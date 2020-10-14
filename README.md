@@ -1,38 +1,60 @@
+
 # flask-starter
+
+  
 
   
 
 ## Starting the server:
 
   
+
   
 
 1. Open a terminal and go to the server folder. Make sure you have **pipenv** installed (`pip install pipenv`)
 
+  
+
 2. Install the dependencies with `pipenv install`. This also createa a virtual environment, if there isn't one already
+
+  
 
 3. Activate the virtual environment and start the app with `pipenv run flask run`
 
   
 
+  
+
 ## Setting up PostgreSQL
- 
 
-1. Follow the instructions to install Postgresql (v12.4) on your local machine https://www.postgresqltutorial.com/install-postgresql/ 
+  
 
-2. Install all psql flask dependencies in your venv `pipenv install`
-	-   Psycopg2 ([2.8.6](https://pypi.python.org/pypi/psycopg2/2.8.6)) : a Python adapter for Postgres
-	-   Flask-SQLAlchemy ([2.4.4](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)) : Flask extension that provides  [SQLAlchemy](https://www.sqlalchemy.org/)  support
-	-   Flask-Migrate ([2.5.3](https://pypi.python.org/pypi/Flask-Migrate/2.5.2)) : extension that supports SQLAlchemy database migrations via  [Alembic](https://pypi.python.org/pypi/alembic/2.5.3)
-	- Python-dotenv ([0.14.0](https://pypi.org/project/python-dotenv/)):Reads from `.env` file and adds them to environment variables.
-	
-3.  Add `C:\Program Files\PostgreSQL\12\bin` and `C:\Program Files\PostgreSQL\12\lib` to your PATH, so you can run the psql shell from your terminal.
+1. Follow the instructions to [install](https://www.postgresqltutorial.com/install-postgresql/) Postgresql (v12) on your local machine 
 
-4.  To create a local database, we need to access the psql shell. Run the following in your terminal: 
-![setup psql](https://drive.google.com/uc?export=view&id=1Xlf6S5nODTuWjCp7xIyW3XrIXwcJt7MZ)
+2. Install all dependencies with `pipenv install`
 
-5. Now that you have created a database, make sure to update your .env file so in the future we will be able to connect the flask app to our local psql database.
+3. (MacOS and Windows only) To run the psql shell from anywhere in our command line, we need to set up our $PATH [environment variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them) to point towards the location of our psql shell executable.
 
-Common psql shell commands: https://www.postgresqltutorial.com/psql-commands/
+	- Windows: [follow these instructions](https://sqlbackupandftp.com/blog/setting-windows-path-for-postgres-tools)
+	- [MacOS](https://opensource.com/article/17/6/set-path-linux): `export PATH=/Library/PostgreSQL/12/bin:$PATH`
+	- Linux: *Most Linux platforms such as Debian, Red Hat / CentOS, SUSE, and Ubuntu have PostgreSQL integrated with their package management.*
 
+4. To create a local database, we can either use the pgAdmin GUI or through the psql shell via terminal. The following is an example of how to run it through your terminal.
 
+	 a) Access the psql shell and type in your password
+			- Windows: `psql -U postgres`
+			- MacOS: `sudo psql postgres`
+			- Linux: `sudo -i -u postgres` then `psql`
+			
+	b) Create a database while in the shell
+			- `postgres=# CREATE DATABASE dealsmate_db;`
+			- `postgres=# \l`: to view all available databases
+			- `postgres=# \q`: to exit the shell
+			- other psql shell [commands](https://www.postgresqltutorial.com/psql-commands/)
+		
+
+5. If you made any changes (eg. passwords, urls, dbNames). Update the following vars in your .env file so in the future you will be able to connect the flask app to your local psql. 
+ - `POSTGRES_USER = "postgres"`
+- `POSTGRES_PW = "password"`
+- `POSTGRES_URL = "127.0.0.1:5432"`
+- `POSTGRES_DB = "dealsmate_db"`
