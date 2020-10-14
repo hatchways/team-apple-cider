@@ -26,3 +26,10 @@ https://realpython.com/flask-by-example-part-2-postgres-sqlalchemy-and-alembic/
 6. \dt to see all the tables
 
 7. you can export to set and environment variable but I decided to just create a local variable in my config file called DATABASE_URL
+
+
+## Todo List
+- Create a models.py to init a db
+- Test CRUD features using dummy data 
+- Revise README so others know how to setup their psql db
+- Test CRUD using real product data issue #7
