@@ -54,7 +54,7 @@
 		
 
 5. If you made any changes (eg. passwords, urls, dbNames). Update the following vars in your .env file so in the future you will be able to connect the flask app to your local psql. 
- - `POSTGRES_USER = "postgres"`
-- `POSTGRES_PW = "password"`
-- `POSTGRES_URL = "127.0.0.1:5432"`
-- `POSTGRES_DB = "dealsmate_db"`
+    - `POSTGRES_USER = "postgres"`
+    - `POSTGRES_PW = "password"`
+    - `POSTGRES_URL = "127.0.0.1:5432"`
+    - `POSTGRES_DB = "dealsmate_db"`
