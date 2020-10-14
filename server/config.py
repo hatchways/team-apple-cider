@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 
-basedir = os.path.abspath(os.path.dirname(__file__))
 
 load_dotenv() #load all the environment variables in the .env file
 
@@ -13,7 +12,8 @@ POSTGRES_DB = os.environ['POSTGRES_DB']
 
 
 class Config:
-    DATABASE_URL = "postgresql:///dealsmates_db" 
+    # Create connection between python and psql db
+    DATABASE_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
