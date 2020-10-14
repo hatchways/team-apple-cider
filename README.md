@@ -9,3 +9,20 @@
 
 
 ## How to setup PostgresSQL Database
+
+1. Install PostgresSQL
+- https://www.postgresqltutorial.com/install-postgresql/
+
+2. https://hackersandslackers.com/configure-flask-applications/
+https://realpython.com/flask-by-example-part-2-postgres-sqlalchemy-and-alembic/
+
+
+3. pipenv install psycopg2 Flask-SQLAlchemy Flask-Migrate
+
+4. Create a database: psql -U postgres, then type your password you get for your server
+
+5. Create database using: CREATE DATBASE dealsmate_db, then do \l to see all your databases
+
+6. \dt to see all the tables
+
+7. you can export to set and environment variable but I decided to just create a local variable in my config file called DATABASE_URL
