@@ -40,7 +40,8 @@
 	- Linux: *Most Linux platforms such as Debian, Red Hat / CentOS, SUSE, and Ubuntu have PostgreSQL integrated with their package management.*
 
 4. To create a local database, we can either use the pgAdmin GUI or through the psql shell via terminal. The following is an example of how to run it through your terminal.
-    a) Access the psql shell and type in your password
+    
+    a)  Access the psql shell and type in your password
     - Windows: `psql -U postgres`
 	- MacOS: `sudo psql postgres`
 	- Linux: `sudo -i -u postgres` then `psql`
