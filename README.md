@@ -41,16 +41,16 @@
 
 4. To create a local database, we can either use the pgAdmin GUI or through the psql shell via terminal. The following is an example of how to run it through your terminal.
 
-	 a) Access the psql shell and type in your password
-			- Windows: `psql -U postgres`
-			- MacOS: `sudo psql postgres`
-			- Linux: `sudo -i -u postgres` then `psql`
+	a) Access the psql shell and type in your password
+        - Windows: `psql -U postgres`
+		- MacOS: `sudo psql postgres`
+		- Linux: `sudo -i -u postgres` then `psql`
 			
 	b) Create a database while in the shell
-			- `postgres=# CREATE DATABASE dealsmate_db;`
-			- `postgres=# \l`: to view all available databases
-			- `postgres=# \q`: to exit the shell
-			- other psql shell [commands](https://www.postgresqltutorial.com/psql-commands/)
+		- `postgres=# CREATE DATABASE dealsmate_db;`
+		- `postgres=# \l`: to view all available databases`
+		- `postgres=# \q`: to exit the shell`
+		- other psql shell [commands](https://www.postgresqltutorial.com/psql-commands/)
 		
 
 5. If you made any changes (eg. passwords, urls, dbNames). Update the following vars in your .env file so in the future you will be able to connect the flask app to your local psql. 
