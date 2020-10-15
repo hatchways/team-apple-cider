@@ -13,3 +13,8 @@ app.register_blueprint(ping_handler)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+
+@app.route('/')
+def index():
+    return "This is an example app"
