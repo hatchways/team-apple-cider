@@ -1,17 +1,17 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Header from "components/Header";
 import AddItem from "components/AddItem";
 
-const dashPageStyle = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   dashContainer: {
     margin: theme.spacing.unit * 1,
   },
-});
+}));
 
 const Dashboard = (props) => {
-  const { classes } = props;
+  const classes = useStyles();
   return (
     <div className={classes.dashContainer}>
       <Header />
@@ -20,4 +20,4 @@ const Dashboard = (props) => {
   );
 };
 
-export default withStyles(dashPageStyle)(Dashboard);
+export default Dashboard;

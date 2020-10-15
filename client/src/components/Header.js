@@ -1,12 +1,12 @@
 import React from "react";
 
 import { Typography } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import logo from "img/logo.png";
 import icon from "img/icon.png";
 
-const headerStyle = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   headerContainer: {
     padding: theme.spacing.unit * 1,
     width: "100%",
@@ -62,10 +62,10 @@ const headerStyle = (theme) => ({
     height: "3.5rem",
     borderRadius: "100%",
   },
-});
+}));
 
 const Header = (props) => {
-  const { classes } = props;
+  const classes = useStyles();
   return (
     <div className={classes.headerContainer}>
       <img className={classes.logo} src={logo} alt="logo" />
@@ -89,4 +89,4 @@ const Header = (props) => {
   );
 };
 
-export default withStyles(headerStyle)(Header);
+export default Header;

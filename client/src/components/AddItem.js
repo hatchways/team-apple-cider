@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Typography,
   TextField,
@@ -7,15 +6,16 @@ import {
   MenuItem,
   Button,
 } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import "css/AddItem.css";
 
-const addItemStyle = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   //
-});
+}));
 
 const AddItem = () => {
+  const classes = useStyles();
   return (
     <div className="dashboard-add-item">
       <Typography variant="h4">Add new item:</Typography>
@@ -32,4 +32,4 @@ const AddItem = () => {
   );
 };
 
-export default withStyles(addItemStyle)(AddItem);
+export default AddItem;
