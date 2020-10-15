@@ -32,7 +32,7 @@ const Dashboard = () => {
         </div>
         <div className="profile">
           <img className="profile-icon" src={icon} alt="profile" />
-          <div>Profile</div>
+          <span className="profile-text">Profile</span>
         </div>
       </div>
       <Typography>{"Dashboard"}</Typography>
