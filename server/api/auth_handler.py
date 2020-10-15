@@ -1,7 +1,8 @@
 from models.models import User
-from flask import Blueprint, request, make_response, jsonify
+from flask import Blueprint, request, make_response, jsonify, g, redirect, url_for
 from flask.views import MethodView
 from server import db, flask_bcrypt
+from functools import wraps
 
 auth_blueprint = Blueprint("auth_blueprint", __name__)
 
@@ -20,7 +21,7 @@ class RegisterAPI(MethodView):
                         "message": "Password must be at least six characters long."
                     }
                     return make_response(jsonify(responseObject)), 401
-                if post_data.get("password") != post_data.get("confirm_password"):
+                if post_data.get("password") != post_data.get("confirm"):
                     responseObject = {
                         "status": "fail",
                         "message": "Passwords must match."
@@ -32,6 +33,7 @@ class RegisterAPI(MethodView):
                 db.session.add(user)
                 db.session.commit()
                 auth_token = user.encode_auth_token(user.id)
+                g.user = user
                 responseObject = {
                     "status": "success",
                     "message": "Successfully registered.",
@@ -64,6 +66,7 @@ class LoginAPI(MethodView):
             ):
                 auth_token = user.encode_auth_token(user.id)
                 if auth_token:
+                    g.user = user
                     responseObject = {
                         "status": "success",
                         "message": "Successfully logged in",
@@ -116,6 +119,16 @@ class UserAPI(MethodView):
                 "message": "Provide a valid auth token."
             }
             return make_response(jsonify(responseObject)), 401
+
+
+# Basic middleware for protected routes pulled from Flask's documentation.
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if g.user is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 registration_view = RegisterAPI.as_view("register_api")

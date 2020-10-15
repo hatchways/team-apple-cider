@@ -8,7 +8,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)  # Ensure this is hashed!
+    password = db.Column(db.String(255), nullable=False)
     registered_time = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, email, password, registered_time):
@@ -19,13 +19,13 @@ class User(db.Model):
     def encode_auth_token(self, user_id):
         try:
             payload = {
-                "exp": datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
+                "exp": datetime.datetime.utcnow() + datetime.timedelta(days=0, hours=1),
                 "iat": datetime.datetime.utcnow(),
                 "sub": user_id
             }
             return jwt.encode(
                 payload,
-                SECRET_KEY,
+                app.config.get("SECRET_KEY"),
                 algorithm="HS256"
             )
         except Exception as e:
@@ -34,7 +34,7 @@ class User(db.Model):
     @staticmethod
     def decode_auth_token(auth_token):
         try:
-            payload = jwt.decode(auth_token, BaseConfig.SECRET_KEY)
+            payload = jwt.decode(auth_token, app.config.get("SECRET_KEY"))
             return payload["sub"]
         except jwt.ExpiredSignatureError:
             return "Signature expired. Please log in again."
