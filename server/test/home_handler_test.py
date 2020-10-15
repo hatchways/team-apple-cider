@@ -1,4 +1,4 @@
-from test.test_base import TestBase
+from .test_base import TestBase
 
 
 class HomeHandlerTest(TestBase):
