@@ -11,16 +11,16 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     registered_time = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, email, password, registered_time):
+    def __init__(self, email, password):
         self.email = email
         self.password = flask_bcrypt.generate_password_hash(password, app.config.get("BCRYPT_LOG_ROUNDS")).decode()
-        self.registered_time = registered_time
+        self.registered_time = datetime.datetime.now(tz=datetime.timezone.utc)
 
     def encode_auth_token(self, user_id):
         try:
             payload = {
-                "exp": datetime.datetime.utcnow() + datetime.timedelta(days=0, hours=1),
-                "iat": datetime.datetime.utcnow(),
+                "exp": datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=120),
+                "iat": datetime.datetime.now(tz=datetime.timezone.utc),
                 "sub": user_id
             }
             return jwt.encode(
