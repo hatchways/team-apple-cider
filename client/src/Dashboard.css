@@ -1,0 +1,33 @@
+.dashboard-header {
+  height: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 1rem;
+}
+
+.links > * {
+  margin: 1rem;
+  text-decoration: none;
+  color: black;
+}
+
+.logo {
+  height: 2rem;
+  padding: 0.5rem;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile > * {
+  margin: 0.5rem;
+}
+
+.profile-icon {
+  height: 3.5rem;
+  border-radius: 100%;
+}

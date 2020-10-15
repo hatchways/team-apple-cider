@@ -11,7 +11,7 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
-        <Route path="/dashboard" component={DashboardPage} />
+        <Route path="/" component={DashboardPage} />
       </BrowserRouter>
     </MuiThemeProvider>
   );
