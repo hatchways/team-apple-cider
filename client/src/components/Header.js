@@ -3,8 +3,8 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
-import logo from "../img/logo.png";
-import icon from "../img/icon.png";
+import logo from "img/logo.png";
+import icon from "img/icon.png";
 
 const headerStyle = (theme) => ({
   //
