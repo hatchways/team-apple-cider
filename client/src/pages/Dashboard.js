@@ -6,8 +6,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Header from "components/Header";
 import AddItem from "components/AddItem";
 
-import "css/Dashboard.css";
-
 const dashPageStyle = (theme) => ({
   dashContainer: {
     margin: theme.spacing.unit * 2,

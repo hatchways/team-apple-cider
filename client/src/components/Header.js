@@ -6,6 +6,8 @@ import { withStyles } from "@material-ui/core/styles";
 import logo from "img/logo.png";
 import icon from "img/icon.png";
 
+import "css/Header.css";
+
 const headerStyle = (theme) => ({
   //
 });
