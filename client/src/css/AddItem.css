@@ -1,6 +1,12 @@
 .dashboard-add-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+}
+
+.add-item-input {
+  display: flex;
+  flex-direction: row;
 }
