@@ -1,6 +1,6 @@
 import React from "react";
 
-// import { Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import logo from "../img/logo.png";
@@ -16,19 +16,19 @@ const Header = () => {
       <img className="logo" src={logo} alt="logo" />
       <div className="link-container">
         <div className="link">
-          <span className="link-text">Shopping Lists</span>
+          <Typography>Shopping Lists</Typography>
         </div>
         <div className="link">
-          <span className="link-text">Friends</span>
+          <Typography>Friends</Typography>
         </div>
         <div className="link">
-          <span className="link-text">Notifications</span>
+          <Typography>Notifications</Typography>
           <div className="notification-icon" />
         </div>
       </div>
       <div className="profile">
         <img className="profile-icon" src={icon} alt="profile" />
-        <span className="profile-text">Profile</span>
+        <Typography>Profile</Typography>
       </div>
     </div>
   );
