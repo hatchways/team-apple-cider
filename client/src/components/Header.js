@@ -6,30 +6,83 @@ import { withStyles } from "@material-ui/core/styles";
 import logo from "img/logo.png";
 import icon from "img/icon.png";
 
-import "css/Header.css";
-
 const headerStyle = (theme) => ({
-  //
+  headerContainer: {
+    padding: theme.spacing.unit * 1,
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    boxSizing: "border-box",
+  },
+  dashboardHeader: {
+    height: "auto",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    boxSizing: "border-box",
+  },
+  linkContainer: {
+    marginLeft: theme.spacing.unit * 6,
+    marginRight: theme.spacing.unit * 6,
+    display: "flex",
+  },
+  link: {
+    margin: theme.spacing.unit * 3,
+    textDecoration: "none",
+    color: "black",
+    position: "relative",
+    padding: "5px 18px",
+  },
+  notificationIcon: {
+    top: "0",
+    right: "0",
+    height: "10px",
+    width: "10px",
+    backgroundColor: "#35d554",
+    borderRadius: "100%",
+    position: "absolute",
+  },
+  logo: {
+    height: "2rem",
+    padding: theme.spacing.unit * 1,
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: "auto",
+  },
+  profileContainer: {
+    display: "flex",
+    alignItems: "center",
+    marginLeft: theme.spacing.unit * 6,
+    marginRight: theme.spacing.unit * 6,
+  },
+  profileIcon: {
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
+    height: "3.5rem",
+    borderRadius: "100%",
+  },
 });
 
-const Header = () => {
+const Header = (props) => {
+  const { classes } = props;
   return (
-    <div className="dashboard-header">
-      <img className="logo" src={logo} alt="logo" />
-      <div className="link-container">
-        <div className="link">
+    <div className={classes.headerContainer}>
+      <img className={classes.logo} src={logo} alt="logo" />
+      <div className={classes.linkContainer}>
+        <div className={classes.link}>
           <Typography>Shopping Lists</Typography>
         </div>
-        <div className="link">
+        <div className={classes.link}>
           <Typography>Friends</Typography>
         </div>
-        <div className="link">
+        <div className={classes.link}>
           <Typography>Notifications</Typography>
-          <div className="notification-icon" />
+          <div className={classes.notificationIcon} />
         </div>
       </div>
-      <div className="profile">
-        <img className="profile-icon" src={icon} alt="profile" />
+      <div className={classes.profileContainer}>
+        <img className={classes.profileIcon} src={icon} alt="profile" />
         <Typography>Profile</Typography>
       </div>
     </div>
