@@ -19,9 +19,16 @@ const Dashboard = () => {
       <div className="dashboard-header">
         <img className="logo" src={logo} alt="logo" />
         <div className="link-container">
-          <div className="link">Shopping Lists</div>
-          <div className="link">Friends</div>
-          <div className="link">Notifications</div>
+          <div className="link">
+            <span className="link-text">Shopping Lists</span>
+          </div>
+          <div className="link">
+            <span className="link-text">Friends</span>
+          </div>
+          <div className="link">
+            <span className="link-text">Notifications</span>
+            <div className="notification-icon" />
+          </div>
         </div>
         <div className="profile">
           <img className="profile-icon" src={icon} alt="profile" />
