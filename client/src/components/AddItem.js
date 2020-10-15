@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Container,
   Typography,
   TextField,
   Select,
@@ -13,21 +14,28 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
     padding: "2rem",
   },
   addItemInput: {
     display: "flex",
+    margin: "2rem",
     flexDirection: "row",
+    justifyContent: "center",
+  },
+  addButton: {
+    borderRadius: "10rem",
+    backgroundColor: "#DF1B1B",
+    color: "white",
+    width: "8rem",
   },
 }));
 
 const AddItem = () => {
   const classes = useStyles();
   return (
-    <div className={classes.dashboardAddItem}>
+    <Container className={classes.dashboardAddItem}>
       <Typography variant="h4">Add new item:</Typography>
-      <div className={classes.addItemInput}>
+      <Container className={classes.addItemInput}>
         <TextField label="Please enter your link here" />
         <Select>
           <MenuItem value={"clothes"}>Clothes</MenuItem>
@@ -35,10 +43,10 @@ const AddItem = () => {
           <MenuItem value={"luxury"}>Luxury</MenuItem>
         </Select>
         <Button className={classes.addButton} variant="contained">
-          Default
+          ADD
         </Button>
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 };
 
