@@ -26,7 +26,7 @@ const Dashboard = (props) => {
   const classes = useStyles();
   return (
     <Box className={classes.dashContainer}>
-      <Header {...{ setSelectedPage }} />
+      <Header {...{ selectedPage, setSelectedPage }} />
       <Box className={classes.bodyContainer}>
         {selectedPage === 0 && [<ShoppingLists />]}
         {selectedPage === 1 && [<div>friends page</div>]}

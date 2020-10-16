@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
-  const { setSelectedPage } = props;
+  const { selectedPage, setSelectedPage } = props;
   const classes = useStyles();
 
   const handleTabChange = (event, newValue) => {
@@ -68,14 +68,15 @@ const Header = (props) => {
       <img className={classes.logo} src={logo} alt="logo" />
       <Box className={classes.linkContainer}>
         <Tabs
-          value={setSelectedPage}
+          value={selectedPage}
           onChange={handleTabChange}
           aria-label="page select"
+          TabIndicatorProps={{ style: { backgroundColor: "white" } }}
         >
           <Tab label="Shopping Lists" />
           <Tab label="Friends" />
         </Tabs>
-        <Box to="/notifications" className={classes.link}>
+        <Box className={classes.link}>
           <Typography>Notifications</Typography>
           <Box className={classes.notificationIcon} />
           <Notifications />
