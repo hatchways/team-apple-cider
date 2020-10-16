@@ -36,8 +36,8 @@ def addProduct():
     if request.method == "GET":
         product_types = List.query.all()
         ls = []
-        for i in product_types:
-            ls.append({"id":i.id, "product_type":i.product_type})
+        for item in product_types:
+            ls.append({"id":item.id, "product_type":item.product_type})
         return jsonify({'list':ls}), 200
         
     elif request.method == 'POST':
@@ -51,9 +51,18 @@ def addProduct():
             return jsonify({'response': "{} already exists in the database".format(body['name'])}), 400
     return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
 
-@app.route('/edit_list')
-def index():
-    return "This is an edit product page"
+@app.route('/edit_list',methods=['GET','POST'])
+def editList():
+
+    if request.method == "GET":
+        body = json.loads(request.get_data())
+        list_id = body['list_id']
+        products = Product.query.filter_by(list_id=list_id)
+        ls = []
+        for prod in products:
+             ls.append({"id":prod.id, "product_type":item.product_type})
+
+
 
 
 

@@ -21,18 +21,19 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=False)
-    description = db.Column(db.Text, nullable=False)
     name = db.Column(db.String, unique=True, nullable=False)
-    url = db.Column(db.String, nullable=False)
+    description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
+    url = db.Column(db.String, nullable=False)
   
 
-    def __init__(self, list_id, description, name,url,price):
+    def __init__(self, list_id, name, description,price,url):
         self.list_id = list_id
-        self.description = description
         self.name =name
-        self.url =url
+        self.description = description
         self.price =price
+        self.url =url
+        
 
 
     # def __repr__(self):
