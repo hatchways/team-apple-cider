@@ -7,12 +7,12 @@ import logo from "img/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
-    padding: theme.spacing(1),
     width: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-evenly",
     boxSizing: "border-box",
+    padding: theme.spacing(3),
   },
   logo: {
     height: "1.8rem",
