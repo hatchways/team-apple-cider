@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
     display: "flex",
     flexDirection: "column",
-    margin: "5rem 18rem",
+    margin: "0 18rem",
   },
   listsTitle: {
     margin: "2rem 0",
@@ -24,11 +24,26 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginRight: "2rem",
     backgroundColor: "white",
+    borderRadius: "1rem",
+    overflow: "hidden",
   },
   listImage: {
     objectFit: "cover",
     height: "18rem",
     width: "18rem",
+  },
+  listTextContainer: {
+    margin: "2rem",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  listTextTitle: {
+    fontWeight: "800",
+  },
+  listTextItems: {
+    color: "grey",
   },
 }));
 
@@ -49,6 +64,14 @@ const ShoppingLists = () => {
         {demoList.map((el) => (
           <Box className={classes.listContainer}>
             <img src={el.img} alt={el.title} className={classes.listImage} />
+            <Box className={classes.listTextContainer}>
+              <Typography className={classes.listTextTitle}>
+                {el.title}
+              </Typography>
+              <Typography
+                className={classes.listTextItems}
+              >{`${el.itemCount} items`}</Typography>
+            </Box>
           </Box>
         ))}
       </Box>
