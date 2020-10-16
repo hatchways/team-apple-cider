@@ -10,9 +10,6 @@ POSTGRES_URL = os.environ['POSTGRES_URL']
 POSTGRES_DB = os.environ['POSTGRES_DB']
 
 
-
-
-
 class Config:
     # Create connection between python and psql db
     DATABASE_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)

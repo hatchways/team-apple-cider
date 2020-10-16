@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import json
 
-
 app = Flask(__name__)
 app.config.from_object('config.Config')
 
@@ -17,7 +16,7 @@ migrate = Migrate(app, db)
 
 from models import List, Product
 
-@app.route('/create_list',methods=['POST'])
+@app.route('/create_list', methods=['POST'])
 def createList():
     if request.method == 'POST':
         body = json.loads(request.get_data())
@@ -31,18 +30,23 @@ def createList():
     return jsonify({'response': "{} was successfully added to the database".format(body['product_type'])}), 200
 
 
-@app.route('/add_product',methods=['GET','POST'])
+@app.route('/add_product', methods=['GET', 'POST'])
 def addProduct():
     if request.method == "GET":
         product_types = List.query.all()
         ls = []
         for item in product_types:
-            ls.append({"id":item.id, "product_type":item.product_type})
-        return jsonify({'list':ls}), 200
-        
+            ls.append(
+                {
+                    "id": item.id,
+                    "product_type": item.product_type
+                })
+        return jsonify({'list': ls}), 200
+
     elif request.method == 'POST':
         body = json.loads(request.get_data())
-        product_item = Product(body['list_id'],body['description'], body['name'],body['url'],body['price'])
+        product_item = Product(
+            body['list_id'], body['name'], body['description'], body['price'], body['url'])
         db.create_all()
         db.session.add(product_item)
         try:
@@ -51,18 +55,34 @@ def addProduct():
             return jsonify({'response': "{} already exists in the database".format(body['name'])}), 400
     return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
 
-@app.route('/edit_list',methods=['GET','POST'])
+
+@app.route('/edit_list', methods=['GET', 'DELETE'])
 def editList():
 
     if request.method == "GET":
         body = json.loads(request.get_data())
         list_id = body['list_id']
         products = Product.query.filter_by(list_id=list_id)
+        product_type = List.query.filter_by(id=list_id).first()
         ls = []
         for prod in products:
-             ls.append({"id":prod.id, "product_type":item.product_type})
+            ls.append(
+                {
+                    "id": prod.id,
+                    "name": prod.name,
+                    "description": prod.description,
+                    "price": prod.price,
+                    "url": prod.url
+                })
+        return jsonify({product_type.product_type: ls}), 200
+    
+    if request.method == "DELETE":
+        body = json.loads(request.get_data())
+        product_id = body['product_id']
+        product_name = Product.query.filter_by(id=product_id).first().name
+        Product.query.filter_by(id=product_id).delete()
+        db.session.commit()
+        return jsonify({'response': "{} was successfully deleted from the database".format(product_name)}), 200
 
 
-
-
-
+    
