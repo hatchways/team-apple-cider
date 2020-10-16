@@ -4,6 +4,7 @@ import { Box } from "@material-ui/core";
 
 import Header from "components/Header";
 import AddItem from "components/AddItem";
+import ShoppingLists from "components/ShoppingLists";
 
 const useStyles = makeStyles((theme) => ({
   dashContainer: {
@@ -28,6 +29,7 @@ const Dashboard = (props) => {
       <Header />
       <Box className={classes.bodyContainer}>
         <AddItem />
+        <ShoppingLists />
       </Box>
     </Box>
   );
