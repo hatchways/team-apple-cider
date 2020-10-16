@@ -26,12 +26,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NotificationsButton = (props) => {
+  const { notificationsOpen, setNotificationsOpen } = props;
   const classes = useStyles();
   return (
-    <Button className={classes.notificationButton} disableRipple>
+    <Button
+      className={classes.notificationButton}
+      disableRipple
+      onClick={() => setNotificationsOpen((cur) => !cur)}
+    >
       <Typography className={classes.buttonText}>Notifications</Typography>
       <Box className={classes.notificationIcon} />
-      <NotificationPopup {...props} />
+      {Boolean(notificationsOpen) && <NotificationPopup {...props} />}
     </Button>
   );
 };
