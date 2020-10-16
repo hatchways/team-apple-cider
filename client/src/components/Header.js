@@ -72,7 +72,7 @@ const Header = (props) => {
           onChange={handleTabChange}
           aria-label="page select"
         >
-          <Tab label="Shopping List" />
+          <Tab label="Shopping Lists" />
           <Tab label="Friends" />
         </Tabs>
         <Box to="/notifications" className={classes.link}>
