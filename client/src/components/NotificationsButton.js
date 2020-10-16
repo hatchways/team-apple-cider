@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Notifications from "components/Notifications";
+import NotificationPopup from "components/NotificationPopup";
 
 const useStyles = makeStyles((theme) => ({
   notificationIcon: {
@@ -31,7 +31,7 @@ const NotificationsButton = (props) => {
     <Button className={classes.notificationButton} disableRipple>
       <Typography className={classes.buttonText}>Notifications</Typography>
       <Box className={classes.notificationIcon} />
-      <Notifications {...props} />
+      <NotificationPopup {...props} />
     </Button>
   );
 };

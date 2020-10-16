@@ -58,8 +58,8 @@ const HeaderTabs = (props) => {
           disableRipple
           label={<Typography className={classes.tabLabel}>Friends</Typography>}
         />
-        <NotificationsButton {...props} />
       </Tabs>
+      <NotificationsButton {...props} />
     </Box>
   );
 };

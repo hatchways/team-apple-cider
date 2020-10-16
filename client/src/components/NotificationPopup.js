@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Notifications = (props) => {
+const NotificationPopup = (props) => {
   const classes = useStyles();
   return (
     <Box className={classes.dashboardNotifications}>
@@ -49,4 +49,4 @@ const Notifications = (props) => {
   );
 };
 
-export default Notifications;
+export default NotificationPopup;
