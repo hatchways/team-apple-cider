@@ -11,8 +11,8 @@ class List(db.Model):
     def __init__(self, product_type):
         self.product_type = product_type
 
-    def __repr__(self):
-        return f"Id: {self.id} --- Product Type: {self.product_type}"
+    # def __repr__(self):
+    #     return f"Id: {self.id} --- Product Type: {self.product_type}"
 
 
 class Product(db.Model):
@@ -35,8 +35,8 @@ class Product(db.Model):
         self.price =price
 
 
-    def __repr__(self):
-        return f"Product Id: {self.id} --- Name: {self.name}"
+    # def __repr__(self):
+    #     return f"Product Id: {self.id} --- Name: {self.name}"
 
 
 if __name__ == "__main__":
