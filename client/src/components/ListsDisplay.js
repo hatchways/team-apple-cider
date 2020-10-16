@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 18rem",
   },
   listsTitle: {
-    fontWeight: "500",
+    fontWeight: "bold",
     margin: "2rem 0",
   },
   myShoppingLists: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   listTextTitle: {
-    fontWeight: "800",
+    fontWeight: "bold",
   },
   listTextItems: {
     color: "grey",
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0.5rem",
   },
   addNewListText: {
-    fontWeight: "500",
+    fontWeight: "bold",
   },
 }));
 

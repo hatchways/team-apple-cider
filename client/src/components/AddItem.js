@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "4rem",
   },
   addNewItemTitle: {
-    fontWeight: "500",
+    fontWeight: "bold",
   },
   addItemInput: {
     display: "flex",
