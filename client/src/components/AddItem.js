@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    margin: "2rem",
+    margin: "4rem",
   },
   addItemInput: {
     display: "flex",
@@ -22,10 +22,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-    margin: "2rem",
+    margin: "3rem",
     overflow: "hidden",
     padding: "0.5rem",
     borderRadius: "10rem",
+    boxShadow: "0 0 0.5rem 1px #eee",
   },
   addButton: {
     borderRadius: "10rem",
@@ -50,7 +51,7 @@ const AddItem = () => {
   const classes = useStyles();
   return (
     <Box className={classes.dashboardAddItem}>
-      <Typography variant="h4">Add new item:</Typography>
+      <Typography variant="h5">Add new item:</Typography>
       <Box className={classes.addItemInput}>
         <Input
           placeholder="Paste your link here"
