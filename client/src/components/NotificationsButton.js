@@ -1,9 +1,12 @@
 import React from "react";
-import { Box, Typography, Button } from "@material-ui/core";
+import { Box, Typography, Button, ClickAwayListener } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import NotificationPopup from "components/NotificationPopup";
 
 const useStyles = makeStyles((theme) => ({
+  parentContainer: {
+    position: "relative",
+  },
   notificationIcon: {
     top: "0",
     right: "0",
@@ -14,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
   },
   notificationButton: {
-    position: "relative",
     padding: "5px 18px",
     "&:hover": {
       backgroundColor: "transparent",
@@ -28,16 +30,32 @@ const useStyles = makeStyles((theme) => ({
 const NotificationsButton = (props) => {
   const { notificationsOpen, setNotificationsOpen } = props;
   const classes = useStyles();
+
+  const handleClickAway = () => setNotificationsOpen(false);
+
   return (
-    <Button
-      className={classes.notificationButton}
-      disableRipple
-      onClick={() => setNotificationsOpen((cur) => !cur)}
-    >
-      <Typography className={classes.buttonText}>Notifications</Typography>
-      <Box className={classes.notificationIcon} />
-      {Boolean(notificationsOpen) && <NotificationPopup {...props} />}
-    </Button>
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Box className={classes.parentContainer}>
+        <Button
+          className={classes.notificationButton}
+          disableRipple
+          onClick={() => setNotificationsOpen((cur) => !cur)}
+        >
+          <Typography
+            className={classes.buttonText}
+            style={{
+              textShadow: Boolean(notificationsOpen)
+                ? "0 0 0.01px black"
+                : "none",
+            }}
+          >
+            Notifications
+          </Typography>
+          <Box className={classes.notificationIcon} />
+        </Button>
+        {Boolean(notificationsOpen) && <NotificationPopup {...props} />}
+      </Box>
+    </ClickAwayListener>
   );
 };
 
