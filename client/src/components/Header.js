@@ -7,6 +7,8 @@ import { Route, Link } from "react-router-dom";
 import logo from "img/logo.png";
 import icon from "img/icon.png";
 
+import Notifications from "components/Notifications";
+
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
     padding: theme.spacing(1),
@@ -80,6 +82,7 @@ const Header = (props) => {
         <Link to="/notifications" className={classes.link}>
           <Typography>Notifications</Typography>
           <Box className={classes.notificationIcon} />
+          <Notifications />
         </Link>
       </Box>
       <Box className={classes.profileContainer}>
