@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
   },
   logo: {
-    height: "2rem",
+    height: "1.8rem",
     padding: theme.spacing.unit * 1,
-    marginLeft: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit * 5,
     marginRight: "auto",
   },
   profileContainer: {
