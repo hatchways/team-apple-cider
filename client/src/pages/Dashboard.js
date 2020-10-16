@@ -23,10 +23,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = (props) => {
   const [selectedPage, setSelectedPage] = useState(0);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
   return (
     <Box className={classes.dashContainer}>
-      <Header {...{ selectedPage, setSelectedPage }} />
+      <Header
+        {...{
+          selectedPage,
+          setSelectedPage,
+          notificationsOpen,
+          setNotificationsOpen,
+        }}
+      />
       <Box className={classes.bodyContainer}>
         {selectedPage === 0 && [<ShoppingLists />]}
         {selectedPage === 1 && [<div>friends page</div>]}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Typography, Tabs, Tab } from "@material-ui/core";
+import { Box, Typography, Tabs, Tab, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Notifications from "components/Notifications";
@@ -11,13 +11,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(6),
     display: "flex",
     alignItems: "center",
-  },
-  tab: {
-    margin: theme.spacing(3),
-    textDecoration: "none",
-    color: "black",
-    position: "relative",
-    padding: "5px 18px",
   },
   notificationIcon: {
     top: "0",
@@ -31,10 +24,17 @@ const useStyles = makeStyles((theme) => ({
   tabLabel: {
     textTransform: "none",
   },
+  notificationButton: {
+    position: "relative",
+    padding: "5px 18px",
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+  },
 }));
 
 const HeaderTabs = (props) => {
-  const { selectedPage, setSelectedPage } = props;
+  const { selectedPage, setSelectedPage, notificationsOpen } = props;
   const classes = useStyles();
 
   const handleTabChange = (e, newValue) => setSelectedPage(newValue);
@@ -50,19 +50,21 @@ const HeaderTabs = (props) => {
         }}
       >
         <Tab
+          disableRipple
           label={
             <Typography className={classes.tabLabel}>Shopping Lists</Typography>
           }
         />
         <Tab
+          disableRipple
           label={<Typography className={classes.tabLabel}>Friends</Typography>}
         />
+        <Button className={classes.notificationButton} disableRipple>
+          <Typography className={classes.tabLabel}>Notifications</Typography>
+          <Box className={classes.notificationIcon} />
+          <Notifications {...props} />
+        </Button>
       </Tabs>
-      <Box className={classes.tab}>
-        <Typography>Notifications</Typography>
-        <Box className={classes.notificationIcon} />
-        <Notifications />
-      </Box>
     </Box>
   );
 };
