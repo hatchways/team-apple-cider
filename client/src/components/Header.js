@@ -5,9 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Route, Link } from "react-router-dom";
 
 import logo from "img/logo.png";
-import icon from "img/icon.png";
 
 import Notifications from "components/Notifications";
+import ProfileMenu from "components/ProfileMenu";
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -53,18 +53,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
     marginRight: "auto",
   },
-  profileContainer: {
-    display: "flex",
-    alignItems: "center",
-    marginLeft: theme.spacing(6),
-    marginRight: theme.spacing(6),
-  },
-  profileIcon: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    height: "3.5rem",
-    borderRadius: "100%",
-  },
 }));
 
 const Header = (props) => {
@@ -85,10 +73,7 @@ const Header = (props) => {
           <Notifications />
         </Link>
       </Box>
-      <Box className={classes.profileContainer}>
-        <img className={classes.profileIcon} src={icon} alt="profile" />
-        <Typography>Profile</Typography>
-      </Box>
+      <ProfileMenu />
     </Box>
   );
 };
