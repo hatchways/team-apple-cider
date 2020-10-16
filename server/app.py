@@ -51,21 +51,9 @@ def addProduct():
             return jsonify({'response': "{} already exists in the database".format(body['name'])}), 400
     return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
 
-# instructions: run flask first and then retrieve the files.
-# TODO: still have to do edit product list
-
-
-
-
-
-
-# @app.route('/create_product')
-# def index():
-#     return "This is an create product page"
-
-# @app.route('/edit_product_list')
-# def index():
-#     return "This is an edit product page"
+@app.route('/edit_list')
+def index():
+    return "This is an edit product page"
 
 
 
