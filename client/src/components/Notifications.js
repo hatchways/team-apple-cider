@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   dashboardNotifications: {
     left: "0",
     top: "0",
-    transform: "translate(-50%,-10%)",
+    transform: "translate(-50%,-20%)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
