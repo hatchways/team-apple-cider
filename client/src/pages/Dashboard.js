@@ -4,6 +4,7 @@ import { Box } from "@material-ui/core";
 
 import Header from "components/Header";
 import ShoppingLists from "pages/ShoppingLists";
+import Friends from "pages/Friends";
 
 const useStyles = makeStyles((theme) => ({
   dashContainer: {
@@ -37,7 +38,7 @@ const Dashboard = (props) => {
       />
       <Box className={classes.bodyContainer}>
         {selectedPage === 0 && [<ShoppingLists />]}
-        {selectedPage === 1 && [<div>friends page</div>]}
+        {selectedPage === 1 && [<Friends />]}
       </Box>
     </Box>
   );
