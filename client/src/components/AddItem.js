@@ -49,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const demoListArray = ["clothes", "furniture", "luxury"];
+
 const AddItem = () => {
   const [selectedItem, setSelectedItem] = useState("none");
   const classes = useStyles();
@@ -72,9 +74,9 @@ const AddItem = () => {
           <MenuItem value="none" disabled>
             Select List
           </MenuItem>
-          <MenuItem value={"clothes"}>Clothes</MenuItem>
-          <MenuItem value={"furniture"}>Furniture</MenuItem>
-          <MenuItem value={"luxury"}>Luxury</MenuItem>
+          {demoListArray.map((el) => (
+            <MenuItem value={el}>{el}</MenuItem>
+          ))}
         </Select>
         <Button className={classes.addButton} variant="contained">
           ADD
