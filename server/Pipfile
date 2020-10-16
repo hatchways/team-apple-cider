@@ -13,6 +13,7 @@ pyjwt = "*"
 psycopg2 = "*"
 python-dotenv = "*"
 flask-migrate = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"

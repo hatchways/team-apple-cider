@@ -7,6 +7,24 @@ from functools import wraps
 auth_blueprint = Blueprint("auth_blueprint", __name__)
 
 
+# Wrapper that obtains and verifies an auth token in a cookie. Returns true if valid, false otherwise.
+def login_cookie_getter(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        try:
+            auth_header = request.cookies.get("Authentication token")
+            if auth_header:
+                auth_token = auth_header
+                auth_token = User.decode_auth_token(auth_token)
+                if not isinstance(auth_token, str):
+                    g.user = User.query.filter_by(id=auth_token).first()
+        except:
+            auth_token = ""
+        return f(None)
+    return decorated_function
+
+
+
 class RegisterAPI(MethodView):
     def post(self):
         post_data = request.get_json()
@@ -37,11 +55,10 @@ class RegisterAPI(MethodView):
                 g.user = user
                 responseObject = {
                     "status": "success",
-                    "message": "Successfully registered.",
-                    "auth_token": auth_token.decode()
+                    "message": "Successfully registered."
                 }
                 resp = make_response(jsonify(responseObject))
-                resp.set_cookie("Authentication token", auth_token.decode(), httponly=True)  # Should the auth_token be encoded or decoded?
+                resp.set_cookie("Authentication token", auth_token, httponly=True)
                 return resp, 201
             except Exception as e:
                 responseObject = {
@@ -69,14 +86,12 @@ class LoginAPI(MethodView):
             ):
                 auth_token = user.encode_auth_token(user.id)
                 if auth_token:
-                    g.user = user
                     responseObject = {
                         "status": "success",
-                        "message": "Successfully logged in",
-                        "auth_token": auth_token.decode()
+                        "message": "Successfully logged in"
                     }
                     resp = make_response(jsonify(responseObject))
-                    resp.set_cookie("Authentication token", auth_token.decode(), httponly=True)  # Should the auth_token be encoded or decoded?
+                    resp.set_cookie("Authentication token", auth_token, httponly=True)
                     return resp, 200
                 else:
                     responseObject = {
@@ -105,16 +120,11 @@ class LoginAPI(MethodView):
 
 
 class UserAPI(MethodView):
+    @login_cookie_getter
     def get(self):
-        auth_header = request.headers.get("Authorization")
-        if auth_header:
-            auth_token = auth_header.split(" ")[1]
-        else:
-            auth_token = ""
-        if auth_token:
-            resp = User.decode_auth_token(auth_token)
-            if not isinstance(resp, str):
-                user = User.query.filter_by(id=resp).first()
+        try:
+            if g.user:
+                user = g.user
                 responseObject = {
                     "status": "success",
                     "data": {
@@ -124,15 +134,16 @@ class UserAPI(MethodView):
                     }
                 }
                 return make_response(jsonify(responseObject)), 200
+            else:
+                responseObject = {
+                    "status": "fail",
+                    "message": "User is not logged in."
+                }
+                return make_response(jsonify(responseObject)), 401
+        except AttributeError:
             responseObject = {
                 "status": "fail",
-                "message": resp
-            }
-            return make_response(jsonify(responseObject)), 401
-        else:
-            responseObject = {
-                "status": "fail",
-                "message": "Provide a valid auth token."
+                "message": "User is not logged in."
             }
             return make_response(jsonify(responseObject)), 401
 
@@ -140,6 +151,7 @@ class UserAPI(MethodView):
 # Basic middleware for protected routes pulled from Flask's documentation.
 def login_required(f):
     @wraps(f)
+    @login_cookie_getter
     def decorated_function(*args, **kwargs):
         if g.user is None:
             return redirect(url_for('login', next=request.url))
