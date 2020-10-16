@@ -1,22 +1,35 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Box } from "@material-ui/core";
 
 import Header from "components/Header";
 import AddItem from "components/AddItem";
 
 const useStyles = makeStyles((theme) => ({
   dashContainer: {
-    margin: theme.spacing.unit * 1,
+    position: "absolute",
+    top: "0",
+    left: "0",
+    right: "0",
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+  },
+  bodyContainer: {
+    flex: "1",
+    backgroundColor: "#f8f8f8",
   },
 }));
 
 const Dashboard = (props) => {
   const classes = useStyles();
   return (
-    <div className={classes.dashContainer}>
+    <Box className={classes.dashContainer}>
       <Header />
-      <AddItem />
-    </div>
+      <Box className={classes.bodyContainer}>
+        <AddItem />
+      </Box>
+    </Box>
   );
 };
 
