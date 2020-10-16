@@ -3,8 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 
 import Header from "components/Header";
-import AddItem from "components/AddItem";
-import ShoppingLists from "components/ShoppingLists";
+import ShoppingLists from "pages/ShoppingLists";
 
 const useStyles = makeStyles((theme) => ({
   dashContainer: {
@@ -23,13 +22,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = (props) => {
-  const [selectedPage, setSelectedPage] = useState(null);
+  const [selectedPage, setSelectedPage] = useState(0);
   const classes = useStyles();
   return (
     <Box className={classes.dashContainer}>
       <Header {...{ setSelectedPage }} />
       <Box className={classes.bodyContainer}>
-        {selectedPage === 0 && [<AddItem />, <ShoppingLists />]}
+        {selectedPage === 0 && [<ShoppingLists />]}
         {selectedPage === 1 && [<div>friends page</div>]}
       </Box>
     </Box>

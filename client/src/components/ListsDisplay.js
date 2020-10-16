@@ -74,7 +74,7 @@ const demoList = [
   { title: "Luxury", itemCount: 8, img: luxury },
 ];
 
-const ShoppingLists = () => {
+const ListsDisplay = () => {
   const classes = useStyles();
   return (
     <Box className={classes.shoppingContainer}>
@@ -108,4 +108,4 @@ const ShoppingLists = () => {
   );
 };
 
-export default ShoppingLists;
+export default ListsDisplay;
