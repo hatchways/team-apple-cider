@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AddIcon from "@material-ui/icons/Add";
 
 import clothes from "img/clothes.png";
 import furniture from "img/furniture.png";
@@ -45,6 +46,25 @@ const useStyles = makeStyles((theme) => ({
   listTextItems: {
     color: "grey",
   },
+  addNewList: {
+    width: "18rem",
+    backgroundColor: "white",
+    borderRadius: "1rem",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  addIcon: {
+    color: "red",
+    height: "3rem",
+    width: "3rem",
+    margin: "0.5rem",
+  },
+  addNewListText: {
+    fontWeight: "500",
+  },
 }));
 
 const demoList = [
@@ -74,6 +94,14 @@ const ShoppingLists = () => {
             </Box>
           </Box>
         ))}
+        <Box className={classes.addNewList}>
+          <IconButton>
+            <AddIcon className={classes.addIcon} />
+          </IconButton>
+          <Typography className={classes.addNewListText}>
+            ADD NEW LIST
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
