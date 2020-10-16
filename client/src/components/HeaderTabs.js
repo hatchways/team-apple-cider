@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Box, Typography, Tabs, Tab } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import NotificationsButton from "components/NotificationsButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,9 +20,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "100%",
     position: "absolute",
   },
-  tabLabel: {
-    textTransform: "none",
-  },
   notificationButton: {
     position: "relative",
     padding: "5px 18px",
@@ -32,10 +29,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const StyledTab = withStyles({
+  root: {
+    fontWeight: "normal",
+    textTransform: "none",
+  },
+  selected: {
+    textShadow: "0 0 0.01px black",
+  },
+})(Tab);
+
 const HeaderTabs = (props) => {
   const { selectedPage, setSelectedPage } = props;
   const classes = useStyles();
-
   const handleTabChange = (e, newValue) => setSelectedPage(newValue);
 
   return (
@@ -48,16 +54,11 @@ const HeaderTabs = (props) => {
           style: { backgroundColor: "white" },
         }}
       >
-        <Tab
+        <StyledTab
           disableRipple
-          label={
-            <Typography className={classes.tabLabel}>Shopping Lists</Typography>
-          }
+          label={<Typography>Shopping Lists</Typography>}
         />
-        <Tab
-          disableRipple
-          label={<Typography className={classes.tabLabel}>Friends</Typography>}
-        />
+        <StyledTab disableRipple label={<Typography>Friends</Typography>} />
       </Tabs>
       <NotificationsButton {...props} />
     </Box>
