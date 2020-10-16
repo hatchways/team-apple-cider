@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 
@@ -23,13 +23,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = (props) => {
+  const [selectedPage, setSelectedPage] = useState(null);
   const classes = useStyles();
   return (
     <Box className={classes.dashContainer}>
-      <Header />
+      <Header {...{ setSelectedPage }} />
       <Box className={classes.bodyContainer}>
-        <AddItem />
-        <ShoppingLists />
+        {selectedPage === 0 && [<AddItem />, <ShoppingLists />]}
+        {selectedPage === 1 && [<div>friends page</div>]}
       </Box>
     </Box>
   );

@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Route, Link } from "react-router-dom";
 
 import logo from "img/logo.png";
 
@@ -30,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(6),
     marginRight: theme.spacing(6),
     display: "flex",
+    alignItems: "center",
   },
   link: {
     margin: theme.spacing(3),
@@ -56,22 +56,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
+  const { setSelectedPage } = props;
   const classes = useStyles();
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedPage(newValue);
+  };
+
   return (
     <Box className={classes.headerContainer}>
       <img className={classes.logo} src={logo} alt="logo" />
       <Box className={classes.linkContainer}>
-        <Link to="/shopping" className={classes.link}>
-          <Typography>Shopping Lists</Typography>
-        </Link>
-        <Link to="/friends" className={classes.link}>
-          <Typography>Friends</Typography>
-        </Link>
-        <Link to="/notifications" className={classes.link}>
+        <Tabs
+          value={setSelectedPage}
+          onChange={handleTabChange}
+          aria-label="page select"
+        >
+          <Tab label="Shopping List" />
+          <Tab label="Friends" />
+        </Tabs>
+        <Box to="/notifications" className={classes.link}>
           <Typography>Notifications</Typography>
           <Box className={classes.notificationIcon} />
           <Notifications />
-        </Link>
+        </Box>
       </Box>
       <ProfileMenu />
     </Box>
