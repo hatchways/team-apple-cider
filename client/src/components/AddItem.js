@@ -74,8 +74,10 @@ const AddItem = () => {
           <MenuItem value="none" disabled>
             Select List
           </MenuItem>
-          {demoListArray.map((el) => (
-            <MenuItem value={el}>{el}</MenuItem>
+          {demoListArray.map((el, i) => (
+            <MenuItem key={i} value={el}>
+              {el}
+            </MenuItem>
           ))}
         </Select>
         <Button className={classes.addButton} variant="contained">

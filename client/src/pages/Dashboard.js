@@ -37,8 +37,8 @@ const Dashboard = (props) => {
         }}
       />
       <Box className={classes.bodyContainer}>
-        {selectedPage === 0 && [<ShoppingLists />]}
-        {selectedPage === 1 && [<Friends />]}
+        {selectedPage === 0 && <ShoppingLists />}
+        {selectedPage === 1 && <Friends />}
       </Box>
     </Box>
   );
