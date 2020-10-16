@@ -4,56 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import root from '../style/signupLoginPages'
+
 
 const useStyles = makeStyles({
-    root: {
-        height:'100%',
-        padding:'50px',
-        backgroundColor:'rgba(53, 53, 65, 0.473)',
-        '& .container':{
-        border:' solid rgb(241, 238, 232) 1px',
-        borderRadius:'1%',
-        width:'50% ',
-        margin: '0 auto',
-        textAlign:'center',
-        backgroundColor:'rgb(241, 238, 232)',
-        padding:'30px',
-        '& form':{
-            '& h2':{
-            },
-            '& .textField':{
-                display:'block',
-                width:'100%',
-                margin:'10px auto 15px auto',
-                textAlign:'center',
-                '& input':{
-                    backgroundColor:'white',
-                    border:'none',
-                    '& label':{
-                        
-                    }
-                }
-            },
-            '& .button':{
-                marginTop:'20px',
-                borderRadius:'20%',
-            }
-        },
-        '& .login':{
-            display:'flex',
-            justifyContent:'center',
-            marginTop:'40px',
-            textAlign:'center',
-            '& p':{
-             margin:0,
-             marginRight:'10px'
-            },
-            '& .loginLink':{
-                color:'#f50057'
-            }
-        }
-        }
-    }
+    root: root
 });
 function SignUp (){
     const classes = useStyles();
@@ -63,11 +18,11 @@ function SignUp (){
                 <form >
                     <h2>Sign Up</h2>
                     <label>Your name:</label>
-                    <TextField className='textField' id="outlined-basic" variant="outlined"label="name" required/>
+                    <TextField className='textField' variant="outlined" fullWidth label="name" required/>
                     <label>Your email address:</label>
-                    <TextField className='textField' id="outlined-basic" variant="outlined" label="email" required type="email"/>
+                    <TextField className='textField' variant="outlined" fullWidth label="email" required type="email"/>
                     <label>Password:</label>
-                    <TextField className='textField' id="outlined-basic" variant="outlined" label="password" required type="password"/>
+                    <TextField className='textField' variant="outlined" fullWidth label="password" required type="password"/>
                     <Button variant="contained" color="secondary">Create an account</Button>
                 </form>
                 <div className='login'>
