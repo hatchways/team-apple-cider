@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Button, Menu, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
 import icon from "img/icon.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,9 +24,10 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = (e) => setAnchorEl(e.currentTarget);
-  const handleClose = (e) => setAnchorEl(null);
   const classes = useStyles();
+  const handleClick = (e) => setAnchorEl(e.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+
   return (
     <Box className={classes.profileMenuContainer}>
       <img className={classes.profileIcon} src={icon} alt="profile" />

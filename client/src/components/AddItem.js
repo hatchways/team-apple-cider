@@ -49,11 +49,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const demoListArray = ["clothes", "furniture", "luxury"];
+const demoListArray = ["Clothes", "Furniture", "Luxury"];
 
 const AddItem = () => {
   const [selectedItem, setSelectedItem] = useState("none");
   const classes = useStyles();
+
   return (
     <Box className={classes.dashboardAddItem}>
       <Typography variant="h5" className={classes.addNewItemTitle}>

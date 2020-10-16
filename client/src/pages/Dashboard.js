@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
-
+import { makeStyles } from "@material-ui/core/styles";
 import Header from "components/Header";
 import ShoppingLists from "pages/ShoppingLists";
 import Friends from "pages/Friends";
@@ -22,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = (props) => {
+const Dashboard = () => {
   const [selectedPage, setSelectedPage] = useState(0);
   const [notificationsOpen, setNotificationsOpen] = useState(0);
   const classes = useStyles();
+
   return (
     <Box className={classes.dashContainer}>
       <Header

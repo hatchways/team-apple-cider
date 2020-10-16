@@ -34,8 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NotificationPopup = (props) => {
+const NotificationPopup = () => {
   const classes = useStyles();
+
   return (
     <Box className={classes.dashboardNotifications}>
       <Box className={classes.arrow}></Box>

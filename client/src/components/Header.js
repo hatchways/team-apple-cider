@@ -1,12 +1,9 @@
 import React from "react";
-
 import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
-import logo from "img/logo.png";
-
 import ProfileMenu from "components/ProfileMenu";
 import HeaderTabs from "components/HeaderTabs";
+import logo from "img/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {

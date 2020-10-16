@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Box, Typography, Tabs, Tab } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import NotificationsButton from "components/NotificationsButton";

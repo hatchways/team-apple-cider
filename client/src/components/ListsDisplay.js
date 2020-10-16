@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
-
 import clothes from "img/clothes.png";
 import furniture from "img/furniture.png";
 import luxury from "img/luxury.png";
@@ -76,6 +75,7 @@ const demoList = [
 
 const ListsDisplay = () => {
   const classes = useStyles();
+
   return (
     <Box className={classes.shoppingContainer}>
       <Typography variant="h5" className={classes.listsTitle}>

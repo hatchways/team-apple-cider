@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 const NotificationsButton = (props) => {
   const { notificationsOpen, setNotificationsOpen } = props;
   const classes = useStyles();
-
   const handleClickAway = () => setNotificationsOpen(false);
 
   return (

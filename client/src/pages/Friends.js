@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 
-const Friends = (props) => {
+const Friends = () => {
   return (
     <Box
       style={{
