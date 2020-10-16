@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   Box,
   Typography,
-  TextField,
+  Input,
   Select,
   MenuItem,
   Button,
@@ -19,10 +19,12 @@ const useStyles = makeStyles((theme) => ({
   addItemInput: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
     margin: "2rem",
-    padding: "1rem",
+    overflow: "hidden",
+    padding: "0.5rem",
     borderRadius: "10rem",
   },
   addButton: {
@@ -30,12 +32,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#DF1B1B",
     color: "white",
     width: "8rem",
+    height: "3rem",
   },
   linkForm: {
-    width: "20rem",
+    padding: "0.2rem 12rem 0.2rem 0",
+    margin: "0 1.5rem",
+    borderRight: "1px solid #eee",
   },
   dropdownList: {
-    width: "10rem",
+    width: "7rem",
+    marginRight: "5rem",
   },
 }));
 
@@ -46,11 +52,16 @@ const AddItem = () => {
     <Box className={classes.dashboardAddItem}>
       <Typography variant="h4">Add new item:</Typography>
       <Box className={classes.addItemInput}>
-        <TextField className={classes.linkForm} label="Paste your link here" />
+        <Input
+          placeholder="Paste your link here"
+          disableUnderline
+          className={classes.linkForm}
+        />
         <Select
           className={classes.dropdownList}
           value={selectedItem}
           onChange={(e) => setSelectedItem(e.target.value)}
+          disableUnderline
         >
           <MenuItem value="none" disabled>
             Select List
