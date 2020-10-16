@@ -9,7 +9,7 @@ import icon from "img/icon.png";
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
-    padding: theme.spacing.unit * 1,
+    padding: theme.spacing(1),
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
   },
   linkContainer: {
-    marginLeft: theme.spacing.unit * 6,
-    marginRight: theme.spacing.unit * 6,
+    marginLeft: theme.spacing(6),
+    marginRight: theme.spacing(6),
     display: "flex",
   },
   link: {
-    margin: theme.spacing.unit * 3,
+    margin: theme.spacing(3),
     textDecoration: "none",
     color: "black",
     position: "relative",
@@ -47,19 +47,19 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     height: "1.8rem",
-    padding: theme.spacing.unit * 1,
-    marginLeft: theme.spacing.unit * 5,
+    padding: theme.spacing(1),
+    marginLeft: theme.spacing(5),
     marginRight: "auto",
   },
   profileContainer: {
     display: "flex",
     alignItems: "center",
-    marginLeft: theme.spacing.unit * 6,
-    marginRight: theme.spacing.unit * 6,
+    marginLeft: theme.spacing(6),
+    marginRight: theme.spacing(6),
   },
   profileIcon: {
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
     height: "3.5rem",
     borderRadius: "100%",
   },

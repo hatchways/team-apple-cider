@@ -8,7 +8,7 @@ import Ping from "pages/Ping";
 
 const landinPageStyle = (theme) => ({
   landingContainer: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
   },
 });
 
