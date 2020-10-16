@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 18rem",
   },
   listsTitle: {
+    fontWeight: "500",
     margin: "2rem 0",
   },
   myShoppingLists: {

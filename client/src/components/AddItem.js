@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     margin: "4rem",
   },
+  addNewItemTitle: {
+    fontWeight: "500",
+  },
   addItemInput: {
     display: "flex",
     flexDirection: "row",
@@ -51,7 +54,9 @@ const AddItem = () => {
   const classes = useStyles();
   return (
     <Box className={classes.dashboardAddItem}>
-      <Typography variant="h5">Add new item:</Typography>
+      <Typography variant="h5" className={classes.addNewItemTitle}>
+        Add new item:
+      </Typography>
       <Box className={classes.addItemInput}>
         <Input
           placeholder="Paste your link here"
