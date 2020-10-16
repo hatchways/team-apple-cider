@@ -6,13 +6,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Notifications from "components/Notifications";
 
 const useStyles = makeStyles((theme) => ({
-  linkContainer: {
+  tabContainer: {
     marginLeft: theme.spacing(6),
     marginRight: theme.spacing(6),
     display: "flex",
     alignItems: "center",
   },
-  link: {
+  tab: {
     margin: theme.spacing(3),
     textDecoration: "none",
     color: "black",
@@ -28,21 +28,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "100%",
     position: "absolute",
   },
-  logo: {
-    height: "1.8rem",
-    padding: theme.spacing(1),
-    marginLeft: theme.spacing(5),
-    marginRight: "auto",
-  },
   tabLabel: {
     textTransform: "none",
-  },
-  tabDefault: {
-    fontWeight: "normal",
-  },
-  tabSelected: {
-    fontWeight: "bold",
-    color: "silver",
   },
 }));
 
@@ -50,22 +37,16 @@ const HeaderTabs = (props) => {
   const { selectedPage, setSelectedPage } = props;
   const classes = useStyles();
 
-  const handleTabChange = (event, newValue) => {
-    setSelectedPage(newValue);
-  };
+  const handleTabChange = (e, newValue) => setSelectedPage(newValue);
 
   return (
-    <Box className={classes.linkContainer}>
+    <Box className={classes.tabContainer}>
       <Tabs
         value={selectedPage}
         onChange={handleTabChange}
         aria-label="page select"
         TabIndicatorProps={{
-          style: { backgroundColor: "white", color: "red" },
-        }}
-        classes={{
-          root: classes.tabDefault,
-          selected: classes.tabSelected,
+          style: { backgroundColor: "white" },
         }}
       >
         <Tab
@@ -77,7 +58,7 @@ const HeaderTabs = (props) => {
           label={<Typography className={classes.tabLabel}>Friends</Typography>}
         />
       </Tabs>
-      <Box className={classes.link}>
+      <Box className={classes.tab}>
         <Typography>Notifications</Typography>
         <Box className={classes.notificationIcon} />
         <Notifications />
