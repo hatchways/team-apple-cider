@@ -82,8 +82,8 @@ const ShoppingLists = () => {
         My Shopping Lists:
       </Typography>
       <Box className={classes.myShoppingLists}>
-        {demoList.map((el) => (
-          <Box className={classes.listContainer}>
+        {demoList.map((el, i) => (
+          <Box className={classes.listContainer} key={i}>
             <img src={el.img} alt={el.title} className={classes.listImage} />
             <Box className={classes.listTextContainer}>
               <Typography className={classes.listTextTitle}>
