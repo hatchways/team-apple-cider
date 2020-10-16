@@ -28,6 +28,12 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     width: "8rem",
   },
+  linkForm: {
+    width: "20rem",
+  },
+  dropdownList: {
+    width: "20rem",
+  },
 }));
 
 const AddItem = () => {
@@ -36,8 +42,8 @@ const AddItem = () => {
     <Container className={classes.dashboardAddItem}>
       <Typography variant="h4">Add new item:</Typography>
       <Container className={classes.addItemInput}>
-        <TextField label="Please enter your link here" />
-        <Select>
+        <TextField className={classes.linkForm} label="Paste your link here" />
+        <Select className={classes.dropdownList}>
           <MenuItem value={"clothes"}>Clothes</MenuItem>
           <MenuItem value={"furniture"}>Furniture</MenuItem>
           <MenuItem value={"luxury"}>Luxury</MenuItem>
