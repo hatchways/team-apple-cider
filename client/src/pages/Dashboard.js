@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = (props) => {
   const [selectedPage, setSelectedPage] = useState(0);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
   return (
     <Box className={classes.dashContainer}>
@@ -31,8 +30,6 @@ const Dashboard = (props) => {
         {...{
           selectedPage,
           setSelectedPage,
-          notificationsOpen,
-          setNotificationsOpen,
         }}
       />
       <Box className={classes.bodyContainer}>

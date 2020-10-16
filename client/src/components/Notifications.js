@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Typography, Menu } from "@material-ui/core";
+import React from "react";
+import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,19 +35,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Notifications = (props) => {
-  const { notificationsOpen, setNotificationsOpen } = props;
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = (e) => setAnchorEl(e.currentTarget);
-  const handleClose = (e) => setAnchorEl(null);
   const classes = useStyles();
   return (
-    <Menu
-      className={classes.dashboardNotifications}
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-      onClick={handleClick}
-    >
+    <Box className={classes.dashboardNotifications}>
       <Box className={classes.arrow}></Box>
       <Box className={classes.notificationsContainer}>
         <Typography>New price!</Typography>
@@ -55,7 +45,7 @@ const Notifications = (props) => {
         <Typography>New price!</Typography>
         <Typography>New price!</Typography>
       </Box>
-    </Menu>
+    </Box>
   );
 };
 

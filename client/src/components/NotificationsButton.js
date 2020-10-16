@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NotificationsButton = (props) => {
-  const { selectedPage, setSelectedPage, notificationsOpen } = props;
   const classes = useStyles();
   return (
     <Button className={classes.notificationButton} disableRipple>
