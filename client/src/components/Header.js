@@ -1,7 +1,8 @@
 import React from "react";
 
-import { Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Route, Link } from "react-router-dom";
 
 import logo from "img/logo.png";
 import icon from "img/icon.png";
@@ -67,25 +68,25 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const classes = useStyles();
   return (
-    <div className={classes.headerContainer}>
+    <Box className={classes.headerContainer}>
       <img className={classes.logo} src={logo} alt="logo" />
-      <div className={classes.linkContainer}>
-        <div className={classes.link}>
+      <Box className={classes.linkContainer}>
+        <Link to="/shopping" className={classes.link}>
           <Typography>Shopping Lists</Typography>
-        </div>
-        <div className={classes.link}>
+        </Link>
+        <Link to="/friends" className={classes.link}>
           <Typography>Friends</Typography>
-        </div>
-        <div className={classes.link}>
+        </Link>
+        <Link to="/notifications" className={classes.link}>
           <Typography>Notifications</Typography>
-          <div className={classes.notificationIcon} />
-        </div>
-      </div>
-      <div className={classes.profileContainer}>
+          <Box className={classes.notificationIcon} />
+        </Link>
+      </Box>
+      <Box className={classes.profileContainer}>
         <img className={classes.profileIcon} src={icon} alt="profile" />
         <Typography>Profile</Typography>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
