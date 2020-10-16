@@ -1,9 +1,8 @@
 import React from "react";
 
-import { Box, Typography, Tabs, Tab, Button } from "@material-ui/core";
+import { Box, Typography, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
-import Notifications from "components/Notifications";
+import NotificationsButton from "components/NotificationsButton";
 
 const useStyles = makeStyles((theme) => ({
   tabContainer: {
@@ -34,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HeaderTabs = (props) => {
-  const { selectedPage, setSelectedPage, notificationsOpen } = props;
+  const { selectedPage, setSelectedPage } = props;
   const classes = useStyles();
 
   const handleTabChange = (e, newValue) => setSelectedPage(newValue);
@@ -59,11 +58,7 @@ const HeaderTabs = (props) => {
           disableRipple
           label={<Typography className={classes.tabLabel}>Friends</Typography>}
         />
-        <Button className={classes.notificationButton} disableRipple>
-          <Typography className={classes.tabLabel}>Notifications</Typography>
-          <Box className={classes.notificationIcon} />
-          <Notifications {...props} />
-        </Button>
+        <NotificationsButton {...props} />
       </Tabs>
     </Box>
   );
