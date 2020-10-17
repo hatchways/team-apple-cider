@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     height: "3.5rem",
     borderRadius: "100%",
   },
+  profileButtonText: {
+    textTransform: "none",
+  },
 }));
 
 const ProfileMenu = () => {
@@ -32,7 +35,7 @@ const ProfileMenu = () => {
     <Box className={classes.profileMenuContainer}>
       <img className={classes.profileIcon} src={icon} alt="profile" />
       <Button onClick={handleClick}>
-        <Typography style={{ textTransform: "none" }}>Profile</Typography>
+        <Typography className={classes.profileButtonText}>Profile</Typography>
       </Button>
       <Menu
         anchorEl={anchorEl}
