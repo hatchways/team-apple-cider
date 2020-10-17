@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "12rem",
   },
-
   notificationsContainer: {
     display: "flex",
     flexDirection: "column",
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "1rem",
   },
-
   arrow: {
     width: "0",
     height: "0",
