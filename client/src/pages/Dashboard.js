@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const [selectedPage, setSelectedPage] = useState(0);
-  const [notificationsOpen, setNotificationsOpen] = useState(0);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
 
   return (
