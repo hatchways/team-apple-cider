@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "transparent",
     },
   },
+  tabIndicator: {
+    backgroundColor: "white",
+  },
 }));
 
 const StyledTab = withStyles({
@@ -49,9 +52,7 @@ const HeaderTabs = (props) => {
         value={selectedPage}
         onChange={handleTabChange}
         aria-label="page select"
-        TabIndicatorProps={{
-          style: { backgroundColor: "white" },
-        }}
+        classes={{ indicator: classes.tabIndicator }}
       >
         <StyledTab
           disableRipple
