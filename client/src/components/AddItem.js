@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    margin: "4rem",
+    marginTop: "5rem",
   },
   addNewItemTitle: {
     fontWeight: "bold",

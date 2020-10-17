@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
     display: "flex",
     flexDirection: "column",
-    margin: "0 18rem",
+    margin: "1rem 18rem",
   },
   listsTitle: {
     fontWeight: "bold",
