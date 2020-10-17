@@ -22,8 +22,13 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "transparent",
     },
   },
-  buttonText: {
+  defaultButtonText: {
     textTransform: "none",
+    textShadow: "none",
+  },
+  selectedButtontext: {
+    textTransform: "none",
+    textShadow: "0 0 0.01px black",
   },
 }));
 
@@ -41,12 +46,11 @@ const NotificationsButton = (props) => {
           onClick={() => setNotificationsOpen((cur) => !cur)}
         >
           <Typography
-            className={classes.buttonText}
-            style={{
-              textShadow: Boolean(notificationsOpen)
-                ? "0 0 0.01px black"
-                : "none",
-            }}
+            className={
+              Boolean(notificationsOpen)
+                ? classes.selectedButtontext
+                : classes.defaultButtonText
+            }
           >
             Notifications
           </Typography>
