@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const demoList = [
+const demoListsArray = [
   { title: "Clothes", itemCount: 34, img: clothes },
   { title: "Furniture", itemCount: 12, img: furniture },
   { title: "Luxury", itemCount: 8, img: luxury },
@@ -82,16 +82,20 @@ const ListsDisplay = () => {
         My Shopping Lists:
       </Typography>
       <Box className={classes.myShoppingLists}>
-        {demoList.map((el, i) => (
+        {demoListsArray.map((list, i) => (
           <Box className={classes.listContainer} key={i}>
-            <img src={el.img} alt={el.title} className={classes.listImage} />
+            <img
+              src={list.img}
+              alt={list.title}
+              className={classes.listImage}
+            />
             <Box className={classes.listTextContainer}>
               <Typography className={classes.listTextTitle}>
-                {el.title}
+                {list.title}
               </Typography>
               <Typography
                 className={classes.listTextItems}
-              >{`${el.itemCount} items`}</Typography>
+              >{`${list.itemCount} items`}</Typography>
             </Box>
           </Box>
         ))}

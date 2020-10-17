@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const demoListArray = ["Clothes", "Furniture", "Luxury"];
+const demoListsArray = ["Clothes", "Furniture", "Luxury"];
 
 const AddItem = () => {
   const [selectedItem, setSelectedItem] = useState("none");
@@ -75,9 +75,9 @@ const AddItem = () => {
           <MenuItem value="none" disabled>
             Select List
           </MenuItem>
-          {demoListArray.map((el, i) => (
-            <MenuItem key={i} value={el}>
-              {el}
+          {demoListsArray.map((listName, i) => (
+            <MenuItem key={i} value={listName}>
+              {listName}
             </MenuItem>
           ))}
         </Select>
