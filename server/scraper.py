@@ -41,12 +41,15 @@ def getItem(URL):
         "imgURL": getImgURL(),
         "available": getAvailability(),
     }    
-    print(details)
+    return details
 
-try:
-    getItem('https://www.amazon.co.uk/dp/B07PJV3JPR')
-    getItem('https://www.amazon.co.uk/dp/B07WMKZZXL')
-    getItem('https://www.amazon.co.uk/dp/B08H95Y452')
-finally:
-    browser.quit()
-
+def scrapeAmazon(input):
+    try:
+        if (isinstance(input, list)):
+            items = []
+            for url in input: items.append(getItem(url))
+            return items
+        elif (isinstance(input, str)): return getItem(input)
+        else: return 'ERROR: INVALID INPUT'
+    finally:
+        browser.quit()
