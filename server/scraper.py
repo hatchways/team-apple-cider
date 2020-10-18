@@ -2,11 +2,15 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
 
+PATH = '/home/user/scraping/geckodriver'
+
 options = Options()
 options.add_argument("--headless")
-
-PATH = '/home/user/scraping/geckodriver'
-browser = webdriver.Firefox(executable_path=PATH, options=options)
+firefox_profile = webdriver.FirefoxProfile()
+# firefox_profile.set_preference('permissions.default.image', 2) # Faster loading, but outputs ps5 image as raw data string
+firefox_profile.set_preference('javascript.enabled', False)
+firefox_profile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so', False)
+browser = webdriver.Firefox(executable_path=PATH, options=options, firefox_profile=firefox_profile)
 
 def getTitle():
     try: return browser.find_element_by_id('productTitle').text
