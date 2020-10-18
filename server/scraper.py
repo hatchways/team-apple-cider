@@ -14,6 +14,7 @@ def getItem(URL):
         "title": None,
         "oldPrice": None,
         "price": None,
+        "imgURL": None,
     }
     try: details["title"] = browser.find_element_by_id('productTitle').text
     except: pass
@@ -21,6 +22,8 @@ def getItem(URL):
     except: pass
     try: details["price"] = browser.find_element_by_id('priceblock_ourprice').text
     except: pass
+    try: details["imgURL"] = browser.find_element_by_id('landingImage').get_attribute("src")
+    except: pass    
     print(details)
 
 try:
