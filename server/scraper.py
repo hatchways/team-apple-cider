@@ -1,6 +1,6 @@
 import time
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+
 PATH = '/home/user/scraping/geckodriver'
 browser = webdriver.Firefox(executable_path=PATH)
 browser.get('https://www.amazon.co.uk/dp/B07PJV3JPR/')
