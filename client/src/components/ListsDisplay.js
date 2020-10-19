@@ -56,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+  addNewListButton: {
+    height: "5rem",
+    width: "5rem",
+    margin: "0.5rem",
+  },
   addIcon: {
     color: "red",
     height: "3rem",
@@ -100,7 +105,7 @@ const ListsDisplay = () => {
           </Box>
         ))}
         <Box className={classes.addNewList}>
-          <IconButton>
+          <IconButton className={classes.addNewListButton}>
             <AddIcon className={classes.addIcon} />
           </IconButton>
           <Typography className={classes.addNewListText}>
