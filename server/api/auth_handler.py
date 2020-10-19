@@ -18,8 +18,24 @@ def login_cookie_getter(f):
                 auth_token = User.decode_auth_token(auth_token)
                 if not isinstance(auth_token, str):
                     g.user = User.query.filter_by(id=auth_token).first()
+                else:
+                    responseObject = {
+                        "status": "fail",
+                        "message": "User is not logged in."
+                    }
+                    return make_response(jsonify(responseObject)), 401
+            else:
+                responseObject = {
+                    "status": "fail",
+                    "message": "User is not logged in."
+                }
+                return make_response(jsonify(responseObject)), 401
         except:
-            auth_token = ""
+            responseObject = {
+                "status": "fail",
+                "message": "User is not logged in."
+            }
+            return make_response(jsonify(responseObject)), 401
         return f(None)
     return decorated_function
 
@@ -122,30 +138,16 @@ class LoginAPI(MethodView):
 class UserAPI(MethodView):
     @login_cookie_getter
     def get(self):
-        try:
-            if g.user:
-                user = g.user
-                responseObject = {
-                    "status": "success",
-                    "data": {
-                        "user_id": user.id,
-                        "email": user.email,
-                        "registered_time": user.registered_time
-                    }
-                }
-                return make_response(jsonify(responseObject)), 200
-            else:
-                responseObject = {
-                    "status": "fail",
-                    "message": "User is not logged in."
-                }
-                return make_response(jsonify(responseObject)), 401
-        except AttributeError:
-            responseObject = {
-                "status": "fail",
-                "message": "User is not logged in."
+        user = g.user
+        responseObject = {
+            "status": "success",
+            "data": {
+                "user_id": user.id,
+                "email": user.email,
+                "registered_time": user.registered_time
             }
-            return make_response(jsonify(responseObject)), 401
+        }
+        return make_response(jsonify(responseObject)), 200
 
 
 # Basic middleware for protected routes pulled from Flask's documentation.

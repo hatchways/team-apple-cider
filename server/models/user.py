@@ -4,8 +4,6 @@ import jwt
 
 
 class User(db.Model):
-    # I'm not entirely certain how to get these commands to create the table for us, I had to create the table
-    # using SQL, so help on how to use SQLAlchemy for that would be appreciated!
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
