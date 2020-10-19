@@ -19,17 +19,9 @@ def login_cookie_getter(f):
                 if not isinstance(auth_token, str):
                     g.user = User.query.filter_by(id=auth_token).first()
                 else:
-                    responseObject = {
-                        "status": "fail",
-                        "message": "User is not logged in."
-                    }
-                    return make_response(jsonify(responseObject)), 401
+                    raise Exception
             else:
-                responseObject = {
-                    "status": "fail",
-                    "message": "User is not logged in."
-                }
-                return make_response(jsonify(responseObject)), 401
+                raise Exception
         except:
             responseObject = {
                 "status": "fail",
