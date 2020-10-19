@@ -5,7 +5,7 @@ class List(db.Model):
 
     __tablename__ = 'list'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     product_type = db.Column(db.String, unique=True, nullable=False)
     # have an image type aswell, will implement later...
 
@@ -17,7 +17,7 @@ class Product(db.Model):
 
     __tablename__ = 'product'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=False)
     name = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
