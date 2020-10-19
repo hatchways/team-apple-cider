@@ -44,7 +44,9 @@ const StyledTab = withStyles({
 const HeaderTabs = (props) => {
   const { selectedPage, setSelectedPage } = props;
   const classes = useStyles();
-  const handleTabChange = (e, newValue) => setSelectedPage(newValue);
+  const handleTabChange = (e, newValue) => {
+    setSelectedPage(newValue);
+  }
 
   return (
     <Box className={classes.tabContainer}>
@@ -52,7 +54,7 @@ const HeaderTabs = (props) => {
         value={selectedPage}
         onChange={handleTabChange}
         aria-label="page select"
-        classes={{ indicator: classes.tabIndicator }}
+        // classes={{ indicator: classes.tabIndicator }}
       >
         <StyledTab
           disableRipple

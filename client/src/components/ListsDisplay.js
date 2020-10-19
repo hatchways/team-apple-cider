@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import clothes from "img/clothes.png";
 import furniture from "img/furniture.png";
 import luxury from "img/luxury.png";
+import CustomizedDialogs from "components/ListProducts";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
@@ -75,6 +76,11 @@ const demoListsArray = [
 
 const ListsDisplay = () => {
   const classes = useStyles();
+  const [listOpen, setListOpen] = useState(false);
+  const handleListClick = () => {
+    setListOpen(true);
+    // console.log(listOpen);
+  };
 
   return (
     <Box className={classes.shoppingContainer}>
@@ -83,12 +89,16 @@ const ListsDisplay = () => {
       </Typography>
       <Box className={classes.myShoppingLists}>
         {demoListsArray.map((list, i) => (
-          <Box className={classes.listContainer} key={i}>
+          <Box
+            onClick={handleListClick}
+            className={classes.listContainer}
+            key={i}
+          >
             <img
               src={list.img}
               alt={list.title}
               className={classes.listImage}
-            />
+            /> 
             <Box className={classes.listTextContainer}>
               <Typography className={classes.listTextTitle}>
                 {list.title}
@@ -97,8 +107,13 @@ const ListsDisplay = () => {
                 className={classes.listTextItems}
               >{`${list.itemCount} items`}</Typography>
             </Box>
+            
           </Box>
         ))}
+        {/* Open Dialog Box */}
+        {Boolean(listOpen) && (
+              <CustomizedDialogs onChange={(value)=>setListOpen(value)}/>
+            )}
         <Box className={classes.addNewList}>
           <IconButton>
             <AddIcon className={classes.addIcon} />
