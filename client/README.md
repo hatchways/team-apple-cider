@@ -66,3 +66,11 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Adams' Todo list for List Details
+- Do React Tutorial
+- Make List Container clickable
+- Make A dialog box with a button
+- Style X button
+- Make background dashboard dark
+- Add Item button
