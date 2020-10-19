@@ -78,9 +78,9 @@ const demoListsArray = [
   { title: "Luxury", itemCount: 8, img: luxury },
 ];
 
-const ListsDisplay = () => {
+const ListsDisplay = (props) => {
   const classes = useStyles();
-  const [addListOpen, setAddListOpen] = useState(false)
+  const {state, setState} = props;
 
   return (
     <Box className={classes.shoppingContainer}>
@@ -106,7 +106,7 @@ const ListsDisplay = () => {
           </Box>
         ))}
         <Box className={classes.addNewList}>
-          <IconButton className={classes.addNewListButton} onClick={() => setAddListOpen(true)}>
+          <IconButton className={classes.addNewListButton} onClick={() => setState(true)}>
             <AddIcon className={classes.addIcon}/>
           </IconButton>
           <Typography className={classes.addNewListText}>
