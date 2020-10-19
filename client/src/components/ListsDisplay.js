@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -80,6 +80,7 @@ const demoListsArray = [
 
 const ListsDisplay = () => {
   const classes = useStyles();
+  const [addListOpen, setAddListOpen] = useState(false)
 
   return (
     <Box className={classes.shoppingContainer}>
@@ -105,8 +106,8 @@ const ListsDisplay = () => {
           </Box>
         ))}
         <Box className={classes.addNewList}>
-          <IconButton className={classes.addNewListButton}>
-            <AddIcon className={classes.addIcon} />
+          <IconButton className={classes.addNewListButton} onClick={() => setAddListOpen(true)}>
+            <AddIcon className={classes.addIcon}/>
           </IconButton>
           <Typography className={classes.addNewListText}>
             ADD NEW LIST
