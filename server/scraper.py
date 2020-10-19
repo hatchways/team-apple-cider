@@ -1,3 +1,4 @@
+import re
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
@@ -31,8 +32,7 @@ def getImgURL():
 def getAvailability():
     try:
         text = browser.find_element_by_css_selector("#availability > *:first-child").text
-        return (text == 'In stock.' or text == 'In Stock.')
-        # Needs to decide if "In stock on x date" counts as available
+        return (bool(re.search('in stock', text, re.IGNORECASE)))
     except: return None
 
 
