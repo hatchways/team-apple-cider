@@ -1,6 +1,6 @@
 #!/bin/bash
 
-singleURL="https://www.amazon.co.uk/dp/B07PJV3JPR"
+singleURL="https://www.amazon.com/dp/B081FZV45H"
 multipleURLs=(\
     "https://www.amazon.co.uk/dp/B07PJV3JPR" \
     "https://www.amazon.co.uk/dp/B07WMKZZXL" \

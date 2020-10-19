@@ -31,7 +31,7 @@ def getImgURL():
 def getAvailability():
     try:
         text = browser.find_element_by_css_selector("#availability > *:first-child").text
-        return (text == 'In stock.')
+        return (text == 'In stock.' or text == 'In Stock.')
         # Needs to decide if "In stock on x date" counts as available
     except: return None
 
