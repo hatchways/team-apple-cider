@@ -33,7 +33,6 @@ def login_cookie_getter(f):
     return decorated_function
 
 
-
 class RegisterAPI(MethodView):
     def post(self):
         post_data = request.get_json()
@@ -67,7 +66,8 @@ class RegisterAPI(MethodView):
                     "message": "Successfully registered."
                 }
                 resp = make_response(jsonify(responseObject))
-                resp.set_cookie("Authentication token", auth_token, httponly=True)
+                resp.set_cookie("Authentication token",
+                                auth_token, httponly=True)
                 return resp, 201
             except Exception as e:
                 responseObject = {
@@ -100,7 +100,8 @@ class LoginAPI(MethodView):
                         "message": "Successfully logged in"
                     }
                     resp = make_response(jsonify(responseObject))
-                    resp.set_cookie("Authentication token", auth_token, httponly=True)
+                    resp.set_cookie("Authentication token",
+                                    auth_token, httponly=True)
                     return resp, 200
                 else:
                     responseObject = {

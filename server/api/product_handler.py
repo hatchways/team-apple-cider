@@ -4,7 +4,7 @@ from models.list import List
 from database import db
 import json
 
-product_handler = Blueprint('product_blueprint', __name__)
+product_handler = Blueprint('product_handler', __name__)
 
 
 @product_handler.route('/products', methods=['GET', 'POST', 'DELETE'])
