@@ -8,7 +8,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import AddItemModal from "pages/AddItemModal";
+import AddItemPopup from "pages/AddItemPopup";
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {
@@ -56,13 +56,10 @@ const useStyles = makeStyles((theme) => ({
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
 
 const AddItem = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
   const [selectedList, setSelectedList] = useState("none");
   const classes = useStyles();
-
-  const openModalPage = () => {
-    setModalOpen(true);
-  };
+  const openPopup = () => setPopupOpen(true);
 
   return (
     <Box className={classes.dashboardAddItem}>
@@ -93,11 +90,11 @@ const AddItem = () => {
         <Button
           className={classes.addButton}
           variant="contained"
-          onClick={openModalPage}
+          onClick={openPopup}
         >
           ADD
         </Button>
-        <AddItemModal {...{ modalOpen, setModalOpen }} />
+        <AddItemPopup {...{ popupOpen, setPopupOpen }} />
       </Box>
     </Box>
   );

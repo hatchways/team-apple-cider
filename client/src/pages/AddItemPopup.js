@@ -4,7 +4,7 @@ import { Modal, Box, Button } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
 
 const useStyles = makeStyles((theme) => ({
-  modal: {
+  popup: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddItemModal = (props) => {
-  const { modalOpen, setModalOpen } = props;
+const AddItemPopup = (props) => {
+  const { popupOpen, setPopupOpen } = props;
   const classes = useStyles();
   const handleClose = () => {
-    setModalOpen(false);
+    setPopupOpen(false);
   };
 
   const demoItem = {
@@ -48,8 +48,8 @@ const AddItemModal = (props) => {
 
   return (
     <Modal
-      className={classes.modal}
-      open={modalOpen}
+      className={classes.popup}
+      open={popupOpen}
       onClose={handleClose}
       aria-labelledby="add-item-popup"
       aria-describedby="confirms-adding-item-of-url-to-selected-list"
@@ -63,4 +63,4 @@ const AddItemModal = (props) => {
   );
 };
 
-export default AddItemModal;
+export default AddItemPopup;
