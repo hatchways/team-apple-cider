@@ -4,4 +4,4 @@ from flask_cors import CORS
 
 migrate = Migrate()
 cors = CORS()
-flask_brcypt = Bcrypt()
+flask_bcrypt = Bcrypt()

@@ -5,7 +5,7 @@ from database import db
 from server import flask_bcrypt
 from functools import wraps
 
-auth_blueprint = Blueprint("auth_blueprint", __name__)
+auth_handler = Blueprint("auth_handler", __name__)
 
 
 # Wrapper that obtains and verifies an auth token in a cookie. Returns true if valid, false otherwise.
@@ -158,17 +158,17 @@ registration_view = RegisterAPI.as_view("register_api")
 login_view = LoginAPI.as_view("login_api")
 user_view = UserAPI.as_view("user_api")
 
-auth_blueprint.add_url_rule(
+auth_handler.add_url_rule(
     "/auth/register",
     view_func=registration_view,
     methods=["POST"]
 )
-auth_blueprint.add_url_rule(
+auth_handler.add_url_rule(
     "/auth/login",
     view_func=login_view,
     methods=["POST"]
 )
-auth_blueprint.add_url_rule(
+auth_handler.add_url_rule(
     "/auth/status",
     view_func=user_view,
     methods=["GET"]

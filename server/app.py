@@ -1,17 +1,11 @@
 from flask import Flask
 from database import db
+from server import migrate,cors,flask_bcrypt
 from api.ping_handler import ping_handler
 from api.home_handler import home_handler
 from api.auth_handler import auth_handler
 from api.product_handler import product_handler
 from api.list_handler import list_handler
-from flask_migrate import Migrate
-from flask_bcrypt import Bcrypt
-from flask_cors import CORS
-
-migrate = Migrate()
-cors = CORS()
-flask_brcypt = Bcrypt()
 
 
 
@@ -22,7 +16,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     cors.init_app(app)
-    flask_brcypt.init_app(app)
+    flask_bcrypt.init_app(app)
 
     with app.app_context():
 
