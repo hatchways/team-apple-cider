@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Modal, Box } from "@material-ui/core";
+import { Modal, Box, Button } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +19,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     borderRadius: "0.3rem",
     overflow: "hidden",
+  },
+  addButton: {
+    borderRadius: "10rem",
+    padding: theme.spacing(2, 6),
+    backgroundColor: "#DF1B1B",
+    color: "white",
+    margin: theme.spacing(2),
   },
 }));
 
@@ -50,6 +57,7 @@ const AddItemModal = (props) => {
       <Box className={classes.paper}>
         <h2 className={classes.paperTitle}>Add new item:</h2>
         <ItemDisplay item={demoItem} />
+        <Button className={classes.addButton}>ADD NEW ITEM</Button>
       </Box>
     </Modal>
   );
