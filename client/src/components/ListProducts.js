@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles,withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
@@ -8,6 +8,14 @@ import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
+
+
+const useStyles = makeStyles((theme) => ({
+  titleText: {
+    display: "flex",
+    alignItems: "right",
+  }
+}));
 
 const styles = (theme) => ({
   root: {
@@ -54,6 +62,7 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 const CustomizedDialogs = (props) => {
+  const classes = useStyles();
   const handleClose = () => {
     props.onChange(false);
   };
@@ -65,8 +74,8 @@ const CustomizedDialogs = (props) => {
         aria-labelledby="customized-dialog-title"
         open={true}
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+        <DialogTitle id="customized-dialog-title" className={classes.titleText} onClose={handleClose}>
+          Clothes
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
