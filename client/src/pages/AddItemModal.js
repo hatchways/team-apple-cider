@@ -18,18 +18,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     borderRadius: "0.3rem",
+    overflow: "hidden",
   },
-  paperTitle: {
-    textAlign: "center",
-  },
-  paperText: {
-    textAlign: "center",
-  },
-  paperImage: {
-    height: "5rem",
-    width: "5rem",
-  },
-  paperTextContainer: {},
 }));
 
 const AddItemModal = (props) => {
@@ -40,12 +30,13 @@ const AddItemModal = (props) => {
   };
 
   const demoItem = {
-    amazonURL: "https://www.amazon.com/dp/B08L5PTDTK",
-    title: "iPhone",
+    shopURL:
+      "https://www.amazon.com/Apple-iPhone-Graphite-Carrier-Subscription/dp/B08L5PTDTK/ref=sr_1_3?dchild=1&keywords=New+Apple+iPhone+12+Pro&qid=1603196512&sr=8-3",
+    title:
+      "New Apple iPhone 12 Pro (128GB, Graphite) [Locked] + Carrier Subscription",
     oldPrice: "$1299",
     price: "$999",
-    imgURL:
-      "https://www.three.co.uk/static/images/device_pages/MobileVersion/Apple/iPhone_SE_2020/Black/carousel/2.jpg",
+    imgURL: "https://m.media-amazon.com/images/I/71YlH-4MUQL.jpg",
   };
 
   return (
