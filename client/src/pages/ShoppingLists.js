@@ -5,12 +5,12 @@ import ListsDisplay from "components/ListsDisplay";
 import AddList from "components/AddList"
 
 const ShoppingLists = () => {
-    const [state, setState] = useState(false)
+    const [addListOpen, setAddListOpen] = useState(false)
   return (
     <Box>
       <AddItem />
-      <ListsDisplay state = {state} setState = {setState} />
-      <AddList state = {state} setState = {setState}/>
+      <ListsDisplay addListOpen = {addListOpen} setAddListOpen = {setAddListOpen} />
+      <AddList addListOpen = {addListOpen} setAddListOpen = {setAddListOpen}/>
     </Box>
   );
 };

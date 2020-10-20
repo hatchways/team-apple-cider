@@ -80,7 +80,7 @@ const demoListsArray = [
 
 const ListsDisplay = (props) => {
   const classes = useStyles();
-  const {state, setState} = props;
+  const {addListOpen, setAddListOpen} = props;
 
   return (
     <Box className={classes.shoppingContainer}>
@@ -106,7 +106,7 @@ const ListsDisplay = (props) => {
           </Box>
         ))}
         <Box className={classes.addNewList}>
-          <IconButton className={classes.addNewListButton} onClick={() => setState(true)}>
+          <IconButton className={classes.addNewListButton} onClick={() => setAddListOpen(true)}>
             <AddIcon className={classes.addIcon}/>
           </IconButton>
           <Typography className={classes.addNewListText}>
