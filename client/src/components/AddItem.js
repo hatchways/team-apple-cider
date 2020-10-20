@@ -8,6 +8,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AddItemModal from "pages/AddItemModal";
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {
@@ -55,8 +56,13 @@ const useStyles = makeStyles((theme) => ({
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
 
 const AddItem = () => {
-  const [selectedItem, setSelectedItem] = useState("none");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedList, setSelectedList] = useState("none");
   const classes = useStyles();
+
+  const openModalPage = () => {
+    setModalOpen(true);
+  };
 
   return (
     <Box className={classes.dashboardAddItem}>
@@ -71,8 +77,8 @@ const AddItem = () => {
         />
         <Select
           className={classes.dropdownList}
-          value={selectedItem}
-          onChange={(e) => setSelectedItem(e.target.value)}
+          value={selectedList}
+          onChange={(e) => setSelectedList(e.target.value)}
           disableUnderline
         >
           <MenuItem value="none" disabled>
@@ -84,9 +90,14 @@ const AddItem = () => {
             </MenuItem>
           ))}
         </Select>
-        <Button className={classes.addButton} variant="contained">
+        <Button
+          className={classes.addButton}
+          variant="contained"
+          onClick={openModalPage}
+        >
           ADD
         </Button>
+        {modalOpen && <AddItemModal {...{ modalOpen, setModalOpen }} />}
       </Box>
     </Box>
   );
