@@ -55,6 +55,7 @@ class RegisterAPI(MethodView):
                     return make_response(jsonify(responseObject)), 401
                 user = User(
                     email=post_data.get("email"),
+                    name=post_data.get("name"),
                     password=post_data.get("password")
                 )
                 db.session.add(user)
