@@ -1,4 +1,3 @@
-
 # flask-starter
 
   
@@ -24,7 +23,6 @@
   
 
   
-
 ## Setting up PostgreSQL
 
   
@@ -47,6 +45,7 @@
 	- Linux: `sudo -i -u postgres` then `psql`
         
 	b)  Create a database while in the shell
+
 	- `postgres=# CREATE DATABASE dealsmate_db;`
 	- `postgres=# \l`: to view all available databases`
 	- `postgres=# \q`: to exit the shell`

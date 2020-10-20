@@ -1,6 +1,8 @@
 import json
 from flask import jsonify, request, Blueprint
 from config import TEAM_NAME
+
+
 ping_handler = Blueprint('ping_handler', __name__)
 
 
