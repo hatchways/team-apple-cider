@@ -51,8 +51,8 @@ const AddItemModal = (props) => {
       className={classes.modal}
       open={modalOpen}
       onClose={handleClose}
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
+      aria-labelledby="add-item-popup"
+      aria-describedby="confirms-adding-item-of-url-to-selected-list"
     >
       <Box className={classes.paper}>
         <h2 className={classes.paperTitle}>Add new item:</h2>
