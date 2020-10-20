@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme)=>({
 login:{
     maxWidth:'1200px',
     margin:'0 auto',
-    height:'100vh',
+    height:'123vh', // Eyeballed to make the form centered in the background. May be a better way to do this.
     padding:'50px',
     backgroundColor:'#44475ab9',
 },
@@ -54,9 +54,29 @@ signupLink:{
 }));
 function SignUp (){
     const classes = useStyles();
-    const [userName, setName]=useState('')
-    const [userEmail,setEmail]=useState('')
-    const [userPass, setPass]=useState('')
+    const [name, setName]=useState('')  // Changed names to correspond with backend.
+    const [email,setEmail]=useState('')
+    const [password, setPass]=useState('')
+    const [confirm, setConfirm]=useState('')
+    const handleClick = () => {
+        fetch("/auth/register", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'name': name,
+                'email': email,
+                'password': password,
+                'confirm': confirm
+            })})
+            .then(response => response.json())
+            .then(console.log('Success:', name))
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
+    // Added confirm password field. Still needs to check for password being at least six characters
     return(
             <section className={classes.login}>
                 <Box className={classes.formContainer}>
@@ -68,11 +88,13 @@ function SignUp (){
                         <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email"  onChange={(e)=>setEmail(e.target.value)}/>
                         <label>Password:</label>
                         <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" onChange={(e)=>setPass(e.target.value)}/>
-                        <Button className={classes.button} variant="contained" color="secondary" >Login</Button>
+                        <label>Confirm Password:</label>
+                        <TextField className={classes.textField} variant="outlined" label="confirm password" fullWidth required type="password" onChange={(e)=>setConfirm(e.target.value)}/>
+                        <Button className={classes.button} variant="contained" color="secondary" onClick={handleClick}>Register</Button>
                     </form>
                     <Box className={classes.signup}>
-                        <p className={classes.p}>Don't have an account?</p>
-                        <Link className={classes.signupLink} to="/login">Create an account</Link>
+                        <p className={classes.p}>Already have an account?</p>
+                        <Link className={classes.signupLink} to="/login">Login</Link>
                     </Box>
                 </Box>
             </section>

@@ -57,8 +57,8 @@ signupLink:{
 }));
 function Login (){
     const classes = useStyles();
-    const [userEmail,setEmail]=useState('')
-    const [userPass, setPass]=useState('')
+    const [email,setEmail]=useState('')
+    const [password, setPass]=useState('')
     return(
             <section className={classes.login}>
                 <Box className={classes.formContainer}>
