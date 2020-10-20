@@ -97,7 +97,7 @@ const AddItem = () => {
         >
           ADD
         </Button>
-        {modalOpen && <AddItemModal {...{ modalOpen, setModalOpen }} />}
+        <AddItemModal {...{ modalOpen, setModalOpen }} />
       </Box>
     </Box>
   );
