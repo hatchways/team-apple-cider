@@ -98,7 +98,7 @@ const ListsDisplay = () => {
               src={list.img}
               alt={list.title}
               className={classes.listImage}
-            /> 
+            />
             <Box className={classes.listTextContainer}>
               <Typography className={classes.listTextTitle}>
                 {list.title}
@@ -107,13 +107,12 @@ const ListsDisplay = () => {
                 className={classes.listTextItems}
               >{`${list.itemCount} items`}</Typography>
             </Box>
-            
           </Box>
         ))}
         {/* Open Dialog Box */}
         {Boolean(listOpen) && (
-              <CustomizedDialogs onChange={(value)=>setListOpen(value)}/>
-            )}
+          <CustomizedDialogs onChange={(value) => setListOpen(value)} />
+        )}
         <Box className={classes.addNewList}>
           <IconButton>
             <AddIcon className={classes.addIcon} />
