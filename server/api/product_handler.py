@@ -7,7 +7,7 @@ from database import db
 product_handler = Blueprint('product_handler', __name__)
 
 
-@product_handler.route('/product', methods=['GET', 'POST', 'DELETE'])
+@product_handler.route('/products', methods=['GET', 'POST', 'DELETE'])
 def productRequests():
     if request.method == 'GET':
         body = json.loads(request.get_data())

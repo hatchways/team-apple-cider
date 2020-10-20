@@ -6,7 +6,7 @@ from database import db
 list_handler = Blueprint('list_handler', __name__)
 
 
-@list_handler.route('/list', methods=['GET', 'POST', 'DELETE'])
+@list_handler.route('/lists', methods=['GET', 'POST', 'DELETE'])
 def listRequests():
     if request.method == "GET":
         product_types = List.query.all()
