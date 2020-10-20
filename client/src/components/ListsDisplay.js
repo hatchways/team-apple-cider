@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Box, IconButton, Typography } from "@material-ui/core";
+import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import clothes from "img/clothes.png";
 import furniture from "img/furniture.png";
 import luxury from "img/luxury.png";
-import CustomizedDialogs from "components/ListProducts";
+// import CustomizedDialogs from "components/ListProducts";
+import ListPopup from "components/ListPopup";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
@@ -110,9 +111,10 @@ const ListsDisplay = () => {
           </Box>
         ))}
         {/* Open Dialog Box */}
-        {Boolean(listOpen) && (
+        {/* {Boolean(listOpen) && (
           <CustomizedDialogs onChange={(value) => setListOpen(value)} />
-        )}
+        )} */}
+        <ListPopup {...{ listOpen, setListOpen }} />
         <Box className={classes.addNewList}>
           <IconButton>
             <AddIcon className={classes.addIcon} />
