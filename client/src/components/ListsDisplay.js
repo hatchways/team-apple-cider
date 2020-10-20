@@ -5,7 +5,6 @@ import AddIcon from "@material-ui/icons/Add";
 import clothes from "img/clothes.png";
 import furniture from "img/furniture.png";
 import luxury from "img/luxury.png";
-// import CustomizedDialogs from "components/ListProducts";
 import ListPopup from "components/ListPopup";
 
 const useStyles = makeStyles((theme) => ({
@@ -70,9 +69,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const demoListsArray = [
-  { title: "Clothes", itemCount: 34, img: clothes },
-  { title: "Furniture", itemCount: 12, img: furniture },
-  { title: "Luxury", itemCount: 8, img: luxury },
+  { id: "1", title: "Clothes", itemCount: 34, img: clothes },
+  { id: "2", title: "Furniture", itemCount: 12, img: furniture },
+  { id: "3", title: "Luxury", itemCount: 8, img: luxury },
 ];
 
 const ListsDisplay = () => {
@@ -95,6 +94,7 @@ const ListsDisplay = () => {
             className={classes.listContainer}
             key={i}
           >
+         
             <img
               src={list.img}
               alt={list.title}
@@ -102,7 +102,7 @@ const ListsDisplay = () => {
             />
             <Box className={classes.listTextContainer}>
               <Typography className={classes.listTextTitle}>
-                {list.title}
+                
               </Typography>
               <Typography
                 className={classes.listTextItems}
@@ -110,10 +110,7 @@ const ListsDisplay = () => {
             </Box>
           </Box>
         ))}
-        {/* Open Dialog Box */}
-        {/* {Boolean(listOpen) && (
-          <CustomizedDialogs onChange={(value) => setListOpen(value)} />
-        )} */}
+
         <ListPopup {...{ listOpen, setListOpen }} />
         <Box className={classes.addNewList}>
           <IconButton>
