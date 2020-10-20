@@ -71,7 +71,7 @@ function SignUp (){
                 'confirm': confirm
             })})
             .then(response => response.json())
-            .then(console.log('Success:', name))
+            .then(console.log('Success:', name)) // Logs success even when unsuccessful, not certain how to fix it.
             .catch((error) => {
                 console.error('Error:', error)
             })

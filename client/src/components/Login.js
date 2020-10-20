@@ -59,6 +59,22 @@ function Login (){
     const classes = useStyles();
     const [email,setEmail]=useState('')
     const [password, setPass]=useState('')
+    const handleClick = () => {
+        fetch("/auth/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'email': email,
+                'password': password,
+            })})
+            .then(response => response.json())
+            .then(console.log('Success')) // Logs success even when unsuccessful, not certain how to fix it.
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
     return(
             <section className={classes.login}>
                 <Box className={classes.formContainer}>
@@ -68,7 +84,7 @@ function Login (){
                         <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email"  onChange={(e)=>setEmail(e.target.value)}/>
                         <label>Password:</label>
                         <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" onChange={(e)=>setPass(e.target.value)}/>
-                        <Button className={classes.button} variant="contained" color="secondary" >Login</Button>
+                        <Button className={classes.button} variant="contained" color="secondary" onClick={handleClick}>Login</Button>
                     </form>
                     <Box className={classes.signup}>
                         <p className={classes.p}>Don't have an account?</p>
