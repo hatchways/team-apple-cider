@@ -11,17 +11,21 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   paper: {
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(1, 1, 3),
     backgroundColor: "white",
+    outline: 'none',
   },
   titleContainer: {
-    margin: "2rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-  contentContainer: {
-    //
+  closeButtonContainer: {
+    textAlign: "right",
+  },
+  popupTitleProductType: {
+    fontSize: "1.3rem",
+    fontWeight: "500"
   },
 }));
 
@@ -42,8 +46,19 @@ const ListPopup = (props) => {
   return (
     <Modal open={listOpen} onClose={handleClose} className={classes.popup}>
       <Box className={classes.paper}>
+        <Box className={classes.closeButtonContainer}>
+          <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={handleClose}
+            size="small"
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </Box>
+
         <Box className={classes.titleContainer}>
-          <Typography>Clothes</Typography>
+          <Typography className={classes.popupTitleProductType}>Clothes</Typography>
           <Typography>34 Items</Typography>
         </Box>
         <Box className={classes.contentContainer}>
