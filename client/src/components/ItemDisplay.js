@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box } from "@material-ui/core";
+import { Box, Link } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   itemContainer: {
@@ -55,9 +55,9 @@ const ItemDisplay = (props) => {
         <Box component="div" className={classes.itemTitle}>
           {item.title}
         </Box>
-        <Box component="div" className={classes.shopURL}>
+        <Link href={item.shopURL} className={classes.shopURL}>
           {item.shopURL}
-        </Box>
+        </Link>
         <Box className={classes.priceTextContainer}>
           <Box component="span" className={classes.itemOldPrice}>
             {item.oldPrice}
