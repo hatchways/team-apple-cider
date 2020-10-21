@@ -51,7 +51,7 @@ const ItemDisplay = (props) => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.itemContainer}>
+    <Box className={`${classes.itemContainer} ${props.className}`}>
       <img className={classes.itemImage} src={item.imgURL} alt={item.title} />
       <Box className={classes.itemTextContainer}>
         <Typography className={classes.itemTitle}>{item.title}</Typography>

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Modal, Box, Button } from "@material-ui/core";
+import { Modal, Box, Button, CircularProgress } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "0.3rem",
     overflow: "hidden",
   },
+  itemDisplay: {
+    margin: theme.spacing(4),
+  },
+  spinner: {
+    margin: theme.spacing(8),
+  },
   addButton: {
     borderRadius: "10rem",
     padding: theme.spacing(2, 6),
@@ -35,7 +41,6 @@ const AddItemPopup = (props) => {
   const handleClose = () => {
     setPopupOpen(false);
   };
-  console.log(item);
 
   return (
     <Modal
@@ -50,9 +55,9 @@ const AddItemPopup = (props) => {
         {item.error ? (
           <div>{item.response}</div>
         ) : item.title ? (
-          <ItemDisplay item={item} />
+          <ItemDisplay item={item} className={classes.itemDisplay} />
         ) : (
-          <div>Loading...</div>
+          <CircularProgress className={classes.spinner} />
         )}
         <Button className={classes.addButton}>ADD NEW ITEM</Button>
       </Box>
