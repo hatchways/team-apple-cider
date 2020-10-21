@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Button, Menu, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import icon from "img/icon.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,7 @@ const ProfileMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>Logout</MenuItem>
+        <MenuItem><Link to="/">Logout</Link></MenuItem>
         <MenuItem>Go to profile</MenuItem>
       </Menu>
     </Box>

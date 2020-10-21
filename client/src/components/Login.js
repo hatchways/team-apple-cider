@@ -55,20 +55,20 @@ signupLink:{
     color:'#f50057'
 }
 }));
-function Login (){
+function Login (props){
     const classes = useStyles();
     const [userEmail,setEmail]=useState('')
     const [userPass, setPass]=useState('')
     return(
             <section className={classes.login}>
                 <Box className={classes.formContainer}>
-                    <form>
+                    <form onSubmit={props.handleLogin}>
                         <h2 className={classes.h2}>Sign in</h2>
                         <label>Your email address:</label>
-                        <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email"  onChange={(e)=>setEmail(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="email"  fullWidth type="email"  onChange={(e)=>setEmail(e.target.value)}/>
                         <label>Password:</label>
-                        <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" onChange={(e)=>setPass(e.target.value)}/>
-                        <Button className={classes.button} variant="contained" color="secondary" >Login</Button>
+                        <TextField className={classes.textField} variant="outlined" label="password" fullWidth type="password" onChange={(e)=>setPass(e.target.value)}/>
+                        <Button className={classes.button} type='submit' variant="contained" color="secondary" onClick={props.handleLogin}><Link to="/dashboard">Login</Link></Button>
                     </form>
                     <Box className={classes.signup}>
                         <p className={classes.p}>Don't have an account?</p>
