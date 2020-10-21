@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "0.3rem",
     overflow: "hidden",
   },
+  errorMessage: {
+    margin: theme.spacing(4),
+  },
   itemDisplay: {
     margin: theme.spacing(4),
   },
@@ -53,7 +56,7 @@ const AddItemPopup = (props) => {
       <Box className={classes.paper}>
         <h2 className={classes.paperTitle}>Add new item:</h2>
         {item.error ? (
-          <div>{item.response}</div>
+          <Box className={classes.errorMessage}>{item.response}</Box>
         ) : item.title ? (
           <ItemDisplay item={item} className={classes.itemDisplay} />
         ) : (
