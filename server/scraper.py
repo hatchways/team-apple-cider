@@ -24,20 +24,16 @@ class ScrapeAmazon:
         self.availability = self.getAvailability()  
         self.driver.quit()
     def getTitle(self):
-        try: 
-            return self.driver.find_element_by_id('productTitle').text
+        try: return self.driver.find_element_by_id('productTitle').text
         except: return None
     def getOldPrice(self):
-        try: 
-            return self.driver.find_element_by_class_name('priceBlockStrikePriceString').text
+        try: return self.driver.find_element_by_class_name('priceBlockStrikePriceString').text
         except: return None
     def getPrice(self):
-        try: 
-            return self.driver.find_element_by_id('priceblock_ourprice').text
+        try: return self.driver.find_element_by_id('priceblock_ourprice').text
         except: return None
     def getImgURL(self):
-        try: 
-            return self.driver.find_element_by_id('landingImage').get_attribute("src")
+        try: return self.driver.find_element_by_id('landingImage').get_attribute("src")
         except: return None
     def getAvailability(self):
         try:
