@@ -19,7 +19,7 @@ class ScrapeAmazon:
 
         driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
         driver.get(URL)
-        self.itemURL = URL
+        self.shopURL = URL
         self.title = self.getTitle(driver) 
         self.oldPrice = self.getOldPrice(driver)  
         self.price = self.getPrice(driver)  

@@ -66,14 +66,21 @@ async function getItem() {
 }
 
 const AddItem = () => {
+  const [item, setItem] = useState({
+    shopURL: null,
+    title: null,
+    oldPrice: null,
+    price: null,
+    imgURL: null,
+  });
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedList, setSelectedList] = useState("none");
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
   const addButtonClick = async () => {
     openPopup();
-    const test = await getItem();
-    console.log(test);
+    const newItem = await getItem();
+    setItem(newItem);
   };
 
   return (
@@ -109,7 +116,7 @@ const AddItem = () => {
         >
           ADD
         </Button>
-        <AddItemPopup {...{ popupOpen, setPopupOpen }} />
+        <AddItemPopup {...{ item, popupOpen, setPopupOpen }} />
       </Box>
     </Box>
   );

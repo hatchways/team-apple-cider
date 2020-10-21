@@ -30,20 +30,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddItemPopup = (props) => {
-  const { popupOpen, setPopupOpen } = props;
+  const { item, popupOpen, setPopupOpen } = props;
   const classes = useStyles();
   const handleClose = () => {
     setPopupOpen(false);
-  };
-
-  const demoItem = {
-    shopURL:
-      "https://www.amazon.com/Apple-iPhone-Graphite-Carrier-Subscription/dp/B08L5PTDTK/ref=sr_1_3?dchild=1&keywords=New+Apple+iPhone+12+Pro&qid=1603196512&sr=8-3",
-    title:
-      "New Apple iPhone 12 Pro (128GB, Graphite) [Locked] + Carrier Subscription",
-    oldPrice: "$1299",
-    price: "$999",
-    imgURL: "https://m.media-amazon.com/images/I/71YlH-4MUQL.jpg",
   };
 
   return (
@@ -56,7 +46,7 @@ const AddItemPopup = (props) => {
     >
       <Box className={classes.paper}>
         <h2 className={classes.paperTitle}>Add new item:</h2>
-        <ItemDisplay item={demoItem} />
+        {item.title ? <ItemDisplay item={item} /> : <div>Loading...</div>}
         <Button className={classes.addButton}>ADD NEW ITEM</Button>
       </Box>
     </Modal>
