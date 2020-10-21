@@ -17,6 +17,7 @@ class Item:
     def __init__(self, URL):
         self.driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)  
         self.driver.get(URL)
+        self.itemURL = URL
         self.title = self.getTitle() 
         self.oldPrice = self.getOldPrice()  
         self.price = self.getPrice()  
