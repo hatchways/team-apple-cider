@@ -55,5 +55,5 @@ def scrapeAmazon(input):
             return items
         elif (isinstance(input, str)): return getItem(input)
         else: return 'ERROR: INVALID INPUT'
-    finally:
-        browser.quit()
+    except:
+        return 'ERROR: SCRAPE FAILED'
