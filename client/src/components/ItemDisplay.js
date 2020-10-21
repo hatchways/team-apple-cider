@@ -10,10 +10,17 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     margin: theme.spacing(1),
   },
-  itemImage: {
-    marginRight: theme.spacing(2),
+  imageContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     height: "7.5rem",
     width: "7.5rem",
+    marginRight: theme.spacing(2),
+  },
+  itemImage: {
+    maxHeight: "7.5rem",
+    maxWidth: "7.5rem",
   },
   itemTextContainer: {
     marginLeft: theme.spacing(2),
@@ -52,7 +59,9 @@ const ItemDisplay = (props) => {
 
   return (
     <Box className={`${classes.itemContainer} ${props.className}`}>
-      <img className={classes.itemImage} src={item.imgURL} alt={item.title} />
+      <Box className={classes.imageContainer}>
+        <img className={classes.itemImage} src={item.imgURL} alt={item.title} />
+      </Box>
       <Box className={classes.itemTextContainer}>
         <Typography className={classes.itemTitle}>{item.title}</Typography>
         <Link href={item.shopURL} className={classes.shopURL}>
