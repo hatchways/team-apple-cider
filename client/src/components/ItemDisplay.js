@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "1.2",
   },
   shopURL: {
+    display: "block",
     padding: theme.spacing(0.25),
     color: "grey",
     fontSize: "0.8rem",
