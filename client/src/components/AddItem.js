@@ -55,16 +55,15 @@ const useStyles = makeStyles((theme) => ({
 
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
 
-const getItem = async () => {
+async function getItem() {
   const response = await fetch("/scrape", {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ URL: "https://www.amazon.com/dp/B07TWFWJDZ/" }),
   });
-  return response.json();
-};
+  const json = await response.json();
+  return json;
+}
 
 const AddItem = () => {
   const [popupOpen, setPopupOpen] = useState(false);

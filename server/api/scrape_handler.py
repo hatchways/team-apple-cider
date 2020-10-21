@@ -1,8 +1,11 @@
-from flask import jsonify, Blueprint
+import json
+from flask import jsonify, make_response, request, Blueprint
 scrape_handler = Blueprint('scrape_handler', __name__)
 from .scraper import ScrapeAmazon
 
-@scrape_handler.route('/scrape')
+@scrape_handler.route('/scrape', methods = ['POST'])
 def scrape():
-    item = ScrapeAmazon('https://www.amazon.com/dp/B07YMJ9WFN')
-    return jsonify(item.__dict__)
+    if request.method == 'POST':
+        URL = json.loads(request.get_data())['URL']
+        item = ScrapeAmazon(URL)
+        return jsonify(item.__dict__)
