@@ -80,9 +80,12 @@ const AddItem = () => {
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
   const addButtonClick = async () => {
-    openPopup();
-    const newItem = await getItem(inputLink);
-    setItem(newItem);
+    // regex check inputLink here
+    if (inputLink.length > 0) {
+      openPopup();
+      const newItem = await getItem(inputLink);
+      setItem(newItem);
+    }
   };
 
   useEffect(() => {
