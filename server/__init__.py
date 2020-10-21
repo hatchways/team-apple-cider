@@ -1,14 +1,39 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from database import db
+from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
-from config import DevelopmentConfig
+
+migrate = Migrate()
+cors = CORS()
+flask_bcrypt = Bcrypt()
 
 
-# I moved the app initialization here because when it was in app.py, importing auth_handler created
-# an infinite loop. Open to suggestions if there is a cleaner way to do this!
-app = Flask(__name__)
-CORS(app)  # For testing with Postman, not certain whether it should be left in long-term.
-app.config.from_object(DevelopmentConfig)
-db = SQLAlchemy(app)
-flask_bcrypt = Bcrypt(app)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object('config.DevelopmentConfig')
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+    cors.init_app(app)
+    flask_bcrypt.init_app(app)
+
+    with app.app_context():
+
+        # Register Routes
+        from api.ping_handler import ping_handler
+        from api.home_handler import home_handler
+        from api.auth_handler import auth_handler
+        from api.product_handler import product_handler
+        from api.list_handler import list_handler
+
+        # Register Blueprints
+        app.register_blueprint(home_handler)
+        app.register_blueprint(ping_handler)
+        app.register_blueprint(auth_handler)
+        app.register_blueprint(product_handler)
+        app.register_blueprint(list_handler)
+
+        db.create_all()
+        return app
+
