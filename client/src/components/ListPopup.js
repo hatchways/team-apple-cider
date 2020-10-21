@@ -90,7 +90,7 @@ const demoProductsArray = [
 
 const ListPopup = (props) => {
   const classes = useStyles();
-  const { listOpen, setListOpen } = props;
+  const { list_title,item_count,listOpen, setListOpen } = props;
   const handleClose = () => setListOpen(false);
 
   return (
@@ -109,9 +109,9 @@ const ListPopup = (props) => {
 
         <Box className={classes.titleContainer}>
           <Typography className={classes.popupTitleProductType}>
-            Clothes
+            {list_title}
           </Typography>
-          <Typography>34 Items</Typography>
+          <Typography>{item_count}</Typography>
         </Box>
 
         {demoProductsArray.map((list) => (
