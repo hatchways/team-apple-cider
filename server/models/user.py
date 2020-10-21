@@ -8,9 +8,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
-    name = db.Column(db.String(255), nullable=False)  # Right now this is a very simple full name column. Could be
-    # possibly better to include first and last name fields in the front-end form and make this two columns, one for
-    # first names and one for last names.
+    name = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     registered_time = db.Column(db.DateTime, nullable=False)
 

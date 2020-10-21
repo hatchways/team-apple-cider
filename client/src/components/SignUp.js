@@ -54,42 +54,66 @@ signupLink:{
 }));
 function SignUp (){
     const classes = useStyles();
-    const [name, setName]=useState('')  // Changed names to correspond with backend.
-    const [email,setEmail]=useState('')
-    const [password, setPass]=useState('')
-    const [confirm, setConfirm]=useState('')
-    const handleClick = () => {
-        fetch("/auth/register", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'name': name,
-                'email': email,
-                'password': password,
-                'confirm': confirm
-            })})
-            .then(response => response.json())
-            .then(console.log('Success:', name)) // Logs success even when unsuccessful, not certain how to fix it.
-            .catch((error) => {
-                console.error('Error:', error)
-            })
+    const [name, setName]=useState('');
+    const [email,setEmail]=useState('');
+    const [password, setPass]=useState('');
+    const [confirm, setConfirm]=useState('');
+    const [errors, setErrors]=useState('');
+
+    const validations = () => {
+        let temp = {};
+        temp.name = name ? "" : "This field is required.";
+        temp.email = (/.+@.+..+/).test(email) ? "" : "Email is not valid.";
+        temp.password = password.length > 5 ? "" : "Password must be at least six characters.";
+        temp.confirm = password === confirm ? "" : "Passwords must match.";
+        setErrors({ ...temp });
+
+        return Object.values(temp).every(x => x == "");
     }
-    // Added confirm password field. Still needs to check for password being at least six characters
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        if (validations()) {
+            fetch("/auth/register", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'name': name,
+                    'email': email,
+                    'password': password,
+                    'confirm': confirm
+                })})
+                .then(response => response.json())
+                .then(function(response) {
+                    if (response.status === 'success') {
+                        console.log('Success:', email);
+                    }
+                    else {
+                        window.alert(response.message);
+                        console.log(response.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+            }
+    }
+    // The console throws a warning because the 'error' field in each TextField is given a string, not a boolean. However, the code appears to work as intended, and it does not appear to be a problem.
     return(
             <section className={classes.login}>
                 <Box className={classes.formContainer}>
                     <form>
                         <h2 className={classes.h2}>Sign up</h2>
                         <label>Your Name</label>
-                        <TextField className={classes.textField} variant="outlined" label="name"  fullWidth required type="text"  onChange={(e)=>setName(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="name"  fullWidth required type="text" error={errors.name} helperText={errors.name} onChange={(e)=>setName(e.target.value)}/>
                         <label>Your email address:</label>
-                        <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email"  onChange={(e)=>setEmail(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email" error={errors.email} helperText={errors.email} onChange={(e)=>setEmail(e.target.value)}/>
                         <label>Password:</label>
-                        <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" onChange={(e)=>setPass(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" error={errors.password} helperText={errors.password} onChange={(e)=>setPass(e.target.value)}/>
                         <label>Confirm Password:</label>
-                        <TextField className={classes.textField} variant="outlined" label="confirm password" fullWidth required type="password" onChange={(e)=>setConfirm(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="confirm password" fullWidth required type="password" error={errors.confirm} helperText={errors.confirm} onChange={(e)=>setConfirm(e.target.value)}/>
                         <Button className={classes.button} variant="contained" color="secondary" onClick={handleClick}>Register</Button>
                     </form>
                     <Box className={classes.signup}>

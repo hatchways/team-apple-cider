@@ -57,33 +57,56 @@ signupLink:{
 }));
 function Login (){
     const classes = useStyles();
-    const [email,setEmail]=useState('')
-    const [password, setPass]=useState('')
-    const handleClick = () => {
-        fetch("/auth/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'email': email,
-                'password': password,
-            })})
-            .then(response => response.json())
-            .then(console.log('Success')) // Logs success even when unsuccessful, not certain how to fix it.
-            .catch((error) => {
-                console.error('Error:', error)
-            })
+    const [email,setEmail]=useState('');
+    const [password, setPassword]=useState('');
+    const [errors, setErrors]=useState('');
+
+    const validations = () => {
+        let temp = {};
+        temp.email = email ? "" : "Please enter an email.";
+        temp.password = password ? "" : "Please enter a password.";
+        setErrors({ ...temp });
+
+        return Object.values(temp).every(x => x == "");
     }
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        if (validations()) {
+            fetch("/auth/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'email': email,
+                    'password': password,
+                })})
+                .then(response => response.json())
+                .then(function(response) {
+                    if (response.status === 'success') {
+                        console.log('Success:', email);
+                    }
+                    else {
+                        window.alert(response.message);
+                        console.log(response.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error)
+                })
+            }
+    }
+    // The console throws a warning because the 'error' field in each TextField is given a string, not a boolean. However, the code appears to work as intended, and it does not appear to be a problem.
     return(
             <section className={classes.login}>
                 <Box className={classes.formContainer}>
                     <form>
                         <h2 className={classes.h2}>Sign in</h2>
                         <label>Your email address:</label>
-                        <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email"  onChange={(e)=>setEmail(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email" error={errors.email} helperText={errors.email} onChange={(e)=>setEmail(e.target.value)}/>
                         <label>Password:</label>
-                        <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" onChange={(e)=>setPass(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" error={errors.password} helperText={errors.password} onChange={(e)=>setPassword(e.target.value)}/>
                         <Button className={classes.button} variant="contained" color="secondary" onClick={handleClick}>Login</Button>
                     </form>
                     <Box className={classes.signup}>
