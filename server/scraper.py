@@ -7,45 +7,41 @@ from selenium.webdriver.chrome.options import Options
 chrome_options = Options()
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--ignore-certificate-errors')
-# chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_argument('--remote-debugging-port=9222')
 executable_path=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
-driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)
 
 
 class Item:   
     def __init__(self, URL):
-        driver.get(URL)
+        self.driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)  
+        self.driver.get(URL)
         self.title = self.getTitle() 
         self.oldPrice = self.getOldPrice()  
         self.price = self.getPrice()  
         self.imgURL = self.getImgURL()  
         self.availability = self.getAvailability()  
-    @staticmethod
-    def getTitle():
+        self.driver.quit()
+    def getTitle(self):
         try: 
-            return driver.find_element_by_id('productTitle').text
+            return self.driver.find_element_by_id('productTitle').text
         except: return None
-    @staticmethod
-    def getOldPrice():
+    def getOldPrice(self):
         try: 
-            return driver.find_element_by_class_name('priceBlockStrikePriceString').text
+            return self.driver.find_element_by_class_name('priceBlockStrikePriceString').text
         except: return None
-    @staticmethod
-    def getPrice():
+    def getPrice(self):
         try: 
-            return driver.find_element_by_id('priceblock_ourprice').text
+            return self.driver.find_element_by_id('priceblock_ourprice').text
         except: return None
-    @staticmethod
-    def getImgURL():
+    def getImgURL(self):
         try: 
-            return driver.find_element_by_id('landingImage').get_attribute("src")
+            return self.driver.find_element_by_id('landingImage').get_attribute("src")
         except: return None
-    @staticmethod
-    def getAvailability():
+    def getAvailability(self):
         try:
-            text = driver.find_element_by_css_selector("#availability > *:first-child").text
+            text = self.driver.find_element_by_css_selector("#availability > *:first-child").text
             return (bool(re.search('in stock', text, re.IGNORECASE)))
         except: return None
     def __str__(self):
@@ -61,5 +57,3 @@ def scrapeAmazon(input):
         else: return 'ERROR: INVALID INPUT'
     except:
         return 'ERROR: SCRAPE FAILED'
-    finally:
-        driver.quit()
