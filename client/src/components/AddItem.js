@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -55,33 +55,39 @@ const useStyles = makeStyles((theme) => ({
 
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
 
-async function getItem() {
+const getItem = async (input) => {
   const response = await fetch("/scrape", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ URL: "https://www.amazon.com/dp/B07TWFWJDZ/" }),
+    body: JSON.stringify({ URL: input }),
   });
-  const json = await response.json();
-  return json;
-}
+  return response.json();
+};
+
+const emptyItem = {
+  shopURL: null,
+  title: null,
+  oldPrice: null,
+  price: null,
+  imgURL: null,
+};
 
 const AddItem = () => {
-  const [item, setItem] = useState({
-    shopURL: null,
-    title: null,
-    oldPrice: null,
-    price: null,
-    imgURL: null,
-  });
+  const [inputLink, setInputLink] = useState("");
+  const [item, setItem] = useState(emptyItem);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedList, setSelectedList] = useState("none");
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
   const addButtonClick = async () => {
     openPopup();
-    const newItem = await getItem();
+    const newItem = await getItem(inputLink);
     setItem(newItem);
   };
+
+  useEffect(() => {
+    setItem(emptyItem);
+  }, [inputLink]);
 
   return (
     <Box className={classes.dashboardAddItem}>
@@ -93,6 +99,7 @@ const AddItem = () => {
           placeholder="Paste your link here"
           disableUnderline
           className={classes.linkForm}
+          onChange={(e) => setInputLink(e.target.value)}
         />
         <Select
           className={classes.dropdownList}

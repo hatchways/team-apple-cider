@@ -35,6 +35,7 @@ const AddItemPopup = (props) => {
   const handleClose = () => {
     setPopupOpen(false);
   };
+  console.log(item);
 
   return (
     <Modal
@@ -46,7 +47,13 @@ const AddItemPopup = (props) => {
     >
       <Box className={classes.paper}>
         <h2 className={classes.paperTitle}>Add new item:</h2>
-        {item.title ? <ItemDisplay item={item} /> : <div>Loading...</div>}
+        {item.error ? (
+          <div>{item.response}</div>
+        ) : item.title ? (
+          <ItemDisplay item={item} />
+        ) : (
+          <div>Loading...</div>
+        )}
         <Button className={classes.addButton}>ADD NEW ITEM</Button>
       </Box>
     </Modal>
