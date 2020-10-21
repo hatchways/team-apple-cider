@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     height: "7.5rem",
     width: "7.5rem",
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(4),
   },
   itemImage: {
     maxHeight: "7.5rem",
     maxWidth: "7.5rem",
   },
   itemTextContainer: {
-    marginLeft: theme.spacing(2),
+    marginLeft: theme.spacing(4),
     overflow: "hidden",
   },
   itemTitle: {
