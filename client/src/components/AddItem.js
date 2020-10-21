@@ -55,11 +55,27 @@ const useStyles = makeStyles((theme) => ({
 
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
 
+const getItem = async () => {
+  const response = await fetch("/scrape", {
+    method: "get",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  return response.json();
+};
+
 const AddItem = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedList, setSelectedList] = useState("none");
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
+  const addButtonClick = async () => {
+    openPopup();
+    const test = await getItem();
+    console.log(test);
+  };
 
   return (
     <Box className={classes.dashboardAddItem}>
@@ -90,7 +106,7 @@ const AddItem = () => {
         <Button
           className={classes.addButton}
           variant="contained"
-          onClick={openPopup}
+          onClick={addButtonClick}
         >
           ADD
         </Button>
