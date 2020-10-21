@@ -1,21 +1,23 @@
 import re
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.utils import ChromeType
-from selenium.webdriver.chrome.options import Options
 
-chrome_options = Options()
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--ignore-certificate-errors')
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-dev-shm-usage')
-chrome_options.add_argument('--remote-debugging-port=9222')
-executable_path=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
-
-
-class Item:   
+class ScrapeAmazon:   
     def __init__(self, URL):
-        self.driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)  
+        chrome_options = Options()
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--remote-debugging-port=9222')
+        executable_path=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+        
+        userAgent = 'Mozilla/5.0 (X11; Linux x86_64)' +  'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
+        chrome_options.add_argument("user-agent={}".format(userAgent))   
+
+        self.driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
         self.driver.get(URL)
         self.itemURL = URL
         self.title = self.getTitle() 
@@ -47,14 +49,3 @@ class Item:
         except: return None
     def __str__(self):
         return str(self.__class__) + ": " + str(self.__dict__)
-
-def scrapeAmazon(input):
-    try:
-        if (isinstance(input, list)):
-            items = []
-            for url in input: items.append(Item(url))
-            return items
-        elif (isinstance(input, str)): return Item(input)
-        else: return 'ERROR: INVALID INPUT'
-    except:
-        return 'ERROR: SCRAPE FAILED'
