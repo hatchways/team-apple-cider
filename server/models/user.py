@@ -10,11 +10,13 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
+    name = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     registered_time = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, email, password):
+    def __init__(self, email, name, password):
         self.email = email
+        self.name = name
         self.password = flask_bcrypt.generate_password_hash(password, DevelopmentConfig.BCRYPT_LOG_ROUNDS).decode()
         self.registered_time = datetime.datetime.now(tz=datetime.timezone.utc)
 

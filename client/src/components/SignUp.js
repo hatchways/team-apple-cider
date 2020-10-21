@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme)=>({
 login:{
     maxWidth:'1200px',
     margin:'0 auto',
-    height:'100vh',
+    height:'123vh',
     padding:'50px',
     backgroundColor:'#44475ab9',
 },
@@ -54,25 +54,71 @@ signupLink:{
 }));
 function SignUp (){
     const classes = useStyles();
-    const [userName, setName]=useState('')
-    const [userEmail,setEmail]=useState('')
-    const [userPass, setPass]=useState('')
+    const [name, setName]=useState('');
+    const [email,setEmail]=useState('');
+    const [password, setPassword]=useState('');
+    const [confirm, setConfirm]=useState('');
+    const [errors, setErrors]=useState({});
+
+    const validations = () => {
+        const errorsCopy = {...errors};
+        errorsCopy.name = name ? "" : "This field is required.";
+        errorsCopy.email = (/.+@.+..+/).test(email) ? "" : "Email is not valid.";
+        errorsCopy.password = password.length > 5 ? "" : "Password must be at least six characters.";
+        errorsCopy.confirm = password === confirm ? "" : "Passwords must match.";
+        setErrors({ ...errorsCopy });
+
+        return Object.values(errorsCopy).every(field => field === "");
+    }
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        if (validations()) {
+            fetch("/auth/register", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'name': name,
+                    'email': email,
+                    'password': password,
+                    'confirm': confirm
+                })})
+                .then(response => response.json())
+                .then(function(response) {
+                    if (response.status === 'success') {
+                        console.log('Success:', email);
+                    }
+                    else {
+                        window.alert(response.message); // Replace with snackbar.
+                        console.log(response.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+            }
+    }
+
     return(
             <section className={classes.login}>
                 <Box className={classes.formContainer}>
                     <form>
                         <h2 className={classes.h2}>Sign up</h2>
                         <label>Your Name</label>
-                        <TextField className={classes.textField} variant="outlined" label="name"  fullWidth required type="text"  onChange={(e)=>setName(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="name"  fullWidth required type="text" error={!!errors.name} helperText={errors.name} onChange={(e)=>setName(e.target.value)}/>
                         <label>Your email address:</label>
-                        <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email"  onChange={(e)=>setEmail(e.target.value)}/>
+                        <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email" error={!!errors.email} helperText={errors.email} onChange={(e)=>setEmail(e.target.value)}/>
                         <label>Password:</label>
-                        <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" onChange={(e)=>setPass(e.target.value)}/>
-                        <Button className={classes.button} variant="contained" color="secondary" >Login</Button>
+                        <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" error={!!errors.password} helperText={errors.password} onChange={(e)=>setPassword(e.target.value)}/>
+                        <label>Confirm Password:</label>
+                        <TextField className={classes.textField} variant="outlined" label="confirm password" fullWidth required type="password" error={!!errors.confirm} helperText={errors.confirm} onChange={(e)=>setConfirm(e.target.value)}/>
+                        <Button className={classes.button} variant="contained" color="secondary" onClick={handleClick}>Register</Button>
                     </form>
                     <Box className={classes.signup}>
-                        <p className={classes.p}>Don't have an account?</p>
-                        <Link className={classes.signupLink} to="/login">Create an account</Link>
+                        <p className={classes.p}>Already have an account?</p>
+                        <Link className={classes.signupLink} to="/login">Login</Link>
                     </Box>
                 </Box>
             </section>
