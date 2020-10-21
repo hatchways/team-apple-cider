@@ -41,9 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const AddItemPopup = (props) => {
   const { item, popupOpen, setPopupOpen } = props;
   const classes = useStyles();
-  const handleClose = () => {
-    setPopupOpen(false);
-  };
+  const handleClose = () => setPopupOpen(false);
 
   return (
     <Modal

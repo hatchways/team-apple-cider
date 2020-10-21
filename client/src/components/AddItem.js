@@ -88,9 +88,7 @@ const AddItem = () => {
     }
   };
 
-  useEffect(() => {
-    setItem(emptyItem);
-  }, [inputLink]);
+  useEffect(() => setItem(emptyItem), [inputLink]);
 
   return (
     <Box className={classes.dashboardAddItem}>
