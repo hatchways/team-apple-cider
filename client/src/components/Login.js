@@ -72,7 +72,7 @@ function Login (props){
                     </form>
                     <Box className={classes.signup}>
                         <p className={classes.p}>Don't have an account?</p>
-                        <Link className={classes.signupLink} to="/">Create an account</Link>
+                        <Link className={classes.signupLink} to="/signup">Create an account</Link>
                     </Box>
                 </Box>
             </section>

@@ -68,11 +68,11 @@ function SignUp (){
                         <TextField className={classes.textField} variant="outlined" label="email"  fullWidth required type="email"  onChange={(e)=>setEmail(e.target.value)}/>
                         <label>Password:</label>
                         <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" onChange={(e)=>setPass(e.target.value)}/>
-                        <Button className={classes.button} variant="contained" color="secondary" >Login</Button>
+                        <Button className={classes.button} variant="contained" color="secondary" >Sign up</Button>
                     </form>
                     <Box className={classes.signup}>
-                        <p className={classes.p}>Don't have an account?</p>
-                        <Link className={classes.signupLink} to="/login">Create an account</Link>
+                        <p className={classes.p}>Do have an account?</p>
+                        <Link className={classes.signupLink} to="/">Sign in</Link>
                     </Box>
                 </Box>
             </section>

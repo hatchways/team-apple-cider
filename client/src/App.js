@@ -30,7 +30,7 @@ function App() {
         <MuiThemeProvider theme={theme}>
           <BrowserRouter>
             <Route path="/" exact render={()=><Login user={user} handleLogin={handleLogin}></Login>}/>
-            <Route path="/signup" component={SignUp}></Route>
+            <Route path="/signup" component={SignUp} exact/>
             <ProtectedRoute exact path='/dashboard' user={user} handleLogout={handleLogout} component={Dashboard} />
           </BrowserRouter>
         </MuiThemeProvider>
