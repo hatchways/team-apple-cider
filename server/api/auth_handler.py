@@ -1,10 +1,11 @@
 from models.user import User
 from flask import Blueprint, request, make_response, jsonify, g, redirect, url_for
 from flask.views import MethodView
-from server import db, flask_bcrypt
+from database import db
+from server import flask_bcrypt
 from functools import wraps
 
-auth_blueprint = Blueprint("auth_blueprint", __name__)
+auth_handler = Blueprint("auth_handler", __name__)
 
 
 # Wrapper that obtains and verifies an auth token in a cookie. Returns true if valid, false otherwise.
@@ -32,7 +33,6 @@ def login_cookie_getter(f):
     return decorated_function
 
 
-
 class RegisterAPI(MethodView):
     def post(self):
         post_data = request.get_json()
@@ -55,6 +55,7 @@ class RegisterAPI(MethodView):
                     return make_response(jsonify(responseObject)), 401
                 user = User(
                     email=post_data.get("email"),
+                    name=post_data.get("name"),
                     password=post_data.get("password")
                 )
                 db.session.add(user)
@@ -66,7 +67,8 @@ class RegisterAPI(MethodView):
                     "message": "Successfully registered."
                 }
                 resp = make_response(jsonify(responseObject))
-                resp.set_cookie("Authentication token", auth_token, httponly=True)
+                resp.set_cookie("Authentication token",
+                                auth_token, httponly=True)
                 return resp, 201
             except Exception as e:
                 responseObject = {
@@ -99,7 +101,8 @@ class LoginAPI(MethodView):
                         "message": "Successfully logged in"
                     }
                     resp = make_response(jsonify(responseObject))
-                    resp.set_cookie("Authentication token", auth_token, httponly=True)
+                    resp.set_cookie("Authentication token",
+                                    auth_token, httponly=True)
                     return resp, 200
                 else:
                     responseObject = {
@@ -157,17 +160,17 @@ registration_view = RegisterAPI.as_view("register_api")
 login_view = LoginAPI.as_view("login_api")
 user_view = UserAPI.as_view("user_api")
 
-auth_blueprint.add_url_rule(
+auth_handler.add_url_rule(
     "/auth/register",
     view_func=registration_view,
     methods=["POST"]
 )
-auth_blueprint.add_url_rule(
+auth_handler.add_url_rule(
     "/auth/login",
     view_func=login_view,
     methods=["POST"]
 )
-auth_blueprint.add_url_rule(
+auth_handler.add_url_rule(
     "/auth/status",
     view_func=user_view,
     methods=["GET"]

@@ -1,8 +1,8 @@
-import json
 from flask import jsonify, Blueprint, request
 from models.product import Product
 from models.list import List
 from database import db
+import json
 
 product_handler = Blueprint('product_handler', __name__)
 
