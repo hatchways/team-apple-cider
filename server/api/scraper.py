@@ -37,15 +37,18 @@ class ScrapeAmazon:
         # Non-books:
         try: return driver.find_element_by_id('priceblock_ourprice').text
         except: pass
-        try : return driver.find_element_by_id('priceblock_dealprice').text
+        try: return driver.find_element_by_id('priceblock_dealprice').text
         except: pass
-        try : return driver.find_element_by_id('priceblock_saleprice').text
+        try: return driver.find_element_by_id('priceblock_saleprice').text
         except: pass
         #Paperback
-        try : return driver.find_element_by_css_selector("#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child").text
+        try: return driver.find_element_by_css_selector("#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child").text
         except: pass
         #Ebook
-        try : return driver.find_element_by_css_selector(".kindle-price > *:last-child > *:first-child").text
+        try: return driver.find_element_by_css_selector(".kindle-price > *:last-child > *:first-child").text
+        except: pass
+        #Audiobook
+        try: return driver.find_element_by_css_selector("#accordion_row_header_membership > h5 > .a-row > .a-column.a-span3 > *:first-child").text
         except: return None
     def get_img_URL(self, driver):
         # Non-books:
@@ -56,6 +59,9 @@ class ScrapeAmazon:
         except: pass
         # Ebooks:
         try: return driver.find_element_by_id('ebooksImgBlkFront').get_attribute("src")        
+        except: pass
+        # Audiobooks:
+        try: return driver.find_element_by_id('main-image').get_attribute("src")        
         except: return None
     def get_availability(self, driver):
         try:
