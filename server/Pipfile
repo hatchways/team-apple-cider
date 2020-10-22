@@ -10,12 +10,12 @@ flask = "*"
 flask-sqlalchemy = "*"
 flask-bcrypt = "*"
 pyjwt = "*"
-psycopg2 = "*"
 python-dotenv = "*"
 flask-migrate = "*"
 flask-cors = "*"
 selenium = "*"
 webdriver-manager = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
