@@ -50,15 +50,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddItemPopup = (props) => {
-  const { item, popupOpen, setPopupOpen } = props;
+  const { item, popupOpen, closePopup } = props;
   const classes = useStyles();
-  const handleClose = () => setPopupOpen(false);
 
   return (
     <Modal
       className={classes.popup}
       open={popupOpen}
-      onClose={handleClose}
+      onClose={closePopup}
       aria-labelledby="add-item-popup"
       aria-describedby="confirms-adding-item-of-url-to-selected-list"
     >

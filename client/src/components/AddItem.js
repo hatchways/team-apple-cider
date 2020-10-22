@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -54,17 +54,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
-const emptyItem = {
-  shopURL: null,
-  title: null,
-  oldPrice: null,
-  price: null,
-  imgURL: null,
-};
 
 const AddItem = () => {
   const [inputLink, setInputLink] = useState("");
-  const [item, setItem] = useState(emptyItem);
+  const [item, setItem] = useState({});
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedList, setSelectedList] = useState("none");
   const classes = useStyles();
@@ -88,7 +81,10 @@ const AddItem = () => {
     }
   };
 
-  useEffect(() => setItem(emptyItem), [inputLink]);
+  const closePopup = () => {
+    setPopupOpen(false);
+    setItem({});
+  };
 
   return (
     <Box className={classes.dashboardAddItem}>
@@ -124,7 +120,7 @@ const AddItem = () => {
         >
           ADD
         </Button>
-        <AddItemPopup {...{ item, popupOpen, setPopupOpen }} />
+        <AddItemPopup {...{ item, popupOpen, closePopup }} />
       </Box>
     </Box>
   );
