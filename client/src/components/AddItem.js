@@ -80,7 +80,7 @@ const AddItem = () => {
   };
 
   const addButtonClick = async () => {
-    // regex check inputLink here
+    // TODO: regex check inputLink here is a valid URL to scrape
     if (inputLink.length > 0) {
       openPopup();
       const newItem = await getItem(inputLink);
