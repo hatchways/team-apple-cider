@@ -30,8 +30,8 @@ class ScrapeAmazon:
             return driver.find_element_by_id('productTitle').text
         except: return None
     def get_old_price(self, driver):
-        try: 
-            return driver.find_element_by_class_name('priceBlockStrikePriceString').text
+        # Non-books:
+        try: return driver.find_element_by_class_name('priceBlockStrikePriceString').text
         except: return None
     def get_price(self, driver):
         # Non-books:
@@ -41,16 +41,16 @@ class ScrapeAmazon:
         except: pass
         try: return driver.find_element_by_id('priceblock_saleprice').text
         except: pass
-        #Hardcover:
+        # Hardcover:
         try: return driver.find_element_by_id('price').text
         except: pass
-        #Paperback
+        # Paperback
         try: return driver.find_element_by_css_selector("#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child").text
         except: pass
-        #Ebook
+        # Ebook
         try: return driver.find_element_by_css_selector(".kindle-price > *:last-child > *:first-child").text
         except: pass
-        #Audiobook
+        # Audiobook
         try: return driver.find_element_by_css_selector("#accordion_row_header_membership > h5 > .a-row > .a-column.a-span3 > *:first-child").text
         except: return None
     def get_img_URL(self, driver):
