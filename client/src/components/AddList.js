@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Modal, IconButton, Typography,Button } from "@material-ui/core";
+import { Box, Modal, IconButton, Typography, Button, TextField } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,12 +51,12 @@ const useStyles = makeStyles((theme) => ({
   },
   titleContainer: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: theme.spacing(0, 0, 3),
+    //padding: theme.spacing(0, 0, 3),
+    maxHeight:"3rem"
   },
   closeButtonContainer: {
     textAlign: "right",
+    width: "100%"
   },
   titleText: {
     fontSize: "1.3rem",
@@ -66,7 +66,6 @@ const useStyles = makeStyles((theme) => ({
   itemText:{
     fontSize: "0.8rem",
     fontWeight: "400",
-    color:"gray",
     letterSpacing:"0.5px"
   },
   productCard: {
@@ -95,21 +94,75 @@ const useStyles = makeStyles((theme) => ({
     minWidth:"30rem",
     maxHeight: "29rem",
     overflow:"hidden",
-    
+    display:"flex",
+    justifyContent:"center"
   },
   bodyContent:{
     minWidth:"30rem",
     maxHeight: "30rem",
     overflow:"scroll",
     overflowX:"hidden",
-  }
+  },
+  textFieldContainer:{
+    display:"flex",
+    justifyContent:"center",
+    width:"80%"
+  },
+  centerText:{
+    textAlign:"center"
+  },
+  imageFieldContainer:{
+    display:"flex",
+  },
+  input: {
+    display:'none'
+  },
 }));
 
 const AddList = (props) => {
     const {addListOpen, setAddListOpen} = props;
     const classes = useStyles()
+    const [errors, setErrors]=useState({});
+    const [title, setTitle]=useState('');
+
     const handleClose = () => {
         setAddListOpen(false);
+    }
+
+    const validations = () => {
+        const errorsCopy = {...errors};
+        errorsCopy.title = title ? "" : "This field is required.";
+        setErrors({ ...errorsCopy });
+
+        return Object.values(errorsCopy).every(field => field === "");
+    }
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        if (validations()) {
+            fetch("route", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'title': title,
+                    //'cover': cover
+                })})
+                .then(response => response.json())
+                .then(function(response) {
+                    if (response.status === 'success') {
+                        console.log('Success:');
+                    }
+                    else {
+                        window.alert(response.message); // Replace with snackbar.
+                        console.log(response.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+            }
     }
 
     return (
@@ -132,23 +185,40 @@ const AddList = (props) => {
             </IconButton>
           </Box>
           <Box className={classes.titleContainer}>
-            <Typography className={classes.titleText}>
-              Create new list
-            </Typography>
-            
+            <Typography><h2 className={classes.titleText}>Create new list</h2></Typography>
           </Box>
           <Box className={classes.bodyContainer}>
-            <Box className={classes.bodyContent}>
-            </Box>
+            <Typography><h4 className={classes.itemText}>Add a title</h4></Typography>
+          </Box>
+          <Box className={classes.textFieldContainer}>
+            <TextField
+              className={classes.textField}
+              variant="outlined"
+              placeholder="Enter name" // Placeholder needs to be centered.
+              fullWidth
+              type="text"
+              error={!!errors.title}
+              helperText={errors.title}
+              onChange={(e)=>setTitle(e.target.value)}/>
+          </Box>
+          <Box className={classes.bodyContainer}>
+            <Typography><h4 className={classes.itemText}>Add a cover</h4></Typography>
+          </Box>
+          <Box className={classes.imageFieldContainer}>
+            <Typography>Drop an image here or <strong><u><input
+              accept="image/*"
+              className={classes.input}
+              id="file-input"
+              multiple
+              type="file"
+              />
+            <label htmlFor="file-input">
+              select a file
+            </label></u></strong></Typography>
           </Box>
           <Box className={classes.addButtonContainer}>
-            <Button className={classes.addButton} variant="contained">
-            ADD NEW ITEM
-            </Button>
+            <Button className={classes.addButton} variant="contained">CREATE LIST</Button>
           </Box>
-          <h2 className={classes.paperTitle}>Create new list</h2>
-
-          <Button className={classes.addButton}>CREATE LIST</Button>
         </Box>
         </Modal>
     );
