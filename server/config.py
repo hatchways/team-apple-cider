@@ -11,7 +11,6 @@ POSTGRES_URL = os.environ['POSTGRES_URL']
 POSTGRES_DB = os.environ['POSTGRES_DB']
 
 
-
 class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY", "example_backup_secret_key")
     DEBUG = False

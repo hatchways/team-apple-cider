@@ -1,11 +1,6 @@
-from flask import Flask
-from api.ping_handler import ping_handler
-from api.home_handler import home_handler
 
+from server import create_app
 
-app = Flask(__name__)
-
-
-app.register_blueprint(home_handler)
-app.register_blueprint(ping_handler)
+if __name__ == "__main__":
+    app = create_app()
 
