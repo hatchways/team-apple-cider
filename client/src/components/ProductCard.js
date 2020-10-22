@@ -37,7 +37,7 @@ const ProductCard = (props) => {
       <Box>
         <ItemDisplay
           className={classes.itemDisplay}
-          item={props.list}
+          item={props.item}
         ></ItemDisplay>
       </Box>
 

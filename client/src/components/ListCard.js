@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ListCard = (props) => {
   const classes = useStyles();
-  const list_title = props.list.title;
-  const item_count = props.list.itemCount;
+  const listTitle = props.list.title;
+  const itemCount = props.list.itemCount;
   const [listOpen, setListOpen] = useState(false);
   const handleListClick = () => {
     setListOpen(true);
@@ -61,14 +61,14 @@ const ListCard = (props) => {
 
         <Box className={classes.listTextContainer}>
           <Typography className={classes.listTextTitle}>
-            {props.list.title}
+            {listTitle}
           </Typography>
           <Typography
             className={classes.listTextItems}
-          >{`${props.list.itemCount} items`}</Typography>
+          >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{ list_title, item_count, listOpen, setListOpen }} />
+      <ListPopup {...{ listTitle, itemCount, listOpen, setListOpen }} />
     </Box>
   );
 };

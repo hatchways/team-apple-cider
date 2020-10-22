@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 
 const demoProductsArray = [
   {
-    shopURL:
+    url:
       "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
     oldPrice: "$90",
     price: "$56",
@@ -100,7 +100,7 @@ const demoProductsArray = [
     imgURL: levis_501,
   },
   {
-    shopURL:
+    url:
       "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
     oldPrice: "$120",
     price: "$98",
@@ -108,7 +108,7 @@ const demoProductsArray = [
     imgURL: tommy_jeans,
   },
   {
-    shopURL:
+    url:
       "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
     oldPrice: "$110",
     price: "$56",
@@ -116,7 +116,7 @@ const demoProductsArray = [
     imgURL: ck_jacket,
   },
   {
-    shopURL:
+    url:
       "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
     oldPrice: "$90",
     price: "$56",
@@ -127,7 +127,7 @@ const demoProductsArray = [
 
 const ListPopup = (props) => {
   const classes = useStyles();
-  const { list_title, item_count, listOpen, setListOpen } = props;
+  const { listTitle, itemCount, listOpen, setListOpen } = props;
   const handleClose = () => setListOpen(false);
 
   return (
@@ -146,17 +146,17 @@ const ListPopup = (props) => {
 
         <Box className={classes.titleContainer}>
           <Typography className={classes.popupTitleProductType}>
-            {list_title}
+            {listTitle}
           </Typography>
 
           <Typography
             className={classes.itemText}
-          >{`${item_count} items`}</Typography>
+          >{`${itemCount} items`}</Typography>
         </Box>
         <Box className={classes.bodyContainer}>
           <Box className={classes.bodyContent}>
-            {demoProductsArray.map((list) => (
-              <ProductCard list={list} />
+            {demoProductsArray.map((item) => (
+              <ProductCard list={item} />
             ))}
           </Box>
         </Box>
