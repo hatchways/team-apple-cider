@@ -37,7 +37,9 @@ class ScrapeAmazon:
     def get_price(self, driver):
         try: 
             return driver.find_element_by_id('priceblock_ourprice').text
-        except: return None
+        except: 
+            try : return driver.find_element_by_id('priceblock_dealprice').text
+            except: return None
     def get_img_URL(self, driver):
         try: 
             return driver.find_element_by_id('landingImage').get_attribute("src")
