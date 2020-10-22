@@ -41,6 +41,9 @@ class ScrapeAmazon:
         except: pass
         try: return driver.find_element_by_id('priceblock_saleprice').text
         except: pass
+        #Hardcover:
+        try: return driver.find_element_by_id('price').text
+        except: pass
         #Paperback
         try: return driver.find_element_by_css_selector("#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child").text
         except: pass
