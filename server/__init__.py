@@ -26,6 +26,7 @@ def create_app():
         from api.auth_handler import auth_handler
         from api.product_handler import product_handler
         from api.list_handler import list_handler
+        # from api.image_handler import image_handler
 
         # Register Blueprints
         app.register_blueprint(home_handler)
@@ -33,6 +34,7 @@ def create_app():
         app.register_blueprint(auth_handler)
         app.register_blueprint(product_handler)
         app.register_blueprint(list_handler)
+        # app.register_blueprint(image_handler)
 
         db.create_all()
         return app
