@@ -31,11 +31,9 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    noWrap:"true",
- 
+    noWrap: "true",
   },
   priceTextContainer: {
-    
     padding: theme.spacing(0.25),
   },
   itemOldPrice: {
@@ -56,7 +54,11 @@ const ItemDisplay = (props) => {
   return (
     <Box className={classes.itemContainer}>
       <img className={classes.itemImage} src={item.imgURL} alt={item.title} />
-      <Box component="div" textOverflow="ellipsis" className={classes.itemTextContainer}>
+      <Box
+        component="div"
+        textOverflow="ellipsis"
+        className={classes.itemTextContainer}
+      >
         <Typography className={classes.itemTitle}>{item.title}</Typography>
         <Link href={item.shopURL} className={classes.shopURL}>
           {item.shopURL}

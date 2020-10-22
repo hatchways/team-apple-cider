@@ -1,42 +1,39 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Modal, IconButton, Typography,Button } from "@material-ui/core";
+import { Box, Modal, IconButton, Typography, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import ItemDisplay from "components/ItemDisplay";
 import levis_501 from "img/levis_501.png";
 import tommy_jeans from "img/tommy_jeans.png";
 import ck_jacket from "img/ck_jacket.png";
-import ProductCard from "components/ProductCard"
+import ProductCard from "components/ProductCard";
 
 const useStyles = makeStyles((theme) => ({
-  '@global': {
-    '*::-webkit-scrollbar': {
-      width: '0.2rem'
+  "@global": {
+    "*::-webkit-scrollbar": {
+      width: "0.2rem",
     },
-    '*::-webkit-scrollbar-track': {
-      '-webkit-box-shadow': 'inset 0 0 6px rgba(10,10,10,0.1)'
+    "*::-webkit-scrollbar-track": {
+      "-webkit-box-shadow": "inset 0 0 6px rgba(10,10,10,0.1)",
     },
-    '*::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(1,1,1)',
-      outline: '1px solid slategrey'
-    }
+    "*::-webkit-scrollbar-thumb": {
+      backgroundColor: "rgba(1,1,1)",
+      outline: "1px solid slategrey",
+    },
   },
   popup: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
-
   },
   paper: {
     padding: theme.spacing(1, 1, 3),
     backgroundColor: "white",
     outline: "none",
-    minWidth:"40rem",
+    minWidth: "40rem",
     maxHeight: "41rem",
-    overflow:'hidden',
-    height:'100%',
-    display:'block',
+    overflow: "hidden",
+    height: "100%",
+    display: "block",
   },
   titleContainer: {
     display: "flex",
@@ -50,59 +47,47 @@ const useStyles = makeStyles((theme) => ({
   popupTitleProductType: {
     fontSize: "1.3rem",
     fontWeight: "500",
-    letterSpacing:"1px"
+    letterSpacing: "1px",
   },
 
-  itemText:{
+  itemText: {
     fontSize: "0.8rem",
-    fontWeight: "400",
-    color:"gray",
-    letterSpacing:"0.5px"
+    fontWeight: "500",
+    color: "gray",
+    letterSpacing: "0.5px",
   },
   productCard: {
     display: "flex",
     flexDirection: "row",
-    maxWidth: "30rem"
+    maxWidth: "30rem",
   },
-  removeButtonContainer:{
-    display: "flex",
-    alignItems:"center",
-    justifyContent:"center",
-  },
-  removeButton:{
-    display: "flex",
-    alignItems:"center",
-    justifyContent:"center",
-    borderRadius: "10rem",
-    height:"3rem",
-  },
-  addButton: {  
+
+  addButton: {
     borderRadius: "10rem",
     backgroundColor: "#DF1B1B",
     color: "white",
     width: "11rem",
     height: "3.5rem",
-    fontSize: "0.8rem"
+    fontSize: "0.8rem",
   },
 
-  addButtonContainer:{
+  addButtonContainer: {
     display: "flex",
-    justifyContent:"center",
-    margin:theme.spacing(3,0,2)
+    justifyContent: "center",
+    margin: theme.spacing(3, 0, 2),
   },
-  bodyContainer:{
-    minWidth:"30rem",
+  bodyContainer: {
+    minWidth: "30rem",
     maxHeight: "29rem",
-    overflow:"hidden",
-    
+    overflow: "hidden",
   },
 
-  bodyContent:{
-    minWidth:"30rem",
+  bodyContent: {
+    minWidth: "30rem",
     maxHeight: "30rem",
-    overflow:"scroll",
-    overflowX:"hidden",
-  }
+    overflow: "scroll",
+    overflowX: "hidden",
+  },
 }));
 
 const demoProductsArray = [
@@ -124,7 +109,7 @@ const demoProductsArray = [
   },
   {
     shopURL:
-    "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
+      "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
     oldPrice: "$110",
     price: "$56",
     title: "Calvin Klein Performance Women Jacket",
@@ -142,7 +127,7 @@ const demoProductsArray = [
 
 const ListPopup = (props) => {
   const classes = useStyles();
-  const { list_title,item_count,listOpen, setListOpen } = props;
+  const { list_title, item_count, listOpen, setListOpen } = props;
   const handleClose = () => setListOpen(false);
 
   return (
@@ -163,20 +148,22 @@ const ListPopup = (props) => {
           <Typography className={classes.popupTitleProductType}>
             {list_title}
           </Typography>
-          
-          <Typography className={classes.itemText}>{`${item_count} items`}</Typography>
+
+          <Typography
+            className={classes.itemText}
+          >{`${item_count} items`}</Typography>
         </Box>
         <Box className={classes.bodyContainer}>
-        <Box className={classes.bodyContent}>
-        {demoProductsArray.map((list) => (
-          <ProductCard list={list} />
-        ))}
+          <Box className={classes.bodyContent}>
+            {demoProductsArray.map((list) => (
+              <ProductCard list={list} />
+            ))}
+          </Box>
         </Box>
-        </Box>
-          <Box className={classes.addButtonContainer}>
-        <Button className={classes.addButton} variant="contained">
-          ADD NEW ITEM
-        </Button>
+        <Box className={classes.addButtonContainer}>
+          <Button className={classes.addButton} variant="contained">
+            ADD NEW ITEM
+          </Button>
         </Box>
       </Box>
     </Modal>

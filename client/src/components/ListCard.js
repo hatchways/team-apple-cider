@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     borderRadius: "1rem",
     overflow: "hidden",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.04)",
+      opacity: "0.95",
+    },
   },
   listImage: {
     objectFit: "cover",
@@ -39,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ListCard = (props) => {
   const classes = useStyles();
-  const list_title  = props.list.title;
-  const item_count  = props.list.itemCount;
+  const list_title = props.list.title;
+  const item_count = props.list.itemCount;
   const [listOpen, setListOpen] = useState(false);
   const handleListClick = () => {
     setListOpen(true);
@@ -64,7 +68,7 @@ const ListCard = (props) => {
           >{`${props.list.itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{ list_title,item_count,listOpen, setListOpen }} />
+      <ListPopup {...{ list_title, item_count, listOpen, setListOpen }} />
     </Box>
   );
 };
