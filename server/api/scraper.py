@@ -1,4 +1,4 @@
-import re
+import re, json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
@@ -29,9 +29,12 @@ class ScrapeAmazon:
         try: 
             return driver.find_element_by_id('productTitle').text
         except: return None
-    def get_old_price(self, driver):
+    def get_old_price(self, driver):        
         # Non-books:
         try: return driver.find_element_by_class_name('priceBlockStrikePriceString').text
+        except : pass
+        # Books:
+        try: return driver.find_element_by_css_selector('#buyBoxInner > ul > *:first-child > span > *:last-child').text
         except: return None
     def get_price(self, driver):
         # Non-books:
