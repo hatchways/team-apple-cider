@@ -1,8 +1,7 @@
-import re
+import re, json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.utils import ChromeType
 
 class ScrapeAmazon:   
     def __init__(self, URL):
@@ -12,37 +11,65 @@ class ScrapeAmazon:
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument('--remote-debugging-port=9222')
-        executable_path=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+        executable_path=ChromeDriverManager().install()
         
         userAgent = 'Mozilla/5.0 (X11; Linux x86_64)' +  'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
         chrome_options.add_argument("user-agent={}".format(userAgent))   
 
         driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
         driver.get(URL)
-        self.itemURL = URL
-        self.title = self.getTitle(driver) 
-        self.oldPrice = self.getOldPrice(driver)  
-        self.price = self.getPrice(driver)  
-        self.imgURL = self.getImgURL(driver)  
-        self.availability = self.getAvailability(driver)  
+        self.shopURL = URL
+        self.title = self.get_title(driver) 
+        self.oldPrice = self.get_old_price(driver)  
+        self.price = self.get_price(driver)  
+        self.imgURL = self.get_img_URL(driver)  
+        self.availability = self.get_availability(driver)  
         driver.quit()
-    def getTitle(self, driver):
+    def get_title(self, driver):
         try: 
             return driver.find_element_by_id('productTitle').text
         except: return None
-    def getOldPrice(self, driver):
-        try: 
-            return driver.find_element_by_class_name('priceBlockStrikePriceString').text
+    def get_old_price(self, driver):        
+        # Non-books:
+        try: return driver.find_element_by_class_name('priceBlockStrikePriceString').text
+        except : pass
+        # Books:
+        try: return driver.find_element_by_css_selector('#buyBoxInner > ul > *:first-child > span > *:last-child').text
         except: return None
-    def getPrice(self, driver):
-        try: 
-            return driver.find_element_by_id('priceblock_ourprice').text
+    def get_price(self, driver):
+        # Non-books:
+        try: return driver.find_element_by_id('priceblock_ourprice').text
+        except: pass
+        try: return driver.find_element_by_id('priceblock_dealprice').text
+        except: pass
+        try: return driver.find_element_by_id('priceblock_saleprice').text
+        except: pass
+        # Hardcover:
+        try: return driver.find_element_by_id('price').text
+        except: pass
+        # Paperback
+        try: return driver.find_element_by_css_selector("#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child").text
+        except: pass
+        # Ebook
+        try: return driver.find_element_by_css_selector(".kindle-price > *:last-child > *:first-child").text
+        except: pass
+        # Audiobook
+        try: return driver.find_element_by_css_selector("#accordion_row_header_cash > h5 > .a-row > .a-column.a-span4 > *:first-child").text
         except: return None
-    def getImgURL(self, driver):
-        try: 
-            return driver.find_element_by_id('landingImage').get_attribute("src")
+    def get_img_URL(self, driver):
+        # Non-books:
+        try: return driver.find_element_by_id('landingImage').get_attribute("src")
+        except: pass
+        # Books:
+        try: return driver.find_element_by_id('imgBlkFront').get_attribute("src")
+        except: pass
+        # Ebooks:
+        try: return driver.find_element_by_id('ebooksImgBlkFront').get_attribute("src")        
+        except: pass
+        # Audiobooks:
+        try: return driver.find_element_by_id('main-image').get_attribute("src")        
         except: return None
-    def getAvailability(self, driver):
+    def get_availability(self, driver):
         try:
             text = driver.find_element_by_css_selector("#availability > *:first-child").text
             return (bool(re.search('in stock', text, re.IGNORECASE)))
