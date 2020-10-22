@@ -7,10 +7,15 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-psycopg2 = "*"
 flask-sqlalchemy = "*"
-flask-migrate = "*"
+flask-bcrypt = "*"
+pyjwt = "*"
+psycopg2-binary = "*"
 python-dotenv = "*"
+flask-migrate = "*"
+flask-cors = "*"
+selenium = "*"
+webdriver-manager = "*"
 
 [requires]
 python_version = "3.7"
