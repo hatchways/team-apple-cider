@@ -20,29 +20,29 @@ class ScrapeAmazon:
         driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
         driver.get(URL)
         self.shopURL = URL
-        self.title = self.getTitle(driver) 
-        self.oldPrice = self.getOldPrice(driver)  
-        self.price = self.getPrice(driver)  
-        self.imgURL = self.getImgURL(driver)  
-        self.availability = self.getAvailability(driver)  
+        self.title = self.get_title(driver) 
+        self.oldPrice = self.get_old_price(driver)  
+        self.price = self.get_price(driver)  
+        self.imgURL = self.get_img_URL(driver)  
+        self.availability = self.get_availability(driver)  
         driver.quit()
-    def getTitle(self, driver):
+    def get_title(self, driver):
         try: 
             return driver.find_element_by_id('productTitle').text
         except: return None
-    def getOldPrice(self, driver):
+    def get_old_price(self, driver):
         try: 
             return driver.find_element_by_class_name('priceBlockStrikePriceString').text
         except: return None
-    def getPrice(self, driver):
+    def get_price(self, driver):
         try: 
             return driver.find_element_by_id('priceblock_ourprice').text
         except: return None
-    def getImgURL(self, driver):
+    def get_img_URL(self, driver):
         try: 
             return driver.find_element_by_id('landingImage').get_attribute("src")
         except: return None
-    def getAvailability(self, driver):
+    def get_availability(self, driver):
         try:
             text = driver.find_element_by_css_selector("#availability > *:first-child").text
             return (bool(re.search('in stock', text, re.IGNORECASE)))
