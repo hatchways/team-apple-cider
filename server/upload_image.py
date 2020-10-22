@@ -1,6 +1,8 @@
+from flask import current_app
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+
 
 # def upload(file,upload_preset, **options):
 #     cloudinary.uploader.upload(file,upload_preset)
@@ -23,6 +25,8 @@ name = "applecider"
 
 # print(upload_preset)
 
-result = cloudinary.uploader.unsigned_upload(image, "xnxitkef",
-  cloud_name = 'applecider')
-print(result['secure_url'])
+print(current_app.config['CLOUDINARY_PRESET'])
+
+# result = cloudinary.uploader.unsigned_upload(image, "xnxitkef",
+#   cloud_name = 'applecider')
+# print(result['secure_url'])

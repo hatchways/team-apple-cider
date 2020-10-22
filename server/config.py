@@ -11,6 +11,7 @@ POSTGRES_URL = os.environ['POSTGRES_URL']
 POSTGRES_DB = os.environ['POSTGRES_DB']
 
 
+
 class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY", "example_backup_secret_key")
     DEBUG = False
@@ -28,4 +29,5 @@ class DevelopmentConfig(BaseConfig):
     BCRYPT_LOG_ROUNDS = 4
     CLOUDINARY_NAME= os.environ["CLOUDINARY_NAME"]
     CLOUDINARY_UPLOAD_PRESET_NAME = os.environ["CLOUDINARY_UPLOAD_PRESET_NAME"]
+
 
