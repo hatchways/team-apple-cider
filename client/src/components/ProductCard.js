@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   productCard: {
     display: "flex",
     flexDirection: "row",
-    margin:theme.spacing(2, 1),
+    margin:theme.spacing(0,2, 3),
     boxShadow: " 0 2px 6px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.06)"
   },
 
@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    minWidth:"10rem"
+    minWidth:"10rem",
+    
   },
   removeButton: {
     display: "flex",
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize:"0.7rem",
     fontWeight:"bold",
     padding:theme.spacing(0, 3)
+    
   },
 }));
 

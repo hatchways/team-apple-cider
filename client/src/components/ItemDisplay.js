@@ -56,7 +56,7 @@ const ItemDisplay = (props) => {
   return (
     <Box className={classes.itemContainer}>
       <img className={classes.itemImage} src={item.imgURL} alt={item.title} />
-      <Box className={classes.itemTextContainer}>
+      <Box component="div" textOverflow="ellipsis" className={classes.itemTextContainer}>
         <Typography className={classes.itemTitle}>{item.title}</Typography>
         <Link href={item.shopURL} className={classes.shopURL}>
           {item.shopURL}
