@@ -2,7 +2,6 @@ import re
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.utils import ChromeType
 
 class ScrapeAmazon:   
     def __init__(self, URL):
@@ -12,7 +11,7 @@ class ScrapeAmazon:
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument('--remote-debugging-port=9222')
-        executable_path=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+        executable_path=ChromeDriverManager().install()
         
         userAgent = 'Mozilla/5.0 (X11; Linux x86_64)' +  'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
         chrome_options.add_argument("user-agent={}".format(userAgent))   
