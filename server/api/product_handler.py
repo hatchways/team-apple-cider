@@ -2,6 +2,8 @@ from flask import jsonify, Blueprint, request
 from models.product import Product
 from models.list import List
 from database import db
+from api.image_uploader import imageUploader
+from config import PRODUCT_IMG_PRESET, CLOUDINARY_NAME
 import json
 
 product_handler = Blueprint('product_handler', __name__)
@@ -21,8 +23,9 @@ def productRequests():
                     "id": prod.id,
                     "name": prod.name,
                     "description": prod.description,
+                    "old_price":prod.old_price,
                     "price": prod.price,
-                    "url": prod.url
+                    "img_url": prod.img_url
                 })
         return jsonify({list.product_type: product_ls}), 200
     if request.method == 'POST':
@@ -33,8 +36,15 @@ def productRequests():
             body['price'] = round(float(body['price']), 2)
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
+
+        try:
+            new_url = imageUploader(body['img_url'],PRODUCT_IMG_PRESET,CLOUDINARY_NAME)
+            print(new_url)
+        except Exception as e:
+            return jsonify({'error': "{}".format("error uploading image on cloudinary")}), 400
+
         product_item = Product(
-            int(body['list_id']), body['name'], body['description'], body['price'], body['url'])
+            int(body['list_id']), body['name'], body['description'],body['old_price'], body['price'], new_url)
         db.session.add(product_item)
         try:
             db.session.commit()

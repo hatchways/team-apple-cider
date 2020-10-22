@@ -1,6 +1,7 @@
 from flask import jsonify, Blueprint, request
 from models.list import List
 from database import db
+
 import json
 
 list_handler = Blueprint('list_handler', __name__)
