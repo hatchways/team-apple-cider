@@ -25,6 +25,7 @@ def productRequests():
                     "description": prod.description,
                     "old_price":prod.old_price,
                     "price": prod.price,
+                    "url": prod.url,
                     "img_url": prod.img_url
                 })
         return jsonify({list.product_type: product_ls}), 200
@@ -38,13 +39,13 @@ def productRequests():
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
         try:
-            new_url = imageUploader(body['img_url'],PRODUCT_IMG_PRESET,CLOUDINARY_NAME)
-            print(new_url)
+            new_img_url = imageUploader(body['img_url'],PRODUCT_IMG_PRESET,CLOUDINARY_NAME)
+            
         except Exception as e:
             return jsonify({'error': "{}".format("error uploading image on cloudinary")}), 400
 
         product_item = Product(
-            int(body['list_id']), body['name'], body['description'],body['old_price'], body['price'], new_url)
+            int(body['list_id']), body['name'], body['description'],body['old_price'], body['price'],body['url'],new_img_url)
         db.session.add(product_item)
         try:
             db.session.commit()
