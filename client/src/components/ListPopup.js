@@ -6,17 +6,20 @@ import ItemDisplay from "components/ItemDisplay";
 import levis_501 from "img/levis_501.png";
 import tommy_jeans from "img/tommy_jeans.png";
 import ck_jacket from "img/ck_jacket.png";
+import ProductCard from "components/ProductCard"
 
 const useStyles = makeStyles((theme) => ({
   popup: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    
   },
   paper: {
     padding: theme.spacing(1, 1, 3),
     backgroundColor: "white",
     outline: "none",
+    minWidth:"40rem"
   },
   titleContainer: {
     display: "flex",
@@ -111,16 +114,12 @@ const ListPopup = (props) => {
           <Typography className={classes.popupTitleProductType}>
             {list_title}
           </Typography>
-          <Typography>{item_count}</Typography>
+          
+          <Typography>{`${item_count} items`}</Typography>
         </Box>
 
         {demoProductsArray.map((list) => (
-          <Box className={classes.productCard}>
-            <ItemDisplay item={list}></ItemDisplay>
-            <Box className={classes.removeButtonContainer}>
-            <Button className={classes.removeButton} >Remove</Button>
-            </Box>
-          </Box>
+          <ProductCard list={list} />
         ))}
           <Box className={classes.addButtonContainer}>
         <Button className={classes.addButton} variant="contained">
