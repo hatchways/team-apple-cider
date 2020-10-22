@@ -41,8 +41,11 @@ class ScrapeAmazon:
         try : return driver.find_element_by_id('priceblock_saleprice').text
         except: return None
     def get_img_URL(self, driver):
-        try: 
-            return driver.find_element_by_id('landingImage').get_attribute("src")
+        # Normal products:
+        try: return driver.find_element_by_id('landingImage').get_attribute("src")
+        except: pass
+        # Books:
+        try: return driver.find_element_by_id('imgBlkFront').get_attribute("src")
         except: return None
     def get_availability(self, driver):
         try:
