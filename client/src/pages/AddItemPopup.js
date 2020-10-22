@@ -1,6 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Modal, Box, Button, CircularProgress } from "@material-ui/core";
+import {
+  Modal,
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
+} from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
     borderRadius: "0.3rem",
     overflow: "hidden",
+  },
+  paperTitle: {
+    fontSize: "1.4rem",
+    fontWeight: "bold",
+    margin: theme.spacing(2),
   },
   errorMessage: {
     margin: theme.spacing(4),
@@ -52,7 +63,7 @@ const AddItemPopup = (props) => {
       aria-describedby="confirms-adding-item-of-url-to-selected-list"
     >
       <Box className={classes.paper}>
-        <h2 className={classes.paperTitle}>Add new item:</h2>
+        <Typography className={classes.paperTitle}>Add new item:</Typography>
         {item.error ? (
           <Box className={classes.errorMessage}>{item.response}</Box>
         ) : item.title ? (
