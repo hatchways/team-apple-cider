@@ -22,7 +22,6 @@ def productRequests():
                 {
                     "id": prod.id,
                     "name": prod.name,
-                    "description": prod.description,
                     "old_price":prod.old_price,
                     "price": prod.price,
                     "url": prod.url,
@@ -45,7 +44,7 @@ def productRequests():
             return jsonify({'error': "{}".format("error uploading image on cloudinary")}), 400
 
         product_item = Product(
-            int(body['list_id']), body['name'], body['description'],body['old_price'], body['price'],body['url'],new_img_url)
+            int(body['list_id']), body['name'],body['old_price'], body['price'],body['url'],new_img_url)
         db.session.add(product_item)
         try:
             db.session.commit()
