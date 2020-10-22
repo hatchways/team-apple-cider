@@ -54,7 +54,7 @@ class ScrapeAmazon:
         try: return driver.find_element_by_css_selector(".kindle-price > *:last-child > *:first-child").text
         except: pass
         # Audiobook
-        try: return driver.find_element_by_css_selector("#accordion_row_header_membership > h5 > .a-row > .a-column.a-span3 > *:first-child").text
+        try: return driver.find_element_by_css_selector("#accordion_row_header_cash > h5 > .a-row > .a-column.a-span4 > *:first-child").text
         except: return None
     def get_img_URL(self, driver):
         # Non-books:
