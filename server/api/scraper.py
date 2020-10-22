@@ -35,11 +35,12 @@ class ScrapeAmazon:
             return driver.find_element_by_class_name('priceBlockStrikePriceString').text
         except: return None
     def get_price(self, driver):
-        try: 
-            return driver.find_element_by_id('priceblock_ourprice').text
-        except: 
-            try : return driver.find_element_by_id('priceblock_dealprice').text
-            except: return None
+        try: return driver.find_element_by_id('priceblock_ourprice').text
+        except: pass
+        try : return driver.find_element_by_id('priceblock_dealprice').text
+        except: pass
+        try : return driver.find_element_by_id('priceblock_saleprice').text
+        except: return None
     def get_img_URL(self, driver):
         try: 
             return driver.find_element_by_id('landingImage').get_attribute("src")
