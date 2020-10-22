@@ -54,16 +54,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
-
-const getItem = async (input) => {
-  const response = await fetch("/scrape", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ URL: input }),
-  });
-  return response.json();
-};
-
 const emptyItem = {
   shopURL: null,
   title: null,
@@ -79,6 +69,16 @@ const AddItem = () => {
   const [selectedList, setSelectedList] = useState("none");
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
+
+  const getItem = async (input) => {
+    const response = await fetch("/scrape", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ URL: input }),
+    });
+    return response.json();
+  };
+
   const addButtonClick = async () => {
     // regex check inputLink here
     if (inputLink.length > 0) {
