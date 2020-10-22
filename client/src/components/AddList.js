@@ -46,9 +46,9 @@ const AddList = (props) => {
         aria-describedby="confirms-adding-item-of-url-to-selected-list"
         >
         <Box className={classes.paper}>
-            <h2 className={classes.paperTitle}>Add new list:</h2>
+            <h2 className={classes.paperTitle}>Create new list</h2>
 
-            <Button className={classes.addButton}>ADD NEW LIST</Button>
+            <Button className={classes.addButton}>CREATE LIST</Button>
         </Box>
         </Modal>
     );
