@@ -101,7 +101,6 @@ const demoProductsArray = [
   },
   {
     title: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
-
     oldPrice: "$120",
     price: "$98",
     shopURL:
