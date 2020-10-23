@@ -1,3 +1,4 @@
+
 # flask-starter
 
   
@@ -58,4 +59,16 @@
     - `POSTGRES_URL = "127.0.0.1:5432"`
     - `POSTGRES_DB = "dealsmate_db"`
 
+## External API Services
+
+### Cloudinary
+On Cloudinary these were the presets that were used to get proper image transformations for the products and profiles.
+
+| PRODUCT_IMG_PRESET  | PROFILE_IMG_PRESET |
+|--|--|
+| max_width: 400px|max_width: 400px|
+|max_height:400px|max_height:400px|
+|crop_type:fitted|crop_type: fitted|
+||face_detection_crop: true|
+||background_removal: true|
 

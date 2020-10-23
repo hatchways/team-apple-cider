@@ -9,13 +9,6 @@ from api.list_handler import list_handler
 from api.scrape_handler import scrape_handler 
 
 
-from server import create_app
-
-
-if __name__ == "__main__":
-    app = create_app()
-
-
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
@@ -37,6 +30,3 @@ def create_app():
 
         db.create_all()
         return app
-
-
-app = create_app() 
