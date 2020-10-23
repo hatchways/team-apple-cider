@@ -8,6 +8,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AddItemPopup from "pages/AddItemPopup";
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {
@@ -55,8 +56,35 @@ const useStyles = makeStyles((theme) => ({
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
 
 const AddItem = () => {
-  const [selectedItem, setSelectedItem] = useState("none");
+  const [inputLink, setInputLink] = useState("");
+  const [item, setItem] = useState({});
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedList, setSelectedList] = useState("none");
   const classes = useStyles();
+  const openPopup = () => setPopupOpen(true);
+
+  const getItem = async (input) => {
+    const response = await fetch("/scrape", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ URL: input }),
+    });
+    return response.json();
+  };
+
+  const addButtonClick = async () => {
+    // TODO: regex check inputLink here is a valid URL to scrape
+    if (inputLink.length > 0) {
+      openPopup();
+      const newItem = await getItem(inputLink);
+      setItem(newItem);
+    }
+  };
+
+  const closePopup = () => {
+    setPopupOpen(false);
+    setItem({});
+  };
 
   return (
     <Box className={classes.dashboardAddItem}>
@@ -68,11 +96,12 @@ const AddItem = () => {
           placeholder="Paste your link here"
           disableUnderline
           className={classes.linkForm}
+          onChange={(e) => setInputLink(e.target.value)}
         />
         <Select
           className={classes.dropdownList}
-          value={selectedItem}
-          onChange={(e) => setSelectedItem(e.target.value)}
+          value={selectedList}
+          onChange={(e) => setSelectedList(e.target.value)}
           disableUnderline
         >
           <MenuItem value="none" disabled>
@@ -84,9 +113,14 @@ const AddItem = () => {
             </MenuItem>
           ))}
         </Select>
-        <Button className={classes.addButton} variant="contained">
+        <Button
+          className={classes.addButton}
+          variant="contained"
+          onClick={addButtonClick}
+        >
           ADD
         </Button>
+        <AddItemPopup {...{ item, popupOpen, closePopup }} />
       </Box>
     </Box>
   );
