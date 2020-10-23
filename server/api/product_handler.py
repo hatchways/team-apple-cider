@@ -41,8 +41,8 @@ def productRequests():
             new_img_url = image_uploader(
                 body['img_url'], PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
 
-        except Exception as e:
-            return jsonify({"error :uploading image on cloudinary"}), 400
+        except:
+            return jsonify({"error : uploading image on cloudinary"}), 400
 
         product_item = Product(
             int(body['list_id']), body['name'], body['old_price'], body['price'], body['url'], new_img_url)
