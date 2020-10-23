@@ -71,3 +71,4 @@ On Cloudinary these were the presets that were used to get proper image transfor
 |crop_type:fitted|crop_type: fitted|
 ||face_detection_crop: true|
 ||background_removal: true|
+

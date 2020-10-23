@@ -2,6 +2,7 @@ from flask import jsonify, Blueprint, request
 from models.product import Product
 from models.list import List
 from database import db
+
 from api.image_uploader import image_uploader
 from config import PRODUCT_IMG_PRESET, CLOUDINARY_NAME
 import json
@@ -46,6 +47,7 @@ def productRequests():
 
         product_item = Product(
             int(body['list_id']), body['name'], body['old_price'], body['price'], body['url'], new_img_url)
+
         db.session.add(product_item)
         try:
             db.session.commit()
