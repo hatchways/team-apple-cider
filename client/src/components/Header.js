@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   logo: {
-    height: "1.8rem",
+    height: "2.8rem",
     padding: theme.spacing(1),
     marginLeft: theme.spacing(5),
     marginRight: "auto",
