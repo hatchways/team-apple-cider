@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   addButtonContainer: {
     display: "flex",
     justifyContent: "center",
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 2),
   },
   bodyContainer: {
     minWidth: "30rem",
@@ -96,17 +96,14 @@ const demoProductsArray = [
     oldPrice: "$90",
     price: "$56",
     shopURL:
-    
       "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
     imgURL: levis_501,
   },
   {
     title: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
-
     oldPrice: "$120",
     price: "$98",
     shopURL:
-    
       "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
     imgURL: tommy_jeans,
   },
