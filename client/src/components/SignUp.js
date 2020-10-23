@@ -114,11 +114,11 @@ function SignUp (){
                         <TextField className={classes.textField} variant="outlined" label="password" fullWidth required type="password" error={!!errors.password} helperText={errors.password} onChange={(e)=>setPassword(e.target.value)}/>
                         <label>Confirm Password:</label>
                         <TextField className={classes.textField} variant="outlined" label="confirm password" fullWidth required type="password" error={!!errors.confirm} helperText={errors.confirm} onChange={(e)=>setConfirm(e.target.value)}/>
-                        <Button className={classes.button} variant="contained" color="secondary" onClick={handleClick}>Register</Button>
+                        <Button className={classes.button} variant="contained" color="secondary" onClick={handleClick}>Sign up</Button>
                     </form>
                     <Box className={classes.signup}>
                         <p className={classes.p}>Already have an account?</p>
-                        <Link className={classes.signupLink} to="/login">Login</Link>
+                        <Link className={classes.signupLink} to="/">Login</Link>
                     </Box>
                 </Box>
             </section>
