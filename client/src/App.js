@@ -1,24 +1,27 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
-
-import { theme } from "themes/theme";
-import DashboardPage from "pages/Dashboard";
+import SignUp from './components/SignUp';
+import Login from './components/Login';
+import ProtectedRoute from './components/ProtectedRoute';
+import Dashboard from './pages/Dashboard';
+import { theme } from './themes/theme';
+import {UserStore} from './contexts/UserContext'
 
 function App() {
   return (
     <Fragment>
       <CssBaseline>
         <MuiThemeProvider theme={theme}>
-          <BrowserRouter>
-            <Route path="/" component={DashboardPage} />
-            {/* <Route path="/" component={SignUp} exact/>
-            <Route path="/login" component={Login}/> */}
-          </BrowserRouter>
+          <UserStore>
+            <BrowserRouter>
+              <Route path="/" exact render={()=><Login></Login>}/>
+              <Route path="/signup" component={SignUp} exact/>
+              <ProtectedRoute exact path='/dashboard' component={Dashboard} />
+            </BrowserRouter>
+          </UserStore>
         </MuiThemeProvider>
       </CssBaseline>
     </Fragment>

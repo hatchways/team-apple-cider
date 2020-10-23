@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import clothes from "img/clothes.png";
 import furniture from "img/furniture.png";
 import luxury from "img/luxury.png";
+import ListCard from "components/ListCard";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
@@ -19,33 +20,7 @@ const useStyles = makeStyles((theme) => ({
   myShoppingLists: {
     display: "flex",
   },
-  listContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginRight: "2rem",
-    backgroundColor: "white",
-    borderRadius: "1rem",
-    overflow: "hidden",
-  },
-  listImage: {
-    objectFit: "cover",
-    height: "18rem",
-    width: "18rem",
-  },
-  listTextContainer: {
-    margin: "2rem",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  listTextTitle: {
-    fontWeight: "bold",
-  },
-  listTextItems: {
-    color: "grey",
-  },
+
   addNewList: {
     width: "18rem",
     backgroundColor: "white",
@@ -73,9 +48,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const demoListsArray = [
-  { title: "Clothes", itemCount: 34, img: clothes },
-  { title: "Furniture", itemCount: 12, img: furniture },
-  { title: "Luxury", itemCount: 8, img: luxury },
+  { listTitle: "Clothes", itemCount: 34, img: clothes },
+  { listTitle: "Furniture", itemCount: 12, img: furniture },
+  { listTitle: "Luxury", itemCount: 8, img: luxury },
 ];
 
 const ListsDisplay = (props) => {
@@ -89,21 +64,7 @@ const ListsDisplay = (props) => {
       </Typography>
       <Box className={classes.myShoppingLists}>
         {demoListsArray.map((list, i) => (
-          <Box className={classes.listContainer} key={i}>
-            <img
-              src={list.img}
-              alt={list.title}
-              className={classes.listImage}
-            />
-            <Box className={classes.listTextContainer}>
-              <Typography className={classes.listTextTitle}>
-                {list.title}
-              </Typography>
-              <Typography
-                className={classes.listTextItems}
-              >{`${list.itemCount} items`}</Typography>
-            </Box>
-          </Box>
+          <ListCard key={i} list={list} />
         ))}
         <Box className={classes.addNewList}>
           <IconButton className={classes.addNewListButton} onClick={() => setAddListOpen(true)}>
