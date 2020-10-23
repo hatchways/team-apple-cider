@@ -92,43 +92,43 @@ const useStyles = makeStyles((theme) => ({
 
 const demoProductsArray = [
   {
-    url:
-      "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
+    name: "Levi's 501 crop jean in lightwash",
     oldPrice: "$90",
     price: "$56",
-    title: "Levi's 501 crop jean in lightwash",
+    url:
+      "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
     imgURL: levis_501,
   },
   {
-    url:
-      "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
+    name: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
+
     oldPrice: "$120",
     price: "$98",
-    title: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
+    url:
+      "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
     imgURL: tommy_jeans,
   },
   {
-    url:
-      "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
+    name: "Calvin Klein Performance Women Jacket",
     oldPrice: "$110",
     price: "$56",
-    title: "Calvin Klein Performance Women Jacket",
+    url:
+      "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
     imgURL: ck_jacket,
   },
   {
-    url:
-      "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
+    name: "Levi's 501 crop jean in lightwash",
     oldPrice: "$90",
     price: "$56",
-    title: "Levi's 501 crop jean in lightwash",
+    url:
+      "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
     imgURL: levis_501,
   },
 ];
 
-const ListPopup = (props) => {
+const ListPopup = ({ listTitle, itemCount, listOpen, changeListOpen }) => {
   const classes = useStyles();
-  const { listTitle, itemCount, listOpen, setListOpen } = props;
-  const handleClose = () => setListOpen(false);
+  const handleClose = () => changeListOpen();
 
   return (
     <Modal open={listOpen} onClose={handleClose} className={classes.popup}>
@@ -155,8 +155,8 @@ const ListPopup = (props) => {
         </Box>
         <Box className={classes.bodyContainer}>
           <Box className={classes.bodyContent}>
-            {demoProductsArray.map((item) => (
-              <ProductCard list={item} />
+            {demoProductsArray.map((item, i) => (
+              <ProductCard key={i} item={item} />
             ))}
           </Box>
         </Box>

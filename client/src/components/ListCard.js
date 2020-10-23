@@ -42,33 +42,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListCard = (props) => {
+  const { listTitle, itemCount, img } = props.list;
   const classes = useStyles();
-  const listTitle = props.list.title;
-  const itemCount = props.list.itemCount;
   const [listOpen, setListOpen] = useState(false);
-  const handleListClick = () => {
-    setListOpen(true);
+  const changeListOpen = () => {
+    setListOpen(!listOpen);
   };
 
   return (
     <Box>
-      <Box onClick={handleListClick} className={classes.listContainer}>
-        <img
-          src={props.list.img}
-          alt={props.list.title}
-          className={classes.listImage}
-        />
+      <Box onClick={changeListOpen} className={classes.listContainer}>
+        <img src={img} alt={listTitle} className={classes.listImage} />
 
         <Box className={classes.listTextContainer}>
-          <Typography className={classes.listTextTitle}>
-            {listTitle}
-          </Typography>
+          <Typography className={classes.listTextTitle}>{listTitle}</Typography>
           <Typography
             className={classes.listTextItems}
           >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{ listTitle, itemCount, listOpen, setListOpen }} />
+      <ListPopup {...{ listTitle, itemCount, listOpen, changeListOpen }} />
     </Box>
   );
 };

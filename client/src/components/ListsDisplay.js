@@ -43,9 +43,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const demoListsArray = [
-  { title: "Clothes", itemCount: 34, img: clothes },
-  { title: "Furniture", itemCount: 12, img: furniture },
-  { title: "Luxury", itemCount: 8, img: luxury },
+  { listTitle: "Clothes", itemCount: 34, img: clothes },
+  { listTitle: "Furniture", itemCount: 12, img: furniture },
+  { listTitle: "Luxury", itemCount: 8, img: luxury },
 ];
 
 const ListsDisplay = () => {
@@ -56,8 +56,8 @@ const ListsDisplay = () => {
         My Shopping Lists:
       </Typography>
       <Box className={classes.myShoppingLists}>
-        {demoListsArray.map((list) => (
-          <ListCard list={list} />
+        {demoListsArray.map((list, i) => (
+          <ListCard key={i} list={list} />
         ))}
         <Box className={classes.addNewList}>
           <IconButton>

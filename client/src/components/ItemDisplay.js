@@ -48,26 +48,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ItemDisplay = (props) => {
-  const { item } = props;
+  const { name, oldPrice, price, url, imgURL } = props.item;
   const classes = useStyles();
 
   return (
     <Box className={classes.itemContainer}>
-      <img className={classes.itemImage} src={item.imgURL} alt={item.title} />
+      <img className={classes.itemImage} src={imgURL} alt={name} />
       <Box
         component="div"
         textOverflow="ellipsis"
         className={classes.itemTextContainer}
       >
-        <Typography className={classes.itemTitle}>{item.title}</Typography>
-        <Link href={item.shopURL} className={classes.shopURL}>
-          {item.shopURL}
+        <Typography className={classes.itemTitle}>{name}</Typography>
+        <Link href={url} className={classes.shopURL}>
+          {url}
         </Link>
         <Box className={classes.priceTextContainer}>
-          <Typography className={classes.itemOldPrice}>
-            {item.oldPrice}
-          </Typography>{" "}
-          <Typography className={classes.itemPrice}>{item.price}</Typography>
+          <Typography className={classes.itemOldPrice}>{oldPrice}</Typography>{" "}
+          <Typography className={classes.itemPrice}>{price}</Typography>
         </Box>
       </Box>
     </Box>

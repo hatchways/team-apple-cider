@@ -30,15 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductCard = (props) => {
+const ProductCard = ({item}) => {
   const classes = useStyles();
   return (
     <Box className={classes.productCard}>
       <Box>
-        <ItemDisplay
-          className={classes.itemDisplay}
-          item={props.item}
-        ></ItemDisplay>
+        <ItemDisplay className={classes.itemDisplay} item={item} />
       </Box>
 
       <Box className={classes.removeButtonContainer}>
