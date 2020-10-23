@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     outline: "none",
     minWidth: "40rem",
-    maxHeight: "41rem",
+    maxHeight: "42rem",
     overflow: "hidden",
     height: "100%",
     display: "block",
@@ -92,35 +92,37 @@ const useStyles = makeStyles((theme) => ({
 
 const demoProductsArray = [
   {
-    name: "Levi's 501 crop jean in lightwash",
+    title: "Levi's 501 crop jean in lightwash",
     oldPrice: "$90",
     price: "$56",
-    url:
+    shopURL:
+    
       "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
     imgURL: levis_501,
   },
   {
-    name: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
+    title: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
 
     oldPrice: "$120",
     price: "$98",
-    url:
+    shopURL:
+    
       "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
     imgURL: tommy_jeans,
   },
   {
-    name: "Calvin Klein Performance Women Jacket",
+    title: "Calvin Klein Performance Women Jacket",
     oldPrice: "$110",
     price: "$56",
-    url:
+    shopURL:
       "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
     imgURL: ck_jacket,
   },
   {
-    name: "Levi's 501 crop jean in lightwash",
+    title: "Levi's 501 crop jean in lightwash",
     oldPrice: "$90",
     price: "$56",
-    url:
+    shopURL:
       "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
     imgURL: levis_501,
   },
