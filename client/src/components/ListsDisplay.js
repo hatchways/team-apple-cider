@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -48,11 +48,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const demoListsArray = [
-  { title: "Clothes", itemCount: 34, img: clothes },
-  { title: "Furniture", itemCount: 12, img: furniture },
-  { title: "Luxury", itemCount: 8, img: luxury },
+  { listTitle: "Clothes", itemCount: 34, img: clothes },
+  { listTitle: "Furniture", itemCount: 12, img: furniture },
+  { listTitle: "Luxury", itemCount: 8, img: luxury },
 ];
-
 
 const ListsDisplay = () => {
   const classes = useStyles();
@@ -63,7 +62,7 @@ const ListsDisplay = () => {
       </Typography>
       <Box className={classes.myShoppingLists}>
         {demoListsArray.map((list, i) => (
-          <ListCard list={list}/>
+          <ListCard key={i} list={list} />
         ))}
         <Box className={classes.addNewList}>
           <IconButton className={classes.addNewListButton}>

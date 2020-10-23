@@ -54,7 +54,6 @@ const HeaderTabs = (props) => {
         value={selectedPage}
         onChange={handleTabChange}
         aria-label="page select"
-        // classes={{ indicator: classes.tabIndicator }}
       >
         <StyledTab
           disableRipple

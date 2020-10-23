@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     borderRadius: "1rem",
     overflow: "hidden",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.04)",
+      opacity: "0.95",
+    },
   },
   listImage: {
     objectFit: "cover",
@@ -38,31 +42,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListCard = (props) => {
+  const { listTitle, itemCount, img } = props.list;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
-  const handleListClick = () => {
-    setListOpen(true);
+  const changeListOpen = () => {
+    setListOpen(!listOpen);
   };
 
   return (
     <Box>
-      <Box onClick={handleListClick} className={classes.listContainer}>
-        <img
-          src={props.list.img}
-          alt={props.list.title}
-          className={classes.listImage}
-        />
+      <Box onClick={changeListOpen} className={classes.listContainer}>
+        <img src={img} alt={listTitle} className={classes.listImage} />
 
         <Box className={classes.listTextContainer}>
-          <Typography className={classes.listTextTitle}>
-            {props.list.title}
-          </Typography>
+          <Typography className={classes.listTextTitle}>{listTitle}</Typography>
           <Typography
             className={classes.listTextItems}
-          >{`${props.list.itemCount} items`}</Typography>
+          >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{ listOpen, setListOpen }} />
+      <ListPopup {...{ listTitle, itemCount, listOpen, changeListOpen }} />
     </Box>
   );
 };

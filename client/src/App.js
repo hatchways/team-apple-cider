@@ -3,7 +3,6 @@ import { MuiThemeProvider } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter, Route } from "react-router-dom";
 
-// import './App.css';
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 
@@ -17,8 +16,8 @@ function App() {
         <MuiThemeProvider theme={theme}>
           <BrowserRouter>
             <Route path="/" component={DashboardPage} />
-            <Route path="/" component={SignUp} exact />
-            <Route path="/login" component={Login} />
+            {/* <Route path="/" component={SignUp} exact/>
+            <Route path="/login" component={Login}/> */}
           </BrowserRouter>
         </MuiThemeProvider>
       </CssBaseline>
