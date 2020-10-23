@@ -118,7 +118,7 @@ function SignUp (){
                     </form>
                     <Box className={classes.signup}>
                         <p className={classes.p}>Already have an account?</p>
-                        <Link className={classes.signupLink} to="/login">Login</Link>
+                        <Link className={classes.signupLink} to="/">Login</Link>
                     </Box>
                 </Box>
             </section>

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Typography, Button, Menu, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import icon from "img/icon.png";
+
+import UserContext from '../contexts/UserContext'
 
 const useStyles = makeStyles((theme) => ({
   profileMenuContainer: {
@@ -26,11 +28,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileMenu = () => {
+const ProfileMenu = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
+  const value=useContext(UserContext)
   const handleClick = (e) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
+  
+  const handleLogout=(e)=>{
+    value.handleLogout()
+    props.history.push('/')
+  }
 
   return (
     <Box className={classes.profileMenuContainer}>
@@ -44,11 +52,11 @@ const ProfileMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem><Link to="/">Logout</Link></MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
         <MenuItem>Go to profile</MenuItem>
       </Menu>
     </Box>
   );
 };
 
-export default ProfileMenu;
+export default withRouter(ProfileMenu);
