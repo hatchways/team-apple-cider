@@ -1,5 +1,6 @@
 from database import db
 
+
 class Product(db.Model):
 
     __tablename__ = 'product'
@@ -12,10 +13,10 @@ class Product(db.Model):
     url = db.Column(db.String, nullable=False)
     img_url = db.Column(db.String, nullable=False)
 
-    def __init__(self, list_id, name, description, price,old_price,url, img_url):
+    def __init__(self, list_id, name, price, old_price, url, img_url):
         self.list_id = list_id
         self.name = name
-        self.old_price=old_price
+        self.old_price = old_price
         self.price = price
         self.url = url
         self.img_url = img_url
