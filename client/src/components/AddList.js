@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
     //display:'block',
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: theme.palette.background.paper,
-    //backgroundColor: "white",
+    //backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#f8f8f8",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     //padding: theme.spacing(1, 1, 3),
@@ -59,9 +59,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   },
   titleText: {
-    fontSize: "1.3rem",
-    fontWeight: "500",
-    letterSpacing:"1px"
+    fontSize: "1.5rem",
+    fontWeight:"bold"
   },
   itemText:{
     fontSize: "0.8rem",
@@ -106,13 +105,18 @@ const useStyles = makeStyles((theme) => ({
   textFieldContainer:{
     display:"flex",
     justifyContent:"center",
-    width:"80%"
+    width:"80%",
+    backgroundColor:"white"
   },
   centerText:{
     textAlign:"center"
   },
   imageFieldContainer:{
     display:"flex",
+    backgroundColor:"white",
+    width:"35%",
+    height:"0",
+    paddingBottom:"35%"
   },
   input: {
     display:'none'
