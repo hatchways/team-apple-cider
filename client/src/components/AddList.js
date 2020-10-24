@@ -175,7 +175,7 @@ const AddList = (props) => {
         open={addListOpen}
         onClose={handleClose}
         aria-labelledby="add-list"
-        aria-describedby="confirms-adding-item-of-url-to-selected-list"
+        aria-describedby="confirms-adding-a-new-list"
         >
         <Box className={classes.paper}>
           <Box className={classes.closeButtonContainer}>

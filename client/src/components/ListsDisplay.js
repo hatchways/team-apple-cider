@@ -64,7 +64,7 @@ const ListsDisplay = (props) => {
       </Typography>
       <Box className={classes.myShoppingLists}>
         {demoListsArray.map((list, i) => (
-          <ListCard key={i} list={list} />
+          <ListCard key={i} list={list} demoListsArray={demoListsArray}/>
         ))}
         <Box className={classes.addNewList}>
           <IconButton className={classes.addNewListButton} onClick={() => setAddListOpen(true)}>

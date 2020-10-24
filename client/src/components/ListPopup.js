@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Modal, IconButton, Typography, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -125,9 +125,14 @@ const demoProductsArray = [
   },
 ];
 
-const ListPopup = ({ listTitle, itemCount, listOpen, changeListOpen }) => {
+const ListPopup = ({ listTitle, itemCount, listOpen, changeListOpen, addProductOpen, changeAddProductOpen }) => {
   const classes = useStyles();
   const handleClose = () => changeListOpen();
+
+  const handleAddClick = () => {
+    changeAddProductOpen();
+    changeListOpen();
+  }
 
   return (
     <Modal open={listOpen} onClose={handleClose} className={classes.popup}>
@@ -160,7 +165,7 @@ const ListPopup = ({ listTitle, itemCount, listOpen, changeListOpen }) => {
           </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained">
+          <Button className={classes.addButton} variant="contained" onClick={handleAddClick}>
             ADD NEW ITEM
           </Button>
         </Box>
