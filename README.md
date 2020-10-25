@@ -51,6 +51,19 @@ The following command will scrape a headset listing:
 
 `curl --header "Content-Type: application/json" --request POST --data '{"URL": "https://www.amazon.com/dp/B00YXO5UKY"}' http://localhost:5000/scrape | jq`
 
+This will return the following JSON object:
+
+```
+{
+  "availability": true,
+  "imgURL": "https://images-na.ssl-images-amazon.com/images/I/81dh8R950eL._SX342_.jpg",
+  "oldPrice": "$29.95",
+  "price": "$24.95",
+  "shopURL": "https://www.amazon.com/dp/B00YXO5UKY",
+  "title": "Turtle Beach Recon 50P Gaming Headset for PlayStation 5, PS4 Pro & PS4"
+}
+```
+
 ## External API Services
 
 ### Cloudinary
