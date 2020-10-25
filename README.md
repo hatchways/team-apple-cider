@@ -49,7 +49,7 @@ The scraper can retrieve information about an amazon product by providing a vali
 
 The following cURL POST request will scrape an Amazon headset listing:
 
-`curl --header "Content-Type: application/json" --request POST --data '{"URL": "https://www.amazon.com/dp/B00YXO5UKY"}' http://localhost:5000/scrape | jq`
+`curl -X POST http://localhost:5000/scrape --data '{"URL": "https://www.amazon.com/dp/B00YXO5UKY"}' --header "Content-Type: application/json" | jq`
 
 The information is returned in the following JSON object:
 
