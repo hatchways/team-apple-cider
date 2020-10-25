@@ -47,11 +47,11 @@
 
 The scraper can retrieve information about an amazon product by providing a valid product link.
 
-The following command will scrape a headset listing:
+The following cURL POST request will scrape an Amazon headset listing:
 
 `curl --header "Content-Type: application/json" --request POST --data '{"URL": "https://www.amazon.com/dp/B00YXO5UKY"}' http://localhost:5000/scrape | jq`
 
-This will return the following JSON object:
+The information is returned in the following JSON object:
 
 ```
 {
