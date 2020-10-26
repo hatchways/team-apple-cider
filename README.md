@@ -49,18 +49,18 @@ The scraper can retrieve information about an Amazon product by providing a vali
 
 The following cURL POST request will scrape an Amazon headset listing:
 
-`curl -X POST http://localhost:5000/scrape --data '{"URL": "https://www.amazon.com/dp/B00YXO5UKY"}' --header "Content-Type: application/json" | jq`
+`curl -X POST http://localhost:5000/scrape --data '{"url": "https://www.amazon.com/dp/B00YXO5UKY"}' --header "Content-Type: application/json" | jq`
 
 The information is returned as a JSON object:
 
 ```
 {
   "availability": true,
-  "imgURL": "https://images-na.ssl-images-amazon.com/images/I/81dh8R950eL._SX342_.jpg",
-  "oldPrice": "$29.95",
+  "img_url": "https://images-na.ssl-images-amazon.com/images/I/81dh8R950eL._SX342_.jpg",
+  "old_price": "$29.95",
   "price": "$24.95",
-  "shopURL": "https://www.amazon.com/dp/B00YXO5UKY",
-  "title": "Turtle Beach Recon 50P Gaming Headset for PlayStation 5, PS4 Pro & PS4"
+  "url": "https://www.amazon.com/dp/B00YXO5UKY",
+  "name": "Turtle Beach Recon 50P Gaming Headset for PlayStation 5, PS4 Pro & PS4"
 }
 ```
 
