@@ -6,7 +6,7 @@ class Prices(db.Model):
     __tablename__ = 'price_history'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    url_id = db.Column(db.String, unique=True, nullable=False)
+    url_id = db.Column(db.String, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
 
