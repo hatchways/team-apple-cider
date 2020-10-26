@@ -14,7 +14,7 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 flask-migrate = "*"
 flask-cors = "*"
-celery = {extras = ["redis"], version = "*"}
+celery = {extras = ["librabbitmq"], version = "*"}
 cloudinary = "*"
 selenium = "*"
 webdriver-manager = "*"
