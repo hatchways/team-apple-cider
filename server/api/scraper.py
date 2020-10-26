@@ -3,6 +3,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
+def string_to_int_price(price_string):
+    x = re.search(r"\$([0-9]+)\.([0-9]+)", price_string) 
+    return int(x.group(1)) * 100 + int(x.group(2))
+
 class ScrapeAmazon:   
     def __init__(self, URL):
         chrome_options = Options()
@@ -20,8 +24,8 @@ class ScrapeAmazon:
         driver.get(URL)
         self.shopURL = URL
         self.title = self.get_title(driver) 
-        self.oldPrice = self.get_old_price(driver)  
-        self.price = self.get_price(driver)  
+        self.oldPrice = string_to_int_price(self.get_old_price_string(driver))  
+        self.price = string_to_int_price(self.get_price_string(driver))  
         self.imgURL = self.get_img_URL(driver)  
         self.availability = self.get_availability(driver)  
         driver.quit()
@@ -29,14 +33,14 @@ class ScrapeAmazon:
         try: 
             return driver.find_element_by_id('productTitle').text
         except: return None
-    def get_old_price(self, driver):        
+    def get_old_price_string(self, driver):        
         # Non-books:
         try: return driver.find_element_by_class_name('priceBlockStrikePriceString').text
         except : pass
         # Books:
         try: return driver.find_element_by_css_selector('#buyBoxInner > ul > *:first-child > span > *:last-child').text
         except: return None
-    def get_price(self, driver):
+    def get_price_string(self, driver):
         # Non-books:
         try: return driver.find_element_by_id('priceblock_ourprice').text
         except: pass
