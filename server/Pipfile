@@ -10,11 +10,14 @@ flask = "*"
 flask-sqlalchemy = "*"
 flask-bcrypt = "*"
 pyjwt = "*"
-psycopg2 = "*"
+psycopg2-binary = "*"
 python-dotenv = "*"
 flask-migrate = "*"
 flask-cors = "*"
 celery = {extras = ["redis"], version = "*"}
+cloudinary = "*"
+selenium = "*"
+webdriver-manager = "*"
 
 [requires]
 python_version = "3.7"

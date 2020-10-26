@@ -24,7 +24,6 @@
   
 
   
-
 ## Setting up PostgreSQL
 
   
@@ -36,10 +35,10 @@
 3. (MacOS and Windows only) To run the psql shell from anywhere in our command line, we need to set up our $PATH [environment variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them) to point towards the location of our psql shell executable.
 
 	- Windows: [follow these instructions](https://sqlbackupandftp.com/blog/setting-windows-path-for-postgres-tools)
-	- [MacOS](https://opensource.com/article/17/6/set-path-linux): `export PATH=/Library/PostgreSQL/12/bin:$PATH`
+	- [MacOS](https://www.cyberciti.biz/faq/appleosx-bash-unix-change-set-path-environment-variable/): `export PATH=/Library/PostgreSQL/12/bin:$PATH`
 	- Linux: *Most Linux platforms such as Debian, Red Hat / CentOS, SUSE, and Ubuntu have PostgreSQL integrated with their package management.*
 
-4. To create a local database, we can either use the pgAdmin GUI or through the psql shell via terminal. The following is an example of how to run it through your terminal.
+4. To create a local database, we can either use the GUI (eg pgAdmin or [dbeavear](https://dbeaver.io/download/)) or through the psql shell via terminal. The following is an example of how to run it through your terminal.
     
     a)  Access the psql shell and type in your password
     - Windows: `psql -U postgres`
@@ -47,6 +46,7 @@
 	- Linux: `sudo -i -u postgres` then `psql`
         
 	b)  Create a database while in the shell
+
 	- `postgres=# CREATE DATABASE dealsmate_db;`
 	- `postgres=# \l`: to view all available databases`
 	- `postgres=# \q`: to exit the shell`
@@ -58,3 +58,17 @@
     - `POSTGRES_PW = "password"`
     - `POSTGRES_URL = "127.0.0.1:5432"`
     - `POSTGRES_DB = "dealsmate_db"`
+
+## External API Services
+
+### Cloudinary
+On Cloudinary these were the presets that were used to get proper image transformations for the products and profiles.
+
+| PRODUCT_IMG_PRESET  | PROFILE_IMG_PRESET |
+|--|--|
+| max_width: 400px|max_width: 400px|
+|max_height:400px|max_height:400px|
+|crop_type:fitted|crop_type: fitted|
+||face_detection_crop: true|
+||background_removal: true|
+
