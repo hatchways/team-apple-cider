@@ -67,7 +67,7 @@ const AddItem = () => {
     const response = await fetch("/scrape", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ URL: input }),
+      body: JSON.stringify({ url: input }),
     });
     return response.json();
   };
