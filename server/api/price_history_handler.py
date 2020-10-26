@@ -30,7 +30,7 @@ def price_history():
         try:
             item = ScrapeAmazon(URL)
             url_id = get_url_id(URL)
-            price_entry = Prices(url_id, 0)
+            price_entry = Prices(url_id, item.price)
             db.session.add(price_entry)
         except:
             return jsonify({'error': "{}".format(e.__cause__)}), 400      
@@ -38,7 +38,7 @@ def price_history():
             db.session.commit()
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
-        return jsonify({'response': "{} was successfully added to the database".format(URL)}), 200
+        return jsonify({'response': "{} was successfully added to the database".format(url_id)}), 200
 
 
 
