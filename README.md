@@ -59,8 +59,8 @@ The information is returned as a JSON object:
   "imgURL": "https://images-na.ssl-images-amazon.com/images/I/81dh8R950eL._SX342_.jpg",
   "oldPrice": "$29.95",
   "price": "$24.95",
-  "shopURL": "https://www.amazon.com/dp/B00YXO5UKY",
-  "title": "Turtle Beach Recon 50P Gaming Headset for PlayStation 5, PS4 Pro & PS4"
+  "url": "https://www.amazon.com/dp/B00YXO5UKY",
+  "name": "Turtle Beach Recon 50P Gaming Headset for PlayStation 5, PS4 Pro & PS4"
 }
 ```
 
