@@ -59,15 +59,15 @@ const ItemDisplay = (props) => {
   const { item } = props;
   const classes = useStyles();
   const name = item.name ? item.name : "";
-  const imgURL = item.imgURL ? item.imgURL : "";
+  const img_url = item.img_url ? item.img_url : "";
   const url = item.url ? item.url : "";
-  const oldPrice = item.oldPrice ? item.oldPrice : "";
+  const old_price = item.old_price ? item.old_price : "";
   const price = item.price ? item.price : "";
 
   return (
     <Box className={`${classes.itemContainer} ${props.className}`}>
       <Box className={classes.imageContainer}>
-        <img className={classes.itemImage} src={imgURL} alt={name} />
+        <img className={classes.itemImage} src={img_url} alt={name} />
       </Box>
       <Box className={classes.itemTextContainer}>
         <Typography className={classes.itemName}>{name}</Typography>
@@ -75,7 +75,7 @@ const ItemDisplay = (props) => {
           {url}
         </Link>
         <Box className={classes.priceTextContainer}>
-          <Typography className={classes.itemOldPrice}>{oldPrice}</Typography>{" "}
+          <Typography className={classes.itemOldPrice}>{old_price}</Typography>{" "}
           <Typography className={classes.itemPrice}>{price}</Typography>
         </Box>
       </Box>

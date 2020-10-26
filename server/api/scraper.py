@@ -20,9 +20,9 @@ class ScrapeAmazon:
         driver.get(URL)
         self.url = URL
         self.name = self.get_name(driver) 
-        self.oldPrice = self.get_old_price(driver)  
+        self.old_price = self.get_old_price(driver)  
         self.price = self.get_price(driver)  
-        self.imgURL = self.get_img_URL(driver)  
+        self.img_url = self.get_img_URL(driver)  
         self.availability = self.get_availability(driver)  
         driver.quit()
     def get_name(self, driver):
