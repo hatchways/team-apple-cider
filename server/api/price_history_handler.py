@@ -22,7 +22,7 @@ def price_history():
                     "id": item.id,
                     "url_id": item.url_id,
                     "price": item.price,
-                    "date": item.date
+                    "scrape_date": item.scrape_date
                 })
         return jsonify({'prices': price_history_ls}), 200
     if request.method == 'POST':

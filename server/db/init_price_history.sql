@@ -1,0 +1,6 @@
+CREATE TABLE price_history (
+  id SERIAL PRIMARY KEY,
+  url_id VARCHAR(255) NOT NULL,
+  price INT NOT NULL,
+  scrape_date TIMESTAMP WITHOUT TIME ZONE NOT NULL
+);
