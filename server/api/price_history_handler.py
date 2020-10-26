@@ -14,17 +14,17 @@ def get_url_id(URL):
 @price_history_handler.route('/price_history', methods = ['GET', 'POST'])
 def price_history():
     if request.method == 'GET':
-        product_types = Prices.query.all()
-        product_types_ls = []
-        for item in product_types:
-            product_types_ls.append(
+        price_history = Prices.query.all()
+        price_history_ls = []
+        for item in price_history:
+            price_history_ls.append(
                 {
                     "id": item.id,
                     "url_id": item.url_id,
                     "price": item.price,
                     "date": item.date
                 })
-        return jsonify({'prices': product_types_ls}), 200
+        return jsonify({'prices': price_history_ls}), 200
     if request.method == 'POST':
         URL = json.loads(request.get_data())['url']
         try:
