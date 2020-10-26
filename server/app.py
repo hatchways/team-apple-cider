@@ -7,7 +7,7 @@ from api.auth_handler import auth_handler
 from api.product_handler import product_handler
 from api.list_handler import list_handler
 from api.scrape_handler import scrape_handler 
-from api.scraped_items_handler import scraped_items_handler 
+from api.price_history_handler import price_history_handler 
 
 
 def create_app():
@@ -28,7 +28,7 @@ def create_app():
         app.register_blueprint(product_handler)
         app.register_blueprint(list_handler)
         app.register_blueprint(scrape_handler)
-        app.register_blueprint(scraped_items_handler) 
+        app.register_blueprint(price_history_handler) 
 
         db.create_all()
         return app
