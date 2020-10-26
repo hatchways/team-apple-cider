@@ -22,11 +22,11 @@ class ScrapeAmazon:
 
         driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
         driver.get(URL)
-        self.shopURL = URL
+        self.url = URL
         self.title = self.get_title(driver) 
-        self.oldPrice = string_to_int_price(self.get_old_price_string(driver))  
+        self.old_price = string_to_int_price(self.get_old_price_string(driver))  
         self.price = string_to_int_price(self.get_price_string(driver))  
-        self.imgURL = self.get_img_URL(driver)  
+        self.img_url = self.get_img_URL(driver)  
         self.availability = self.get_availability(driver)  
         driver.quit()
     def get_title(self, driver):
