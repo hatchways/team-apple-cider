@@ -51,7 +51,7 @@ The following cURL POST request will scrape an Amazon headset listing:
 
 `curl -X POST http://localhost:5000/scrape --data '{"URL": "https://www.amazon.com/dp/B00YXO5UKY"}' --header "Content-Type: application/json" | jq`
 
-The information is returned in the following JSON object:
+The information is returned as a JSON object:
 
 ```
 {
