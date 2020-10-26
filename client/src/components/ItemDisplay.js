@@ -55,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const centsToDollarsDisplay = (cents) =>
+  `$${Math.floor(cents / 100)}.${cents % 100}`;
+
 const ItemDisplay = (props) => {
   const { item } = props;
   const classes = useStyles();
@@ -75,8 +78,12 @@ const ItemDisplay = (props) => {
           {url}
         </Link>
         <Box className={classes.priceTextContainer}>
-          <Typography className={classes.itemOldPrice}>{old_price}</Typography>{" "}
-          <Typography className={classes.itemPrice}>{price}</Typography>
+          <Typography className={classes.itemOldPrice}>
+            {centsToDollarsDisplay(old_price)}
+          </Typography>{" "}
+          <Typography className={classes.itemPrice}>
+            {centsToDollarsDisplay(price)}
+          </Typography>
         </Box>
       </Box>
     </Box>
