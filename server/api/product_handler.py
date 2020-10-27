@@ -1,7 +1,6 @@
 from flask import jsonify, Blueprint, request
 from models.product import Product
 from models.list import List
-from models.list_to_product import ListToProduct
 from database import db
 
 from api.image_uploader import image_uploader
@@ -11,20 +10,27 @@ import json
 
 product_handler = Blueprint('product_handler', __name__)
 
-
-@product_handler.route('/products', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def productRequests():
+@product_handler.route('/products/<product_id>', methods=['GET'])
+def oneProductRequests(product_id):
     if request.method == 'GET':
-        body = json.loads(request.get_data())
-        product_id = body['product_id']
-        product = Product.query.filter_by(id=product_id)
-        return jsonify({product}), 200
+        product = Product.query.get(int(product_id)) 
+        return jsonify(product.serialize), 200
 
-    if request.method == 'POST':
+
+@product_handler.route('/products', methods=['GET','POST'])
+def allProductRequests():
+    if request.method == 'GET':
+        products = Product.query.all()
+        return jsonify([product.serialize for product in products]), 200
+
+
+
+    #POST request
+    if request.method == "POST":
         body = json.loads(request.get_data())
         product_name = body['name']
 
-        # checks if product already exists
+#         # checks if product already exists
         if not Product.query.filter_by(name=product_name).first():
             try:
                 body['price'] = round(float(body['price']), 2)
@@ -50,13 +56,15 @@ def productRequests():
         else:
             return jsonify({'error': 'product already exists'}), 400
 
-    if request.method == "PUT":
-        body= json.loads(request.get_data())
-        my_user = session.query(User).get(5)
-    if request.method == "DELETE":
-        body = json.loads(request.get_data())
-        product_id = body['product_id']
-        product_name = Product.query.filter_by(id=product_id).first().name
-        Product.query.filter_by(id=product_id).delete()
-        db.session.commit()
-        return jsonify({'response': "{} was successfully deleted from the database".format(product_name)}), 200
+
+
+#     if request.method == "PUT":
+#         body= json.loads(request.get_data())
+#         my_user = session.query(User).get(5)
+#     if request.method == "DELETE":
+#         body = json.loads(request.get_data())
+#         product_id = body['product_id']
+#         product_name = Product.query.filter_by(id=product_id).first().name
+#         Product.query.filter_by(id=product_id).delete()
+#         db.session.commit()
+#         return jsonify({'response': "{} was successfully deleted from the database".format(product_name)}), 200
