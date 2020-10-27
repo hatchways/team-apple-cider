@@ -2,7 +2,26 @@ import React, { useState } from "react";
 const UserContext = React.createContext({});
 
 export function UserStore(props) {
-  const [user, setUser] = useState(false);
+  const checkCookie = () =>
+    fetch("/auth/status", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === "success") {
+          console.log("It worked");
+          setUser(true);
+        } else {
+          console.log("It failed");
+          setUser(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setUser(false);
+      });
+
+  const [user, setUser] = useState(checkCookie());
 
   const handleLogin = (email, password) =>
     fetch("/auth/login", {
@@ -43,6 +62,7 @@ export function UserStore(props) {
         user: user,
         handleLogin: handleLogin,
         handleLogout: handleLogout,
+        checkCookie: checkCookie,
       }}
     >
       {props.children}
