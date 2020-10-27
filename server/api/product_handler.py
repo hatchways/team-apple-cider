@@ -10,41 +10,49 @@ import json
 
 product_handler = Blueprint('product_handler', __name__)
 
-@product_handler.route('/products/<product_id>', methods=['GET'])
+
+@product_handler.route('/products/<product_id>', methods=['GET', 'DELETE', 'PUT'])
 def oneProductRequests(product_id):
     if request.method == 'GET':
-        product = Product.query.get(int(product_id)) 
+        product = Product.query.get(int(product_id))
         return jsonify(product.serialize), 200
 
-    # if request.method == "DELETE":
-    #     body = json.loads(request.get_data())
-    #     product_id = body['product_id']
-    #     product_name = Product.query.filter_by(id=product_id).first().name
-    #     Product.query.filter_by(id=product_id).delete()
-    #     db.session.commit()
-    #     return jsonify({'response': "{} was successfully deleted from the database".format(product_name)}), 200
+    if request.method == 'DELETE':
+        product = Product.query.get(int(product_id))
+        db.session.delete(product)
+        db.session.commit()
+        return jsonify({'response': "Product '{}' was successfully deleted from the database".format(product_id)}), 200
+    
+    if request.method == "PUT":
+        req = request.get_json()
+        product = Product.query.get(int(product_id))
+        
+        if product:             
+            if "name" in req: product.name = req["name"]
+            if "old_price" in req: product.old_price = req["old_price"]
+            if "price" in req: product.price = req["price"]
+            if "url" in req: product.url = req["url"]
+            if "img_url" in req: product.img_url = req["img_url"]
+            db.session.commit()
+            return jsonify({"response" : "Product '{}' was updated".format(product_id)}), 200
+        else:
+            return jsonify({"error":"Product does not exist, can't update"}), 400
 
+    
 
-@product_handler.route('/products', methods=['GET','POST'])
+@product_handler.route('/products', methods=['GET', 'POST'])
 def allProductRequests():
     if request.method == 'GET':
         products = Product.query.all()
         return jsonify([product.serialize for product in products]), 200
 
-
-
-    #POST request
-    if request.method == "POST":
+    # POST request
+    if request.method == 'POST':
         body = json.loads(request.get_data())
         product_name = body['name']
 
 #         # checks if product already exists
         if not Product.query.filter_by(name=product_name).first():
-            try:
-                body['price'] = round(float(body['price']), 2)
-            except Exception as e:
-                return jsonify({'error': "{}".format(e.__cause__)}), 400
-            
             # checks to see if cloudinary works
             try:
                 new_img_url = image_uploader(
@@ -55,7 +63,7 @@ def allProductRequests():
             # checks to see if data can be saved in the database
             try:
                 product_item = Product(
-                    int(body['list_id']), body['name'], body['old_price'], body['price'], body['url'], new_img_url)
+                    body['name'], body['old_price'], body['price'], body['url'], new_img_url)
                 db.session.add(product_item)
                 db.session.commit()
             except Exception as e:
@@ -64,8 +72,4 @@ def allProductRequests():
         else:
             return jsonify({'error': 'product already exists'}), 400
 
-
-
-#     if request.method == "PUT":
-#         body= json.loads(request.get_data())
-#         my_user = session.query(User).get(5)
+  

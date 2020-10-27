@@ -12,21 +12,21 @@ class Product(db.Model):
     url = db.Column(db.String, nullable=False)
     img_url = db.Column(db.String, nullable=False)
 
-
-    def __init__(self, name, price, old_price, url, img_url):
+    def __init__(self, name, old_price, price, url, img_url):
         self.name = name
         self.old_price = old_price
         self.price = price
         self.url = url
         self.img_url = img_url
-        
+
     @property
     def serialize(self):
-       """Return object data in easily serializable format"""
-       return {
-        "name": self.name, 
-        "old_price": self.old_price, 
-        "price": self.price,
-        "url":self.url,
-        "img_url":self.img_url 
-       }
+        """Return object data in easily serializable format"""
+        return {
+            "id": self.id,
+            "name": self.name,
+            "old_price": self.old_price,
+            "price": self.price,
+            "url": self.url,
+            "img_url": self.img_url
+        }
