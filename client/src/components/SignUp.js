@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Box } from "@material-ui/core";
+import { Button, TextField, Box, Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/alert";
+import UserContext from "../contexts/UserContext";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   login: {
@@ -59,6 +65,22 @@ function SignUp(props) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackText, setSnackText] = useState("");
+  const value = useContext(UserContext);
+
+  const handleSnack = (props) => {
+    setSnackText(props);
+    setOpenSnack(true);
+  };
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
 
   const validations = () => {
     const errorsCopy = { ...errors };
@@ -72,7 +94,7 @@ function SignUp(props) {
     return Object.values(errorsCopy).every((field) => field === "");
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
     if (validations()) {
       fetch("/auth/register", {
@@ -91,10 +113,10 @@ function SignUp(props) {
         .then(function (response) {
           if (response.status === "success") {
             console.log("Success:", email);
-            window.alert(response.message); // Replace with snackbar.
-            props.history.push("/dashboard");
+            const loginSuccess = value.handleLogin(email, password);
+            if (loginSuccess) props.history.push("/dashboard");
           } else {
-            window.alert(response.message); // Replace with snackbar.
+            handleSnack(response.message);
             console.log(response.message);
           }
         })
@@ -172,6 +194,16 @@ function SignUp(props) {
             Login
           </Link>
         </Box>
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={6000}
+          onClose={handleCloseSnack}
+        >
+          <Alert onClose={handleCloseSnack} severity="error">
+            {snackText}
+          </Alert>
+        </Snackbar>
+        ;
       </Box>
     </section>
   );
