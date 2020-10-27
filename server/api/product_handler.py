@@ -12,7 +12,7 @@ import json
 product_handler = Blueprint('product_handler', __name__)
 
 
-@product_handler.route('/products', methods=['GET', 'POST', 'DELETE'])
+@product_handler.route('/products', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def productRequests():
     if request.method == 'GET':
         body = json.loads(request.get_data())
@@ -50,16 +50,15 @@ def productRequests():
             except:
                 return jsonify({"error : uploading image on cloudinary"}), 400
 
-            product_item = Product(
-                int(body['list_id']), body['name'], body['old_price'], body['price'], body['url'], new_img_url)
-            db.session.add(product_item)
-
             # checks to see if data can be saved in the database
             try:
+                product_item = Product(
+                    int(body['list_id']), body['name'], body['old_price'], body['price'], body['url'], new_img_url)
+                db.session.add(product_item)
                 db.session.commit()
-                return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
+            return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
         else:
             return jsonify({'error': 'product already exists'}), 400
 

@@ -4,9 +4,9 @@ class Follower(db.Model):
 
     __tablename__ = 'follower'
 
-    user_id = db.Column(db.String)
-    product_type = db.Column(db.String, unique=True, nullable=False)
-    # have an image type aswell, will implement later...
+    user_id = db.Column(db.String,nullable=False)
+    follower_id = db.Column(db.String,nullable=False)
+
 
     def __init__(self, user_id, follower_id):
         self.user_id = user_id
