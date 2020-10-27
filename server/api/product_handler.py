@@ -16,6 +16,14 @@ def oneProductRequests(product_id):
         product = Product.query.get(int(product_id)) 
         return jsonify(product.serialize), 200
 
+    # if request.method == "DELETE":
+    #     body = json.loads(request.get_data())
+    #     product_id = body['product_id']
+    #     product_name = Product.query.filter_by(id=product_id).first().name
+    #     Product.query.filter_by(id=product_id).delete()
+    #     db.session.commit()
+    #     return jsonify({'response': "{} was successfully deleted from the database".format(product_name)}), 200
+
 
 @product_handler.route('/products', methods=['GET','POST'])
 def allProductRequests():
@@ -61,10 +69,3 @@ def allProductRequests():
 #     if request.method == "PUT":
 #         body= json.loads(request.get_data())
 #         my_user = session.query(User).get(5)
-#     if request.method == "DELETE":
-#         body = json.loads(request.get_data())
-#         product_id = body['product_id']
-#         product_name = Product.query.filter_by(id=product_id).first().name
-#         Product.query.filter_by(id=product_id).delete()
-#         db.session.commit()
-#         return jsonify({'response': "{} was successfully deleted from the database".format(product_name)}), 200
