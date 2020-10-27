@@ -31,29 +31,34 @@ def productRequests():
         return jsonify({list.product_type: product_ls}), 200
     if request.method == 'POST':
         body = json.loads(request.get_data())
-        if all(body.values()) == False:
-            return jsonify({'error': "input has missing fields"}), 200
-        try:
-            body['price'] = round(float(body['price']), 2)
-        except Exception as e:
-            return jsonify({'error': "{}".format(e.__cause__)}), 400
+        product_name = body['name']
 
-        try:
-            new_img_url = image_uploader(
-                body['img_url'], PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
+        # checks if product already exists
+        if not Product.query.filter_by(name=product_name).first():
+            try:
+                body['price'] = round(float(body['price']), 2)
+            except Exception as e:
+                return jsonify({'error': "{}".format(e.__cause__)}), 400
+            
+            # checks to see if cloudinary works
+            try:
+                new_img_url = image_uploader(
+                    body['img_url'], PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
+            except:
+                return jsonify({"error : uploading image on cloudinary"}), 400
 
-        except:
-            return jsonify({"error : uploading image on cloudinary"}), 400
-
-        product_item = Product(
-            int(body['list_id']), body['name'], body['old_price'], body['price'], body['url'], new_img_url)
-
-        db.session.add(product_item)
-        try:
-            db.session.commit()
-        except Exception as e:
-            return jsonify({'error': "{}".format(e.__cause__)}), 400
-        return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
+            product_item = Product(
+                int(body['list_id']), body['name'], body['old_price'], body['price'], body['url'], new_img_url)
+            db.session.add(product_item)
+            
+            # checks to see if data can be saved in the database
+            try:
+                db.session.commit()
+                return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
+            except Exception as e:
+                return jsonify({'error': "{}".format(e.__cause__)}), 400
+        else:
+            return jsonify({'error':'product already ex' }), 400
 
     if request.method == "DELETE":
         body = json.loads(request.get_data())
