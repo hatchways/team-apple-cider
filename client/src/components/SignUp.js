@@ -92,7 +92,7 @@ function SignUp(props) {
           if (response.status === "success") {
             console.log("Success:", email);
             window.alert(response.message); // Replace with snackbar.
-            props.history.push("/");
+            props.history.push("/dashboard");
           } else {
             window.alert(response.message); // Replace with snackbar.
             console.log(response.message);
