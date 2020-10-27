@@ -1,11 +1,13 @@
 from flask import jsonify, Blueprint, request
 from models.product import Product
 from models.list import List
+from models.list_to_product import ListToProduct
 from database import db
 
 from api.image_uploader import image_uploader
 from config import PRODUCT_IMG_PRESET, CLOUDINARY_NAME
 import json
+
 
 product_handler = Blueprint('product_handler', __name__)
 
@@ -29,6 +31,7 @@ def productRequests():
                     "img_url": prod.img_url
                 })
         return jsonify({list.product_type: product_ls}), 200
+
     if request.method == 'POST':
         body = json.loads(request.get_data())
         product_name = body['name']
@@ -39,7 +42,7 @@ def productRequests():
                 body['price'] = round(float(body['price']), 2)
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
-            
+
             # checks to see if cloudinary works
             try:
                 new_img_url = image_uploader(
@@ -50,7 +53,7 @@ def productRequests():
             product_item = Product(
                 int(body['list_id']), body['name'], body['old_price'], body['price'], body['url'], new_img_url)
             db.session.add(product_item)
-            
+
             # checks to see if data can be saved in the database
             try:
                 db.session.commit()
@@ -58,7 +61,7 @@ def productRequests():
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
         else:
-            return jsonify({'error':'product already ex' }), 400
+            return jsonify({'error': 'product already exists'}), 400
 
     if request.method == "DELETE":
         body = json.loads(request.get_data())
