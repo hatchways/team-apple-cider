@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 import { theme } from "./themes/theme";
 import { UserStore } from "./contexts/UserContext";
 
@@ -17,7 +18,8 @@ function App() {
         <MuiThemeProvider theme={theme}>
           <UserStore>
             <BrowserRouter>
-              <Route path="/" exact component={Login} />
+              <Route path="/" exact component={Profile} />
+              {/* <Route path="/" exact component={Login} /> */}
               <Route path="/signup" exact component={SignUp} />
               <ProtectedRoute exact path="/dashboard" component={Dashboard} />
             </BrowserRouter>
