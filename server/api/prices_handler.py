@@ -1,8 +1,8 @@
 import json, re
 from flask import jsonify, request, Blueprint
-from models.prices import Prices
+from models.price import Price
 from database import db
-price_history_handler = Blueprint('price_history_handler', __name__)
+prices_handler = Blueprint('prices_handler', __name__)
 from .scraper import ScrapeAmazon
 
 
@@ -11,26 +11,26 @@ def get_url_id(URL):
     return x.group(1)
     
 
-@price_history_handler.route('/price_history', methods = ['GET', 'POST'])
-def price_history():
+@prices_handler.route('/prices', methods = ['GET', 'POST'])
+def prices():
     if request.method == 'GET':
-        price_history = Prices.query.all()
-        price_history_ls = []
-        for item in price_history:
-            price_history_ls.append(
+        prices = Price.query.all()
+        prices_ls = []
+        for item in prices:
+            prices_ls.append(
                 {
                     "id": item.id,
                     "url_id": item.url_id,
                     "price": item.price,
                     "scrape_date": item.scrape_date
                 })
-        return jsonify({'prices': price_history_ls}), 200
+        return jsonify({'prices': prices_ls}), 200
     if request.method == 'POST':
         URL = json.loads(request.get_data())['url']
         try:
             item = ScrapeAmazon(URL)
             url_id = get_url_id(URL)
-            price_entry = Prices(url_id, item.price)
+            price_entry = Price(url_id, item.price)
             db.session.add(price_entry)
         except:
             return jsonify({'error': "{}".format(e.__cause__)}), 400      

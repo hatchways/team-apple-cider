@@ -1,4 +1,4 @@
-CREATE TABLE price_history (
+CREATE TABLE prices (
   id SERIAL PRIMARY KEY,
   url_id VARCHAR(255) NOT NULL,
   price INT NOT NULL,

@@ -1,9 +1,9 @@
 from database import db
 import datetime
 
-class Prices(db.Model):
+class Price(db.Model):
 
-    __tablename__ = 'price_history'
+    __tablename__ = 'prices'
 
     id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
     url_id = db.Column(db.String, nullable=False)

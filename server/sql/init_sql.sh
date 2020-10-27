@@ -1,2 +1,3 @@
 #!/bin/bash
-cat price_history.sql | psql dealsmate_db
+# Run as user "postgres"
+cat prices.sql | psql dealsmate_db
