@@ -8,11 +8,9 @@ export function UserStore(props) {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.status === "success") {
-          console.log("It worked");
+d        if (response.status === "success") {
           setUser(true);
         } else {
-          console.log("It failed");
           setUser(false);
         }
       })
@@ -53,7 +51,22 @@ export function UserStore(props) {
       });
 
   const handleLogout = () => {
-    setUser(false);
+    fetch("/auth/logout", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === "success") {
+          console.log("Logout successful");
+          setUser(false);
+        } else {
+          setUser(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setUser(false);
+      });
   };
 
   return (
