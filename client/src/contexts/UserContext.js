@@ -8,7 +8,7 @@ export function UserStore(props) {
     })
       .then((response) => response.json())
       .then((response) => {
-d        if (response.status === "success") {
+        if (response.status === "success") {
           setUser(true);
         } else {
           setUser(false);
