@@ -1,7 +1,7 @@
-from database import db
+from database import db, ma
 
 
-class Product(db.Model):
+class ListToProduct(db.Model):
 
     __tablename__ = 'list_to_product'
 
@@ -11,3 +11,10 @@ class Product(db.Model):
     def __init__(self, list_id, product_id):
         self.list_id = list_id
         self.product_id = product_id
+
+# class ListToProductSchema(ma.Schema):
+#     class Meta:
+#         model = ListToProduct
+
+
+
