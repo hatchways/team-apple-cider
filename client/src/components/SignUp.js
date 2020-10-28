@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Box } from "@material-ui/core";
+import { Button, TextField, Box, Snackbar, Tooltip } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/alert";
+import UserContext from "../contexts/UserContext";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   login: {
@@ -28,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     display: "block",
     width: "80%",
-    margin: "5px auto 15px auto",
+    margin: "5px auto 40px auto",
     textAlign: "center",
     backgroundColor: "white",
   },
@@ -59,11 +65,35 @@ function SignUp(props) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
+  const [openNameTooltip, setOpenNameTooltip] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackText, setSnackText] = useState("");
+  const value = useContext(UserContext);
+
+  const handleNameTooltip = () => {
+    setOpenNameTooltip(true);
+  };
+
+  const handleSnack = (props) => {
+    setSnackText(props);
+    setOpenSnack(true);
+  };
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
 
   const validations = () => {
     const errorsCopy = { ...errors };
     errorsCopy.name = name ? "" : "This field is required.";
-    errorsCopy.email = /.+@.+..+/.test(email) ? "" : "Email is not valid.";
+    if (errorsCopy.name) {
+      setOpenNameTooltip(true);
+    }
+    errorsCopy.email = /.+@.+\..+/.test(email) ? "" : "Email is not valid.";
     errorsCopy.password =
       password.length > 5 ? "" : "Password must be at least six characters.";
     errorsCopy.confirm = password === confirm ? "" : "Passwords must match.";
@@ -72,7 +102,7 @@ function SignUp(props) {
     return Object.values(errorsCopy).every((field) => field === "");
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
     if (validations()) {
       fetch("/auth/register", {
@@ -91,10 +121,10 @@ function SignUp(props) {
         .then(function (response) {
           if (response.status === "success") {
             console.log("Success:", email);
-            window.alert(response.message); // Replace with snackbar.
-            props.history.push("/");
+            const loginSuccess = value.handleLogin(email, password);
+            if (loginSuccess) props.history.push("/dashboard");
           } else {
-            window.alert(response.message); // Replace with snackbar.
+            handleSnack(response.message);
             console.log(response.message);
           }
         })
@@ -110,17 +140,25 @@ function SignUp(props) {
         <form>
           <h2 className={classes.h2}>Sign up</h2>
           <label>Your Name</label>
-          <TextField
-            className={classes.textField}
-            variant="outlined"
-            label="name"
-            fullWidth
-            required
-            type="text"
-            error={!!errors.name}
-            helperText={errors.name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <Tooltip
+            open={openNameTooltip}
+            title={errors.name}
+            arrow
+            disableHoverListener
+            disableTouchListener
+            disableFocusListener
+          >
+            <TextField
+              className={classes.textField}
+              variant="outlined"
+              label="name"
+              fullWidth
+              required
+              type="text"
+              error={!!errors.name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Tooltip>
           <label>Your email address:</label>
           <TextField
             className={classes.textField}
@@ -159,9 +197,10 @@ function SignUp(props) {
           />
           <Button
             className={classes.button}
+            onClick={handleClick}
+            //type="submit"
             variant="contained"
             color="secondary"
-            onClick={handleClick}
           >
             Sign up
           </Button>
@@ -172,6 +211,15 @@ function SignUp(props) {
             Login
           </Link>
         </Box>
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={6000}
+          onClose={handleCloseSnack}
+        >
+          <Alert onClose={handleCloseSnack} severity="error">
+            {snackText}
+          </Alert>
+        </Snackbar>
       </Box>
     </section>
   );

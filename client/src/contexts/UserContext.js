@@ -2,7 +2,24 @@ import React, { useState } from "react";
 const UserContext = React.createContext({});
 
 export function UserStore(props) {
-  const [user, setUser] = useState(false);
+  const checkCookie = () =>
+    fetch("/auth/status", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === "success") {
+          setUser(true);
+        } else {
+          setUser(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setUser(false);
+      });
+
+  const [user, setUser] = useState(checkCookie());
 
   const handleLogin = (email, password) =>
     fetch("/auth/login", {
@@ -34,7 +51,22 @@ export function UserStore(props) {
       });
 
   const handleLogout = () => {
-    setUser(false);
+    fetch("/auth/logout", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === "success") {
+          console.log("Logout successful");
+          setUser(false);
+        } else {
+          setUser(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setUser(false);
+      });
   };
 
   return (
@@ -43,6 +75,7 @@ export function UserStore(props) {
         user: user,
         handleLogin: handleLogin,
         handleLogout: handleLogout,
+        checkCookie: checkCookie,
       }}
     >
       {props.children}

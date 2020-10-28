@@ -145,6 +145,17 @@ class UserAPI(MethodView):
         return make_response(jsonify(responseObject)), 200
 
 
+class LogoutAPI(MethodView):
+    def get(self):
+        responseObject = {
+            "status": "success",
+            "message": "Logout successful"
+        }
+        resp = make_response(jsonify(responseObject))
+        resp.delete_cookie("Authentication token")
+        return resp, 200
+
+
 # Basic middleware for protected routes pulled from Flask's documentation.
 def login_required(f):
     @wraps(f)
@@ -159,6 +170,7 @@ def login_required(f):
 registration_view = RegisterAPI.as_view("register_api")
 login_view = LoginAPI.as_view("login_api")
 user_view = UserAPI.as_view("user_api")
+logout_view = LogoutAPI.as_view("logout_api")
 
 auth_handler.add_url_rule(
     "/auth/register",
@@ -173,5 +185,10 @@ auth_handler.add_url_rule(
 auth_handler.add_url_rule(
     "/auth/status",
     view_func=user_view,
+    methods=["GET"]
+)
+auth_handler.add_url_rule(
+    "/auth/logout",
+    view_func=logout_view,
     methods=["GET"]
 )
