@@ -15,16 +15,16 @@ def get_url_id(URL):
 def prices():
     if request.method == 'GET':
         prices = Price.query.all()
-        prices_ls = []
+        prices_list = []
         for item in prices:
-            prices_ls.append(
+            prices_list.append(
                 {
                     "id": item.id,
                     "url_id": item.url_id,
                     "price": item.price,
                     "scrape_date": item.scrape_date
                 })
-        return jsonify({'prices': prices_ls}), 200
+        return jsonify({'prices': prices_list}), 200
     if request.method == 'POST':
         URL = json.loads(request.get_data())['url']
         try:
