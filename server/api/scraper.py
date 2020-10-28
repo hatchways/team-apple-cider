@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 def string_to_int_price(price_string):
+    if price_string == None: return None
     x = re.search(r"\$([0-9]+)\.([0-9]+)", price_string) 
     return int(x.group(1)) * 100 + int(x.group(2))
 
@@ -24,8 +25,8 @@ class ScrapeAmazon:
         driver.get(URL)
         self.url = URL
         self.name = self.get_name(driver) 
-        self.old_price = self.get_old_price(driver)  
-        self.price = self.get_price(driver)  
+        self.old_price = string_to_int_price(self.get_old_price_string(driver))  
+        self.price = string_to_int_price(self.get_price_string(driver))  
         self.img_url = self.get_img_URL(driver)  
         self.availability = self.get_availability(driver)  
         driver.quit()
