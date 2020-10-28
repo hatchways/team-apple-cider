@@ -81,9 +81,11 @@ const ItemDisplay = (props) => {
           {url}
         </Link>
         <Box className={classes.priceTextContainer}>
-          <Typography className={classes.itemOldPrice}>
-            {centsToDollarsDisplay(old_price)}
-          </Typography>{" "}
+          {old_price && (
+            <Typography className={classes.itemOldPrice}>
+              {centsToDollarsDisplay(old_price)}{" "}
+            </Typography>
+          )}
           <Typography className={classes.itemPrice}>
             {centsToDollarsDisplay(price)}
           </Typography>
