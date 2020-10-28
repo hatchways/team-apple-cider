@@ -39,10 +39,14 @@ class ScrapeAmazon:
         self.website = "amazon"
         driver.get(URL)
         self.url = self.get_shortened_url(URL)
-        self.name = self.get_name(driver) 
-        self.old_price = string_to_int_price(self.get_old_price_string(driver))  
-        self.price = string_to_int_price(self.get_price_string(driver))  
-        self.img_url = self.get_img_URL(driver)  
+
+        old_price_string = self.scrape_parameter(driver, "old_price") 
+        price_string = self.scrape_parameter(driver, "price") 
+        self.old_price = string_to_int_price(old_price_string)  
+        self.price = string_to_int_price(price_string)  
+        self.name = self.scrape_parameter(driver, "name") 
+        self.img_url = self.scrape_parameter(driver, "img_url") 
+
         self.availability = self.get_availability(driver)  
         driver.quit()
     
@@ -50,30 +54,14 @@ class ScrapeAmazon:
         url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 
         return 'https://www.amazon{}/dp/{}'.format(url_match.group(1), url_match.group(2))
 
-    def get_name(self, driver):
-        attribute = selectors[self.website]["name"]['attribute']
-        for selector in selectors[self.website]["name"]['css']:
+
+    def scrape_parameter(self, driver, parameter):
+        attribute = selectors[self.website][parameter]['attribute']
+        for selector in selectors[self.website][parameter]['css']:
             try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
             except: pass
         return None
-    def get_old_price_string(self, driver):
-        attribute = selectors[self.website]["old_price"]['attribute']
-        for selector in selectors[self.website]["old_price"]['css']:
-            try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
-            except: pass
-        return None
-    def get_price_string(self, driver):
-        attribute = selectors[self.website]["price"]['attribute']
-        for selector in selectors[self.website]["price"]['css']:
-            try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
-            except: pass
-        return None
-    def get_img_URL(self, driver):
-        attribute = selectors[self.website]["img_url"]['attribute']
-        for selector in selectors[self.website]["img_url"]['css']:
-            try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
-            except: pass
-        return None
+        
     def get_availability(self, driver):
         try:
             text = driver.find_element_by_css_selector("#availability > *:first-child").text
