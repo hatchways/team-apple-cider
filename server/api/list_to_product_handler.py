@@ -1,5 +1,6 @@
 from flask import jsonify, Blueprint, request
 from models.list_to_product import ListToProduct
+from models.list import List
 from database import db
 import json
 
@@ -18,7 +19,18 @@ def listProductsRequest(list_id):
 def allListProductsRequest():
     if request.method == 'POST':
         body = json.loads(request.get_data())
-        product_name = body['list_id']
+        list_id = body['list_id']
+        product_id = body['product_id']
+
+        if not ListToProduct.query.filter_by(list_id=list_id, product_id=product_id).first():
+            try:
+                list_product_connection = ListToProduct(list_id, product_id)
+                db.session.add(list_product_connection)
+                db.session.commit()
+            except Exception as e:
+                return jsonify({'error': "{}".format(e.__cause__)}), 400
+            return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
+        else:
+            return jsonify({'error': 'product already exists in list'}), 400
 
     # if not Product.query
-
