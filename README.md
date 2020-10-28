@@ -64,6 +64,26 @@ The information is returned as a JSON object:
 }
 ```
 
+### Prices
+
+A price history is kept for each product on the database. The API routes for the pricing are as follows:
+
+#### _Get entire price history all products in database:_
+
+`curl localhost:5000/prices`
+
+#### _Get entire price history of a single product:_
+
+`curl localhost:5000/prices/product/<product_id>`
+
+#### _Add new price to price history of a single product:_
+
+`curl -X POST localhost:5000/prices/product/<product_id> --data "{\"price\": #### }" --header "Content-Type: application/json"`
+
+#### _Delete entire price history of a single product:_
+
+`curl -X DELETE localhost:5000/prices/product/<product_id>`
+
 ## External API Services
 
 ### Cloudinary
