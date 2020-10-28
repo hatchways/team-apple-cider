@@ -33,8 +33,4 @@ result = hello.delay()
 result.get(timeout=1)  
 </code>
 
-If 'hello world' is returned, congratulations, everything is set up properly! If you have an error, let me (Austin) know and I can try to help you solve the issue.
-
-
-<h2>Running an asynchronous function:</h2>
-
+If 'hello world' is returned, congratulations, everything is set up properly! If you have an error, let me (Austin) know and I can try to help you solve the issue. For more detail on Celery, go to tasks.py in the celery_api folder in the api folder, and you can see more about Celery and run a few more advanced tasks.
