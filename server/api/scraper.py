@@ -8,20 +8,23 @@ def string_to_int_price(price_string):
     x = re.search(r"([0-9]+)\.([0-9]+)", price_string) 
     return int(x.group(1)) * 100 + int(x.group(2))
 
+
+def loadChromeDriver():
+    chrome_options = Options()
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--remote-debugging-port=9222')
+    executable_path=ChromeDriverManager().install()
+    userAgent = 'Mozilla/5.0 (X11; Linux x86_64)' +  'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
+    chrome_options.add_argument("user-agent={}".format(userAgent))   
+    return webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
+
+
 class ScrapeAmazon:   
     def __init__(self, URL):
-        chrome_options = Options()
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--ignore-certificate-errors')
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument('--remote-debugging-port=9222')
-        executable_path=ChromeDriverManager().install()
-        
-        userAgent = 'Mozilla/5.0 (X11; Linux x86_64)' +  'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
-        chrome_options.add_argument("user-agent={}".format(userAgent))   
-
-        driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
+        driver = loadChromeDriver()
         driver.get(URL)
         self.url = self.get_shortened_url(URL)
         self.name = self.get_name(driver) 
