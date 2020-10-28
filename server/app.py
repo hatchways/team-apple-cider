@@ -1,5 +1,5 @@
 from flask import Flask
-from database import db, ma
+from database import db
 from server import migrate,cors,flask_bcrypt
 from api.ping_handler import ping_handler
 from api.home_handler import home_handler

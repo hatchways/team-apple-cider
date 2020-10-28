@@ -36,7 +36,7 @@ def oneProductRequests(product_id):
         else:
             return jsonify({"error":"Product does not exist, can't update"}), 400
 
-    
+
 
 @product_handler.route('/products', methods=['GET', 'POST'])
 def allProductRequests():
