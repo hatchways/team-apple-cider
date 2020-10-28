@@ -1,6 +1,6 @@
 CREATE TABLE prices (
-  id SERIAL PRIMARY KEY,
-  url_id VARCHAR(255) NOT NULL,
+  primary_id SERIAL PRIMARY KEY,
+  product_id INT NOT NULL,
   price INT NOT NULL,
   scrape_date TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );

@@ -19,18 +19,17 @@ def prices():
         for item in prices:
             prices_list.append(
                 {
-                    "id": item.id,
-                    "url_id": item.url_id,
+                    "product_id": item.product_id,
                     "price": item.price,
                     "scrape_date": item.scrape_date
                 })
         return jsonify({'prices': prices_list}), 200
+
+
     if request.method == 'POST':
-        URL = json.loads(request.get_data())['url']
+        body = json.loads(request.get_data())
         try:
-            item = ScrapeAmazon(URL)
-            url_id = get_url_id(URL)
-            price_entry = Price(url_id, item.price)
+            price_entry = Price(body['product_id'], body['price'])
             db.session.add(price_entry)
         except:
             return jsonify({'error': "{}".format(e.__cause__)}), 400      
