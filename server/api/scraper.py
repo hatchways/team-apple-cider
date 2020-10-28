@@ -40,8 +40,9 @@ class ScrapeAmazon:
     def __init__(self, URL):
         
         driver = loadChromeDriver()
-        self.website = "amazon"
         driver.get(URL)
+        
+        self.website = "amazon"
         self.url = self.get_shortened_url(URL)
         
         self.old_price = self.get_parameter(driver, "old_price") 
