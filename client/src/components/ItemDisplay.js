@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(4),
     overflow: "hidden",
   },
-  itemTitle: {
+  itemName: {
     padding: theme.spacing(0.25),
     fontWeight: "bold",
     lineHeight: "1.2",
   },
-  shopURL: {
+  url: {
     display: "block",
     padding: theme.spacing(0.25),
     color: "grey",
@@ -61,7 +61,7 @@ const centsToDollarsDisplay = (cents) =>
 const ItemDisplay = (props) => {
   const { item } = props;
   const classes = useStyles();
-  const title = item.title ? item.title : "";
+  const name = item.name ? item.name : "";
   const img_url = item.img_url ? item.img_url : "";
   const url = item.url ? item.url : "";
   const old_price = item.old_price ? item.old_price : "";
@@ -70,11 +70,11 @@ const ItemDisplay = (props) => {
   return (
     <Box className={`${classes.itemContainer} ${props.className}`}>
       <Box className={classes.imageContainer}>
-        <img className={classes.itemImage} src={img_url} alt={title} />
+        <img className={classes.itemImage} src={img_url} alt={name} />
       </Box>
       <Box className={classes.itemTextContainer}>
-        <Typography className={classes.itemTitle}>{title}</Typography>
-        <Link href={url} className={classes.shopURL}>
+        <Typography className={classes.itemName}>{name}</Typography>
+        <Link href={url} className={classes.url}>
           {url}
         </Link>
         <Box className={classes.priceTextContainer}>

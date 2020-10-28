@@ -65,7 +65,7 @@ const AddItemPopup = (props) => {
         <Typography className={classes.paperTitle}>Add new item:</Typography>
         {item.error ? (
           <Box className={classes.errorMessage}>{item.response}</Box>
-        ) : item.title ? (
+        ) : item.name ? (
           <ItemDisplay item={item} className={classes.itemDisplay} />
         ) : (
           <CircularProgress className={classes.spinner} />

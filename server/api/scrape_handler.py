@@ -8,7 +8,7 @@ def scrape():
     if request.method == 'POST':
         URL = json.loads(request.get_data())['url']
         item = ScrapeAmazon(URL)
-        if (item.title): return jsonify(item.__dict__)
+        if (item.name): return jsonify(item.__dict__)
         else: return jsonify({'error' : True, 'response': 'Error: Link was invalid or connection failed'})
 
 

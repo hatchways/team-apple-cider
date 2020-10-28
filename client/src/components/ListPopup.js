@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 
 const demoProductsArray = [
   {
-    title: "Levi's 501 crop jean in lightwash",
+    name: "Levi's 501 crop jean in lightwash",
     old_price: "$90",
     price: "$56",
     url:
@@ -100,7 +100,7 @@ const demoProductsArray = [
     img_url: levis_501,
   },
   {
-    title: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
+    name: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
     old_price: "$120",
     price: "$98",
     url:
@@ -108,7 +108,7 @@ const demoProductsArray = [
     img_url: tommy_jeans,
   },
   {
-    title: "Calvin Klein Performance Women Jacket",
+    name: "Calvin Klein Performance Women Jacket",
     old_price: "$110",
     price: "$56",
     url:
@@ -116,7 +116,7 @@ const demoProductsArray = [
     img_url: ck_jacket,
   },
   {
-    title: "Levi's 501 crop jean in lightwash",
+    name: "Levi's 501 crop jean in lightwash",
     old_price: "$90",
     price: "$56",
     url:

@@ -23,13 +23,13 @@ class ScrapeAmazon:
         driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
         driver.get(URL)
         self.url = URL
-        self.title = self.get_title(driver) 
-        self.old_price = string_to_int_price(self.get_old_price_string(driver))  
-        self.price = string_to_int_price(self.get_price_string(driver))  
+        self.name = self.get_name(driver) 
+        self.old_price = self.get_old_price(driver)  
+        self.price = self.get_price(driver)  
         self.img_url = self.get_img_URL(driver)  
         self.availability = self.get_availability(driver)  
         driver.quit()
-    def get_title(self, driver):
+    def get_name(self, driver):
         try: 
             return driver.find_element_by_id('productTitle').text
         except: return None
