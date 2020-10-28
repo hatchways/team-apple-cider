@@ -3,14 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-def string_to_int_price(price_string):
-    if price_string == None: return None
-    x = re.search(r"([0-9]+)\.([0-9]+)", price_string) 
-    return int(x.group(1)) * 100 + int(x.group(2))
-
-def string_availability_to_boolean(string_availability):
-    return (bool(re.search('in stock', string_availability, re.IGNORECASE)))
-
 def loadChromeDriver():
     chrome_options = Options()
     chrome_options.add_argument('--no-sandbox')
@@ -23,6 +15,14 @@ def loadChromeDriver():
     chrome_options.add_argument("user-agent={}".format(userAgent))   
     return webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
 
+
+def string_to_int_price(price_string):
+    if price_string == None: return None
+    x = re.search(r"([0-9]+)\.([0-9]+)", price_string) 
+    return int(x.group(1)) * 100 + int(x.group(2))
+
+def string_availability_to_boolean(string_availability):
+    return (bool(re.search('in stock', string_availability, re.IGNORECASE)))
 
 
 selectors = {
@@ -38,6 +38,7 @@ selectors = {
 
 class ScrapeAmazon:   
     def __init__(self, URL):
+        
         driver = loadChromeDriver()
         self.website = "amazon"
         driver.get(URL)
@@ -54,7 +55,6 @@ class ScrapeAmazon:
     def get_shortened_url(self, URL):
         url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 
         return 'https://www.amazon{}/dp/{}'.format(url_match.group(1), url_match.group(2))
-
 
     def scrape_parameter(self, driver, parameter):
         attribute = selectors[self.website][parameter]['attribute']
