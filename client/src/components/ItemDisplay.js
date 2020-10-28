@@ -55,8 +55,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const centsToDollarsDisplay = (cents) =>
-  `$${Math.floor(cents / 100)}.${cents % 100}`;
+const centsToDollarsDisplay = (inputCents) => {
+  const dollars = String(Math.floor(inputCents / 100));
+  const cents = String(inputCents % 100);
+  return `$${dollars}.${cents.length > 1 ? cents : cents + "0"}`;
+};
 
 const ItemDisplay = (props) => {
   const { item } = props;
