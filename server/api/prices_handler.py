@@ -11,8 +11,9 @@ def get_url_id(URL):
     return url_match.group(1)
     
 
+
 @prices_handler.route('/prices', methods = ['GET', 'POST'])
-def prices():
+def allPriceRequests():
     if request.method == 'GET':
         prices = Price.query.all()
         prices_list = []
@@ -37,7 +38,7 @@ def prices():
             db.session.commit()
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
-        return jsonify({'response': "{} was successfully added to the database".format(url_id)}), 200
+        return jsonify({'response': "{} was successfully added to the database".format(body['product_id'])}), 200
 
 
 
