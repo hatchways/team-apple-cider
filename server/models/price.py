@@ -14,3 +14,12 @@ class Price(db.Model):
         self.product_id = product_id
         self.price = price
         self.scrape_date = datetime.datetime.now(tz=datetime.timezone.utc)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+            "product_id": self.product_id,
+            "price": self.price,
+            "scrape_date": self.scrape_date,
+        }

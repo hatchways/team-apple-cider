@@ -11,6 +11,11 @@ def get_url_id(URL):
     return url_match.group(1)
     
 
+@prices_handler.route('/prices/product/<product_id>', methods=['GET'])
+def onePriceRequests(product_id):
+    if request.method == 'GET':
+        prices = Price.query.filter_by(product_id=product_id)
+        return jsonify([price.serialize for price in prices]), 200
 
 @prices_handler.route('/prices', methods = ['GET', 'POST'])
 def allPriceRequests():
