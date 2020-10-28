@@ -16,7 +16,6 @@ def create_app():
     app.config.from_object('config.DevelopmentConfig')
 
     db.init_app(app)
-    ma.init_app(ma)
 
     migrate.init_app(app, db)
     cors.init_app(app)
