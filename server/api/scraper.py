@@ -8,6 +8,8 @@ def string_to_int_price(price_string):
     x = re.search(r"([0-9]+)\.([0-9]+)", price_string) 
     return int(x.group(1)) * 100 + int(x.group(2))
 
+def string_availability_to_boolean(string_availability):
+    return (bool(re.search('in stock', string_availability, re.IGNORECASE)))
 
 def loadChromeDriver():
     chrome_options = Options()
@@ -26,9 +28,10 @@ def loadChromeDriver():
 selectors = {
     "amazon": {
         "name": {"attribute": "innerText", "css": ['#productTitle']},
-        "old_price": {"attribute": "innerText", "css": ['.priceBlockStrikePriceString', '#buyBoxInner > ul > *:first-child > span > *:last-child']},
-        "price": {"attribute": "innerText", "css": ['#priceblock_ourprice', '#priceblock_dealprice', '#priceblock_saleprice', '#price', '#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child', '.kindle-price > *:last-child > *:first-child', '#accordion_row_header_cash > h5 > .a-row > .a-column.a-span4 > *:first-child']},
+        "old_price": {"attribute": "innerText", "function": string_to_int_price, "css": ['.priceBlockStrikePriceString', '#buyBoxInner > ul > *:first-child > span > *:last-child']},
+        "price": {"attribute": "innerText", "function": string_to_int_price, "css": ['#priceblock_ourprice', '#priceblock_dealprice', '#priceblock_saleprice', '#price', '#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child', '.kindle-price > *:last-child > *:first-child', '#accordion_row_header_cash > h5 > .a-row > .a-column.a-span4 > *:first-child']},
         "img_url": {"attribute": "src", "css": ['#landingImage', '#imgBlkFront', '#ebooksImgBlkFront', '#main-image']},
+        "availability": {"attribute": "innerText", "function": string_availability_to_boolean, "css": ["#availability > *:first-child"]}
     }
 }
 
@@ -39,15 +42,13 @@ class ScrapeAmazon:
         self.website = "amazon"
         driver.get(URL)
         self.url = self.get_shortened_url(URL)
-
-        old_price_string = self.scrape_parameter(driver, "old_price") 
-        price_string = self.scrape_parameter(driver, "price") 
-        self.old_price = string_to_int_price(old_price_string)  
-        self.price = string_to_int_price(price_string)  
-        self.name = self.scrape_parameter(driver, "name") 
-        self.img_url = self.scrape_parameter(driver, "img_url") 
-
-        self.availability = self.get_availability(driver)  
+        
+        self.old_price = self.get_parameter(driver, "old_price") 
+        self.price = self.get_parameter(driver, "price") 
+        self.name = self.get_parameter(driver, "name") 
+        self.img_url = self.get_parameter(driver, "img_url") 
+        self.availability = self.get_parameter(driver, "availability") 
+        
         driver.quit()
     
     def get_shortened_url(self, URL):
@@ -61,9 +62,10 @@ class ScrapeAmazon:
             try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
             except: pass
         return None
-        
-    def get_availability(self, driver):
-        try:
-            text = driver.find_element_by_css_selector("#availability > *:first-child").text
-            return (bool(re.search('in stock', text, re.IGNORECASE)))
-        except: return None
+
+    def get_parameter(self, driver, parameter):
+        raw_param = self.scrape_parameter(driver, parameter)
+        usingFunc = "function" in selectors[self.website][parameter]
+        return (selectors[self.website][parameter]['function'](raw_param) if usingFunc else raw_param)
+
+
