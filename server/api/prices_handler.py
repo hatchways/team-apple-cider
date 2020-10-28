@@ -7,8 +7,8 @@ from .scraper import ScrapeAmazon
 
 
 def get_url_id(URL):
-    x = re.search(r"amazon.com\/.*dp\/([^/]+)", URL) 
-    return x.group(1)
+    url_match = re.search(r"amazon.com\/.*dp\/([^/]+)", URL) 
+    return url_match.group(1)
     
 
 @prices_handler.route('/prices', methods = ['GET', 'POST'])
