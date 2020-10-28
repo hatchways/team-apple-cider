@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def string_to_int_price(price_string):
     if price_string == None: return None
-    x = re.search(r"\$([0-9]+)\.([0-9]+)", price_string) 
+    x = re.search(r"([0-9]+)\.([0-9]+)", price_string) 
     return int(x.group(1)) * 100 + int(x.group(2))
 
 class ScrapeAmazon:   
@@ -23,13 +23,17 @@ class ScrapeAmazon:
 
         driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
         driver.get(URL)
-        self.url = URL
+        self.url = self.get_shortened_url(URL)
         self.name = self.get_name(driver) 
         self.old_price = string_to_int_price(self.get_old_price_string(driver))  
         self.price = string_to_int_price(self.get_price_string(driver))  
         self.img_url = self.get_img_URL(driver)  
         self.availability = self.get_availability(driver)  
         driver.quit()
+    
+    def get_shortened_url(self, URL):
+        url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 
+        return 'https://www.amazon{}/dp/{}'.format(url_match.group(1), url_match.group(2))    
     def get_name(self, driver):
         try: 
             return driver.find_element_by_id('productTitle').text

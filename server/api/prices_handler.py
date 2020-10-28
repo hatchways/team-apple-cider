@@ -6,10 +6,6 @@ prices_handler = Blueprint('prices_handler', __name__)
 from .scraper import ScrapeAmazon
 
 
-def get_url_id(URL):
-    url_match = re.search(r"amazon.com\/.*dp\/([^/]+)", URL) 
-    return url_match.group(1)
-    
 
 @prices_handler.route('/prices/product/<product_id>', methods=['GET'])
 def onePriceRequests(product_id):
