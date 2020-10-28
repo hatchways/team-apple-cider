@@ -59,7 +59,9 @@ const HeaderTabs = (props) => {
           disableRipple
           label={<Typography>Shopping Lists</Typography>}
         />
-        <StyledTab disableRipple label={<Typography>Friends</Typography>} />
+        <StyledTab
+         disableRipple 
+         label={<Typography>Friends</Typography>} />
       </Tabs>
       <NotificationsButton {...props} />
     </Box>

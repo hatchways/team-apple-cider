@@ -10,7 +10,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        value.user ? <Component {...rest} {...props} /> : <Login />
+        true ? <Component {...rest} {...props} /> : <Login />
       }
     />
   );
