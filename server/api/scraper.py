@@ -22,6 +22,8 @@ def loadChromeDriver():
     return webdriver.Chrome(executable_path=executable_path, options=chrome_options)    
 
 
+
+
 class ScrapeAmazon:   
     def __init__(self, URL):
         driver = loadChromeDriver()
@@ -39,25 +41,25 @@ class ScrapeAmazon:
         return 'https://www.amazon{}/dp/{}'.format(url_match.group(1), url_match.group(2))    
     def get_name(self, driver):
         try: 
-            return driver.find_element_by_id('productTitle').text
+            return driver.find_element_by_css_selector('#productTitle').text
         except: return None
     def get_old_price_string(self, driver):        
         # Non-books:
-        try: return driver.find_element_by_class_name('priceBlockStrikePriceString').text
+        try: return driver.find_element_by_css_selector('.priceBlockStrikePriceString').text
         except : pass
         # Books:
         try: return driver.find_element_by_css_selector('#buyBoxInner > ul > *:first-child > span > *:last-child').text
         except: return None
     def get_price_string(self, driver):
         # Non-books:
-        try: return driver.find_element_by_id('priceblock_ourprice').text
+        try: return driver.find_element_by_css_selector('#priceblock_ourprice').text
         except: pass
-        try: return driver.find_element_by_id('priceblock_dealprice').text
+        try: return driver.find_element_by_css_selector('#priceblock_dealprice').text
         except: pass
-        try: return driver.find_element_by_id('priceblock_saleprice').text
+        try: return driver.find_element_by_css_selector('#priceblock_saleprice').text
         except: pass
         # Hardcover:
-        try: return driver.find_element_by_id('price').text
+        try: return driver.find_element_by_css_selector('#price').text
         except: pass
         # Paperback
         try: return driver.find_element_by_css_selector("#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child").text
@@ -70,16 +72,16 @@ class ScrapeAmazon:
         except: return None
     def get_img_URL(self, driver):
         # Non-books:
-        try: return driver.find_element_by_id('landingImage').get_attribute("src")
+        try: return driver.find_element_by_css_selector('#landingImage').get_attribute("src")
         except: pass
         # Books:
-        try: return driver.find_element_by_id('imgBlkFront').get_attribute("src")
+        try: return driver.find_element_by_css_selector('#imgBlkFront').get_attribute("src")
         except: pass
         # Ebooks:
-        try: return driver.find_element_by_id('ebooksImgBlkFront').get_attribute("src")        
+        try: return driver.find_element_by_css_selector('#ebooksImgBlkFront').get_attribute("src")        
         except: pass
         # Audiobooks:
-        try: return driver.find_element_by_id('main-image').get_attribute("src")        
+        try: return driver.find_element_by_css_selector('#main-image').get_attribute("src")        
         except: return None
     def get_availability(self, driver):
         try:
