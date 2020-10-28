@@ -13,6 +13,28 @@ def listProductsRequest(list_id):
     if request.method == 'GET':
         products_in_list = ListToProduct.query.filter_by(list_id=list_id)
         return jsonify([product.serialize for product in products_in_list])
+    
+    if request.method == 'DELETE':
+        products_in_list = ListToProduct.query.filter_by(list_id=list_id)
+        db.session.delete(products_in_list)
+        try:
+            db.session.commit()
+        except Exception as e:
+                return jsonify({'error': "{}".format(e.__cause__)}), 400
+        return jsonify({'response': "List '{}' was successfully deleted from the database".format(list_id)}), 200
+
+
+@list_to_product_handler.route('/list-to-products/<list_id>/<product_id>',methods=['DELETE'])
+def onelistProductsRequest(list_id,product_id):
+    if request.method == 'DELETE':
+        product_in_list = ListToProduct.query.filter_by(list_id=list_id, product_id=product_id)
+        db.session.delete(product_in_list)
+        try:
+            db.session.commit()
+        except Exception as e:
+            return jsonify({'error': "{}".format(e.__cause__)}), 400
+        return jsonify({'response': "Product '{}' was successfully deleted from the List'{}'".format(list_id)}), 200
+
 
 
 @list_to_product_handler.route('/list-to-products', methods=['POST'])
@@ -32,5 +54,3 @@ def allListProductsRequest():
             return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
         else:
             return jsonify({'error': 'product already exists in list'}), 400
-
-    # if not Product.query
