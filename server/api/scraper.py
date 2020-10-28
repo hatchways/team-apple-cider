@@ -25,10 +25,10 @@ def loadChromeDriver():
 
 selectors = {
     "amazon": {
-        "name": ['#productTitle'],
-        "old_price": ['.priceBlockStrikePriceString', '#buyBoxInner > ul > *:first-child > span > *:last-child'],
-        "price": ['#priceblock_ourprice', '#priceblock_dealprice', '#priceblock_saleprice', '#price', '#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child', '.kindle-price > *:last-child > *:first-child', '#accordion_row_header_cash > h5 > .a-row > .a-column.a-span4 > *:first-child'],
-        "img_url": ['#landingImage', '#imgBlkFront', '#ebooksImgBlkFront', '#main-image'],
+        "name": {"attribute": "innerText", "css": ['#productTitle']},
+        "old_price": {"attribute": "innerText", "css": ['.priceBlockStrikePriceString', '#buyBoxInner > ul > *:first-child > span > *:last-child']},
+        "price": {"attribute": "innerText", "css": ['#priceblock_ourprice', '#priceblock_dealprice', '#priceblock_saleprice', '#price', '#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child', '.kindle-price > *:last-child > *:first-child', '#accordion_row_header_cash > h5 > .a-row > .a-column.a-span4 > *:first-child']},
+        "img_url": {"attribute": "src", "css": ['#landingImage', '#imgBlkFront', '#ebooksImgBlkFront', '#main-image']},
     }
 }
 
@@ -51,23 +51,27 @@ class ScrapeAmazon:
         return 'https://www.amazon{}/dp/{}'.format(url_match.group(1), url_match.group(2))
 
     def get_name(self, driver):
-        for selector in selectors[self.website]["name"]:
-            try: return driver.find_element_by_css_selector(selector).text
+        attribute = selectors[self.website]["name"]['attribute']
+        for selector in selectors[self.website]["name"]['css']:
+            try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
             except: pass
         return None
     def get_old_price_string(self, driver):
-        for selector in selectors[self.website]["old_price"]:
-            try: return driver.find_element_by_css_selector(selector).text
+        attribute = selectors[self.website]["old_price"]['attribute']
+        for selector in selectors[self.website]["old_price"]['css']:
+            try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
             except: pass
         return None
     def get_price_string(self, driver):
-        for selector in selectors[self.website]["price"]:
-            try: return driver.find_element_by_css_selector(selector).text
+        attribute = selectors[self.website]["price"]['attribute']
+        for selector in selectors[self.website]["price"]['css']:
+            try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
             except: pass
         return None
     def get_img_URL(self, driver):
-        for selector in selectors[self.website]["img_url"]:
-            try: return driver.find_element_by_css_selector(selector).get_attribute("src")
+        attribute = selectors[self.website]["img_url"]['attribute']
+        for selector in selectors[self.website]["img_url"]['css']:
+            try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
             except: pass
         return None
     def get_availability(self, driver):
