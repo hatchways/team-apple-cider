@@ -1,8 +1,6 @@
 from flask import jsonify, Blueprint, request
 from models.product import Product
-from models.list import List
 from database import db
-
 from api.image_uploader import image_uploader
 from config import PRODUCT_IMG_PRESET, CLOUDINARY_NAME
 import json
@@ -22,23 +20,32 @@ def oneProductRequests(product_id):
         db.session.delete(product)
         db.session.commit()
         return jsonify({'response': "Product '{}' was successfully deleted from the database".format(product_id)}), 200
-    
+
     if request.method == "PUT":
         req = request.get_json()
         product = Product.query.get(int(product_id))
-        
-        if product:             
-            if "name" in req: product.name = req["name"]
-            if "old_price" in req: product.old_price = req["old_price"]
-            if "price" in req: product.price = req["price"]
-            if "url" in req: product.url = req["url"]
-            if "img_url" in req: product.img_url = req["img_url"]
-            db.session.commit()
-            return jsonify({"response" : "Product '{}' was updated".format(product_id)}), 200
-        else:
-            return jsonify({"error":"Product does not exist, can't update"}), 400
 
-    
+        if product:
+            if "name" in req:
+                product.name = req["name"]
+            if "old_price" in req:
+                product.old_price = req["old_price"]
+            if "price" in req:
+                product.price = req["price"]
+            if "url" in req:
+                product.url = req["url"]
+            if "img_url" in req:
+                try:
+                    new_img_url = image_uploader(
+                        req["img_url"], PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
+                except:
+                    return jsonify({"error : uploading image on cloudinary"}), 400
+                product.img_url = new_img_url
+            db.session.commit()
+            return jsonify({"response": "Product '{}' was updated".format(product_id)}), 200
+        else:
+            return jsonify({"error": "Product does not exist, can't update"}), 400
+
 
 @product_handler.route('/products', methods=['GET', 'POST'])
 def allProductRequests():
@@ -71,5 +78,3 @@ def allProductRequests():
             return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
         else:
             return jsonify({'error': 'product already exists'}), 400
-
-  
