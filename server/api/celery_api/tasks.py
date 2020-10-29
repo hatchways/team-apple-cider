@@ -24,7 +24,7 @@ def scheduled_tasks(sender, **kwargs):
     sender.add_periodic_task(10.0, test.s("hello"))
 
 # This task (still under the scheduled_tasks function which is decorated by app.on_after_configure.connect)
-# uses the crontab API in Celery in order to schedule a periodic task. This task will take place every Tuesday at noon.
+# uses the crontab API in Celery in order to schedule a periodic task. This task will take place every Thursday at 9:25 AM.
 # You can alter the hour, minute, and day_of_week to test it yourself (note that you will have to use Ctrl+C and rerun
 # celery -A tasks beat if you want to alter this code).
     sender.add_periodic_task(
