@@ -23,10 +23,9 @@ def oneProductRequests(product_id):
 
     if request.method == "PUT":
         req = request.get_json()
-        print(req['name'])
-        
+
         product = Product.query.get(int(product_id))
-          
+
         try:
             product.name = req.get("name", product.name)
             product.old_price = req.get("old_price", product.old_price)
@@ -39,7 +38,7 @@ def oneProductRequests(product_id):
                 except:
                     return jsonify({"error : uploading image on cloudinary"}), 400
                 product.img_url = new_img_url
-            db.session.commit() 
+            db.session.commit()
             return jsonify({"response": "Product '{}' was updated".format(product_id)}), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
