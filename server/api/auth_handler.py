@@ -151,6 +151,11 @@ class LogoutAPI(MethodView):
             "status": "success",
             "message": "Logout successful"
         }
+        try:
+            auth_token = request.cookies.get("Authentication token")
+        except:
+            return "Already logged out!", 401
+        
         resp = make_response(jsonify(responseObject))
         resp.delete_cookie("Authentication token")
         return resp, 200
