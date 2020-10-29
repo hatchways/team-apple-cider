@@ -1,5 +1,4 @@
 from flask import jsonify, Blueprint, request
-from models.user import User
 from models.list import List
 from database import db
 from api.image_uploader import image_uploader
@@ -8,7 +7,7 @@ import json
 
 list_handler = Blueprint('list_handler', __name__)
 
-@list_handler.route('/lists', methods=['GET','DELETE','POST','PUT'])
+@list_handler.route('/lists', methods=['GET','DELETE','POST'])
 def listRequests():
     list_id = request.args.get('list_id', None)
     user_id = request.args.get('user_id', None)
@@ -71,16 +70,37 @@ def listRequests():
         list_name = List(body['name'])
 
         if not List.query.filter_by(list_id=list_user_id,name=list_name).first():
-            db.session.add(list_item)
+            # checks to see if cloudinary works
+            try:
+                new_img_url = image_uploader(
+                    body['img_url'], PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
+            except:
+                return jsonify({"error : uploading image on cloudinary"}), 400
+         
+            try:
+                product_item = List(
+                    body['user_id'], body['name'], new_img_url)
+                db.session.add(product_item)
+                db.session.commit()
+            except Exception as e:
+                return jsonify({'error': "{}".format(e.__cause__)}), 400
+        else:
+            return jsonify({'error': 'list already exists'}), 400
+    
+    if request.method == "PUT":
+        req = request.get_json()
         try:
-            db.session.commit()
-        except Exception as e:
-            return jsonify({'error': "{}".format(e.__cause__)}), 400
-        return jsonify({'response': "{} was successfully added to the database".format(body['product_type'])}), 200
-    if request.method == 'DELETE':
-        body = json.loads(request.get_data())
-        list_id = body['list_id']
-        product_type = List.query.filter_by(id=list_id).first().id
-        List.query.filter_by(id=list_id).delete()
-        db.session.commit()
-        return jsonify({'response': "the {} was successfully deleted from the database".format(product_type)}), 200
+            list_user_id = List.query.filter_by(id=req['list_id']).first().user_id
+            if list_user_id == token_user_id:         
+                if "name" in req: product.name = req["name"]
+                if "img_url" in req: 
+                    try:
+                        new_img_url = image_uploader(
+                        req["img_url"], PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
+                    except:
+                        return jsonify({"error : uploading image on cloudinary"}), 400
+                    product.img_url = new_img_url
+                db.session.commit()
+            return jsonify({"response" : "Product '{}' was updated".format(product_id)}), 200
+        else:
+            return jsonify({"error":"Product does not exist, can't update"}), 400
