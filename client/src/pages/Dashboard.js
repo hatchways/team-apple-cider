@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Header from "components/Header";
 import ShoppingLists from "pages/ShoppingLists";
 import Friends from "pages/Friends";
+import { Switch, Route } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   dashContainer: {
@@ -37,8 +38,12 @@ const Dashboard = () => {
         }}
       />
       <Box className={classes.bodyContainer}>
-        {selectedPage === 0 && <ShoppingLists />}
-        {selectedPage === 1 && <Friends />}
+        {/* {selectedPage === 0 && <ShoppingLists />}
+        {selectedPage === 1 && <Friends />} */}
+        <Switch>
+          <Route exact path="/dashboard" component={ShoppingLists}/> 
+          <Route exact path="/dashboard/friends" component={Friends}/> 
+        </Switch>
       </Box>
     </Box>
   );

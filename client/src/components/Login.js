@@ -63,7 +63,7 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const value = useContext(UserContext);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const loginSuccess = value.handleLogin(email, password);
     if (loginSuccess) props.history.push("/dashboard");
