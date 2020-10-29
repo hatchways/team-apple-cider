@@ -42,7 +42,7 @@ def oneProductRequests(product_id):
                 product.img_url = new_img_url
             db.session.commit()
             return jsonify({"response": "Product '{}' was updated".format(product_id)}), 200
-        except:
+        except Exception as e:
            return jsonify({'error': "{}".format(e.__cause__)}), 400
 
 
