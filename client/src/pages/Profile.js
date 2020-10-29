@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileHeader from "components/ProfileHeader";
 import profile_photo_1 from "img/profile_photo_1.png";
@@ -27,11 +27,19 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: "2rem",
+    margin: theme.spacing(8),
+  },
+  profileTitle: {
+    display: "flex",
+    alignItems: "center",
   },
   profilePhoto: {
     borderRadius: "100%",
-    height: "10rem",
+    height: "7rem",
+  },
+  profileOwnerName: {
+    fontSize: "2rem",
+    margin: theme.spacing(2),
   },
 }));
 
@@ -55,11 +63,16 @@ const Profile = (props) => {
       />
       <Box className={classes.bodyContainer}>
         <Box className={classes.profileContainer}>
-          <img
-            className={classes.profilePhoto}
-            src={profile_photo_1}
-            alt="profile-pic"
-          />
+          <Box className={classes.profileTitle}>
+            <img
+              className={classes.profilePhoto}
+              src={profile_photo_1}
+              alt="profile-pic"
+            />
+            <Typography className={classes.profileOwnerName}>
+              Firstname Lastname
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>
