@@ -40,14 +40,6 @@ def onePriceRequests(product_id):
 def allPriceRequests():
     if request.method == 'GET':
         prices = Price.query.all()
-        prices_list = []
-        for item in prices:
-            prices_list.append(
-                {
-                    "product_id": item.product_id,
-                    "price": item.price,
-                    "scrape_date": item.scrape_date
-                })
-        return jsonify({'prices': prices_list}), 200
+        return jsonify({'prices': [price.serialize for price in prices]}), 200
 
 
