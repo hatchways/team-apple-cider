@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileHeader from "components/ProfileHeader";
+import ListsDisplay from "components/ListsDisplay";
 import profile_photo_1 from "img/profile_photo_1.png";
 import profile_photo_2 from "img/profile_photo_2.png";
 import profile_photo_3 from "img/profile_photo_3.png";
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   profileContainer: {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     margin: theme.spacing(8),
@@ -36,9 +38,6 @@ const useStyles = makeStyles((theme) => ({
   profilePhoto: {
     borderRadius: "100%",
     height: "7rem",
-  },
-  profileOwnerName: {
-    fontSize: "2rem",
     margin: theme.spacing(2),
   },
 }));
@@ -47,6 +46,14 @@ const Profile = (props) => {
   const [selectedPage, setSelectedPage] = useState(0);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
+
+  // Demo user
+  const user = {
+    name: "David Richardson",
+    img: profile_photo_2,
+  };
+
+  // const user = null;
 
   // TODO: Header and dashContainer are very similar to the ones found in Dashboard.js,
   //       so they could be their own components and have the differing content passed
@@ -66,13 +73,11 @@ const Profile = (props) => {
           <Box className={classes.profileTitle}>
             <img
               className={classes.profilePhoto}
-              src={profile_photo_1}
+              src={user && user.img}
               alt="profile-pic"
             />
-            <Typography className={classes.profileOwnerName}>
-              Firstname Lastname
-            </Typography>
           </Box>
+          <ListsDisplay {...{ user }} />
         </Box>
       </Box>
     </Box>

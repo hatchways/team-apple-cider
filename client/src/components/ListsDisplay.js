@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -53,25 +53,35 @@ const demoListsArray = [
   { listTitle: "Luxury", itemCount: 8, img: luxury },
 ];
 
-const ListsDisplay = () => {
+const ListsDisplay = (props) => {
+  const { user } = props;
   const classes = useStyles();
+
+  const getListsUserText = (user) => {
+    if (!user) return "My";
+    else if (user.name[user.name.length - 1] === "s") return `${user.name}'`;
+    else return `${user.name}'s`;
+  };
+
   return (
     <Box className={classes.shoppingContainer}>
       <Typography variant="h5" className={classes.listsTitle}>
-        My Shopping Lists:
+        {getListsUserText(user)} Shopping Lists:
       </Typography>
       <Box className={classes.myShoppingLists}>
         {demoListsArray.map((list, i) => (
           <ListCard key={i} list={list} />
         ))}
-        <Box className={classes.addNewList}>
-          <IconButton className={classes.addNewListButton}>
-            <AddIcon className={classes.addIcon} />
-          </IconButton>
-          <Typography className={classes.addNewListText}>
-            ADD NEW LIST
-          </Typography>
-        </Box>
+        {!user && (
+          <Box className={classes.addNewList}>
+            <IconButton className={classes.addNewListButton}>
+              <AddIcon className={classes.addIcon} />
+            </IconButton>
+            <Typography className={classes.addNewListText}>
+              ADD NEW LIST
+            </Typography>
+          </Box>
+        )}
       </Box>
     </Box>
   );
