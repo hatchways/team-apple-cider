@@ -1,0 +1,1 @@
+curl -X POST http://localhost:5000/products --data '{ "img_url": "https://images-na.ssl-images-amazon.com/images/I/81dh8R950eL._SX342_.jpg", "old_price": "2995",  "price": "2495", "url": "https://www.amazon.com/dp/B00YXO5UKY", "name": "Turtle Beach Recon 50P Gaming Headset for PlayStation 5, PS4 Pro & PS4"}' --header "Content-Type:application/json"
