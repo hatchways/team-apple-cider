@@ -87,6 +87,8 @@ function SignUp(props) {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackText, setSnackText] = useState("");
   const value = useContext(UserContext);
+  const vertical = "top";
+  const horizontal = "center";
 
   function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -246,6 +248,7 @@ function SignUp(props) {
           open={openSnack}
           autoHideDuration={6000}
           onClose={handleCloseSnack}
+          anchorOrigin={{ vertical, horizontal }}
         >
           <Alert onClose={handleCloseSnack} severity="error">
             {snackText}
