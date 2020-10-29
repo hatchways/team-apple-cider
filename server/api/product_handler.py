@@ -11,21 +11,21 @@ import json
 product_handler = Blueprint('product_handler', __name__)
 
 
-@product_handler.route('/products/<product_id>', methods=['GET', 'DELETE', 'PUT'])
-def oneProductRequests(product_id):
+@product_handler.route('/products/<url_id>', methods=['GET', 'DELETE', 'PUT'])
+def oneProductRequests(url_id):
     if request.method == 'GET':
-        product = Product.query.get(int(product_id))
+        product = Product.query.get(int(url_id))
         return jsonify(product.serialize), 200
 
     if request.method == 'DELETE':
-        product = Product.query.get(int(product_id))
+        product = Product.query.get(int(url_id))
         db.session.delete(product)
         db.session.commit()
-        return jsonify({'response': "Product '{}' was successfully deleted from the database".format(product_id)}), 200
+        return jsonify({'response': "Product '{}' was successfully deleted from the database".format(url_id)}), 200
     
     if request.method == "PUT":
         req = request.get_json()
-        product = Product.query.get(int(product_id))
+        product = Product.query.get(int(url_id))
         
         if product:             
             if "name" in req: product.name = req["name"]
@@ -34,7 +34,7 @@ def oneProductRequests(product_id):
             if "url" in req: product.url = req["url"]
             if "img_url" in req: product.img_url = req["img_url"]
             db.session.commit()
-            return jsonify({"response" : "Product '{}' was updated".format(product_id)}), 200
+            return jsonify({"response" : "Product '{}' was updated".format(url_id)}), 200
         else:
             return jsonify({"error":"Product does not exist, can't update"}), 400
 
