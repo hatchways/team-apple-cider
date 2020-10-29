@@ -1,4 +1,4 @@
-import re, json
+import re, json, requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
@@ -53,10 +53,12 @@ class ScrapeAmazon:
         self.availability = self.get_parameter(driver, "availability") 
         
         driver.quit()
+        
+        requests.post('http://localhost:5000/prices/product/{}'.format(self.url_id), json={"price": self.price})
     
     def get_url_id(self, URL):
         url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 
-        url_id = '{}/{}'.format(url_match.group(1), url_match.group(2))
+        url_id = '{}:{}'.format(url_match.group(1), url_match.group(2))
         return (url_id[1:] if url_id.startswith('.') else url_id)
 
     def get_shortened_url(self, URL):
