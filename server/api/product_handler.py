@@ -23,7 +23,6 @@ def oneProductRequests(product_id):
 
     if request.method == "PUT":
         req = request.get_json()
-
         product = Product.query.get(int(product_id))
 
         try:
