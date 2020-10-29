@@ -23,9 +23,8 @@ def oneProductRequests(product_id):
 
     if request.method == "PUT":
         req = request.get_json()
-        product = Product.query.get(int(product_id))
-
-        if product:
+        try:
+            product = Product.query.get(int(product_id))
             if "name" in req:
                 product.name = req["name"]
             if "old_price" in req:
@@ -43,8 +42,8 @@ def oneProductRequests(product_id):
                 product.img_url = new_img_url
             db.session.commit()
             return jsonify({"response": "Product '{}' was updated".format(product_id)}), 200
-        else:
-            return jsonify({"error": "Product does not exist, can't update"}), 400
+        except:
+           return jsonify({'error': "{}".format(e.__cause__)}), 400
 
 
 @product_handler.route('/products', methods=['GET', 'POST'])
