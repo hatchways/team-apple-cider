@@ -13,7 +13,7 @@ class Price(db.Model):
 
     primary_id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
     product_id = db.Column(ForeignKey('product.id'), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer)
     scrape_date = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, product_id, price):
