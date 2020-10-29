@@ -1,9 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Box } from "@material-ui/core";
-
+import { Button, TextField, Box, Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/alert";
 import UserContext from "../contexts/UserContext";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   login: {
@@ -61,18 +65,57 @@ function Login(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackText, setSnackText] = useState("");
   const value = useContext(UserContext);
+  const vertical = "top";
+  const horizontal = "center";
 
-  const handleSubmit = async (e) => {
+  const handleSnack = (props) => {
+    setSnackText(props);
+    setOpenSnack(true);
+  };
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const loginSuccess = value.handleLogin(email, password);
-    if (loginSuccess) props.history.push("/dashboard");
+    fetch("/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then(function (response) {
+        if (response.status === "success") {
+          console.log("Success:", email);
+          const loginSuccess = value.handleLogin(email, password);
+          if (loginSuccess) props.history.push("/dashboard");
+        } else {
+          handleSnack(response.message);
+          console.log(response.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
     <section className={classes.login}>
       <Box className={classes.formContainer}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
           <h2 className={classes.h2}>Sign in</h2>
           <label>Your email address:</label>
           <TextField
@@ -109,6 +152,16 @@ function Login(props) {
             Create an account
           </Link>
         </Box>
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={6000}
+          onClose={handleCloseSnack}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert onClose={handleCloseSnack} severity="error">
+            {snackText}
+          </Alert>
+        </Snackbar>
       </Box>
     </section>
   );

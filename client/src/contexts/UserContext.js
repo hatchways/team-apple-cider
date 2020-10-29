@@ -19,37 +19,34 @@ export function UserStore(props) {
         setUser(false);
       });
   const [user, setUser] = useState(checkCookie());
-  const handleSignup =(name, email, password, confirm) => {
-    
-      fetch("/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          password: password,
-          confirm: confirm,
-        }),
-      })
-        .then((response) => response.json())
-        .then(function (response) {
-          if (response.status === "success") {
-            console.log("Success:", email);
-            setUser(true);
-            return true;
-          } else {
-            // handleSnack(response.message);
-            console.log(response.message);
-            return false;
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
+  const handleSignup = (name, email, password, confirm) => {
+    fetch("/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        confirm: confirm,
+      }),
+    })
+      .then((response) => response.json())
+      .then(function (response) {
+        if (response.status === "success") {
+          console.log("Success:", email);
+          setUser(true);
+          return true;
+        } else {
+          console.log(response.message);
           return false;
-        });
-    
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        return false;
+      });
   };
 
   const handleLogin = (email, password) =>
@@ -71,9 +68,7 @@ export function UserStore(props) {
           setUser(true);
           return true;
         } else {
-          window.alert(response.message);
           console.log(response.message);
-          return false;
         }
       })
       .catch((error) => {
