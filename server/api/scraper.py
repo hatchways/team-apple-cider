@@ -35,6 +35,7 @@ SELECTORS = {
 }
 
 
+
 class ScrapeAmazon:   
     def __init__(self, URL):
         
@@ -43,6 +44,7 @@ class ScrapeAmazon:
         
         self.website = "amazon"
         self.url = self.get_shortened_url(URL)
+        self.url_id = self.get_url_id(URL)
         
         self.old_price = self.get_parameter(driver, "old_price") 
         self.price = self.get_parameter(driver, "price") 
@@ -52,6 +54,11 @@ class ScrapeAmazon:
         
         driver.quit()
     
+    def get_url_id(self, URL):
+        url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 
+        url_id = '{}/{}'.format(url_match.group(1), url_match.group(2))
+        return (url_id[1:] if url_id.startswith('.') else url_id)
+
     def get_shortened_url(self, URL):
         url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 
         return 'https://www.amazon{}/dp/{}'.format(url_match.group(1), url_match.group(2))
