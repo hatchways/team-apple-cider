@@ -23,6 +23,9 @@ def string_to_int_price(price_string):
 def string_availability_to_boolean(string_availability):
     return (bool(re.search('in stock', string_availability, re.IGNORECASE)))
 
+def get_currency_symbol(price_string):
+    currency_symbol = re.search(r"^[^0-9]+", price_string).group(0)
+    return currency_symbol.strip()
 
 SELECTORS = {
     "amazon": {
@@ -30,7 +33,8 @@ SELECTORS = {
         "old_price": {"attribute": "innerText", "function": string_to_int_price, "css": ['.priceBlockStrikePriceString', '#buyBoxInner > ul > *:first-child > span > *:last-child']},
         "price": {"attribute": "innerText", "function": string_to_int_price, "css": ['#priceblock_ourprice', '#priceblock_dealprice', '#priceblock_saleprice', '#price', '#buyNewSection > .a-section > .a-row > .inlineBlock-display > *:first-child', '.kindle-price > *:last-child > *:first-child', '#accordion_row_header_cash > h5 > .a-row > .a-column.a-span4 > *:first-child']},
         "img_url": {"attribute": "src", "css": ['#landingImage', '#imgBlkFront', '#ebooksImgBlkFront', '#main-image']},
-        "availability": {"attribute": "innerText", "function": string_availability_to_boolean, "css": ["#availability > *:first-child"]}
+        "availability": {"attribute": "innerText", "function": string_availability_to_boolean, "css": ["#availability > *:first-child"]},
+        "currency": {"attribute": "innerText", "function": get_currency_symbol, "css": [".a-color-price"]}
     }
 }
 
@@ -45,16 +49,17 @@ class ScrapeAmazon:
         self.website = "amazon"
         self.url = self.get_shortened_url(URL)
         self.url_id = self.get_url_id(URL)
-        
+
         self.old_price = self.get_parameter(driver, "old_price") 
         self.price = self.get_parameter(driver, "price") 
         self.name = self.get_parameter(driver, "name") 
         self.img_url = self.get_parameter(driver, "img_url") 
         self.availability = self.get_parameter(driver, "availability") 
+        self.currency = self.get_parameter(driver, "currency") 
         
         driver.quit()
         
-        requests.post('http://localhost:5000/prices/product/{}'.format(self.url_id), json={"price": self.price})
+        requests.post('http://localhost:5000/prices/product/{}'.format(self.url_id), json={"price": self.price, "currency": self.currency})
     
     def get_url_id(self, URL):
         url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 
