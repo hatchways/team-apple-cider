@@ -11,6 +11,7 @@ product_handler = Blueprint('product_handler', __name__)
 
 @product_handler.route('/products/<product_id>', methods=['GET', 'DELETE', 'PUT'])
 def oneProductRequests(product_id):
+   
     if request.method == 'GET':
         product = Product.query.get(int(product_id))
         return jsonify(product.serialize), 200
