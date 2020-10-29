@@ -17,14 +17,14 @@ def loadChromeDriver():
 
 def string_to_int_price(price_string):
     if price_string == None: return None
-    price_match = re.search(r"([0-9]+)\.([0-9]+)", price_string) 
+    price_match = re.search(r"([0-9]+)[\,|\.]([0-9]+)", price_string) 
     return int(price_match.group(1)) * 100 + int(price_match.group(2))
 
 def string_availability_to_boolean(string_availability):
     return (bool(re.search('in stock', string_availability, re.IGNORECASE)))
 
 def get_currency_symbol(price_string):
-    currency_symbol = re.search(r"^[^0-9]+", price_string).group(0)
+    currency_symbol = re.search(r"[^0-9\,\.]+", price_string).group(0)
     return currency_symbol.strip()
 
 SELECTORS = {
