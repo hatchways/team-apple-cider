@@ -25,7 +25,7 @@ def string_availability_to_boolean(string_availability):
     return (bool(re.search('in stock', string_availability, re.IGNORECASE)))
 
 
-selectors = {
+SELECTORS = {
     "amazon": {
         "name": {"attribute": "innerText", "css": ['#productTitle']},
         "old_price": {"attribute": "innerText", "function": string_to_int_price, "css": ['.priceBlockStrikePriceString', '#buyBoxInner > ul > *:first-child > span > *:last-child']},
@@ -58,15 +58,15 @@ class ScrapeAmazon:
         return 'https://www.amazon{}/dp/{}'.format(url_match.group(1), url_match.group(2))
 
     def scrape_parameter(self, driver, parameter):
-        attribute = selectors[self.website][parameter]['attribute']
-        for selector in selectors[self.website][parameter]['css']:
+        attribute = SELECTORS[self.website][parameter]['attribute']
+        for selector in SELECTORS[self.website][parameter]['css']:
             try: return driver.find_element_by_css_selector(selector).get_attribute(attribute)
             except: pass
         return None
 
     def get_parameter(self, driver, parameter):
         raw_param = self.scrape_parameter(driver, parameter)
-        usingFunc = "function" in selectors[self.website][parameter]
-        return (selectors[self.website][parameter]['function'](raw_param) if usingFunc else raw_param)
+        usingFunc = "function" in SELECTORS[self.website][parameter]
+        return (SELECTORS[self.website][parameter]['function'](raw_param) if usingFunc else raw_param)
 
 
