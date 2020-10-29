@@ -27,47 +27,29 @@ def listProductsRequest(list_id):
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
-    # if request.method == 'POST':
-    #     if List.query.filter_by(user_id=int(auth_token)):
-
-
-            # Already got Delete request started for Ticket #47 (Mila)
-            # if request.method == 'DELETE':
-            #     products_in_list = ListToProduct.query.filter_by(list_id=list_id)
-            #     db.session.delete(products_in_list)
-            #     try:
-            #         db.session.commit()
-            #     except Exception as e:
-            #             return jsonify({'error': "{}".format(e.__cause__)}), 400
-            #     return jsonify({'response': "List '{}' was successfully deleted from the database".format(list_id)}), 200
-
-         # Already got Delete request started for Ticket #47 (Mila)
-            # @list_to_product_handler.route('/list-to-products/<list_id>/<product_id>',methods=['DELETE'])
-            # def onelistProductsRequest(list_id,product_id):
-            #     if request.method == 'DELETE':
-            #         product_in_list = ListToProduct.query.filter_by(list_id=list_id, product_id=product_id)
-            #         db.session.delete(product_in_list)
-            #         try:
-            #             db.session.commit()
-            #         except Exception as e:
-            #             return jsonify({'error': "{}".format(e.__cause__)}), 400
-            #         return jsonify({'response': "Product '{}' was successfully deleted from the List'{}'".format(list_id)}), 200
-
-
-@list_to_product_handler.route('/list-to-products', methods=['POST'])
-def allListProductsRequest():
     if request.method == 'POST':
-        body = json.loads(request.get_data())
-        list_id = body['list_id']
-        product_id = body['product_id']
-
-        if not ListToProduct.query.filter_by(list_id=list_id, product_id=product_id).first():
-            try:
-                list_product_connection = ListToProduct(list_id, product_id)
+        try:
+            list_user_id = List.query.filter_by(list_id=int(list_id)).user_id
+            body = request.get_json()
+            if list_user_id == auth_token:
+                list_product_connection = ListToProduct(list_id, body['product_id'])
                 db.session.add(list_product_connection)
                 db.session.commit()
-            except Exception as e:
-                return jsonify({'error': "{}".format(e.__cause__)}), 400
-            return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
-        else:
-            return jsonify({'error': 'product already exists in list'}), 400
+            else:
+                return jsonify({"error": "you are unauthorized to add to the list"})
+            return jsonify({'response': "item was successfully added to the list"}), 200
+
+        except Exception as e:
+            return jsonify({'error': "{}".format(e.__cause__)}), 400
+
+
+    # @list_to_product_handler.route('/list-to-products/<list_id>/<product_id>',methods=['DELETE'])
+    # def onelistProductsRequest(list_id,product_id):
+    #     if request.method == 'DELETE':
+    #         product_in_list = ListToProduct.query.filter_by(list_id=list_id, product_id=product_id)
+    #         db.session.delete(product_in_list)
+    #         try:
+    #             db.session.commit()
+    #         except Exception as e:
+    #             return jsonify({'error': "{}".format(e.__cause__)}), 400
+    #         return jsonify({'response': "Product '{}' was successfully deleted from the List'{}'".format(list_id)}), 200
