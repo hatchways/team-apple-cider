@@ -30,7 +30,13 @@ def oneProductRequests(product_id):
             if "old_price" in req: product.old_price = req["old_price"]
             if "price" in req: product.price = req["price"]
             if "url" in req: product.url = req["url"]
-            if "img_url" in req: product.img_url = req["img_url"]
+            if "img_url" in req: 
+                try:
+                    new_img_url = image_uploader(
+                    req["img_url"], PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
+                except:
+                    return jsonify({"error : uploading image on cloudinary"}), 400
+                product.img_url = new_img_url
             db.session.commit()
             return jsonify({"response" : "Product '{}' was updated".format(product_id)}), 200
         else:

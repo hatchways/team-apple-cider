@@ -6,7 +6,7 @@ class List(db.Model):
     __tablename__ = 'list'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     name = db.Column(db.String, nullable=False)
     img_url = db.Column(db.String, nullable=False)
     product_count = db.Column(db.Integer, nullable=False)
