@@ -8,7 +8,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, unique=True, nullable=False)
     old_price = db.Column(db.Integer)
-    price = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer)
     url = db.Column(db.String, nullable=False)
     img_url = db.Column(db.String, nullable=False)
 
