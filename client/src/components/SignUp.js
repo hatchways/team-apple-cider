@@ -1,13 +1,32 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Box, Snackbar, Tooltip} from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import {
+  Button,
+  TextField,
+  Box,
+  Snackbar,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/alert";
 import UserContext from "../contexts/UserContext";
 
-// function Alert(props) {
-//   return <MuiAlert elevation={6} variant="filled" {...props} />;
-// }
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const ErrorTooltip = withStyles((theme) => ({
+  arrow: {
+    color: "red",
+  },
+  tooltip: {
+    backgroundColor: "red",
+    color: "rgba(255, 255, 255, 0.87)",
+    boxShadow: theme.shadows[1],
+    fontSize: 14,
+  },
+}))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
   signup: {
@@ -64,105 +83,103 @@ function SignUp(props) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
-  // const [openNameTooltip, setOpenNameTooltip] = useState(false);
-  // const [openSnack, setOpenSnack] = useState(false);
-  // const [snackText, setSnackText] = useState("");
+  const [openTooltip, setOpenTooltip] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackText, setSnackText] = useState("");
   const value = useContext(UserContext);
 
-  // const handleNameTooltip = () => {
-  //   setOpenNameTooltip(true);
-  // };
+  function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
 
-  // const handleSnack = (props) => {
-  //   setSnackText(props);
-  //   setOpenSnack(true);
-  // };
+  const handleOpenTooltip = async () => {
+    setOpenTooltip(true);
+    await sleep(6000);
+    setOpenTooltip(false);
+  };
 
-  // const handleCloseSnack = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
+  const handleCloseTooltip = () => {
+    setOpenTooltip(false);
+  };
 
-  //   setOpenSnack(false);
-  // };
+  const handleSnack = (props) => {
+    setSnackText(props);
+    setOpenSnack(true);
+  };
 
-  // const validations = () => {
-  //   const errorsCopy = { ...errors };
-  //   errorsCopy.name = name ? "" : "This field is required.";
-  //   if (errorsCopy.name) {
-  //     setOpenNameTooltip(true);
-  //   }
-  //   errorsCopy.email = /.+@.+\..+/.test(email) ? "" : "Email is not valid.";
-  //   errorsCopy.password =
-  //     password.length > 5 ? "" : "Password must be at least six characters.";
-  //   errorsCopy.confirm = password === confirm ? "" : "Passwords must match.";
-  //   setErrors({ ...errorsCopy });
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
 
-  //   return Object.values(errorsCopy).every((field) => field === "");
-  // };
+    setOpenSnack(false);
+  };
 
-  // const handleSignup = async (e) => {
-  //   e.preventDefault();
-  //   if (true) {
-  //     fetch("/auth/register", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         name: name,
-  //         email: email,
-  //         password: password,
-  //         confirm: confirm,
-  //       }),
-  //     })
-  //       .then((response) => response.json())
-  //       .then(function (response) {
-  //         if (response.status === "success") {
-  //           console.log("Success:", email);
-  //           const loginSuccess = value.handleLogin(email, password);
-  //           if (loginSuccess) props.history.push("/dashboard");
-  //         } else {
-  //           // handleSnack(response.message);
-  //           console.log(response.message);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error:", error);
-  //       });
-  //   }
-  // };
-  const handleSubmit = (e) => {
+  const validations = () => {
+    const errorsCopy = { ...errors };
+    errorsCopy.name = name ? "" : "This field is required.";
+    errorsCopy.email = /.+@.+\..+/.test(email) ? "" : "Email is not valid.";
+    errorsCopy.password =
+      password.length > 5 ? "" : "Password must be at least six characters.";
+    errorsCopy.confirm = password === confirm ? "" : "Passwords must match.";
+    if (errorsCopy.confirm) {
+      handleOpenTooltip();
+    } else {
+      handleCloseTooltip();
+    }
+    setErrors({ ...errorsCopy });
+
+    return Object.values(errorsCopy).every((field) => field === "");
+  };
+
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const signupSuccess = value.handleSignup(name, email, password, confirm);
-    if (signupSuccess) props.history.push("/dashboard");
+    if (validations()) {
+      fetch("/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+          confirm: confirm,
+        }),
+      })
+        .then((response) => response.json())
+        .then(function (response) {
+          if (response.status === "success") {
+            console.log("Success:", email);
+            const loginSuccess = value.handleLogin(email, password);
+            if (loginSuccess) props.history.push("/dashboard");
+          } else {
+            handleSnack(response.message);
+            console.log(response.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
 
   return (
     <section className={classes.signup}>
       <Box className={classes.formContainer}>
-        <form form onSubmit={handleSubmit}>
+        <form form onSubmit={handleSignup}>
           <h2 className={classes.h2}>Sign up</h2>
           <label>Your Name</label>
-          {/* <Tooltip
-            open={openNameTooltip}
-            title={errors.name}
-            arrow
-            disableHoverListener
-            disableTouchListener
-            disableFocusListener
-          > */}
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              label="name"
-              fullWidth
-              required
-              // type="text"
-              // error={!!errors.name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          {/* </Tooltip> */}
+          <TextField
+            className={classes.textField}
+            variant="outlined"
+            label="name"
+            fullWidth
+            required
+            type="text"
+            error={!!errors.name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <label>Your email address:</label>
           <TextField
             className={classes.textField}
@@ -189,17 +206,26 @@ function SignUp(props) {
             onChange={(e) => setPassword(e.target.value)}
           />
           <label>Confirm Password:</label>
-          <TextField
-            className={classes.textField}
-            variant="outlined"
-            label="confirm password"
-            fullWidth
-            required
-            type="password"
-            // error={!!errors.confirm}
-            // helperText={errors.confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-          />
+          <ErrorTooltip
+            open={openTooltip}
+            title={<Typography>Passwords must match.</Typography>}
+            arrow
+            disableHoverListener
+            disableTouchListener
+            disableFocusListener
+          >
+            <TextField
+              className={classes.textField}
+              variant="outlined"
+              label="confirm password"
+              fullWidth
+              required
+              type="password"
+              error={!!errors.confirm}
+              // helperText={errors.confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+            />
+          </ErrorTooltip>
           <Button
             className={classes.button}
             // onClick={handleClick}
@@ -216,7 +242,7 @@ function SignUp(props) {
             Login
           </Link>
         </Box>
-        {/* <Snackbar
+        <Snackbar
           open={openSnack}
           autoHideDuration={6000}
           onClose={handleCloseSnack}
@@ -224,7 +250,7 @@ function SignUp(props) {
           <Alert onClose={handleCloseSnack} severity="error">
             {snackText}
           </Alert>
-        </Snackbar> */}
+        </Snackbar>
       </Box>
     </section>
   );
