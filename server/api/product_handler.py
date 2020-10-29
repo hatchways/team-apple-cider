@@ -25,14 +25,10 @@ def oneProductRequests(product_id):
         req = request.get_json()
         try:
             product = Product.query.get(int(product_id))
-            if "name" in req:
-                product.name = req["name"]
-            if "old_price" in req:
-                product.old_price = req["old_price"]
-            if "price" in req:
-                product.price = req["price"]
-            if "url" in req:
-                product.url = req["url"]
+            product.name = req.get(req["name"], product.name)
+            product.old_price = req.get(req["old_price"], product.old_price)
+            product.price = req.get(req["price"], product.price)
+            product.url = req.get(req["url"], product.url)
             if "img_url" in req:
                 try:
                     new_img_url = image_uploader(
@@ -43,7 +39,7 @@ def oneProductRequests(product_id):
             db.session.commit()
             return jsonify({"response": "Product '{}' was updated".format(product_id)}), 200
         except Exception as e:
-           return jsonify({'error': "{}".format(e.__cause__)}), 400
+            return jsonify({'error': "{}".format(e.__cause__)}), 400
 
 
 @product_handler.route('/products', methods=['GET', 'POST'])
