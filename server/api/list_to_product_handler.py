@@ -15,8 +15,8 @@ def listProductsRequest(list_id):
 
     if request.method == 'GET':
         try:
-            list_user_id = List.query.filter_by(list_id=int(list_id)).user_id
-            list_privacy = List.query.filter_by(list_id=int(list_id)).private
+            list_user_id = List.query.filter_by(id=int(list_id)).first().user_id
+            list_privacy = List.query.filter_by(id=int(list_id)).first().private
 
             if list_user_id == auth_token or list_privacy == False:
                 products_in_list = ListToProduct.query.filter_by(list_id=list_id)
@@ -29,10 +29,12 @@ def listProductsRequest(list_id):
 
     if request.method == 'POST':
         try:
-            list_user_id = List.query.filter_by(list_id=int(list_id)).user_id
+            list_user_id = List.query.filter_by(id=int(list_id)).first().user_id
+            
             body = request.get_json()
             if list_user_id == auth_token:
-                list_product_connection = ListToProduct(list_id, body['product_id'])
+                print(int(list_id))
+                list_product_connection = ListToProduct(int(list_id), body['product_id'])
                 db.session.add(list_product_connection)
                 db.session.commit()
             else:
