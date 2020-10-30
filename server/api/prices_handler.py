@@ -19,10 +19,10 @@ def onePriceRequests(product_id):
     if request.method == 'POST':
         try:
             body = json.loads(request.get_data())
-            price_entry = Price(product_id, body['price'])
+            price_entry = Price(product_id, body['price'], body['currency'])
             db.session.add(price_entry)
             db.session.commit()
-            return jsonify({'response': "Added price {} to product '{}'".format(body['price'], product_id)}), 200
+            return jsonify({'response': "Added price {} {} to product '{}'".format(body['currency'], body['price'], product_id)}), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
