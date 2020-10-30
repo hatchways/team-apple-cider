@@ -24,7 +24,6 @@ def onePriceRequests(product_id):
             db.session.commit()
             return jsonify({'response': "Added price {} {} to product '{}'".format(body['currency'], body['price'], product_id)}), 200
         except Exception as e:
-            print(e)
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
     if request.method == 'DELETE':
