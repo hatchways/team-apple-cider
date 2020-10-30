@@ -15,11 +15,14 @@ def listProductsRequest(list_id):
 
     if request.method == 'GET':
         try:
-            list_user_id = List.query.filter_by(id=int(list_id)).first().user_id
-            list_privacy = List.query.filter_by(id=int(list_id)).first().private
+            list_user_id = List.query.filter_by(
+                id=int(list_id)).first().user_id
+            list_privacy = List.query.filter_by(
+                id=int(list_id)).first().private
 
             if list_user_id == auth_token or list_privacy == False:
-                products_in_list = ListToProduct.query.filter_by(list_id=list_id)
+                products_in_list = ListToProduct.query.filter_by(
+                    list_id=list_id)
                 return jsonify([product.serialize for product in products_in_list])
             else:
                 return jsonify({"error": "user has set list to private"})
@@ -29,12 +32,14 @@ def listProductsRequest(list_id):
 
     if request.method == 'POST':
         try:
-            list_user_id = List.query.filter_by(id=int(list_id)).first().user_id
-            
+            list_user_id = List.query.filter_by(
+                id=int(list_id)).first().user_id
+
             body = request.get_json()
             if list_user_id == auth_token:
                 print(int(list_id))
-                list_product_connection = ListToProduct(int(list_id), body['product_id'])
+                list_product_connection = ListToProduct(
+                    int(list_id), body['product_id'])
                 db.session.add(list_product_connection)
                 db.session.commit()
             else:
@@ -43,15 +48,3 @@ def listProductsRequest(list_id):
 
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
-
-
-    # @list_to_product_handler.route('/list-to-products/<list_id>/<product_id>',methods=['DELETE'])
-    # def onelistProductsRequest(list_id,product_id):
-    #     if request.method == 'DELETE':
-    #         product_in_list = ListToProduct.query.filter_by(list_id=list_id, product_id=product_id)
-    #         db.session.delete(product_in_list)
-    #         try:
-    #             db.session.commit()
-    #         except Exception as e:
-    #             return jsonify({'error': "{}".format(e.__cause__)}), 400
-    #         return jsonify({'response': "Product '{}' was successfully deleted from the List'{}'".format(list_id)}), 200

@@ -7,6 +7,7 @@ from functools import wraps
 
 auth_handler = Blueprint("auth_handler", __name__)
 
+
 def token_getter():
     try:
         auth_header = request.cookies.get("Authentication token")
@@ -24,34 +25,13 @@ def token_getter():
     return make_response(jsonify(responseObject)), 401
 
 
-
 # Wrapper that obtains and verifies an auth token in a cookie. Returns true if valid, false otherwise.
 def login_cookie_getter(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        try:
-            auth_header = request.cookies.get("Authentication token")
-            if auth_header:
-                auth_token = auth_header
-                auth_token = User.decode_auth_token(auth_token)
-                if not isinstance(auth_token, str):
-                    g.user = User.query.filter_by(id=auth_token).first()
-                else:
-                    raise Exception
-            else:
-                raise Exception
-        except:
-            responseObject = {
-                "status": "fail",
-                "message": "User is not logged in."
-            }
-            return make_response(jsonify(responseObject)), 401
+        token_getter()
         return f(None)
     return decorated_function
-
-
-
-
 
 
 class RegisterAPI(MethodView):
