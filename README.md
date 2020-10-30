@@ -84,6 +84,39 @@ A price history is kept for each product on the database. The API routes for the
 
 `curl -X DELETE localhost:5000/prices/product/<product_id>`
 
+### Lists
+
+The API routes for the lists are as follows:
+
+#### _GET one personal list (public or private) created by the user:_
+`curl localhost:5000/lists?user_id=<USER_ID>&list_id=<LIST_ID>`
+
+#### _GET a all list of any user (only authorized users can see private ones):_
+`curl localhost:5000/lists?user_id=<USER_ID>`
+
+#### _GET one list of any user (only authorized users can see private ones):_
+`curl localhost:5000/lists?list_id=<LIST_ID>`
+
+#### _POST(create) new list:_
+`curl -X POST localhost:5000/lists --data 
+'{
+   "name": "<NAME>",
+   "img_url": "<IMAGE URL>"
+}' --header "Content-Type: application/json"`
+
+### List to Products
+
+#### _GET all existing product_ids given an list_id (only authorized users can see private ones):_
+
+`curl localhost:5000/list-to-products/<LIST_ID>`
+
+#### _POST(add) new products into existing ones (only authorized users can do this):_
+
+`curl -X POST localhost:5000/list-to-products/<LIST_ID> --data 
+'{
+   "product_id": <PRODUCT_ID>
+}'--header "Content-Type: application/json"`
+
 ## External API Services
 
 ### Cloudinary

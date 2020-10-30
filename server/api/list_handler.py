@@ -17,6 +17,7 @@ def listRequests():
     auth_token = token_getter()
 
     if request.method == 'GET':
+        # 1|1|1 Case 1: Where list_id and user_id and auth_token provided
         if list_id and user_id and auth_token:
             if int(user_id) == int(auth_token):
                 try:
@@ -24,10 +25,10 @@ def listRequests():
                 except Exception as e:
                     return jsonify({'error': "{}".format(e.__cause__)}), 400
                 return jsonify(List.query.filter_by(id=list_id).first().serialize)
-        else:
-            return jsonify({'error': "unauthorized access"}), 401
+            else:
+                return jsonify({'error': "unauthorized access"}), 401
 
-        # 0|1|1 Case 3: when user_id and auth_token is provided
+        # 0|1|1 Case 2: when user_id and auth_token is provided
         if user_id and auth_token:
             try:
                 if int(user_id) == int(auth_token):
@@ -41,7 +42,7 @@ def listRequests():
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
 
-        # 1|0|0 Case 2: Where only the list_id is provided
+        # 1|0|0 Case 3: Where only the list_id is provided
         if list_id:
             try:
                 list_privacy = List.query.filter_by(id=list_id).first().private
@@ -53,7 +54,6 @@ def listRequests():
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
 
     if request.method == 'POST':
-        print("hello")
         body = json.loads(request.get_data())
         list_user_id = auth_token
         list_name = body['name']
