@@ -61,7 +61,7 @@ class ScrapeAmazon:
         
         driver.quit()
 
-        # No HTTP reqs, using server funcs
+        # No HTTP requests from sever to server, use server funcs instead
         product_check = requests.get('http://localhost:5000/products/{}'.format(self.product_id))
         if (int(product_check.status_code) == 400):
             requests.post('http://localhost:5000/products/{}'.format(self.product_id), json={"name": self.name, "currency": self.currency, "old_price": self.old_price, "price": self.price, "availability": self.availability, "url": self.url, "img_url": self.img_url})
