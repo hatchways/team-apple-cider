@@ -21,9 +21,11 @@ def string_to_int_price(price_string):
     return int(price_match.group(1)) * 100 + int(price_match.group(2))
 
 def string_availability_to_boolean(string_availability):
+    if string_availability == None: return None
     return (bool(re.search('in stock', string_availability, re.IGNORECASE)))
 
 def get_currency_symbol(price_string):
+    if price_string == None: return None
     currency_symbol = re.search(r"[^0-9\,\.]+", price_string).group(0)
     return currency_symbol.strip()
 
@@ -48,23 +50,26 @@ class ScrapeAmazon:
         
         self.website = "amazon"
         self.url = self.get_shortened_url(URL)
-        self.url_id = self.get_url_id(URL)
+        self.product_id = self.get_product_id(URL)
 
         self.old_price = self.get_parameter(driver, "old_price") 
         self.price = self.get_parameter(driver, "price") 
-        self.name = self.get_parameter(driver, "name") 
-        self.img_url = self.get_parameter(driver, "img_url") 
+        self.name = self.name = self.get_parameter(driver, "name") 
+        self.img_url = self.img_url = self.get_parameter(driver, "img_url") 
         self.availability = self.get_parameter(driver, "availability") 
-        self.currency = self.get_parameter(driver, "currency") 
+        self.currency = self.currency = self.get_parameter(driver, "currency") 
         
         driver.quit()
-        
-        requests.post('http://localhost:5000/prices/product/{}'.format(self.url_id), json={"price": self.price, "currency": self.currency})
+
+        product_check = requests.get('http://localhost:5000/products/{}'.format(self.product_id))
+        if (int(product_check.status_code) == 400):
+            requests.post('http://localhost:5000/products/{}'.format(self.product_id), json={"name": self.name, "currency": self.currency, "old_price": self.old_price, "price": self.price, "availability": self.availability, "url": self.url, "img_url": self.img_url})
+        requests.post('http://localhost:5000/prices/product/{}'.format(self.product_id), json={"price": self.price, "currency": self.currency})
     
-    def get_url_id(self, URL):
+    def get_product_id(self, URL):
         url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 
-        url_id = '{}:{}'.format(url_match.group(1), url_match.group(2))
-        return (url_id[1:] if url_id.startswith('.') else url_id)
+        product_id = '{}:{}'.format(url_match.group(1), url_match.group(2))
+        return (product_id[1:] if product_id.startswith('.') else product_id)
 
     def get_shortened_url(self, URL):
         url_match = re.search(r"amazon((?:\.[a-z]+)+)\/.*dp\/([A-Z0-9]+)", URL) 

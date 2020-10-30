@@ -7,11 +7,11 @@ from .scraper import ScrapeAmazon
 
 
 
-@prices_handler.route('/prices/product/<url_id>', methods=['GET', 'POST', 'DELETE'])
-def onePriceRequests(url_id):
+@prices_handler.route('/prices/product/<product_id>', methods=['GET', 'POST', 'DELETE'])
+def onePriceRequests(product_id):
     if request.method == 'GET':
         try:
-            prices = Price.query.filter_by(url_id=url_id)
+            prices = Price.query.filter_by(product_id=product_id)
             return jsonify([price.serialize for price in prices]), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
@@ -19,20 +19,20 @@ def onePriceRequests(url_id):
     if request.method == 'POST':
         try:
             body = json.loads(request.get_data())
-            price_entry = Price(url_id, body['price'], body['currency'])
+            price_entry = Price(product_id, body['price'], body['currency'])
             db.session.add(price_entry)
             db.session.commit()
-            return jsonify({'response': "Added price {} {} to product '{}'".format(body['currency'], body['price'], url_id)}), 200
+            return jsonify({'response': "Added price {} {} to product '{}'".format(body['currency'], body['price'], product_id)}), 200
         except Exception as e:
             print(e)
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
     if request.method == 'DELETE':
         try:
-            prices = Price.query.filter_by(url_id=url_id)
+            prices = Price.query.filter_by(product_id=product_id)
             [db.session.delete(price) for price in prices]    
             db.session.commit()
-            return jsonify({'response': "Product '{}' prices were successfully deleted from the database".format(url_id)}), 200
+            return jsonify({'response': "Product '{}' prices were successfully deleted from the database".format(product_id)}), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400    
     
