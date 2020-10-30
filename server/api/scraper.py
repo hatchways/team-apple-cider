@@ -54,10 +54,10 @@ class ScrapeAmazon:
 
         self.old_price = self.get_parameter(driver, "old_price") 
         self.price = self.get_parameter(driver, "price") 
-        self.name = self.name = self.get_parameter(driver, "name") 
-        self.img_url = self.img_url = self.get_parameter(driver, "img_url") 
+        self.name = self.get_parameter(driver, "name") 
+        self.img_url = self.get_parameter(driver, "img_url") 
         self.availability = self.get_parameter(driver, "availability") 
-        self.currency = self.currency = self.get_parameter(driver, "currency") 
+        self.currency = self.get_parameter(driver, "currency") 
         
         driver.quit()
 
