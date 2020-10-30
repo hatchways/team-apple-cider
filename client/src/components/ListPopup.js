@@ -6,6 +6,7 @@ import levis_501 from "img/levis_501.png";
 import tommy_jeans from "img/tommy_jeans.png";
 import ck_jacket from "img/ck_jacket.png";
 import ProductCard from "components/ProductCard";
+import ItemDisplay from "./ItemDisplay";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -128,39 +129,42 @@ const demoProductsArray = [
 const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) => {
   const classes = useStyles();
   const handleClose = () => changeListOpen();
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [listProducts, setListProducts] = useState([]);
+  // const [error, setError] = useState(null);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
+  const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
 
-  useEffect(() => {
-    fetch(`list-to-products/${listId}`)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setListProducts(result);
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  }, []);
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } 
-  else{
-    console.log(listProducts)
+  const getListRelations = async () => {
+    const res = await fetch(`list-to-products/${listId}`)
+    const json = await res.json()
+    setListToProducts(json);
   }
 
-  // var products = []
-  // for (x of products){
+  useEffect(() => {
+    getListRelations();
+  }, [listId]);
+ 
 
-  // }
+  const getNewProducts = async () => {
+    const newProducts = await Promise.all(listToProducts.map(async (relation)=>{      
+      const res = await fetch(`/products/${relation.product_id}`)
+      return res.json();
+    }));
+    setProducts(newProducts)
+  }
 
+  useEffect(() => {
+    getNewProducts()
+  }, [listToProducts]);
+ 
+  console.log(products)
+
+
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // } else if (!isLoaded) {
+  //   return <div>Loading...</div>;
+  // } ;
 
   return (
     <Modal open={listOpen} onClose={handleClose} className={classes.popup}>
@@ -187,9 +191,9 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
         </Box>
         <Box className={classes.bodyContainer}>
           <Box className={classes.bodyContent}>
-            {listProducts.map((item, i) => (
-              <ProductCard key={i} item={item} />
-            ))}
+          {products.map((item, i) => (
+          <ProductCard key={i} item={item} />
+        ))}
           </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
