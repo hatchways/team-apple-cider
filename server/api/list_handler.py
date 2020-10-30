@@ -42,7 +42,16 @@ def listRequests():
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
 
-        # 1|0|0 Case 3: Where only the list_id is provided
+        # 0|0|1 Case 3: when only auth_token is provided
+        if auth_token:
+            try:
+                lists = List.query.filter_by(user_id=auth_token)
+                return jsonify([list.serialize for list in lists]), 200
+            except Exception as e:
+                return jsonify({'error': "{}".format(e.__cause__)}), 400
+        
+
+        # 1|0|0 Case 4: When only the list_id is provided
         if list_id:
             try:
                 list_privacy = List.query.filter_by(id=list_id).first().private

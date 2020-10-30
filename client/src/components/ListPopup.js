@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{ useEffect, useState }from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Modal, IconButton, Typography, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -125,9 +125,42 @@ const demoProductsArray = [
   },
 ];
 
-const ListPopup = ({ listTitle, itemCount, listOpen, changeListOpen }) => {
+const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) => {
   const classes = useStyles();
   const handleClose = () => changeListOpen();
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [listProducts, setListProducts] = useState([]);
+
+  useEffect(() => {
+    fetch(`list-to-products/${listId}`)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setListProducts(result);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      );
+  }, []);
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } 
+  else{
+    console.log(listProducts)
+  }
+
+  // var products = []
+  // for (x of products){
+
+  // }
+
 
   return (
     <Modal open={listOpen} onClose={handleClose} className={classes.popup}>
@@ -154,7 +187,7 @@ const ListPopup = ({ listTitle, itemCount, listOpen, changeListOpen }) => {
         </Box>
         <Box className={classes.bodyContainer}>
           <Box className={classes.bodyContent}>
-            {demoProductsArray.map((item, i) => (
+            {listProducts.map((item, i) => (
               <ProductCard key={i} item={item} />
             ))}
           </Box>

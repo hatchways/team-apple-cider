@@ -42,7 +42,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListCard = (props) => {
-  const { listTitle, itemCount, img } = props.list;
+  const listId = props.list.id;
+  const listTitle = props.list.name;
+  const itemCount = props.list.product_count;
+  const img = props.list.img_url;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
   const changeListOpen = () => {
@@ -61,7 +64,7 @@ const ListCard = (props) => {
           >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{ listTitle, itemCount, listOpen, changeListOpen }} />
+      <ListPopup {...{listId, listTitle, itemCount, listOpen, changeListOpen }} />
     </Box>
   );
 };
