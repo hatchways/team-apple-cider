@@ -6,7 +6,7 @@ class Product(db.Model):
     __tablename__ = 'product'
 
     id = db.Column(db.String, primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String, nullable=False)
     currency = db.Column(db.String, nullable=False)
     old_price = db.Column(db.Integer)
     price = db.Column(db.Integer)
