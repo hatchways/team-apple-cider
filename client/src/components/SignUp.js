@@ -113,7 +113,6 @@ function SignUp(props) {
     if (reason === "clickaway") {
       return;
     }
-
     setOpenSnack(false);
   };
 
