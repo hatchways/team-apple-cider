@@ -21,7 +21,7 @@ def listRequests():
 
     if request.method == 'POST':
         body = json.loads(request.get_data())
-        list_item = List(body['product_type'])
+        list_item = List(body['product_type'], body['visible'])
         db.session.add(list_item)
         try:
             db.session.commit()
