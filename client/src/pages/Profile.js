@@ -48,9 +48,19 @@ const useStyles = makeStyles((theme) => ({
     height: "7rem",
     margin: theme.spacing(2),
   },
+  profileTextContainer: {
+    display: "flex",
+    flexDirection: "column",
+  },
   userName: {
     fontSize: "1.5rem",
     fontWeight: "bold",
+  },
+  followerCount: {
+    color: "grey",
+  },
+  followingCount: {
+    color: "grey",
   },
   followButton: {
     backgroundColor: "#DF1B1B",
@@ -95,7 +105,15 @@ const Profile = (props) => {
               src={user && user.img}
               alt="profile-pic"
             />
-            <Typography className={classes.userName}>{user.name}</Typography>
+            <Box className={classes.profileTextContainer}>
+              <Typography className={classes.userName}>{user.name}</Typography>
+              <Typography className={classes.followerCount}>
+                5435 Followers
+              </Typography>
+              <Typography className={classes.followingCount}>
+                3253 Following
+              </Typography>
+            </Box>
             <Button className={classes.followButton}>Follow</Button>
           </Box>
           <ListsDisplay {...{ user }} className={classes.listsDisplay} />
