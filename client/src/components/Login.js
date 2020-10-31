@@ -11,9 +11,9 @@ function Alert(props) {
 
 const useStyles = makeStyles((theme) => ({
   login: {
-    maxWidth: "1200px",
+    width: "100vw",
     margin: "0 auto",
-    height: "100vh",
+    minHeight: "100vh",
     padding: "50px",
     backgroundColor: "#44475ab9",
   },
