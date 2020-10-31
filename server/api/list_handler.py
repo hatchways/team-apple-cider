@@ -7,21 +7,21 @@ import json
 list_handler = Blueprint('list_handler', __name__)
 
 
-@list_handler.route('/lists/<list_id>', methods=['GET', 'DELETE'])
-def oneListRequests(list_id):
+@list_handler.route('/lists/<id>', methods=['GET', 'DELETE'])
+def oneListRequests(id):
     if request.method == 'GET':
         try:
-            selected_list = List.query.get(list_id)
+            selected_list = List.query.get(id)
             return jsonify(selected_list.serialize), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
     if request.method == 'DELETE':
         try:        
-            selected_list = List.query.get(list_id)
+            selected_list = List.query.get(id)
             db.session.delete(selected_list)
             db.session.commit()
-            return jsonify({'response': "List '{}' was successfully deleted from the database".format(list_id)}), 200
+            return jsonify({'response': "List '{}' was successfully deleted from the database".format(id)}), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400    
 

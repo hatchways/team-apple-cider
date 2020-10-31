@@ -86,9 +86,21 @@ A price history is kept for each product on the database. The API routes for the
 
 ### Lists
 
+#### _GET all lists from database:_
+
+`curl localhost:5000/lists`
+
+#### _GET single list from database:_
+
+`curl localhost:5000/lists/<id>`
+
 #### _POST new list to database:_
 
 `curl -X POST localhost:5000/lists --data '{"product_type": "Clothes", "visible": true}' --header "Content-Type: application-json"`
+
+#### _DELETE list from database:_
+
+`curl -X DELETE localhost:5000/lists/<id>`
 
 ## External API Services
 
