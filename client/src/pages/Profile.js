@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     height: "7rem",
     margin: theme.spacing(2),
   },
+  userName: {
+    fontSize: "1.5rem",
+    fontWeight: "bold",
+  },
   listsDisplay: {
     margin: theme.spacing(2),
   },
@@ -83,7 +87,7 @@ const Profile = (props) => {
               src={user && user.img}
               alt="profile-pic"
             />
-            <Typography>{user.name}</Typography>
+            <Typography className={classes.userName}>{user.name}</Typography>
           </Box>
           <ListsDisplay {...{ user }} className={classes.listsDisplay} />
         </Box>
