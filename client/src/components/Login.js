@@ -7,9 +7,9 @@ import UserContext from "contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   login: {
-    maxWidth: "1200px",
+    width: "100vw",
     margin: "0 auto",
-    height: "100vh",
+    minHeight: "100vh",
     padding: "50px",
     backgroundColor: "#44475ab9",
   },

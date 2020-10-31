@@ -5,9 +5,9 @@ import { Button, TextField, Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   login: {
-    maxWidth: "1200px",
+    width: "100vw",
     margin: "0 auto",
-    height: "123vh",
+    minHeight: "100vh",
     padding: "50px",
     backgroundColor: "#44475ab9",
   },

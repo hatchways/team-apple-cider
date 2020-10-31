@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     noWrap: "true",
   },
   priceTextContainer: {
+    display: "inlineflex",
     padding: theme.spacing(0.25),
   },
   itemOldPrice: {
@@ -54,6 +55,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
 }));
+
+const centsToDollarsDisplay = (inputCents) => {
+  const dollars = String(Math.floor(inputCents / 100));
+  const cents = String(inputCents % 100);
+  return `$${dollars}.${cents.length > 1 ? cents : "0" + cents}`;
+};
 
 const ItemDisplay = (props) => {
   const { item } = props;
@@ -75,8 +82,14 @@ const ItemDisplay = (props) => {
           {url}
         </Link>
         <Box className={classes.priceTextContainer}>
-          <Typography className={classes.itemOldPrice}>{old_price}</Typography>{" "}
-          <Typography className={classes.itemPrice}>{price}</Typography>
+          {old_price && (
+            <Typography className={classes.itemOldPrice}>
+              {centsToDollarsDisplay(old_price)}
+            </Typography>
+          )}{" "}
+          <Typography className={classes.itemPrice}>
+            {centsToDollarsDisplay(price)}
+          </Typography>
         </Box>
       </Box>
     </Box>
