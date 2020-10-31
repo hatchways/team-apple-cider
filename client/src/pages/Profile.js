@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Button } from "@material-ui/core";
+import { Box, Typography, Button, Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileHeader from "components/ProfileHeader";
 import ListsDisplay from "components/ListsDisplay";
@@ -8,6 +8,7 @@ import profile_photo_2 from "img/profile_photo_2.png";
 import profile_photo_3 from "img/profile_photo_3.png";
 import profile_photo_4 from "img/profile_photo_4.png";
 import profile_photo_5 from "img/profile_photo_5.png";
+import FollowBackIcon from "@material-ui/icons/Autorenew";
 
 const useStyles = makeStyles((theme) => ({
   dashContainer: {
@@ -80,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
     height: "2rem",
     margin: theme.spacing(0.75, 1.25),
   },
+  followBackIcon: {},
   listsDisplay: {
     margin: theme.spacing(2),
   },
@@ -137,9 +139,16 @@ const Profile = (props) => {
                     className={classes.followButton}
                     onClick={() => setFollowing((cur) => !cur)}
                   >
-                    {following ? "follow" : "unfollow"}
+                    {following ? "unfollow" : "follow"}
                   </Button>
                 </Box>
+                {following && (
+                  <Tooltip
+                    title={`You and ${user.name} are following each other!`}
+                  >
+                    <FollowBackIcon className={classes.followBackIcon} />
+                  </Tooltip>
+                )}
               </Box>
             </Box>
           </Box>
