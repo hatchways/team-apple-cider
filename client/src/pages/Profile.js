@@ -37,34 +37,48 @@ const useStyles = makeStyles((theme) => ({
   profileTopBar: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    "& > *:last-child": {
-      marginRight: "50%",
-    },
   },
   profilePhoto: {
     borderRadius: "100%",
     height: "7rem",
-    margin: theme.spacing(2),
+    margin: theme.spacing(2, 2, 2, 2),
   },
   profileTextContainer: {
     display: "flex",
     flexDirection: "column",
+    justifyContent: "start",
   },
   userName: {
     fontSize: "1.5rem",
     fontWeight: "bold",
+    margin: theme.spacing(0.5),
   },
-  followerCount: {
-    color: "grey",
+  followerBox: {
+    display: "flex",
+    alignItems: "center",
   },
-  followingCount: {
+  followerTextContainer: {
+    display: "flex",
+    width: "fit-content",
+    flexDirection: "column",
+    margin: theme.spacing(0, 0.75),
+  },
+  followerText: {
     color: "grey",
+    fontSize: "0.7rem",
+  },
+  buttonContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "7rem",
   },
   followButton: {
     backgroundColor: "#DF1B1B",
     color: "white",
+    width: "auto",
+    height: "2rem",
+    margin: theme.spacing(0.75, 1.25),
   },
   listsDisplay: {
     margin: theme.spacing(2),
@@ -72,13 +86,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = (props) => {
+  const [following, setFollowing] = useState(false);
   const [selectedPage, setSelectedPage] = useState(0);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
 
   // Demo user
   const user = {
-    name: "David Richardson",
+    name: "David Mayer Richardson",
     img: profile_photo_2,
   };
 
@@ -107,14 +122,26 @@ const Profile = (props) => {
             />
             <Box className={classes.profileTextContainer}>
               <Typography className={classes.userName}>{user.name}</Typography>
-              <Typography className={classes.followerCount}>
-                5435 Followers
-              </Typography>
-              <Typography className={classes.followingCount}>
-                3253 Following
-              </Typography>
+
+              <Box className={classes.followerBox}>
+                <Box className={classes.followerTextContainer}>
+                  <Typography className={classes.followerText}>
+                    5435 Followers
+                  </Typography>
+                  <Typography className={classes.followerText}>
+                    3253 Following
+                  </Typography>
+                </Box>
+                <Box className={classes.buttonContainer}>
+                  <Button
+                    className={classes.followButton}
+                    onClick={() => setFollowing((cur) => !cur)}
+                  >
+                    {following ? "follow" : "unfollow"}
+                  </Button>
+                </Box>
+              </Box>
             </Box>
-            <Button className={classes.followButton}>Follow</Button>
           </Box>
           <ListsDisplay {...{ user }} className={classes.listsDisplay} />
         </Box>
