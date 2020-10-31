@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    padding: theme.spacing(4, 0),
   },
   profileContainer: {
     display: "flex",
@@ -38,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
   profileTopBar: {
     display: "flex",
     alignItems: "center",
-    margin: theme.spacing(2, 0),
   },
   profilePhoto: {
     borderRadius: "100%",
