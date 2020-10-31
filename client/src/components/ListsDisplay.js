@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -6,6 +6,7 @@ import clothes from "img/clothes.png";
 import furniture from "img/furniture.png";
 import luxury from "img/luxury.png";
 import ListCard from "components/ListCard";
+import { useHorizontalScroll } from "components/HorrizontalScroll";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
@@ -61,6 +62,7 @@ const demoListsArray = [
 ];
 
 const ListsDisplay = (props) => {
+  const scrollRef = useHorizontalScroll();
   const { user } = props;
   const classes = useStyles();
 
@@ -75,7 +77,7 @@ const ListsDisplay = (props) => {
       <Typography variant="h5" className={classes.listsTitle}>
         {getListsUserText(user)} Shopping Lists:
       </Typography>
-      <Box className={classes.myShoppingLists}>
+      <Box className={classes.myShoppingLists} ref={scrollRef}>
         {demoListsArray.map((list, i) => (
           <ListCard key={i} list={list} />
         ))}
