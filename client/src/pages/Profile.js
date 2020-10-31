@@ -11,11 +11,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = (props) => {
-  // const user = null;
-
-  // TODO: Header and dashContainer are very similar to the ones found in Dashboard.js,
-  //       so they could be their own components and have the differing content passed
-  //       to them as children
   return (
     <Page>
       <Header />
