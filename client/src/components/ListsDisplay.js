@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   myShoppingLists: {
     display: "flex",
+    maxWidth: "75vw",
+    overflowX: "auto",
   },
 
   addNewList: {
@@ -47,6 +49,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const demoListsArray = [
+  { listTitle: "Clothes", itemCount: 34, img: clothes },
+  { listTitle: "Furniture", itemCount: 12, img: furniture },
+  { listTitle: "Luxury", itemCount: 8, img: luxury },
+  { listTitle: "Clothes", itemCount: 34, img: clothes },
+  { listTitle: "Furniture", itemCount: 12, img: furniture },
+  { listTitle: "Luxury", itemCount: 8, img: luxury },
   { listTitle: "Clothes", itemCount: 34, img: clothes },
   { listTitle: "Furniture", itemCount: 12, img: furniture },
   { listTitle: "Luxury", itemCount: 8, img: luxury },
