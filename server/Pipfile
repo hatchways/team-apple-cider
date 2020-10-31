@@ -18,6 +18,7 @@ celery = {extras = ["librabbitmq"], version = "*"}
 cloudinary = "*"
 selenium = "*"
 webdriver-manager = "*"
+flower = "*"
 
 [requires]
 python_version = "3.7"
