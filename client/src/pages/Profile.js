@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileHeader from "components/ProfileHeader";
 import ListsDisplay from "components/ListsDisplay";
@@ -34,10 +34,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "fit-content",
   },
-  profileTitle: {
+  profileTopBar: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    "& > *:last-child": {
+      marginRight: "50%",
+    },
   },
   profilePhoto: {
     borderRadius: "100%",
@@ -47,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
   userName: {
     fontSize: "1.5rem",
     fontWeight: "bold",
+  },
+  followButton: {
+    backgroundColor: "#DF1B1B",
+    color: "white",
   },
   listsDisplay: {
     margin: theme.spacing(2),
@@ -81,13 +89,14 @@ const Profile = (props) => {
       />
       <Box className={classes.bodyContainer}>
         <Box className={classes.profileContainer}>
-          <Box className={classes.profileTitle}>
+          <Box className={classes.profileTopBar}>
             <img
               className={classes.profilePhoto}
               src={user && user.img}
               alt="profile-pic"
             />
             <Typography className={classes.userName}>{user.name}</Typography>
+            <Button className={classes.followButton}>Follow</Button>
           </Box>
           <ListsDisplay {...{ user }} className={classes.listsDisplay} />
         </Box>
