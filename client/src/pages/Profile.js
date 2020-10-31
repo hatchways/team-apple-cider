@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = (props) => {
   const [following, setFollowing] = useState(false);
+  const followingYou = true;
   const [selectedPage, setSelectedPage] = useState(0);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
@@ -142,7 +143,7 @@ const Profile = (props) => {
                     {following ? "unfollow" : "follow"}
                   </Button>
                 </Box>
-                {following && (
+                {following && followingYou && (
                   <Tooltip
                     title={`You and ${user.name} are following each other!`}
                   >
