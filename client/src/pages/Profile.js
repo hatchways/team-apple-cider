@@ -23,21 +23,28 @@ const useStyles = makeStyles((theme) => ({
   bodyContainer: {
     flex: "1",
     backgroundColor: "#f8f8f8",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   profileContainer: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    alignItems: "start",
     justifyContent: "center",
-    margin: theme.spacing(8),
+    flexDirection: "column",
+    width: "fit-content",
   },
   profileTitle: {
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
   profilePhoto: {
     borderRadius: "100%",
     height: "7rem",
+    margin: theme.spacing(2),
+  },
+  listsDisplay: {
     margin: theme.spacing(2),
   },
 }));
@@ -76,8 +83,9 @@ const Profile = (props) => {
               src={user && user.img}
               alt="profile-pic"
             />
+            <Typography>{user.name}</Typography>
           </Box>
-          <ListsDisplay {...{ user }} />
+          <ListsDisplay {...{ user }} className={classes.listsDisplay} />
         </Box>
       </Box>
     </Box>

@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
     display: "flex",
     flexDirection: "column",
-    margin: "1rem 18rem",
   },
   listsTitle: {
     fontWeight: "bold",
@@ -64,7 +63,7 @@ const ListsDisplay = (props) => {
   };
 
   return (
-    <Box className={classes.shoppingContainer}>
+    <Box className={`${classes.shoppingContainer} ${props.className}`}>
       <Typography variant="h5" className={classes.listsTitle}>
         {getListsUserText(user)} Shopping Lists:
       </Typography>
