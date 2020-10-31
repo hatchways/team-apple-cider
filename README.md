@@ -84,6 +84,12 @@ A price history is kept for each product on the database. The API routes for the
 
 `curl -X DELETE localhost:5000/prices/product/<product_id>`
 
+### Lists
+
+#### _POST new list to database:_
+
+`curl -X POST localhost:5000/lists --data '{"product_type": "Clothes", "visible": true}' --header "Content-Type: application-json"`
+
 ## External API Services
 
 ### Cloudinary

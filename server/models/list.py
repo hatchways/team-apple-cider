@@ -12,3 +12,12 @@ class List(db.Model):
     def __init__(self, product_type, visible):
         self.product_type = product_type
         self.visible = visible
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+            "id": self.id,
+            "product_type": self.product_type,
+            "visible": self.visible,
+        }
