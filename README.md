@@ -78,7 +78,7 @@ A price history is kept for each product on the database. The API routes for the
 
 #### _POST new price to price history of a single product:_
 
-`curl -X POST localhost:5000/prices/product/<product_id> --data "{\"price\": ####, \"currency\": $/£/€ }" --header "Content-Type: application/json"`
+`curl -X POST localhost:5000/prices/product/<product_id> --data '{"price": ####, "currency": $/£/€}' --header "Content-Type: application/json"`
 
 #### _DELETE entire price history of a single product:_
 
