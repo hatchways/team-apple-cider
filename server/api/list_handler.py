@@ -18,6 +18,7 @@ def listRequests():
                     "product_type": item.product_type
                 })
         return jsonify({'list': product_types_ls}), 200
+
     if request.method == 'POST':
         body = json.loads(request.get_data())
         list_item = List(body['product_type'])
@@ -27,6 +28,7 @@ def listRequests():
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
         return jsonify({'response': "{} was successfully added to the database".format(body['product_type'])}), 200
+        
     if request.method == 'DELETE':
         body = json.loads(request.get_data())
         list_id = body['list_id']

@@ -94,10 +94,10 @@ const ProfileDisplay = (props) => {
           <Box className={classes.followerBox}>
             <Box className={classes.followerTextContainer}>
               <Typography className={classes.followerText}>
-                5435 Followers
+                54 Followers
               </Typography>
               <Typography className={classes.followerText}>
-                3253 Following
+                32 Following
               </Typography>
             </Box>
             <Box className={classes.buttonContainer}>
