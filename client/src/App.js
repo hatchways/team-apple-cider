@@ -3,13 +3,13 @@ import { MuiThemeProvider } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
-import { theme } from "./themes/theme";
-import { UserStore } from "./contexts/UserContext";
+import Login from "components/Login";
+import SignUp from "components/SignUp";
+import ProtectedRoute from "components/ProtectedRoute";
+import Dashboard from "pages/Dashboard";
+import Profile from "pages/Profile";
+import { theme } from "themes/theme";
+import { UserStore } from "contexts/UserContext";
 
 function App() {
   return (

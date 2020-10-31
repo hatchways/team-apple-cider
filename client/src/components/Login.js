@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Box } from "@material-ui/core";
 
-import UserContext from "../contexts/UserContext";
+import UserContext from "contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   login: {

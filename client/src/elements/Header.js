@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const classes = useStyles();
-
   return (
     <Box className={classes.headerContainer}>
       <img className={classes.logo} src={logo} alt="logo" />
+      {props.children}
       <ProfileMenu />
     </Box>
   );
