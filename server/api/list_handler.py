@@ -29,15 +29,8 @@ def oneListRequests(list_id):
 @list_handler.route('/lists', methods=['GET', 'POST'])
 def allListRequests():
     if request.method == "GET":
-        product_types = List.query.all()
-        product_types_ls = []
-        for item in product_types:
-            product_types_ls.append(
-                {
-                    "id": item.id,
-                    "product_type": item.product_type
-                })
-        return jsonify({'list': product_types_ls}), 200
+        lists = List.query.all()
+        return jsonify([single_list.serialize for single_list in lists]), 200
 
     if request.method == 'POST':
         try:
