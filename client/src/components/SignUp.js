@@ -30,8 +30,9 @@ const ErrorTooltip = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   signup: {
-    maxWidth: "1200px",
+    width: "100vw",
     margin: "0 auto",
+    minHeight: "100vh",
     padding: "50px",
     backgroundColor: "#44475ab9",
   },
