@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginRight: "2rem",
     backgroundColor: "white",
     borderRadius: "1rem",
     overflow: "hidden",

@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     maxWidth: "75vw",
     overflowX: "auto",
+    "& > *": {
+      marginRight: theme.spacing(4),
+    },
   },
 
   addNewList: {
