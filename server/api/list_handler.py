@@ -37,6 +37,7 @@ def oneListRequests(id):
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
+
 @list_handler.route('/lists', methods=['GET', 'POST'])
 def allListRequests():
     if request.method == "GET":

@@ -6,6 +6,8 @@ import {
   Button,
   CircularProgress,
   Typography,
+  Checkbox,
+  FormControlLabel,
 } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
 
@@ -70,6 +72,10 @@ const AddItemPopup = (props) => {
         ) : (
           <CircularProgress className={classes.spinner} />
         )}
+        <FormControlLabel
+          control={<Checkbox name="addToPrivateList" />}
+          label="Add To Private list"
+        />
         <Button className={classes.addButton}>ADD NEW ITEM</Button>
       </Box>
     </Modal>
