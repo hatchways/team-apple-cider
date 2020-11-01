@@ -27,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   addNewList: {
-    width: "18rem",
+    padding: theme.spacing(12),
     backgroundColor: "white",
     borderRadius: "1rem",
-    overflow: "hidden",
+    textAlign: "center",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
