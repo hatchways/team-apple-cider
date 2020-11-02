@@ -39,7 +39,6 @@ const AddList = (props) => {
         },
         body: JSON.stringify({
           title: title,
-          //'cover': cover
         }),
       })
         .then((response) => response.json())
@@ -88,7 +87,7 @@ const AddList = (props) => {
               placeholder="Enter name" // Placeholder needs to be centered.
               fullWidth
               type="text"
-              error={!!errors.title}
+              error={Boolean(errors.title)}
               helperText={errors.title}
               onChange={(e) => setTitle(e.target.value)}
             />

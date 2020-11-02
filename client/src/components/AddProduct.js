@@ -55,7 +55,6 @@ const AddProduct = (props) => {
         },
         body: JSON.stringify({
           url: url,
-          //'cover': cover
         }),
       })
         .then((response) => response.json())
