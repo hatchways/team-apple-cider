@@ -17,8 +17,10 @@ export function UserStore(props) {
       .catch((error) => {
         setUser(false);
       });
+
   const [user, setUser] = useState(checkCookie());
-  const handleSignup = (name, email, password, confirm) => {
+
+  const handleSignup = (name, email, password, confirm) =>
     fetch("/auth/register", {
       method: "POST",
       headers: {
@@ -35,15 +37,14 @@ export function UserStore(props) {
       .then(function (response) {
         if (response.status === "success") {
           setUser(true);
-          return true;
+          return response;
         } else {
-          return false;
+          return response;
         }
       })
       .catch((error) => {
         return false;
       });
-  };
 
   const handleLogin = (email, password) =>
     fetch("/auth/login", {
@@ -62,6 +63,7 @@ export function UserStore(props) {
           setUser(true);
           return response;
         } else {
+          return response;
         }
       })
       .catch((error) => {

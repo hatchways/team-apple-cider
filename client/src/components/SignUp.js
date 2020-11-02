@@ -124,28 +124,9 @@ function SignUp(props) {
   const handleSignup = async (e) => {
     e.preventDefault();
     if (validations()) {
-      fetch("/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          password: password,
-          confirm: confirm,
-        }),
-      })
-        .then((response) => response.json())
-        .then(function (response) {
-          if (response.status === "success") {
-            const loginSuccess = value.handleLogin(email, password);
-            if (loginSuccess) props.history.push("/dashboard");
-          } else {
-            handleSnack(response.message);
-          }
-        })
-        .catch(() => {});
+      const response = await value.handleSignup(name, email, password, confirm);
+      if (response.status === "success") props.history.push("/dashboard");
+      else handleSnack(response.message);
     }
   };
 

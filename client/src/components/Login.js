@@ -80,26 +80,9 @@ function Login(props) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    fetch("/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((response) => response.json())
-      .then(function (response) {
-        if (response.status === "success") {
-          const loginSuccess = value.handleLogin(email, password);
-          if (loginSuccess) props.history.push("/dashboard");
-        } else {
-          handleSnack(response.message);
-        }
-      })
-      .catch(() => {});
+    const response = await value.handleLogin(email, password);
+    if (response.status === "success") props.history.push("/dashboard");
+    else handleSnack(response.message);
   };
 
   return (
