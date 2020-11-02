@@ -15,7 +15,7 @@ const Profile = (props) => {
     <Page>
       <Header />
       <Body>
-        <ProfileDisplay />
+        <ProfileDisplay {...props} />
       </Body>
     </Page>
   );

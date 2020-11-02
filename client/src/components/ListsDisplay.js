@@ -67,10 +67,11 @@ const demoListsArray = [
 const ListsDisplay = (props) => {
   const scrollRef = useHorizontalScroll();
   const { user } = props;
+  console.log(user);
   const classes = useStyles();
 
   const getListsUserText = (user) => {
-    if (!user) return "My";
+    if (!user || user.name === undefined) return "My";
     else if (user.name[user.name.length - 1] === "s") return `${user.name}'`;
     else return `${user.name}'s`;
   };

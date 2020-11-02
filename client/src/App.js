@@ -21,7 +21,7 @@ function App() {
               <Route path="/" exact component={Login} />
               <Route path="/signup" exact component={SignUp} />
               <ProtectedRoute exact path="/dashboard" component={Dashboard} />
-              <Route path="/profile" exact component={Profile} />
+              <Route path="/profile/:id" exact component={Profile} />
             </BrowserRouter>
           </UserStore>
         </MuiThemeProvider>

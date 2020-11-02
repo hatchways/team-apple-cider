@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Button, Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ListsDisplay from "components/ListsDisplay";
@@ -70,15 +70,51 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileDisplay = (props) => {
+  const [user, setUser] = useState({
+    name: "David Mayer Richardson",
+    img: profile_photo_2,
+  });
   const [following, setFollowing] = useState(false);
   const followingYou = true;
   const classes = useStyles();
+  const id = parseInt(props.match.params.id);
 
-  // Demo user
-  const user = {
-    name: "David Mayer Richardson",
-    img: profile_photo_2,
-  };
+  useEffect(() => {
+    switch (id) {
+      case 1:
+        setUser({
+          name: "Ayana Howarth",
+          img: profile_photo_1,
+        });
+        break;
+      case 2:
+        setUser({
+          name: "Dan Lewis",
+          img: profile_photo_2,
+        });
+        break;
+      case 3:
+        setUser({
+          name: "Mary Klein",
+          img: profile_photo_3,
+        });
+        break;
+      case 4:
+        setUser({
+          name: "Uzma Holding",
+          img: profile_photo_4,
+        });
+        break;
+      case 5:
+        setUser({
+          name: "Alexia Grant",
+          img: profile_photo_5,
+        });
+        break;
+      default:
+        break;
+    }
+  }, [id]);
 
   return (
     <Box className={classes.profileContainer}>
