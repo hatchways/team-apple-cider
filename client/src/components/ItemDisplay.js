@@ -56,10 +56,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const reverseString = (string) => string.split("").reverse().join("");
+
+const addCommasToDollars = (dollars) => {
+  let dollarsString = String(dollars);
+  dollarsString = reverseString(dollarsString);
+  dollarsString = dollarsString.replace(/(.{3})/g, "$1,");
+  dollarsString = reverseString(dollarsString);
+  return dollarsString.startsWith(",")
+    ? dollarsString.substring(1)
+    : dollarsString;
+};
+
 const centsToDollarsDisplay = (inputCents) => {
   const dollars = String(Math.floor(inputCents / 100));
   const cents = String(inputCents % 100);
-  return `${dollars}.${cents.length > 1 ? cents : "0" + cents}`;
+  const dollarsString = addCommasToDollars(dollars);
+  const centsString = cents.length > 1 ? cents : "0" + cents;
+  return `${dollarsString}.${centsString}`;
 };
 
 const ItemDisplay = (props) => {
