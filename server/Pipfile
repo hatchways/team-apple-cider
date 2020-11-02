@@ -14,11 +14,11 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 flask-migrate = "*"
 flask-cors = "*"
-celery = {extras = ["librabbitmq"], version = "*"}
 cloudinary = "*"
 selenium = "*"
 webdriver-manager = "*"
 flower = "*"
+celery = {extras = ["librabbitmq"], version = "~=4.4.7"}
 
 [requires]
 python_version = "3.7"
