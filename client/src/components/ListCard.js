@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListCard = (props) => {
-  const {list, demoListsArray} = props;
+  const { list, demoListsArray } = props;
   const { listTitle, itemCount, img } = props.list;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
@@ -52,7 +52,7 @@ const ListCard = (props) => {
   };
   const [addProductOpen, setAddProductOpen] = useState(false);
   const changeAddProductOpen = () => {
-    setAddProductOpen(!addProductOpen);
+    setAddProductOpen((previous) => !previous);
   };
 
   return (
@@ -67,8 +67,26 @@ const ListCard = (props) => {
           >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{ listTitle, itemCount, listOpen, changeListOpen, addProductOpen, changeAddProductOpen }} />
-      <AddProduct {...{ listTitle, listOpen, changeListOpen, addProductOpen, changeAddProductOpen, demoListsArray}} />
+      <ListPopup
+        {...{
+          listTitle,
+          itemCount,
+          listOpen,
+          changeListOpen,
+          addProductOpen,
+          changeAddProductOpen,
+        }}
+      />
+      <AddProduct
+        {...{
+          listTitle,
+          listOpen,
+          changeListOpen,
+          addProductOpen,
+          changeAddProductOpen,
+          demoListsArray,
+        }}
+      />
     </Box>
   );
 };

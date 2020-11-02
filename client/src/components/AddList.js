@@ -9,136 +9,16 @@ import {
   TextField,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-
-const useStyles = makeStyles((theme) => ({
-  "@global": {
-    "*::-webkit-scrollbar": {
-      width: "0.2rem",
-    },
-    "*::-webkit-scrollbar-track": {
-      "-webkit-box-shadow": "inset 0 0 6px rgba(10,10,10,0.1)",
-    },
-    "*::-webkit-scrollbar-thumb": {
-      backgroundColor: "rgba(1,1,1)",
-      outline: "1px solid slategrey",
-    },
-  },
-  popup: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    position: "absolute",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "#f8f8f8",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    borderRadius: "0.3rem",
-    overflow: "hidden",
-    outline: "none",
-    minWidth: "30rem",
-    maxHeight: "41rem",
-    height: "75%",
-  },
-  addButton: {
-    borderRadius: "10rem",
-    padding: theme.spacing(2, 6),
-    backgroundColor: "#DF1B1B",
-    color: "white",
-    margin: theme.spacing(2),
-    width: "11rem",
-    height: "3.5rem",
-    fontSize: "0.8rem",
-  },
-  titleContainer: {
-    display: "flex",
-    maxHeight: "3rem",
-  },
-  closeButtonContainer: {
-    textAlign: "right",
-    width: "100%",
-  },
-  titleText: {
-    fontSize: "1.5rem",
-    fontWeight: "bold",
-  },
-  itemText: {
-    fontSize: "0.8rem",
-    fontWeight: "400",
-    letterSpacing: "0.5px",
-  },
-  productCard: {
-    display: "flex",
-    flexDirection: "row",
-    maxWidth: "30rem",
-  },
-  removeButtonContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  removeButton: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "10rem",
-    height: "3rem",
-  },
-  addButtonContainer: {
-    display: "flex",
-    justifyContent: "center",
-    margin: theme.spacing(3, 0, 2),
-  },
-  bodyContainer: {
-    minWidth: "30rem",
-    maxHeight: "29rem",
-    overflow: "hidden",
-    display: "flex",
-    justifyContent: "center",
-    width: "80%",
-    margin: theme.spacing(2),
-  },
-  bodyContent: {
-    minWidth: "30rem",
-    maxHeight: "30rem",
-    overflow: "scroll",
-    overflowX: "hidden",
-  },
-  textFieldContainer: {
-    display: "flex",
-    justifyContent: "center",
-    width: "80%",
-    backgroundColor: "white",
-  },
-  centerText: {
-    textAlign: "center",
-  },
-  imageFieldContainer: {
-    display: "flex",
-    backgroundColor: "white",
-    width: "13rem",
-    height: "13rem",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    border: "1px dashed grey",
-  },
-  input: {
-    display: "none",
-  },
-}));
+import useStyles from "../styles/AddListStyles";
 
 const AddList = (props) => {
-  const { addListOpen, setAddListOpen } = props;
+  const { addListOpen, changeAddListOpen } = props;
   const classes = useStyles();
   const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
 
   const handleClose = () => {
-    setAddListOpen(false);
+    changeAddListOpen();
   };
 
   const validations = () => {
@@ -201,36 +81,36 @@ const AddList = (props) => {
         </Box>
         <Box className={classes.bodyContainer}>
           <Typography className={classes.itemText}>Add a title</Typography>
-          <TextField
-            className={classes.textField}
-            variant="outlined"
-            placeholder="Enter name" // Placeholder needs to be centered.
-            fullWidth
-            type="text"
-            error={!!errors.title}
-            helperText={errors.title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+          <Box className={classes.textFieldContainer}>
+            <TextField
+              className={classes.textField}
+              variant="outlined"
+              placeholder="Enter name" // Placeholder needs to be centered.
+              fullWidth
+              type="text"
+              error={!!errors.title}
+              helperText={errors.title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Box>
         </Box>
         <Box className={classes.bodyContainer}>
           <Typography className={classes.itemText}>Add a cover</Typography>
-        </Box>
-        <Box className={classes.imageFieldContainer}>
-          <Typography>
-            Drop an image here or{" "}
-            <strong>
-              <u>
-                <input
-                  accept="image/*"
-                  className={classes.input}
-                  id="file-input"
-                  multiple
-                  type="file"
-                />
-                <label htmlFor="file-input">select a file</label>
-              </u>
-            </strong>
-          </Typography>
+          <Box className={classes.imageFieldContainer}>
+            <Typography>Drop an image here or </Typography>
+            <Typography>
+              <input
+                accept="image/*"
+                className={classes.input}
+                id="file-input"
+                multiple
+                type="file"
+              />
+              <label htmlFor="file-input" className={classes.imageFieldText}>
+                select a file
+              </label>
+            </Typography>
+          </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
           <Button className={classes.addButton} variant="contained">

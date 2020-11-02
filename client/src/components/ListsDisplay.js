@@ -55,7 +55,7 @@ const demoListsArray = [
 
 const ListsDisplay = (props) => {
   const classes = useStyles();
-  const {addListOpen, setAddListOpen} = props;
+  const { addListOpen, changeAddListOpen } = props;
 
   return (
     <Box className={classes.shoppingContainer}>
@@ -64,11 +64,14 @@ const ListsDisplay = (props) => {
       </Typography>
       <Box className={classes.myShoppingLists}>
         {demoListsArray.map((list, i) => (
-          <ListCard key={i} list={list} demoListsArray={demoListsArray}/>
+          <ListCard key={i} {...{ list, demoListsArray }} />
         ))}
         <Box className={classes.addNewList}>
-          <IconButton className={classes.addNewListButton} onClick={() => setAddListOpen(true)}>
-            <AddIcon className={classes.addIcon}/>
+          <IconButton
+            className={classes.addNewListButton}
+            onClick={() => changeAddListOpen()}
+          >
+            <AddIcon className={classes.addIcon} />
           </IconButton>
           <Typography className={classes.addNewListText}>
             ADD NEW LIST
