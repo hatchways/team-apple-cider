@@ -16,12 +16,12 @@ def replace_cloudinary_image(image_url):
 
 @product_handler.route('/products/<product_id>', methods=['GET', 'DELETE', 'POST', 'PUT'])
 def oneProductRequests(product_id):
-   
     if request.method == 'GET':
         try:
             product = Product.query.get(product_id)
             return jsonify(product.serialize), 200
         except Exception as e:
+            print(e)
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
     if request.method == 'DELETE':

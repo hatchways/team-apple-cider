@@ -1,4 +1,6 @@
 curl -X POST http://localhost:5000/products --data '{ 
+    "id" : "1",
+    "currency" : "$",
     "img_url": "https://images-na.ssl-images-amazon.com/images/I/71PoArcR3tL._AC_SX679_.jpg", 
     "old_price": "10999",  
     "price": "6999", 
@@ -8,6 +10,8 @@ curl -X POST http://localhost:5000/products --data '{
 
 
 curl -X POST http://localhost:5000/products --data '{ 
+    "id" : "2",
+    "currency" : "$",
     "img_url": "https://images-na.ssl-images-amazon.com/images/I/71pC69I3lzL._AC_SX522_.jpg", 
     "old_price": null,  
     "price": "219900", 
@@ -16,6 +20,8 @@ curl -X POST http://localhost:5000/products --data '{
     }' --header "Content-Type:application/json"
 
 curl -X POST http://localhost:5000/products --data '{
+    "id" : "3",
+    "currency" : "$",
     "name": "Sony Noise Cancelling Headphones WH1000XM3",
     "old_price": "44800",
     "price": "29900",
@@ -25,6 +31,8 @@ curl -X POST http://localhost:5000/products --data '{
 }' --header "Content-Type:application/json"
 
 curl -X POST http://localhost:5000/products --data '{
+    "id" : "4",
+    "currency" : "$",
     "name": "Mens Air Athletic Running Tennis Shoes",
     "old_price": null,
     "price": "3999",
@@ -35,6 +43,8 @@ curl -X POST http://localhost:5000/products --data '{
 
 
 curl -X POST http://localhost:5000/products --data '{
+    "id" : "5",
+    "currency" : "$",
     "name": "Levis Mens Sherpa Trucker Jacket",
     "old_price": null,
     "price": "6499",
@@ -45,6 +55,8 @@ curl -X POST http://localhost:5000/products --data '{
 
 
 curl -X POST http://localhost:5000/products --data '{
+    "id" : "6",
+    "currency" : "$",
     "name": "Vibe 12-Inch Gel Memory Foam Mattress (Only) - Queen",
     "old_price": null,
     "price": "26999",
