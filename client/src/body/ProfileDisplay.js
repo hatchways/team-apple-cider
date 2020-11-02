@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Tooltip } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import ProfileTopBar from "components/ProfileTopBar";
 import ListsDisplay from "components/ListsDisplay";
 import profile_photo_1 from "img/profile_photo_1.png";
 import profile_photo_2 from "img/profile_photo_2.png";
 import profile_photo_3 from "img/profile_photo_3.png";
 import profile_photo_4 from "img/profile_photo_4.png";
 import profile_photo_5 from "img/profile_photo_5.png";
-import FollowBackIcon from "@material-ui/icons/Autorenew";
 
 const useStyles = makeStyles((theme) => ({
   profileContainer: {
@@ -82,7 +82,7 @@ const ProfileDisplay = (props) => {
         setUser({
           name: "Ayana Howarth",
           img: profile_photo_1,
-          followers: 54,
+          followers: 154,
           following: 73,
         });
         break;
@@ -106,7 +106,7 @@ const ProfileDisplay = (props) => {
         setUser({
           name: "Uzma Holding",
           img: profile_photo_4,
-          followers: 64,
+          followers: 164,
           following: 3,
         });
         break;
@@ -123,47 +123,14 @@ const ProfileDisplay = (props) => {
     }
   }, [id]);
 
+  const toggleFollow = () => setFollowing((cur) => !cur);
+
   if (user.name === undefined)
     return <Typography>Profile link not valid</Typography>;
   else
     return (
       <Box className={classes.profileContainer}>
-        <Box className={classes.profileTopBar}>
-          <img
-            className={classes.profilePhoto}
-            src={user && user.img}
-            alt="profile-pic"
-          />
-          <Box className={classes.profileTextContainer}>
-            <Typography className={classes.userName}>{user.name}</Typography>
-
-            <Box className={classes.followerBox}>
-              <Box className={classes.followerTextContainer}>
-                <Typography className={classes.followerText}>
-                  {user.followers} Followers
-                </Typography>
-                <Typography className={classes.followerText}>
-                  {user.following} Following
-                </Typography>
-              </Box>
-              <Box className={classes.buttonContainer}>
-                <Button
-                  className={classes.followButton}
-                  onClick={() => setFollowing((cur) => !cur)}
-                >
-                  {following ? "unfollow" : "follow"}
-                </Button>
-              </Box>
-              {following && followingYou && (
-                <Tooltip
-                  title={`You and ${user.name} are following each other!`}
-                >
-                  <FollowBackIcon className={classes.followBackIcon} />
-                </Tooltip>
-              )}
-            </Box>
-          </Box>
-        </Box>
+        <ProfileTopBar {...{ user, following, toggleFollow, followingYou }} />
         <ListsDisplay {...{ user }} className={classes.listsDisplay} />
       </Box>
     );
