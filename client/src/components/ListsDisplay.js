@@ -55,10 +55,12 @@ const ListsDisplay = () => {
     const json = await res.json()
     setLists(json);
   }
+
   useEffect(() => {
     getLists();
-    return () => console.log('unmounting');
   }, []);
+
+
   return (
     <Box className={classes.shoppingContainer}>
       <Typography variant="h5" className={classes.listsTitle}>

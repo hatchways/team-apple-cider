@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Modal, IconButton, Typography, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import ProductCard from "components/ProductCard";
+import { ContactSupportOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -91,8 +92,6 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
   
   const classes = useStyles();
   const handleClose = () => changeListOpen();
-  // const [error, setError] = useState(null);
-  // const [isLoaded, setIsLoaded] = useState(false);
   const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
   const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
 
@@ -100,27 +99,28 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
     const res = await fetch(`list-to-products/${listId}`)
     const json = await res.json()
     setListToProducts(json);
+    console.log({json})
   }
 
-  useEffect(() => {
-    getListRelations();
-  }, []);
- 
-
-  const getNewProducts = async () => {
+  const getProducts = async () => {
     const newProducts = await Promise.all(listToProducts.map(async (relation)=>{      
       const res = await fetch(`/products/${relation.product_id}`)
       return res.json();
     }));
     setProducts(newProducts)
+    console.log({newProducts})
   }
 
   useEffect(() => {
-    getNewProducts()
-  }, [listToProducts]);
+    getListRelations()
+  }, [listId]);
 
-  console.log(listId)
-  console.log(products)
+  useEffect(() =>{
+    getProducts()
+  },[listToProducts])
+
+
+
  
 
   return (
