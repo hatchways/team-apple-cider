@@ -92,7 +92,7 @@ class RegisterAPI(MethodView):
                     resp.set_cookie("Authentication token",
                                     auth_token, httponly=True)
                     return resp, 201
-            except Exception as e:
+            except Exception:
                 responseObject = {
                     "status": "fail",
                     "message": "Some error occurred. Please try again."
@@ -118,15 +118,12 @@ class LoginAPI(MethodView):
             ):
                 auth_token = user.encode_auth_token(user.id)
                 if auth_token:
-                    print("hello")
                     try:
                         blacklist_check = BlacklistToken.query.filter_by(
                             token=str(auth_token)
                         ).first()
-                    except Exception as e:
-                        print(e)
+                    except Exception:
                         return "Error"
-                    print("hello")
                     if blacklist_check:
                         responseObject = {
                             "status": "failure",
@@ -160,7 +157,7 @@ class LoginAPI(MethodView):
                     "message": "User does not exist."
                 }
                 return make_response(jsonify(responseObject)), 404
-        except Exception as e:
+        except Exception:
             responseObject = {
                 "status": "fail",
                 "message": "Try again"

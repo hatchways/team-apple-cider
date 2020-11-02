@@ -15,7 +15,6 @@ export function UserStore(props) {
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
         setUser(false);
       });
   const [user, setUser] = useState(checkCookie());
@@ -35,16 +34,13 @@ export function UserStore(props) {
       .then((response) => response.json())
       .then(function (response) {
         if (response.status === "success") {
-          console.log("Success:", email);
           setUser(true);
           return true;
         } else {
-          console.log(response.message);
           return false;
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
         return false;
       });
   };
@@ -62,17 +58,13 @@ export function UserStore(props) {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         if (response.status === "success") {
-          console.log("Success:", email);
           setUser(true);
-          return true;
+          return response;
         } else {
-          console.log(response.message);
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
         return false;
       });
 
@@ -82,15 +74,9 @@ export function UserStore(props) {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.status === "success") {
-          console.log("Logout successful");
-          setUser(false);
-        } else {
-          setUser(false);
-        }
+        setUser(false);
       })
       .catch((error) => {
-        console.error("Error:", error);
         setUser(false);
       });
   };
