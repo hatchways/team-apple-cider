@@ -1,17 +1,19 @@
-curl -X POST http://localhost:5000/products --data '{ 
+curl -X POST http://localhost:5000/products/1 --data '{ 
     "id" : "1",
     "currency" : "$",
     "img_url": "https://images-na.ssl-images-amazon.com/images/I/71PoArcR3tL._AC_SX679_.jpg", 
     "old_price": "10999",  
     "price": "6999", 
+    "availability" : True,
     "url": "https://www.amazon.com/Foxemart-Computer-Notebook-Writing-Workstation/dp/B07ZJPCNM2", 
     "name": "Foxemart Computer Desk 47 Modern Sturdy Office Desk"
     }' --header "Content-Type:application/json"
 
 
-curl -X POST http://localhost:5000/products --data '{ 
+curl -X POST http://localhost:5000/products/2 --data '{ 
     "id" : "2",
     "currency" : "$",
+    "availability" : True,
     "img_url": "https://images-na.ssl-images-amazon.com/images/I/71pC69I3lzL._AC_SX522_.jpg", 
     "old_price": null,  
     "price": "219900", 
@@ -19,9 +21,10 @@ curl -X POST http://localhost:5000/products --data '{
     "name": "New Apple MacBook Pro (16-inch, 16GB RAM, 512GB Storage) - Space Gray"
     }' --header "Content-Type:application/json"
 
-curl -X POST http://localhost:5000/products --data '{
+curl -X POST http://localhost:5000/products/3 --data '{
     "id" : "3",
     "currency" : "$",
+    "availability" : True,
     "name": "Sony Noise Cancelling Headphones WH1000XM3",
     "old_price": "44800",
     "price": "29900",
@@ -30,9 +33,10 @@ curl -X POST http://localhost:5000/products --data '{
     
 }' --header "Content-Type:application/json"
 
-curl -X POST http://localhost:5000/products --data '{
+curl -X POST http://localhost:5000/products/4 --data '{
     "id" : "4",
     "currency" : "$",
+    "availability" : True,
     "name": "Mens Air Athletic Running Tennis Shoes",
     "old_price": null,
     "price": "3999",
@@ -42,9 +46,10 @@ curl -X POST http://localhost:5000/products --data '{
 }' --header "Content-Type:application/json"
 
 
-curl -X POST http://localhost:5000/products --data '{
+curl -X POST http://localhost:5000/products/5 --data '{
     "id" : "5",
     "currency" : "$",
+    "availability" : True,
     "name": "Levis Mens Sherpa Trucker Jacket",
     "old_price": null,
     "price": "6499",
@@ -54,9 +59,10 @@ curl -X POST http://localhost:5000/products --data '{
 }' --header "Content-Type:application/json"
 
 
-curl -X POST http://localhost:5000/products --data '{
+curl -X POST http://localhost:5000/products/6 --data '{
     "id" : "6",
     "currency" : "$",
+    "availability" : True,
     "name": "Vibe 12-Inch Gel Memory Foam Mattress (Only) - Queen",
     "old_price": null,
     "price": "26999",
