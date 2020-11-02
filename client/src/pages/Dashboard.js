@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Header from "elements/Header";
-import Page from "elements/Page";
-import Body from "elements/Body";
+import Header from "layout/Header";
+import Page from "layout/Page";
+import Body from "layout/Body";
 import HeaderTabs from "components/HeaderTabs";
 
 import ShoppingLists from "body/ShoppingLists";
