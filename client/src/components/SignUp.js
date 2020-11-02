@@ -92,8 +92,8 @@ function SignUp(props) {
     setOpenTooltip(false);
   };
 
-  const handleSnack = (props) => {
-    setSnackText(props);
+  const handleSnack = (message) => {
+    setSnackText(message);
     setOpenSnack(true);
   };
 
