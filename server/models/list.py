@@ -1,6 +1,7 @@
 from database import db
 
 
+
 class List(db.Model):
 
     __tablename__ = 'list'
@@ -9,14 +10,12 @@ class List(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     name = db.Column(db.String, nullable=False)
     img_url = db.Column(db.String, nullable=False)
-    product_count = db.Column(db.Integer, nullable=False)
     private = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, user_id, name, img_url, private=False):
         self.user_id = user_id
         self.name = name
         self.img_url = img_url
-        self.product_count = 0
         self.private = private
 
     @property
