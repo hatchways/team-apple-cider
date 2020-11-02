@@ -42,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
     noWrap: "true",
   },
   priceTextContainer: {
-    display: "inlineflex",
+    display: "inline-flex",
+    whiteSpace: "pre-wrap",
     padding: theme.spacing(0.25),
   },
   itemOldPrice: {
@@ -100,9 +101,10 @@ const ItemDisplay = (props) => {
         <Box className={classes.priceTextContainer}>
           {old_price && (
             <Typography className={classes.itemOldPrice}>
-              {currency + centsToDollarsDisplay(old_price)}{" "}
+              {currency + centsToDollarsDisplay(old_price)}
             </Typography>
-          )}{" "}
+          )}
+          <Typography> </Typography>
           <Typography className={classes.itemPrice}>
             {currency + centsToDollarsDisplay(price)}
           </Typography>
