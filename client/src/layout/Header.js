@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
     boxSizing: "border-box",
     padding: theme.spacing(3),
+    backgroundColor: "white",
   },
   logo: {
     height: "2.8rem",

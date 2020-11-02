@@ -18,10 +18,10 @@ function App() {
         <MuiThemeProvider theme={theme}>
           <UserStore>
             <BrowserRouter>
-              {/* <Route path="/" exact component={Profile} /> */}
               <Route path="/" exact component={Login} />
               <Route path="/signup" exact component={SignUp} />
               <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+              <Route path="/profile" exact component={Profile} />
             </BrowserRouter>
           </UserStore>
         </MuiThemeProvider>
