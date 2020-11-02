@@ -8,7 +8,9 @@ class Profile(db.Model):
 
     __tablename__ = 'profile'
 
-    id = db.Column(ForeignKey('user.id'), primary_key=True, nullable=False) 
+    users = relationship('User')
+
+    id = db.Column(ForeignKey('users.id'), primary_key=True, nullable=False) 
     name = db.Column(db.String, nullable=False)
     photo = db.Column(db.String)
 
