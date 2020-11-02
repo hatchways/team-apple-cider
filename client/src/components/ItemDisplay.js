@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     noWrap: "true",
   },
   priceTextContainer: {
+    display: "inlineflex",
     padding: theme.spacing(0.25),
   },
   itemOldPrice: {
@@ -58,17 +59,19 @@ const useStyles = makeStyles((theme) => ({
 const centsToDollarsDisplay = (inputCents) => {
   const dollars = String(Math.floor(inputCents / 100));
   const cents = String(inputCents % 100);
-  return `$${dollars}.${cents.length > 1 ? cents : "0" + cents}`;
+  return `${dollars}.${cents.length > 1 ? cents : "0" + cents}`;
 };
 
 const ItemDisplay = (props) => {
   const { item } = props;
+
   const classes = useStyles();
   const name = item.name ? item.name : "";
   const img_url = item.img_url ? item.img_url : "";
   const url = item.url ? item.url : "";
   const old_price = item.old_price ? item.old_price : "";
   const price = item.price ? item.price : "";
+  const currency = item.currency ? item.currency : "";
 
   return (
     <Box className={`${classes.itemContainer} ${props.className}`}>
@@ -83,11 +86,11 @@ const ItemDisplay = (props) => {
         <Box className={classes.priceTextContainer}>
           {old_price && (
             <Typography className={classes.itemOldPrice}>
-              {centsToDollarsDisplay(old_price)}{" "}
+              {currency + centsToDollarsDisplay(old_price)}{" "}
             </Typography>
-          )}
+          )}{" "}
           <Typography className={classes.itemPrice}>
-            {centsToDollarsDisplay(price)}
+            {currency + centsToDollarsDisplay(price)}
           </Typography>
         </Box>
       </Box>

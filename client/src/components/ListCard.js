@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.04)",
       opacity: "0.95",
+      cursor: "pointer",
     },
   },
   listImage: {
