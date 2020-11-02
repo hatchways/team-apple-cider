@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
-import clothes from "img/clothes.png";
-import furniture from "img/furniture.png";
-import luxury from "img/luxury.png";
 import ListCard from "components/ListCard";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,40 +44,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const demoListsArray = [
-  { listTitle: "Clothes", itemCount: 34, img: clothes },
-  { listTitle: "Furniture", itemCount: 12, img: furniture },
-  { listTitle: "Luxury", itemCount: 8, img: luxury },
-];
-
 const ListsDisplay = () => {
   const classes = useStyles();
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [error, setError] = useState(null);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const [lists, setLists] = useState([]);
 
+  const getLists = async () =>{
+    const res = await fetch("/lists")
+    const json = await res.json()
+    setLists(json);
+  }
   useEffect(() => {
-    fetch("/lists")
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setLists(result);
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
+    getLists();
+    return () => console.log('unmounting');
   }, []);
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } 
-
- 
   return (
     <Box className={classes.shoppingContainer}>
       <Typography variant="h5" className={classes.listsTitle}>

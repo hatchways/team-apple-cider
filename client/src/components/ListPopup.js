@@ -2,11 +2,7 @@ import React ,{ useEffect, useState }from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Modal, IconButton, Typography, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import levis_501 from "img/levis_501.png";
-import tommy_jeans from "img/tommy_jeans.png";
-import ck_jacket from "img/ck_jacket.png";
 import ProductCard from "components/ProductCard";
-import ItemDisplay from "./ItemDisplay";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -91,46 +87,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const demoProductsArray = [
-  {
-    name: "Levi's 501 crop jean in lightwash",
-    currency: "$",
-    old_price: 9000,
-    price: 5600,
-    url:
-      "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
-    img_url: levis_501,
-  },
-  {
-    name: "Tommy Jeans '90s Constrast Cropped Hoodie Sweatshirt'",
-    currency: "$",
-    old_price: 12000,
-    price: 9800,
-    url:
-      "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
-    img_url: tommy_jeans,
-  },
-  {
-    name: "Calvin Klein Performance Women Jacket",
-    currency: "$",
-    old_price: 11000,
-    price: 5600,
-    url:
-      "https://www.amazon.ca/Tommy-Hilfiger-Hooded-Performance-Jacket/dp/B07BFVPK7K/ref=sr_1_15?dchild=1&keywords=tommy+jeans+hoodie&qid=1603252642&sr=8-15",
-    img_url: ck_jacket,
-  },
-  {
-    name: "Levi's 501 crop jean in lightwash",
-    currency: "$",
-    old_price: 9000,
-    price: 5600,
-    url:
-      "https://www.amazon.ca/Levis-Womens-Skinny-Jeans-Matter/dp/B077WTLTM5/ref=sr_1_7?dchild=1&keywords=levis+501+crop+jeans&qid=1603251804&sr=8-7",
-    img_url: levis_501,
-  },
-];
-
 const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) => {
+  
   const classes = useStyles();
   const handleClose = () => changeListOpen();
   // const [error, setError] = useState(null);
@@ -146,7 +104,7 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
 
   useEffect(() => {
     getListRelations();
-  }, [listId]);
+  }, []);
  
 
   const getNewProducts = async () => {
@@ -160,6 +118,9 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
   useEffect(() => {
     getNewProducts()
   }, [listToProducts]);
+
+  console.log(listId)
+  console.log(products)
  
 
   return (
