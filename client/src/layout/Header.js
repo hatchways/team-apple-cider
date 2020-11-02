@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     padding: theme.spacing(3),
     backgroundColor: "white",
+    boxShadow: "0 2px 15px 2px #f4f8ff",
+    zIndex: "10",
   },
   logo: {
     height: "2.8rem",
