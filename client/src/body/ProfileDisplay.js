@@ -70,10 +70,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileDisplay = (props) => {
-  const [user, setUser] = useState({
-    name: "David Mayer Richardson",
-    img: profile_photo_2,
-  });
+  const [user, setUser] = useState({});
   const [following, setFollowing] = useState(false);
   const followingYou = true;
   const classes = useStyles();

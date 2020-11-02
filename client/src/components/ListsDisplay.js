@@ -67,7 +67,6 @@ const demoListsArray = [
 const ListsDisplay = (props) => {
   const scrollRef = useHorizontalScroll();
   const { user } = props;
-  console.log(user);
   const classes = useStyles();
 
   const getListsUserText = (user) => {
