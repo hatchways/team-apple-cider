@@ -123,45 +123,50 @@ const ProfileDisplay = (props) => {
     }
   }, [id]);
 
-  return (
-    <Box className={classes.profileContainer}>
-      <Box className={classes.profileTopBar}>
-        <img
-          className={classes.profilePhoto}
-          src={user && user.img}
-          alt="profile-pic"
-        />
-        <Box className={classes.profileTextContainer}>
-          <Typography className={classes.userName}>{user.name}</Typography>
+  if (user.name === undefined)
+    return <Typography>Profile link not valid</Typography>;
+  else
+    return (
+      <Box className={classes.profileContainer}>
+        <Box className={classes.profileTopBar}>
+          <img
+            className={classes.profilePhoto}
+            src={user && user.img}
+            alt="profile-pic"
+          />
+          <Box className={classes.profileTextContainer}>
+            <Typography className={classes.userName}>{user.name}</Typography>
 
-          <Box className={classes.followerBox}>
-            <Box className={classes.followerTextContainer}>
-              <Typography className={classes.followerText}>
-                {user.followers} Followers
-              </Typography>
-              <Typography className={classes.followerText}>
-                {user.following} Following
-              </Typography>
+            <Box className={classes.followerBox}>
+              <Box className={classes.followerTextContainer}>
+                <Typography className={classes.followerText}>
+                  {user.followers} Followers
+                </Typography>
+                <Typography className={classes.followerText}>
+                  {user.following} Following
+                </Typography>
+              </Box>
+              <Box className={classes.buttonContainer}>
+                <Button
+                  className={classes.followButton}
+                  onClick={() => setFollowing((cur) => !cur)}
+                >
+                  {following ? "unfollow" : "follow"}
+                </Button>
+              </Box>
+              {following && followingYou && (
+                <Tooltip
+                  title={`You and ${user.name} are following each other!`}
+                >
+                  <FollowBackIcon className={classes.followBackIcon} />
+                </Tooltip>
+              )}
             </Box>
-            <Box className={classes.buttonContainer}>
-              <Button
-                className={classes.followButton}
-                onClick={() => setFollowing((cur) => !cur)}
-              >
-                {following ? "unfollow" : "follow"}
-              </Button>
-            </Box>
-            {following && followingYou && (
-              <Tooltip title={`You and ${user.name} are following each other!`}>
-                <FollowBackIcon className={classes.followBackIcon} />
-              </Tooltip>
-            )}
           </Box>
         </Box>
+        <ListsDisplay {...{ user }} className={classes.listsDisplay} />
       </Box>
-      <ListsDisplay {...{ user }} className={classes.listsDisplay} />
-    </Box>
-  );
+    );
 };
 
 export default ProfileDisplay;
