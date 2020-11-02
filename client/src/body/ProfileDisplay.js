@@ -85,30 +85,40 @@ const ProfileDisplay = (props) => {
         setUser({
           name: "Ayana Howarth",
           img: profile_photo_1,
+          followers: 54,
+          following: 73,
         });
         break;
       case 2:
         setUser({
           name: "Dan Lewis",
           img: profile_photo_2,
+          followers: 154,
+          following: 193,
         });
         break;
       case 3:
         setUser({
           name: "Mary Klein",
           img: profile_photo_3,
+          followers: 254,
+          following: 323,
         });
         break;
       case 4:
         setUser({
           name: "Uzma Holding",
           img: profile_photo_4,
+          followers: 64,
+          following: 3,
         });
         break;
       case 5:
         setUser({
           name: "Alexia Grant",
           img: profile_photo_5,
+          followers: 323,
+          following: 135,
         });
         break;
       default:
@@ -130,10 +140,10 @@ const ProfileDisplay = (props) => {
           <Box className={classes.followerBox}>
             <Box className={classes.followerTextContainer}>
               <Typography className={classes.followerText}>
-                54 Followers
+                {user.followers} Followers
               </Typography>
               <Typography className={classes.followerText}>
-                32 Following
+                {user.following} Following
               </Typography>
             </Box>
             <Box className={classes.buttonContainer}>
