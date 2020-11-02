@@ -6,8 +6,8 @@ profile_handler = Blueprint('profile_handler', __name__)
 
 
 def create_profile(id, name, photo):
-    price_entry = Profile(id, name, photo)
-    db.session.add(price_entry)
+    profile = Profile(id, name, photo)
+    db.session.add(profile)
     db.session.commit()
 
 
