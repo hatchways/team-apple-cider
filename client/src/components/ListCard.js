@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
+import AddProduct from "components/AddProduct";
 
 const useStyles = makeStyles((theme) => ({
   listsTitle: {
@@ -52,6 +53,10 @@ const ListCard = (props) => {
   const changeListOpen = () => {
     setListOpen(!listOpen);
   };
+  const [addProductOpen, setAddProductOpen] = useState(false);
+  const changeAddProductOpen = () => {
+    setAddProductOpen((previous) => !previous);
+  };
 
   return (
     <Box>
@@ -66,6 +71,16 @@ const ListCard = (props) => {
         </Box>
       </Box>
       <ListPopup {...{listId, listTitle, itemCount, listOpen, changeListOpen }} />
+      {/* <AddProduct
+        {...{
+          listTitle,
+          listOpen,
+          changeListOpen,
+          addProductOpen,
+          changeAddProductOpen,
+          demoListsArray,
+        }}
+      /> */}
     </Box>
   );
 };

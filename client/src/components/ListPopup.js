@@ -123,6 +123,11 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
 
  
 
+  const handleAddClick = () => {
+    changeAddProductOpen();
+    changeListOpen();
+  }
+
   return (
     <Modal open={listOpen} onClose={handleClose} className={classes.popup}>
       <Box className={classes.paper}>
@@ -154,7 +159,7 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
           </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained">
+          <Button className={classes.addButton} variant="contained" onClick={handleAddClick}>
             ADD NEW ITEM
           </Button>
         </Box>

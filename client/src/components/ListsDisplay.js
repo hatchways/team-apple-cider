@@ -71,7 +71,10 @@ const ListsDisplay = () => {
           <ListCard key={i} list={list} />
         ))}
         <Box className={classes.addNewList}>
-          <IconButton className={classes.addNewListButton}>
+          <IconButton
+            className={classes.addNewListButton}
+            onClick={() => changeAddListOpen()}
+          >
             <AddIcon className={classes.addIcon} />
           </IconButton>
           <Typography className={classes.addNewListText}>

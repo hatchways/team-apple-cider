@@ -91,10 +91,10 @@ The API routes for the lists are as follows:
 #### _GET one personal list (public or private) created by the user:_
 `curl localhost:5000/lists?user_id=<USER_ID>&list_id=<LIST_ID>`
 
-#### _GET a all list of any user (only authorized users can see private ones):_
+#### _GET all list of any one user (only authorized users can see private ones):_
 `curl localhost:5000/lists?user_id=<USER_ID>`
 
-#### _GET one list of any user (only authorized users can see private ones):_
+#### _GET one list of any user (public lists only):_
 `curl localhost:5000/lists?list_id=<LIST_ID>`
 
 #### _POST(create) new list:_
@@ -106,11 +106,11 @@ The API routes for the lists are as follows:
 
 ### List to Products
 
-#### _GET all existing product_ids given an list_id (only authorized users can see private ones):_
+#### _GET all existing product given an list_id (only authorized users can see ones from private lists):_
 
 `curl localhost:5000/list-to-products/<LIST_ID>`
 
-#### _POST(add) new products into existing ones (only authorized users can do this):_
+#### _POST(add) new product ids into an existing list (only authorized users can do this):_
 
 `curl -X POST localhost:5000/list-to-products/<LIST_ID> --data 
 '{
