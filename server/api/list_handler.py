@@ -11,10 +11,8 @@ list_handler = Blueprint('list_handler', __name__)
 
 
 def replace_cloudinary_image(image_url):
-    try:
-        return image_uploader(image_url, PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
-    except:
-        return image_url
+    try: return image_uploader(image_url, PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
+    except: return image_url
 
 
 @list_handler.route('/lists', methods=['GET', 'POST', 'PUT', 'DELETE'])
