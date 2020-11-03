@@ -46,7 +46,7 @@ def listToProductsRequest(list_id):
                     db.session.add(list_product_connection)
                     db.session.commit()
                 else:
-                    return jsonify({"error": "you are unauthorized to add to the list"})
+                    return jsonify({"error": "you are unauthorized to add to the list or product was already added"})
                 return jsonify({'response': "item was successfully added to the list"}), 200
 
             except Exception as e:
