@@ -14,6 +14,16 @@ def token_getter():
         auth_header = request.cookies.get("Authentication token")
         if auth_header:
             auth_token = auth_header
+            blacklist_check = BlacklistToken.query.filter_by(
+                token=int(auth_token)
+                ).first()
+            if blacklist_check:
+                responseObject = {
+                    "status": "failure",
+                    "message": "Invalid authentication token, please logout."
+                }
+                resp = make_response(jsonify(responseObject))
+                return resp, 401
             auth_token = User.decode_auth_token(auth_token)
             return auth_token
         else:
@@ -31,6 +41,15 @@ def login_cookie_getter(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         auth_token = token_getter()
+        try:
+            g.user = User.query.filter_by(id=auth_token).first()
+        except:
+            responseObject = {
+                "status": "fail",
+                "message": "User is not logged in."
+            }
+            return make_response(jsonify(responseObject)), 401
+        return f(None)
     return decorated_function
 
 
