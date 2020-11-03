@@ -62,7 +62,7 @@ const AddItem = () => {
   const [item, setItem] = useState({});
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedList, setSelectedList] = useState("none");
-  const [listId, setListId] = useState('');
+  const [listId, setListId] = useState("");
   const [userLists, setUserLists] = useState([]);
 
   const classes = useStyles();
@@ -109,10 +109,10 @@ const AddItem = () => {
     getLists();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     getListId();
-  },[selectedList]);
-  
+  }, [selectedList]);
+
   return (
     <Box className={classes.dashboardAddItem}>
       <Typography variant="h5" className={classes.addNewItemTitle}>

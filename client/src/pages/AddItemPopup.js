@@ -57,7 +57,7 @@ const AddItemPopup = (props) => {
     const res = await fetch(`/list-to-products/${listId}`,{
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ product_id: item.id }),
+      body: JSON.stringify({ product_id: item.product_id }),
     });
     const json = await res.json();
     return json;
@@ -65,6 +65,7 @@ const AddItemPopup = (props) => {
 
   const addButtonClick = async () => {
     addProductToList()
+    closePopup()
   };
 
   return (
@@ -76,16 +77,16 @@ const AddItemPopup = (props) => {
       aria-describedby="confirms-adding-item-of-url-to-selected-list"
     >
       <Box className={classes.paper}>
-        <Typography>{item.product_id}</Typography>
         <Typography className={classes.paperTitle}>Add new item:</Typography>
         {item.error ? (
           <Box className={classes.errorMessage}>{item.response}</Box>
         ) : item.name ? (
-          <ItemDisplay item={item} className={classes.itemDisplay} />
+          <><ItemDisplay item={item} className={classes.itemDisplay} />,
+            <Button onClick ={addButtonClick} className={classes.addButton}>ADD NEW ITEM</Button></>
         ) : (
           <CircularProgress className={classes.spinner} />
         )}
-        <Button onClick ={addButtonClick} className={classes.addButton}>ADD NEW ITEM</Button>
+       
       </Box>
     </Modal>
   );

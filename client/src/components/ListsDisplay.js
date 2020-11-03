@@ -55,6 +55,7 @@ const ListsDisplay = () => {
     const res = await fetch("/auth/status")
     const json = await res.json()
     setUserId(json.data.user_id)
+    console.log(json)
   }
 
   const getLists = async () =>{
@@ -65,7 +66,7 @@ const ListsDisplay = () => {
 
   useEffect(() => {
     getUserId();
-  }, []);
+  }, [lists]);
 
     useEffect(() => {
     getLists();

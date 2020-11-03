@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
@@ -46,10 +46,11 @@ const useStyles = makeStyles((theme) => ({
 const ListCard = (props) => {
   const listId = props.list.id;
   const listTitle = props.list.name;
-  const itemCount = props.list.product_count;
   const img = props.list.img_url;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
+  const [itemCount, setItemCount] = useState('');
+
   const changeListOpen = () => {
     setListOpen(!listOpen);
   };
@@ -57,6 +58,17 @@ const ListCard = (props) => {
   const changeAddProductOpen = () => {
     setAddProductOpen((previous) => !previous);
   };
+
+  const getItemCount = async () => {
+    const res = await fetch(`/list-to-products/${listId}`)
+    const json = await res.json();
+    setItemCount(json.length)
+  };
+
+  useEffect(() => {
+    getItemCount()
+  }, []);
+
 
   return (
     <Box>
