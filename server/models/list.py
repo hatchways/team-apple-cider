@@ -26,6 +26,5 @@ class List(db.Model):
         "user_id" : self.user_id, 
         "name": self.name, 
         "img_url": self.img_url,
-        "product_count" : self.product_count,
         "private":self.private
         }
