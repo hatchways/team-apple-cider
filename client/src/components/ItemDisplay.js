@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Adds a comma once every 3 digits right to left
 const addCommasToDollars = (dollars) => {
   let dollarsArray = String(dollars).split("");
   for (let i = dollarsArray.length - 3; i > 0; i = i - 3)
