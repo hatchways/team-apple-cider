@@ -58,7 +58,7 @@ def listToProductRequest(list_id, product_id):
     auth_token = token_getter()
     if request.method == 'DELETE':
         if type(auth_token) is not int:
-            return jsonify({'error': "you must log in, to delete a product from the list"}), 400
+            return jsonify({'error': "you must log in to delete a product from the list"}), 400
         try:
             list_to_product = ListToProduct.query.filter_by(
                 list_id=int(list_id), product_id=product_id)
