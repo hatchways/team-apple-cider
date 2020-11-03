@@ -80,6 +80,8 @@ const ProfileDisplay = (props) => {
     const updateProfile = async () => {
       const response = await fetch(`/profiles/${id}`);
       const profile = await response.json();
+      // TODO: seperate call for followers/following counts
+      // TODO: seperate call for public lists
       setUser(profile);
     };
     updateProfile();
