@@ -4,18 +4,6 @@ from models.profile import Profile
 from database import db
 profile_handler = Blueprint('profile_handler', __name__)
 
-
-def create_profile(id, name, photo):
-    profile = Profile(id, name, photo)
-    db.session.add(profile)
-    db.session.commit()
-
-def delete_profile(id):
-    profile = Profile.query.get(id)
-    db.session.delete(profile)
-    db.session.commit()
-
-
 @profile_handler.route('/profile/<id>', methods=['GET'])
 def single_profile_requests(id):
     if request.method == 'GET':
