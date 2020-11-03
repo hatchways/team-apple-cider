@@ -106,10 +106,6 @@ function SignUp(props) {
 
   const validations = () => {
     const errorsCopy = { ...errors };
-    errorsCopy.name = name ? "" : "This field is required.";
-    errorsCopy.email = /.+@.+\..+/.test(email) ? "" : "Email is not valid.";
-    errorsCopy.password =
-      password.length > 5 ? "" : "Password must be at least six characters.";
     errorsCopy.confirm = password === confirm ? "" : "Passwords must match.";
     if (errorsCopy.confirm) {
       handleOpenTooltip();
@@ -143,7 +139,6 @@ function SignUp(props) {
             fullWidth
             required
             type="text"
-            error={!!errors.name}
             onChange={(e) => setName(e.target.value)}
           />
           <label>Your email address:</label>
@@ -183,7 +178,7 @@ function SignUp(props) {
               fullWidth
               required
               type="password"
-              error={!!errors.confirm}
+              error={Boolean(errors.confirm)}
               onChange={(e) => setConfirm(e.target.value)}
             />
           </ErrorTooltip>
