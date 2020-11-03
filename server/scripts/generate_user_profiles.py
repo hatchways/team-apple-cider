@@ -1,6 +1,6 @@
+#!/usr/bin/env python3
 import requests
 import asyncio
-
 
 async def add_user_to_db(user):
     try:

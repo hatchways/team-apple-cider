@@ -100,6 +100,7 @@ class RegisterAPI(MethodView):
                 else:
                     g.user = user
                     responseObject = {
+                        "id": user.id,
                         "status": "success",
                         "message": "Successfully registered."
                     }
@@ -183,16 +184,23 @@ class LoginAPI(MethodView):
 class UserAPI(MethodView):
     @login_cookie_getter
     def get(self):
-        user = g.user
-        responseObject = {
-            "status": "success",
-            "data": {
-                "user_id": user.id,
-                "email": user.email,
-                "registered_time": user.registered_time
+        try:
+            user = g.user
+            responseObject = {
+                "status": "success",
+                "data": {
+                    "user_id": user.id,
+                    "email": user.email,
+                    "registered_time": user.registered_time
+                }
             }
-        }
-        return make_response(jsonify(responseObject)), 200
+            return make_response(jsonify(responseObject)), 200
+        except:
+            responseObject = {
+                "status": "failure",
+                "message": "Error: no user on database"
+            }
+            return make_response(jsonify(responseObject)), 401
 
 
 class LogoutAPI(MethodView):
