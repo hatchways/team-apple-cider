@@ -20,7 +20,7 @@ profile_handler = Blueprint('profile_handler', __name__)
 def single_profile_requests(id):
     if request.method == 'GET':
         try:
-            profile = Profile.query.get(id)
+            profile = Profile.query.get(int(id))
             return jsonify(profile.serialize), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400

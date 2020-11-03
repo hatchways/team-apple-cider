@@ -71,7 +71,8 @@ class RegisterAPI(MethodView):
 
                 responseObject = {
                     "status": "success",
-                    "message": "Successfully registered."
+                    "message": "Successfully registered.",
+                    "id": user.id
                 }
                 resp = make_response(jsonify(responseObject))
                 resp.set_cookie("Authentication token",
