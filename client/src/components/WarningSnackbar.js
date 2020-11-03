@@ -1,6 +1,6 @@
 import React from "react";
 import { Snackbar } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/alert";
+import MuiAlert from "@material-ui/lab/Alert";
 
 function WarningSnackbar(props) {
   const { openSnack, handleCloseSnack, snackText } = props;
