@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import LandingPage from "./pages/LandingPage";
 import { theme } from "./themes/theme";
 import { UserStore } from "./contexts/UserContext";
 
@@ -19,6 +20,7 @@ function App() {
             <BrowserRouter>
               <Route path="/" exact component={Login} />
               <Route path="/signup" exact component={SignUp} />
+              <Route path="/landing" exact component={LandingPage} />
               <ProtectedRoute exact path="/dashboard" component={Dashboard} />
             </BrowserRouter>
           </UserStore>

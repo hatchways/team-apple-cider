@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Box } from "@material-ui/core";
-
 import UserContext from "../contexts/UserContext";
+import WarningSnackbar from "./WarningSnackbar";
 
 const useStyles = makeStyles((theme) => ({
   login: {
@@ -61,18 +61,34 @@ function Login(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackText, setSnackText] = useState("");
   const value = useContext(UserContext);
 
-  const handleSubmit = async (e) => {
+  const handleSnack = (message) => {
+    setSnackText(message);
+    setOpenSnack(true);
+  };
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const loginSuccess = value.handleLogin(email, password);
-    if (loginSuccess) props.history.push("/dashboard");
+    const response = await value.handleLogin(email, password);
+    if (response.status === "success") props.history.push("/dashboard");
+    else handleSnack(response.message);
   };
 
   return (
     <section className={classes.login}>
       <Box className={classes.formContainer}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
           <h2 className={classes.h2}>Sign in</h2>
           <label>Your email address:</label>
           <TextField
@@ -109,6 +125,11 @@ function Login(props) {
             Create an account
           </Link>
         </Box>
+        <WarningSnackbar
+          openSnack={openSnack}
+          handleCloseSnack={handleCloseSnack}
+          snackText={snackText}
+        />
       </Box>
     </section>
   );
