@@ -32,7 +32,7 @@ def listToProductsRequest(list_id):
     # can only add a product to a list if logged-in and the list is owned by the user
     if request.method == 'POST':
         if type(auth_token) is not int:
-            return jsonify({'error': "you must log in, to add a product to a list"}), 400
+            return jsonify({'error': "you must log in to add a product to a list"}), 400
         else:
             try:
                 list_user_id = List.query.filter_by(
