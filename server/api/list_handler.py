@@ -61,7 +61,7 @@ def listRequests():
 
         else:
             body = json.loads(request.get_data())
-            list_user_id = auth_token
+            list_user_id = int(auth_token)
             list_name = body['name']
 
             # checks to see if list already exists

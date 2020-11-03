@@ -5,7 +5,7 @@ class ListToProduct(db.Model):
 
     __tablename__ = 'list_to_product'
     list_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    product_id = db.Column(db.Integer,primary_key=True, nullable=False)
+    product_id = db.Column(db.String,primary_key=True, nullable=False)
 
     def __init__(self, list_id, product_id):
         self.list_id = list_id
