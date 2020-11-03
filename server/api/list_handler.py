@@ -57,7 +57,7 @@ def listRequests():
     if request.method == 'POST':
         # client must be logged-in in order to create a list, client is only restricted to create list for their own account
         if type(auth_token) is not int:
-            return jsonify({'error': "you must log in, to create a list"}), 400
+            return jsonify({'error': "you must log in to create a list"}), 400
 
         else:
             body = json.loads(request.get_data())
