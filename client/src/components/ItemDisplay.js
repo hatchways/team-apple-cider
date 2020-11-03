@@ -57,16 +57,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const reverseString = (string) => string.split("").reverse().join("");
-
 const addCommasToDollars = (dollars) => {
-  let dollarsString = String(dollars);
-  dollarsString = reverseString(dollarsString);
-  dollarsString = dollarsString.replace(/(.{3})/g, "$1,");
-  dollarsString = reverseString(dollarsString);
-  return dollarsString.startsWith(",")
-    ? dollarsString.substring(1)
-    : dollarsString;
+  let dollarsArray = String(dollars).split("");
+  for (let i = dollarsArray.length - 3; i > 0; i = i - 3)
+    dollarsArray.splice(i, 0, ",");
+  return dollarsArray.join("");
 };
 
 const centsToDollarsDisplay = (inputCents) => {
