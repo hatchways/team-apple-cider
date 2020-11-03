@@ -31,6 +31,11 @@ def login_cookie_getter(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         auth_token = token_getter()
+        try:
+            g.user = User.query.filter_by(id=auth_token).first()
+            return True
+        except:
+            raise Exception
     return decorated_function
 
 
