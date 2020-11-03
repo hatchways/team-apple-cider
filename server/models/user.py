@@ -4,6 +4,11 @@ from config import DevelopmentConfig
 import datetime
 import jwt
 
+followers = db.Table('followers',
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
+)
+
 
 class User(db.Model):
     __tablename__ = "users"
@@ -19,6 +24,24 @@ class User(db.Model):
         self.name = name
         self.password = flask_bcrypt.generate_password_hash(password, DevelopmentConfig.BCRYPT_LOG_ROUNDS).decode()
         self.registered_time = datetime.datetime.now(tz=datetime.timezone.utc)
+
+    followed = db.relationship(
+        'User', secondary=followers,
+        primaryjoin=(followers.c.follower_id == id),
+        secondaryjoin=(followers.c.followed_id == id),
+        backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+
+    def follow(self, user):
+        if not self.is_following(user):
+            self.followed.append(user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.followed.remove(user)
+
+    def is_following(self, user):
+        return self.followed.filter(followers.c.followed_id == user.id).count() 
+
 
     def encode_auth_token(self, user_id):
         try:
