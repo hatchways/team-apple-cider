@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Typography, IconButton } from "@material-ui/core";
+import React, { useState } from "react";
+import { Box, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import clothes from "img/clothes.png";
@@ -53,8 +53,10 @@ const demoListsArray = [
   { listTitle: "Luxury", itemCount: 8, img: luxury },
 ];
 
-const ListsDisplay = () => {
+const ListsDisplay = (props) => {
   const classes = useStyles();
+  const { addListOpen, changeAddListOpen } = props;
+
   return (
     <Box className={classes.shoppingContainer}>
       <Typography variant="h5" className={classes.listsTitle}>
@@ -62,10 +64,13 @@ const ListsDisplay = () => {
       </Typography>
       <Box className={classes.myShoppingLists}>
         {demoListsArray.map((list, i) => (
-          <ListCard key={i} list={list} />
+          <ListCard key={i} {...{ list, demoListsArray }} />
         ))}
         <Box className={classes.addNewList}>
-          <IconButton className={classes.addNewListButton}>
+          <IconButton
+            className={classes.addNewListButton}
+            onClick={() => changeAddListOpen()}
+          >
             <AddIcon className={classes.addIcon} />
           </IconButton>
           <Typography className={classes.addNewListText}>
