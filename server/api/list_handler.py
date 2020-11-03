@@ -81,7 +81,7 @@ def listRequests():
     if request.method == 'PUT':
         # client must be logged-in in order to edit a list, client is only restricted to editting their own lists
         if type(auth_token) is not int:
-            return jsonify({'error': "you must logged-in, to edit the list"}), 400
+            return jsonify({'error': "you must log in to edit the list"}), 400
 
         else:
             list = List.query.get(int(list_id))
