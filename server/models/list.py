@@ -1,23 +1,30 @@
 from database import db
 
+
+
 class List(db.Model):
 
     __tablename__ = 'list'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    product_type = db.Column(db.String, unique=True, nullable=False)
-    visible = db.Column(db.Boolean, nullable=False)
-    # have an image type aswell, will implement later...
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
+    name = db.Column(db.String, nullable=False)
+    img_url = db.Column(db.String, nullable=False)
+    private = db.Column(db.Boolean, nullable=False)
 
-    def __init__(self, product_type, visible):
-        self.product_type = product_type
-        self.visible = visible
+    def __init__(self, user_id, name, img_url, private=False):
+        self.user_id = user_id
+        self.name = name
+        self.img_url = img_url
+        self.private = private
 
     @property
     def serialize(self):
         """Return object data in easily serializable format"""
         return {
-            "id": self.id,
-            "product_type": self.product_type,
-            "visible": self.visible,
+        "id" : self.id, 
+        "user_id" : self.user_id, 
+        "name": self.name, 
+        "img_url": self.img_url,
+        "private":self.private
         }

@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Typography, IconButton } from "@material-ui/core";
+import React, { useState } from "react";
+import { Box, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import clothes from "img/clothes.png";
@@ -66,7 +66,7 @@ const demoListsArray = [
 
 const ListsDisplay = (props) => {
   const scrollRef = useHorizontalScroll();
-  const { user } = props;
+  const { user, addListOpen, changeAddListOpen } = props;
   const classes = useStyles();
 
   const getListsUserText = (user) => {
@@ -82,11 +82,14 @@ const ListsDisplay = (props) => {
       </Typography>
       <Box className={classes.myShoppingLists} ref={scrollRef}>
         {demoListsArray.map((list, i) => (
-          <ListCard key={i} list={list} />
+          <ListCard key={i} {...{ list, demoListsArray }} />
         ))}
         {!user && (
           <Box className={classes.addNewList}>
-            <IconButton className={classes.addNewListButton}>
+            <IconButton
+              className={classes.addNewListButton}
+              onClick={() => changeAddListOpen()}
+            >
               <AddIcon className={classes.addIcon} />
             </IconButton>
             <Typography className={classes.addNewListText}>

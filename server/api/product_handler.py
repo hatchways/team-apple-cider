@@ -16,6 +16,7 @@ def replace_cloudinary_image(image_url):
 
 @product_handler.route('/products/<product_id>', methods=['GET', 'DELETE', 'POST', 'PUT'])
 def oneProductRequests(product_id):
+   
     if request.method == 'GET':
         try:
             product = Product.query.get(product_id)

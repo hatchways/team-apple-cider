@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Box } from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Button, TextField, Box, Tooltip, Typography } from "@material-ui/core";
+import UserContext from "../contexts/UserContext";
+import WarningSnackbar from "./WarningSnackbar";
+
+const ErrorTooltip = withStyles((theme) => ({
+  arrow: {
+    color: "red",
+  },
+  tooltip: {
+    backgroundColor: "red",
+    color: "rgba(255, 255, 255, 0.87)",
+    boxShadow: theme.shadows[1],
+    fontSize: 14,
+  },
+}))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
-  login: {
+  signup: {
     width: "100vw",
     margin: "0 auto",
     minHeight: "100vh",
@@ -28,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     display: "block",
     width: "80%",
-    margin: "5px auto 15px auto",
+    margin: "5px auto 40px auto",
     textAlign: "center",
     backgroundColor: "white",
   },
@@ -36,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "25px",
     backgroundColor: "#DF1B1B",
   },
-  signup: {
+  login: {
     display: "flex",
     padding: "20px",
     borderTop: "1px solid rgba(128, 128, 128, 0.274)",
@@ -59,55 +73,63 @@ function SignUp(props) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
+  const [openTooltip, setOpenTooltip] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackText, setSnackText] = useState("");
+  const value = useContext(UserContext);
+
+  function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+  const handleOpenTooltip = async () => {
+    setOpenTooltip(true);
+    await sleep(6000);
+    setOpenTooltip(false);
+  };
+
+  const handleCloseTooltip = () => {
+    setOpenTooltip(false);
+  };
+
+  const handleSnack = (message) => {
+    setSnackText(message);
+    setOpenSnack(true);
+  };
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnack(false);
+  };
 
   const validations = () => {
     const errorsCopy = { ...errors };
-    errorsCopy.name = name ? "" : "This field is required.";
-    errorsCopy.email = /.+@.+..+/.test(email) ? "" : "Email is not valid.";
-    errorsCopy.password =
-      password.length > 5 ? "" : "Password must be at least six characters.";
     errorsCopy.confirm = password === confirm ? "" : "Passwords must match.";
+    if (errorsCopy.confirm) {
+      handleOpenTooltip();
+    } else {
+      handleCloseTooltip();
+    }
     setErrors({ ...errorsCopy });
 
     return Object.values(errorsCopy).every((field) => field === "");
   };
 
-  const handleClick = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     if (validations()) {
-      fetch("/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          password: password,
-          confirm: confirm,
-        }),
-      })
-        .then((response) => response.json())
-        .then(function (response) {
-          if (response.status === "success") {
-            console.log("Success:", email);
-            window.alert(response.message); // Replace with snackbar.
-            props.history.push("/");
-          } else {
-            window.alert(response.message); // Replace with snackbar.
-            console.log(response.message);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      const response = await value.handleSignup(name, email, password, confirm);
+      if (response.status === "success") props.history.push("/dashboard");
+      else handleSnack(response.message);
     }
   };
 
   return (
-    <section className={classes.login}>
+    <section className={classes.signup}>
       <Box className={classes.formContainer}>
-        <form>
+        <form onSubmit={handleSignup}>
           <h2 className={classes.h2}>Sign up</h2>
           <label>Your Name</label>
           <TextField
@@ -117,8 +139,6 @@ function SignUp(props) {
             fullWidth
             required
             type="text"
-            error={!!errors.name}
-            helperText={errors.name}
             onChange={(e) => setName(e.target.value)}
           />
           <label>Your email address:</label>
@@ -129,8 +149,6 @@ function SignUp(props) {
             fullWidth
             required
             type="email"
-            error={!!errors.email}
-            helperText={errors.email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <label>Password:</label>
@@ -141,37 +159,49 @@ function SignUp(props) {
             fullWidth
             required
             type="password"
-            error={!!errors.password}
-            helperText={errors.password}
+            inputProps={{ minLength: 6 }}
             onChange={(e) => setPassword(e.target.value)}
           />
           <label>Confirm Password:</label>
-          <TextField
-            className={classes.textField}
-            variant="outlined"
-            label="confirm password"
-            fullWidth
-            required
-            type="password"
-            error={!!errors.confirm}
-            helperText={errors.confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-          />
+          <ErrorTooltip
+            open={openTooltip}
+            title={<Typography>Passwords must match.</Typography>}
+            arrow
+            disableHoverListener
+            disableTouchListener
+            disableFocusListener
+          >
+            <TextField
+              className={classes.textField}
+              variant="outlined"
+              label="confirm password"
+              fullWidth
+              required
+              type="password"
+              error={Boolean(errors.confirm)}
+              onChange={(e) => setConfirm(e.target.value)}
+            />
+          </ErrorTooltip>
           <Button
             className={classes.button}
+            type="submit"
             variant="contained"
             color="secondary"
-            onClick={handleClick}
           >
             Sign up
           </Button>
         </form>
-        <Box className={classes.signup}>
+        <Box className={classes.login}>
           <p className={classes.p}>Already have an account?</p>
           <Link className={classes.signupLink} to="/">
             Login
           </Link>
         </Box>
+        <WarningSnackbar
+          openSnack={openSnack}
+          handleCloseSnack={handleCloseSnack}
+          snackText={snackText}
+        />
       </Box>
     </section>
   );
