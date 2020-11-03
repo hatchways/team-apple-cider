@@ -95,10 +95,18 @@ export function UserStore(props) {
       });
   };
 
+  const [userId, setUserId] = useState('');
+  const getUserId = async () =>{
+    const res = await fetch("/auth/status")
+    const json = await res.json()
+    setUserId(json.data.user_id)
+  }
+
   return (
     <UserContext.Provider
       value={{
         user: user,
+        userId:userId,
         handleLogin: handleLogin,
         handleLogout: handleLogout,
         handleSignup: handleSignup,

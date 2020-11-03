@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   Typography,
@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddItemPopup from "pages/AddItemPopup";
+import UserContext from "../contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {
@@ -56,10 +57,14 @@ const useStyles = makeStyles((theme) => ({
 const demoListsArray = ["Clothes", "Furniture", "Luxury"];
 
 const AddItem = () => {
+  const userId = useContext(UserContext).userId;
   const [inputLink, setInputLink] = useState("");
   const [item, setItem] = useState({});
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedList, setSelectedList] = useState("none");
+  const [listId, setListId] = useState('');
+  const [userLists, setUserLists] = useState([]);
+
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
 
@@ -70,6 +75,20 @@ const AddItem = () => {
       body: JSON.stringify({ url: input }),
     });
     return response.json();
+  };
+
+  const getLists = async () => {
+    const res = await fetch(`/lists?user_id=${userId}`);
+    const json = await res.json();
+    setUserLists(json);
+  };
+
+  const getListId = () => {
+    userLists.forEach(function (list) {
+      if (list.name == selectedList) {
+        setListId(list.id);
+      }
+    });
   };
 
   const addButtonClick = async () => {
@@ -86,6 +105,14 @@ const AddItem = () => {
     setItem({});
   };
 
+  useEffect(() => {
+    getLists();
+  }, []);
+
+  useEffect(()=>{
+    getListId();
+  },[selectedList]);
+  
   return (
     <Box className={classes.dashboardAddItem}>
       <Typography variant="h5" className={classes.addNewItemTitle}>
@@ -107,9 +134,9 @@ const AddItem = () => {
           <MenuItem value="none" disabled>
             Select List
           </MenuItem>
-          {demoListsArray.map((listName, i) => (
-            <MenuItem key={i} value={listName}>
-              {listName}
+          {userLists.map((listName, i) => (
+            <MenuItem key={i} value={listName.name}>
+              {listName.name}
             </MenuItem>
           ))}
         </Select>
@@ -120,7 +147,7 @@ const AddItem = () => {
         >
           ADD
         </Button>
-        <AddItemPopup {...{ item, popupOpen, closePopup }} />
+        <AddItemPopup {...{ item, popupOpen, closePopup, listId }} />
       </Box>
     </Box>
   );

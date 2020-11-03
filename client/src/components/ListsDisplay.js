@@ -49,16 +49,28 @@ const ListsDisplay = () => {
   // const [error, setError] = useState(null);
   // const [isLoaded, setIsLoaded] = useState(false);
   const [lists, setLists] = useState([]);
+  const [userId, setUserId] = useState('-1');
+
+  const getUserId = async () =>{
+    const res = await fetch("/auth/status")
+    const json = await res.json()
+    setUserId(json.data.user_id)
+  }
 
   const getLists = async () =>{
-    const res = await fetch("/lists")
+    const res = await fetch(`/lists?user_id=${userId}`)
     const json = await res.json()
     setLists(json);
   }
 
   useEffect(() => {
-    getLists();
+    getUserId();
   }, []);
+
+    useEffect(() => {
+    getLists();
+  }, [userId]);
+
 
 
   return (
@@ -73,7 +85,7 @@ const ListsDisplay = () => {
         <Box className={classes.addNewList}>
           <IconButton
             className={classes.addNewListButton}
-            onClick={() => changeAddListOpen()}
+            // onClick={() => changeAddListOpen()}
           >
             <AddIcon className={classes.addIcon} />
           </IconButton>

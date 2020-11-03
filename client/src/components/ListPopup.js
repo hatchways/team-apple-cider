@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) => {
+const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen, addProductOpen, changeAddProductOpen }) => {
   
   const classes = useStyles();
   const handleClose = () => changeListOpen();
@@ -99,29 +99,27 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
     const res = await fetch(`list-to-products/${listId}`)
     const json = await res.json()
     setListToProducts(json);
-    console.log({json})
+    console.log(json)
   }
 
   const getProducts = async () => {
     const newProducts = await Promise.all(listToProducts.map(async (relation)=>{      
       const res = await fetch(`/products/${relation.product_id}`)
-      return res.json();
+      console.log(res)
+      return res.json(res);
+      
     }));
     setProducts(newProducts)
-    console.log({newProducts})
   }
 
   useEffect(() => {
     getListRelations()
-  }, [listId]);
+  }, [listId,listOpen]);
 
   useEffect(() =>{
     getProducts()
   },[listToProducts])
 
-
-
- 
 
   const handleAddClick = () => {
     changeAddProductOpen();
@@ -154,7 +152,7 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen }) =
         <Box className={classes.bodyContainer}>
           <Box className={classes.bodyContent}>
           {products.map((item, i) => (
-          <ProductCard key={i} item={item} />
+          <ProductCard key={i} item={item} listId={listId} getListRelations={getListRelations}/>
         ))}
           </Box>
         </Box>

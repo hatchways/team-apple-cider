@@ -50,8 +50,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddItemPopup = (props) => {
-  const { item, popupOpen, closePopup } = props;
+  const { item, popupOpen, closePopup, listId } = props;
   const classes = useStyles();
+
+  const addProductToList = async () => {
+    const res = await fetch(`/list-to-products/${listId}`,{
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product_id: item.id }),
+    });
+    const json = await res.json();
+    return json;
+  };
+
+  const addButtonClick = async () => {
+    addProductToList()
+  };
 
   return (
     <Modal
@@ -62,6 +76,7 @@ const AddItemPopup = (props) => {
       aria-describedby="confirms-adding-item-of-url-to-selected-list"
     >
       <Box className={classes.paper}>
+        <Typography>{item.product_id}</Typography>
         <Typography className={classes.paperTitle}>Add new item:</Typography>
         {item.error ? (
           <Box className={classes.errorMessage}>{item.response}</Box>
@@ -70,7 +85,7 @@ const AddItemPopup = (props) => {
         ) : (
           <CircularProgress className={classes.spinner} />
         )}
-        <Button className={classes.addButton}>ADD NEW ITEM</Button>
+        <Button onClick ={addButtonClick} className={classes.addButton}>ADD NEW ITEM</Button>
       </Box>
     </Modal>
   );

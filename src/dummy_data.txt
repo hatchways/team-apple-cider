@@ -54,7 +54,7 @@ curl -X POST http://localhost:5000/products/5 --data '{
     "old_price": null,
     "price": "6499",
     "img_url": "https://images-na.ssl-images-amazon.com/images/I/91yY9JkVSQL._AC_UX569_.jpg",
-    "url": "https://www.amazon.com/Levis-Sherpa-Jacket-Mustard-Denim/dp/B072MFYGSS"
+    "url": "https://www.amazon.ca/Levis-Cotton-Sherpa-Trucker-Mustard/dp/B072JV2MPW/ref=sr_1_5?dchild=1&gclid=CjwKCAiAnIT9BRAmEiwANaoE1Z0-FbWBXrYIl8JFqkcyUD6P60Aey576ur4maS43u1ttz_yO_8to1hoCGV4QAvD_BwE&hvadid=230027525236&hvdev=c&hvlocphy=1002347&hvnetw=g&hvqmt=e&hvrand=11365666562814957617&hvtargid=kwd-383314754797&hydadcr=21766_10107131&keywords=levis%2Bamazon&qid=1604416812&sr=8-5&tag=googcana-20&th=1&psc=1"
     
 }' --header "Content-Type:application/json"
 

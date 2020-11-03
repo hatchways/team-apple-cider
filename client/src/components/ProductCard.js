@@ -30,8 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductCard = ({item}) => {
+const ProductCard = ({item, listId,getListRelations}) => {
   const classes = useStyles();
+
+  const removeButtonClick = async () => {
+      const res = await fetch(`list-to-products/${listId}/${item.id}`,{
+      method:'DELETE'
+      })
+      console.log(await res.json())
+      getListRelations()
+  };
+
   return (
     <Box className={classes.productCard}>
       <Box>
@@ -39,7 +48,7 @@ const ProductCard = ({item}) => {
       </Box>
 
       <Box className={classes.removeButtonContainer}>
-        <Button variant="outlined" className={classes.removeButton}>
+        <Button onClick={removeButtonClick} variant="outlined" className={classes.removeButton}>
           Remove
         </Button>
       </Box>
