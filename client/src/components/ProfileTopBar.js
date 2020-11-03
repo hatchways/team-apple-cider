@@ -56,11 +56,14 @@ const useStyles = makeStyles((theme) => ({
 const ProfileTopBar = (props) => {
   const { user, following, toggleFollow, followingYou } = props;
   const classes = useStyles();
+
+  console.log(user);
+
   return (
     <Box className={classes.profileTopBar}>
       <img
         className={classes.profilePhoto}
-        src={user && user.img}
+        src={user && user.photo}
         alt="profile-pic"
       />
       <Box className={classes.profileTextContainer}>

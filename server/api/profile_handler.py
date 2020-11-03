@@ -24,12 +24,11 @@ def single_profile_requests(id):
             return jsonify(profile.serialize), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
-            
+
     if request.method == 'PUT':
         try:
             body = request.get_json()
             profile = Profile.query.get(id)
-            print(body)
             if profile:             
                 if "name" in body: profile.name = body["name"]
                 if "photo" in body: profile.photo = replace_cloudinary_image(body["photo"])

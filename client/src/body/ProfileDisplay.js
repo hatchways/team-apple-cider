@@ -77,50 +77,12 @@ const ProfileDisplay = (props) => {
   const id = parseInt(props.match.params.id);
 
   useEffect(() => {
-    switch (id) {
-      case 1:
-        setUser({
-          name: "Ayana Howarth",
-          img: profile_photo_1,
-          followers: 154,
-          following: 73,
-        });
-        break;
-      case 2:
-        setUser({
-          name: "Dan Lewis",
-          img: profile_photo_2,
-          followers: 154,
-          following: 193,
-        });
-        break;
-      case 3:
-        setUser({
-          name: "Mary Klein",
-          img: profile_photo_3,
-          followers: 254,
-          following: 323,
-        });
-        break;
-      case 4:
-        setUser({
-          name: "Uzma Holding",
-          img: profile_photo_4,
-          followers: 164,
-          following: 3,
-        });
-        break;
-      case 5:
-        setUser({
-          name: "Alexia Grant",
-          img: profile_photo_5,
-          followers: 323,
-          following: 135,
-        });
-        break;
-      default:
-        break;
-    }
+    const updateProfile = async () => {
+      const response = await fetch(`/profiles/${id}`);
+      const profile = await response.json();
+      setUser(profile);
+    };
+    updateProfile();
   }, [id]);
 
   const toggleFollow = () => setFollowing((cur) => !cur);
