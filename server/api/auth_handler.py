@@ -15,7 +15,7 @@ def token_getter():
         if auth_header:
             auth_token = auth_header
             blacklist_check = BlacklistToken.query.filter_by(
-                token=int(auth_token)
+                token=str(auth_token)
                 ).first()
             if blacklist_check:
                 responseObject = {
