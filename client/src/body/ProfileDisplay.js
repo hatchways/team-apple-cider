@@ -3,11 +3,6 @@ import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileTopBar from "components/ProfileTopBar";
 import ListsDisplay from "components/ListsDisplay";
-import profile_photo_1 from "img/profile_photo_1.png";
-import profile_photo_2 from "img/profile_photo_2.png";
-import profile_photo_3 from "img/profile_photo_3.png";
-import profile_photo_4 from "img/profile_photo_4.png";
-import profile_photo_5 from "img/profile_photo_5.png";
 
 const useStyles = makeStyles((theme) => ({
   profileContainer: {
