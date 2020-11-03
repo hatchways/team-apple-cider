@@ -15,7 +15,7 @@ def listToProductsRequest(list_id):
 
     if request.method == 'GET':
         try:
-            list = List.query.filter_by(list_id=int(list_id)).first()
+            list = List.query.filter_by(id=int(list_id)).first()
             list_user_id = list.user_id
             list_privacy = list.private
 
@@ -36,7 +36,7 @@ def listToProductsRequest(list_id):
         else:
             try:
                 list_user_id = List.query.filter_by(
-                    list_id=int(list_id)).first().user_id
+                    id=int(list_id)).first().user_id
                 body = request.get_json()
                 list_to_product = ListToProduct.query.filter_by(
                     list_id=int(list_id), product_id=body['product_id'])
@@ -62,7 +62,7 @@ def listToProductRequest(list_id, product_id):
         try:
             list_to_product = ListToProduct.query.filter_by(
                 list_id=int(list_id), product_id=product_id)
-            list_user_id = List.query.filter_by(list_id=int(list_id)).user_id
+            list_user_id = List.query.filter_by(id=int(list_id)).user_id
             if int(list_user_id) == int(auth_token) and list_to_product:
                 db.session.delete(list_to_product)
                 db.session.commit()
