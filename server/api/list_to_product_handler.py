@@ -20,7 +20,8 @@ def listToProductsRequest(list_id):
             list_privacy = list.private
 
             if list_user_id == auth_token or list_privacy == False:
-                products_in_list = ListToProduct.query.filter_by(list_id=list_id)
+                products_in_list = ListToProduct.query.filter_by(
+                    list_id=list_id)
                 return jsonify([product.serialize for product in products_in_list])
             else:
                 return jsonify({"error": "user has set list to private"})
@@ -34,11 +35,14 @@ def listToProductsRequest(list_id):
             return jsonify({'error': "you must log in, to add a product to a list"}), 400
         else:
             try:
-                list_user_id = List.query.filter_by(list_id=int(list_id)).first().user_id
+                list_user_id = List.query.filter_by(
+                    list_id=int(list_id)).first().user_id
                 body = request.get_json()
-                list_to_product = ListToProduct.query.filter_by(list_id=int(list_id),product_id=body['product_id'])
+                list_to_product = ListToProduct.query.filter_by(
+                    list_id=int(list_id), product_id=body['product_id'])
                 if int(list_user_id) == int(auth_token) and not list_to_product:
-                    list_product_connection = ListToProduct(int(list_id), body['product_id'])
+                    list_product_connection = ListToProduct(
+                        int(list_id), body['product_id'])
                     db.session.add(list_product_connection)
                     db.session.commit()
                 else:
@@ -48,21 +52,22 @@ def listToProductsRequest(list_id):
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
 
+
 @list_to_product_handler.route('/list-to-products/<list_id>/<product_id>', methods=['DELETE'])
-def listToProductRequest(list_id,product_id):
+def listToProductRequest(list_id, product_id):
     auth_token = token_getter()
     if request.method == 'DELETE':
         if type(auth_token) is not int:
             return jsonify({'error': "you must log in, to delete a product from the list"}), 400
         try:
-            list_to_product = ListToProduct.query.filter_by(list_id=int(list_id),product_id=product_id)
+            list_to_product = ListToProduct.query.filter_by(
+                list_id=int(list_id), product_id=product_id)
             list_user_id = List.query.filter_by(list_id=int(list_id)).user_id
             if int(list_user_id) == int(auth_token) and list_to_product:
                 db.session.delete(list_to_product)
                 db.session.commit()
-                return jsonify({'response': "Product '{}' was successfully deleted from the List '{}'".format(product_id,list_id)}), 200
+                return jsonify({'response': "Product '{}' was successfully deleted from the List '{}'".format(product_id, list_id)}), 200
             else:
                 return jsonify({"error": "unauthorized access or list connection does not exist"})
         except Exception as e:
-                return jsonify({'error': "{}".format(e.__cause__)}), 400
-
+            return jsonify({'error': "{}".format(e.__cause__)}), 400
