@@ -2,9 +2,21 @@ import json, re
 from flask import jsonify, request, Blueprint
 from models.profile import Profile
 from database import db
+from api.image_uploader import image_uploader
+from config import PROFILE_IMG_PRESET, CLOUDINARY_NAME
+
+
+product_handler = Blueprint('product_handler', __name__)
+
+
+def replace_cloudinary_image(image_url):
+    try: return image_uploader(image_url, PROFILE_IMG_PRESET, CLOUDINARY_NAME)
+    except: return image_url
+
+
 profile_handler = Blueprint('profile_handler', __name__)
 
-@profile_handler.route('/profile/<id>', methods=['GET'])
+@profile_handler.route('/profiles/<id>', methods=['GET', 'PUT'])
 def single_profile_requests(id):
     if request.method == 'GET':
         try:
@@ -12,8 +24,23 @@ def single_profile_requests(id):
             return jsonify(profile.serialize), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
+            
+    if request.method == 'PUT':
+        try:
+            body = request.get_json()
+            profile = Profile.query.get(id)
+            print(body)
+            if profile:             
+                if "name" in body: profile.name = body["name"]
+                if "photo" in body: profile.photo = replace_cloudinary_image(body["photo"])
+                db.session.commit()
+                return jsonify({"response": "Profile '{}' info was updated".format(id)}), 200
+        except Exception as e:
+            return jsonify({'error': "{}".format(e.__cause__)}), 400
+        
 
-@profile_handler.route('/profile', methods = ['GET'])
+
+@profile_handler.route('/profiles', methods = ['GET'])
 def all_profile_requests():
     if request.method == 'GET':
         try:

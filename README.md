@@ -102,6 +102,20 @@ A price history is kept for each product on the database. The API routes for the
 
 `curl -X DELETE localhost:5000/lists/<id>`
 
+### Profiles
+
+#### _GET all profiles from database:_
+
+`curl localhost:5000/profiles`
+
+#### _GET single profile from database:_
+
+`curl localhost:5000/profiles/<id>`
+
+#### _POST update profile information:_
+
+`curl -X PUT localhost:5000/profiles/1 --data '{"name": "Simon", "photo": "https://secure.gravatar.com/avatar/6f81c54461fc4b30b1b855050a071974"}' --header "Content-Type: application/json"`
+
 ## External API Services
 
 ### Cloudinary
