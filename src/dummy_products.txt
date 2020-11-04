@@ -1,0 +1,27 @@
+{
+    "name": "Sony Noise Cancelling Headphones WH1000XM3",
+    "old_price": "44800",
+    "price": "29900",
+    "img_url": "https://images-na.ssl-images-amazon.com/images/I/51IdLe-%2B6kL._AC_SL1500_.jpg",
+    "url": "https://www.amazon.ca/Sony-WH1000XM3-Canceling-Headphones-WH-1000XM3/dp/B07G4MNFS1"
+    
+}
+
+
+{
+    "name": "Mens Air Athletic Running Tennis Shoes",
+    "old_price": null,
+    "price": "3999",
+    "img_url": "https://images-na.ssl-images-amazon.com/images/I/71ChHM5k-4L._AC_SY625._SX._UX._SY._UY_.jpg",
+    "url": "https://www.amazon.com/Athletic-Running-Lightweight-Jogging-Sneakers/dp/B089R9NMPF"
+    
+}
+
+{
+    "name": "Levi's Men's Sherpa Trucker Jacket",
+    "old_price": null,
+    "price": "6499",
+    "img_url": "https://images-na.ssl-images-amazon.com/images/I/91yY9JkVSQL._AC_UX569_.jpg",
+    "url": "https://www.amazon.com/Levis-Sherpa-Jacket-Mustard-Denim/dp/B072MFYGSS"
+    
+}

@@ -19,6 +19,8 @@ selenium = "*"
 webdriver-manager = "*"
 celery = {extras = ["librabbitmq"], version = "~=4.4.7"}
 flower = "*"
+flask-socketio = "*"
+eventlet = "*"
 
 [requires]
 python_version = "3.7"
