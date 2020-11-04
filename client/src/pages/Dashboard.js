@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Header from "components/Header";
 import ShoppingLists from "pages/ShoppingLists";
 import Friends from "pages/Friends";
-import io from "socket.io-client";
 
 const useStyles = makeStyles((theme) => ({
   dashContainer: {
@@ -23,16 +22,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
-  const socket = io.connect("http://127.0.0.1:5000");
   const [selectedPage, setSelectedPage] = useState(0);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
-
-  React.useEffect(() => {
-    socket.on("connect", () => {
-      socket.send("Connected!!!!!!!!!");
-    });
-  }, []);
 
   return (
     <Box className={classes.dashContainer}>

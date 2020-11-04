@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-const UserContext = React.createContext({});
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 
+const UserContext = React.createContext({});
 export function UserStore(props) {
+  const socket = io.connect("http://127.0.0.1:5000");
+
   const checkCookie = () =>
     fetch("/auth/status", {
       method: "GET",
@@ -18,7 +21,19 @@ export function UserStore(props) {
         setUser(false);
       });
 
-  const [user, setUser] = useState(checkCookie());
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    checkCookie();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      socket.on("connect", () => {
+        socket.send("User is connected!");
+      });
+    }
+  }, [user]);
 
   const handleSignup = (name, email, password, confirm) =>
     fetch("/auth/register", {
