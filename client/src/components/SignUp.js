@@ -1,20 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  TextField,
-  Box,
-  Snackbar,
-  Tooltip,
-  Typography,
-} from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/alert";
+import { Button, TextField, Box, Tooltip, Typography } from "@material-ui/core";
 import UserContext from "../contexts/UserContext";
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import WarningSnackbar from "./WarningSnackbar";
 
 const ErrorTooltip = withStyles((theme) => ({
   arrow: {
@@ -88,8 +77,6 @@ function SignUp(props) {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackText, setSnackText] = useState("");
   const value = useContext(UserContext);
-  const vertical = "top";
-  const horizontal = "center";
 
   function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -105,8 +92,8 @@ function SignUp(props) {
     setOpenTooltip(false);
   };
 
-  const handleSnack = (props) => {
-    setSnackText(props);
+  const handleSnack = (message) => {
+    setSnackText(message);
     setOpenSnack(true);
   };
 
@@ -119,10 +106,6 @@ function SignUp(props) {
 
   const validations = () => {
     const errorsCopy = { ...errors };
-    errorsCopy.name = name ? "" : "This field is required.";
-    errorsCopy.email = /.+@.+\..+/.test(email) ? "" : "Email is not valid.";
-    errorsCopy.password =
-      password.length > 5 ? "" : "Password must be at least six characters.";
     errorsCopy.confirm = password === confirm ? "" : "Passwords must match.";
     if (errorsCopy.confirm) {
       handleOpenTooltip();
@@ -137,39 +120,16 @@ function SignUp(props) {
   const handleSignup = async (e) => {
     e.preventDefault();
     if (validations()) {
-      fetch("/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          password: password,
-          confirm: confirm,
-        }),
-      })
-        .then((response) => response.json())
-        .then(function (response) {
-          if (response.status === "success") {
-            console.log("Success:", email);
-            const loginSuccess = value.handleLogin(email, password);
-            if (loginSuccess) props.history.push("/dashboard");
-          } else {
-            handleSnack(response.message);
-            console.log(response.message);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      const response = await value.handleSignup(name, email, password, confirm);
+      if (response.status === "success") props.history.push("/dashboard");
+      else handleSnack(response.message);
     }
   };
 
   return (
     <section className={classes.signup}>
       <Box className={classes.formContainer}>
-        <form form onSubmit={handleSignup}>
+        <form onSubmit={handleSignup}>
           <h2 className={classes.h2}>Sign up</h2>
           <label>Your Name</label>
           <TextField
@@ -179,7 +139,6 @@ function SignUp(props) {
             fullWidth
             required
             type="text"
-            error={!!errors.name}
             onChange={(e) => setName(e.target.value)}
           />
           <label>Your email address:</label>
@@ -190,8 +149,6 @@ function SignUp(props) {
             fullWidth
             required
             type="email"
-            // error={!!errors.email}
-            // helperText={errors.email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <label>Password:</label>
@@ -202,8 +159,6 @@ function SignUp(props) {
             fullWidth
             required
             type="password"
-            // error={!!errors.password}
-            // helperText={errors.password}
             inputProps={{ minLength: 6 }}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -223,14 +178,12 @@ function SignUp(props) {
               fullWidth
               required
               type="password"
-              error={!!errors.confirm}
-              // helperText={errors.confirm}
+              error={Boolean(errors.confirm)}
               onChange={(e) => setConfirm(e.target.value)}
             />
           </ErrorTooltip>
           <Button
             className={classes.button}
-            // onClick={handleClick}
             type="submit"
             variant="contained"
             color="secondary"
@@ -244,16 +197,11 @@ function SignUp(props) {
             Login
           </Link>
         </Box>
-        <Snackbar
-          open={openSnack}
-          autoHideDuration={6000}
-          onClose={handleCloseSnack}
-          anchorOrigin={{ vertical, horizontal }}
-        >
-          <Alert onClose={handleCloseSnack} severity="error">
-            {snackText}
-          </Alert>
-        </Snackbar>
+        <WarningSnackbar
+          openSnack={openSnack}
+          handleCloseSnack={handleCloseSnack}
+          snackText={snackText}
+        />
       </Box>
     </section>
   );

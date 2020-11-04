@@ -14,6 +14,16 @@ def token_getter():
         auth_header = request.cookies.get("Authentication token")
         if auth_header:
             auth_token = auth_header
+            blacklist_check = BlacklistToken.query.filter_by(
+                token=str(auth_token)
+                ).first()
+            if blacklist_check:
+                responseObject = {
+                    "status": "failure",
+                    "message": "Invalid authentication token, please logout."
+                }
+                resp = make_response(jsonify(responseObject))
+                return resp, 401
             auth_token = User.decode_auth_token(auth_token)
             return auth_token
         else:
@@ -30,27 +40,9 @@ def token_getter():
 def login_cookie_getter(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        auth_token = token_getter()
         try:
-            auth_header = request.cookies.get("Authentication token")
-            if auth_header:
-                auth_token = auth_header
-                blacklist_check = BlacklistToken.query.filter_by(
-                    token=auth_token
-                ).first()
-                if blacklist_check:
-                    responseObject = {
-                        "status": "failure",
-                        "message": "Invalid authentication token, please logout."
-                    }
-                    resp = make_response(jsonify(responseObject))
-                    return resp, 401
-                auth_token = User.decode_auth_token(auth_token)
-                if not isinstance(auth_token, str):
-                    g.user = User.query.filter_by(id=auth_token).first()
-                else:
-                    raise Exception
-            else:
-                raise Exception
+            g.user = User.query.filter_by(id=auth_token).first()
         except:
             responseObject = {
                 "status": "fail",
@@ -109,7 +101,7 @@ class RegisterAPI(MethodView):
                     resp.set_cookie("Authentication token",
                                     auth_token, httponly=True)
                     return resp, 201
-            except Exception as e:
+            except Exception:
                 responseObject = {
                     "status": "fail",
                     "message": "Some error occurred. Please try again."
@@ -135,15 +127,12 @@ class LoginAPI(MethodView):
             ):
                 auth_token = user.encode_auth_token(user.id)
                 if auth_token:
-                    print("hello")
                     try:
                         blacklist_check = BlacklistToken.query.filter_by(
                             token=str(auth_token)
                         ).first()
-                    except Exception as e:
-                        print(e)
+                    except Exception:
                         return "Error"
-                    print("hello")
                     if blacklist_check:
                         responseObject = {
                             "status": "failure",
@@ -177,7 +166,7 @@ class LoginAPI(MethodView):
                     "message": "User does not exist."
                 }
                 return make_response(jsonify(responseObject)), 404
-        except Exception as e:
+        except Exception:
             responseObject = {
                 "status": "fail",
                 "message": "Try again"

@@ -17,6 +17,7 @@ flask-cors = "*"
 cloudinary = "*"
 selenium = "*"
 webdriver-manager = "*"
+flask-socketio = "*"
 
 [requires]
 python_version = "3.7"

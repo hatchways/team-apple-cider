@@ -42,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
     noWrap: "true",
   },
   priceTextContainer: {
-    display: "inlineflex",
+    display: "inline-flex",
+    whiteSpace: "pre-wrap",
     padding: theme.spacing(0.25),
   },
   itemOldPrice: {
@@ -56,10 +57,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Adds a comma once every 3 digits right to left
+const addCommasToDollars = (dollars) => {
+  let dollarsArray = dollars.split("");
+  for (let i = dollarsArray.length - 3; i > 0; i = i - 3)
+    dollarsArray.splice(i, 0, ",");
+  return dollarsArray.join("");
+};
+
 const centsToDollarsDisplay = (inputCents) => {
   const dollars = String(Math.floor(inputCents / 100));
   const cents = String(inputCents % 100);
-  return `${dollars}.${cents.length > 1 ? cents : "0" + cents}`;
+  const dollarsString = addCommasToDollars(dollars);
+  const centsString = cents.length > 1 ? cents : "0" + cents;
+  return `${dollarsString}.${centsString}`;
 };
 
 const ItemDisplay = (props) => {
@@ -86,9 +97,10 @@ const ItemDisplay = (props) => {
         <Box className={classes.priceTextContainer}>
           {old_price && (
             <Typography className={classes.itemOldPrice}>
-              {currency + centsToDollarsDisplay(old_price)}{" "}
+              {currency + centsToDollarsDisplay(old_price)}
             </Typography>
-          )}{" "}
+          )}
+          <Typography> </Typography>
           <Typography className={classes.itemPrice}>
             {currency + centsToDollarsDisplay(price)}
           </Typography>

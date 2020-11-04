@@ -17,8 +17,8 @@ def loadChromeDriver():
 
 def string_to_int_price(price_string):
     if price_string == None: return None
-    price_match = re.search(r"([0-9]+)[\,|\.]([0-9]+)", price_string) 
-    return int(price_match.group(1)) * 100 + int(price_match.group(2))
+    price_match = re.sub(r"[^0-9]", "", price_string)
+    return int(price_match)
 
 def string_availability_to_boolean(string_availability):
     if string_availability == None: return None
