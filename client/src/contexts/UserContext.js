@@ -18,7 +18,7 @@ export function UserStore(props) {
       })
       .catch((error) => setUser(false));
 
-  const [user, setUser] = useState(checkCookie());
+  const [user, setUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -81,18 +81,13 @@ export function UserStore(props) {
   };
 
   useEffect(() => {
-    const setUpSockets = async () => {
-      const response = await fetch("/auth/status");
-      const json = await response.json();
-      if (json.status === "success") {
-        socket.open();
-        socket.on("someEvent", (message) => {
-          console.log(message);
-        });
-      }
-    };
-    setUpSockets();
-    return () => socket.disconnect();
+    if (user) {
+      socket.open();
+      socket.on("someEvent", (message) => {
+        console.log(message);
+      });
+      return () => socket.disconnect();
+    }
   }, [user]);
 
   if (loading)

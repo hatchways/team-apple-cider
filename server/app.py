@@ -18,7 +18,6 @@ from api.sockets import SocketIO, attach_events
 socketio = SocketIO()
 
 def create_app(): 
-    print(__name__)
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
 
