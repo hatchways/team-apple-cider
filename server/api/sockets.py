@@ -4,4 +4,4 @@ def attach_events(socketio):
     @socketio.on("connect")
     def handle_message():
         print("I'm connected")
-        emit("Message", "Socket.io connection established")
+        emit("connection_message", "Socket.io connection established")

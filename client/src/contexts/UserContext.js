@@ -83,7 +83,7 @@ export function UserStore(props) {
   useEffect(() => {
     if (user) {
       socket.open();
-      socket.on("someEvent", (message) => {
+      socket.on("connection_message", (message) => {
         console.log(message);
       });
     } else return () => socket.disconnect();
