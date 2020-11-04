@@ -5,12 +5,6 @@ from database import db
 from config import PROFILE_IMG_PRESET
 from .image_uploader import replace_cloudinary_image
 
-
-product_handler = Blueprint('product_handler', __name__)
-
-
-
-
 profile_handler = Blueprint('profile_handler', __name__)
 
 @profile_handler.route('/profiles/<id>', methods=['GET', 'PUT'])
