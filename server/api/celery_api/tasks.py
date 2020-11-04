@@ -14,7 +14,7 @@ def test(text):
 
 # This will create a scheduled task that prints "hello" every 10 seconds. You can run this yourself by 
 # entering the pipenv shell as in the README, navigating to the celery_api folder, and running:
-# celery -A tasks worker --loglevel=INFO
+# celery -A tasks worker --pool=solo --loglevel=INFO
 # in one terminal, and in another terminal running:
 # celery -A tasks beat
 # You should make sure to run the worker first, so you start seeing the scheduled task as soon as it starts.
@@ -39,5 +39,13 @@ def scheduled_tasks(sender, **kwargs):
         crontab(minute=0, hour='*/1'),
         test.s("This runs every hour on the hour.")
     )
+
+    app.conf.beat_schedule = {
+            "task_name": {
+                "task": "tasks.add",
+                "schedule": 5.0,
+                "args": (32, 13)
+            },
+        }
 
 # Unscheduling a task here involves manually removing the task from scheduled_tasks.

@@ -7,6 +7,7 @@ from api.auth_handler import auth_handler
 from api.product_handler import product_handler
 from api.list_handler import list_handler
 from api.scrape_handler import scrape_handler 
+from api.celery_api.scheduled_tasks import scheduled_tasks
 
 
 def create_app():
@@ -27,6 +28,7 @@ def create_app():
         app.register_blueprint(product_handler)
         app.register_blueprint(list_handler)
         app.register_blueprint(scrape_handler) 
+        app.register_blueprint(scheduled_tasks)
 
         db.create_all()
         return app

@@ -17,8 +17,8 @@ flask-cors = "*"
 cloudinary = "*"
 selenium = "*"
 webdriver-manager = "*"
-flower = "*"
 celery = {extras = ["librabbitmq"], version = "~=4.4.7"}
+flower = "*"
 
 [requires]
 python_version = "3.7"

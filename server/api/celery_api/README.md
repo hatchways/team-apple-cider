@@ -18,7 +18,7 @@ To test if everything is set up properly, run the following commands (for Window
 <code>cd server  
 pipenv shell  
 cd api\async  
-celery -A hello worker --loglevel=INFO</code>
+celery -A hello worker --pool=solo --loglevel=INFO</code>
 
 Now, in a separate command prompt, run the following commands (for Windows):
 
