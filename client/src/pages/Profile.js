@@ -5,9 +5,6 @@ import Header from "layout/Header";
 import Page from "layout/Page";
 import Body from "layout/Body";
 
-
-}));
-
 const Profile = (props) => {
   return (
     <Page>
