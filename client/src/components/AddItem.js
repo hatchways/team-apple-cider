@@ -61,12 +61,13 @@ const AddItem = () => {
   const [inputLink, setInputLink] = useState("");
   const [item, setItem] = useState({});
   const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedList, setSelectedList] = useState("none");
+  const [selectedListIndex, setSelectedListIndex] = useState(0);
   const [listId, setListId] = useState("");
   const [userLists, setUserLists] = useState([]);
 
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
+
 
   const getItem = async (input) => {
     const response = await fetch("/scrape", {
@@ -77,19 +78,17 @@ const AddItem = () => {
     return response.json();
   };
 
+  // Step 1: Fetch list from Database
   const getLists = async () => {
     const res = await fetch(`/lists?user_id=${userId}`);
     const json = await res.json();
     setUserLists(json);
   };
-
-  const getListId = () => {
-    userLists.forEach(function (list) {
-      if (list.name == selectedList) {
-        setListId(list.id);
-      }
-    });
-  };
+  
+  useEffect(() => {
+    getLists();
+  }, []);
+  
 
   const addButtonClick = async () => {
     // TODO: regex check inputLink here is a valid URL to scrape
@@ -105,14 +104,12 @@ const AddItem = () => {
     setItem({});
   };
 
-  useEffect(() => {
-    getLists();
-  }, []);
-
-
-  useEffect(() => {
-    getListId();
-  }, [selectedList]);
+  const onChangeList = (e) => {
+    const newIndex = parseInt(e.target.value)
+    setSelectedListIndex(newIndex);
+    setListId(userLists[newIndex].id);
+  }
+  
 
   return (
     <Box className={classes.dashboardAddItem}>
@@ -120,23 +117,27 @@ const AddItem = () => {
         Add new item:
       </Typography>
       <Box className={classes.addItemInput}>
+        
+        
         <Input
           placeholder="Paste your link here"
           disableUnderline
           className={classes.linkForm}
           onChange={(e) => setInputLink(e.target.value)}
         />
+
+        {/* Dropdown menu to select list */}
         <Select
           className={classes.dropdownList}
-          value={selectedList}
-          onChange={(e) => setSelectedList(e.target.value)}
+          value={selectedListIndex}
+          onChange={onChangeList}
           disableUnderline
         >
           <MenuItem value="none" disabled>
             Select List
           </MenuItem>
           {userLists.map((listName, i) => (
-            <MenuItem key={i} value={listName.name}>
+            <MenuItem key={i} value={i}>
               {listName.name}
             </MenuItem>
           ))}

@@ -91,9 +91,10 @@ const useStyles = makeStyles((theme) => ({
 const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen, addProductOpen, changeAddProductOpen }) => {
   
   const classes = useStyles();
-  const handleClose = () => changeListOpen();
   const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
   const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
+ 
+
 
   const getListRelations = async () => {
     const res = await fetch(`list-to-products/${listId}`)
@@ -127,13 +128,13 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen, add
   }
 
   return (
-    <Modal open={listOpen} onClose={handleClose} className={classes.popup}>
+    <Modal open={listOpen} onClose={changeListOpen} className={classes.popup}>
       <Box className={classes.paper}>
         <Box className={classes.closeButtonContainer}>
           <IconButton
             aria-label="close"
             className={classes.closeButton}
-            onClick={handleClose}
+            onClick={changeListOpen}
             size="small"
           >
             <CloseIcon fontSize="small" />

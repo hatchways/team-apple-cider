@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Modal,
@@ -53,10 +53,10 @@ const useStyles = makeStyles((theme) => ({
 const AddItemPopup = (props) => {
   const { item, popupOpen, closePopup, listId } = props;
   const classes = useStyles();
-  const value = useContext(ListContext).listToggle;
+  const listToggle = useContext(ListContext).listToggle;
 
   const addProductToList = async () => {
-    const res = await fetch(`/list-to-products/${listId}`,{
+    const res = await fetch(`/list-to-products/${listId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ product_id: item.product_id }),
@@ -66,9 +66,9 @@ const AddItemPopup = (props) => {
   };
 
   const addButtonClick = () => {
-    addProductToList()
-    closePopup()
-    value()
+    addProductToList();
+    closePopup();
+    listToggle();
   };
 
   return (
@@ -84,12 +84,15 @@ const AddItemPopup = (props) => {
         {item.error ? (
           <Box className={classes.errorMessage}>{item.response}</Box>
         ) : item.name ? (
-          <><ItemDisplay item={item} className={classes.itemDisplay} />,
-            <Button onClick ={addButtonClick} className={classes.addButton}>ADD NEW ITEM</Button></>
+          <>
+            <ItemDisplay item={item} className={classes.itemDisplay} />,
+            <Button onClick={addButtonClick} className={classes.addButton}>
+              ADD NEW ITEM
+            </Button>
+          </>
         ) : (
           <CircularProgress className={classes.spinner} />
         )}
-       
       </Box>
     </Modal>
   );
