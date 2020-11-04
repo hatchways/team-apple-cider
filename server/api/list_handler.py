@@ -1,18 +1,15 @@
 from flask import jsonify, Blueprint, request, make_response
 from models.list import List
 from database import db
-from api.image_uploader import image_uploader
 from api.auth_handler import token_getter
-from config import PRODUCT_IMG_PRESET, CLOUDINARY_NAME
+from config import PRODUCT_IMG_PRESET
 import json
+from .image_uploader import replace_cloudinary_image
 
 
 list_handler = Blueprint('list_handler', __name__)
 
 
-def replace_cloudinary_image(image_url):
-    try: return image_uploader(image_url, PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
-    except: return image_url
 
 
 @list_handler.route('/lists', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -65,7 +62,7 @@ def listRequests():
             # checks to see if list already exists
             if not List.query.filter_by(user_id=list_user_id, name=list_name).first():
                 # checks to see if cloudinary works
-                new_img_url = replace_cloudinary_image(body['img_url'])
+                new_img_url = replace_cloudinary_image(body['img_url'], PRODUCT_IMG_PRESET)
                 try:
                     list = List(list_user_id, list_name, new_img_url)
                     db.session.add(list)
@@ -89,7 +86,7 @@ def listRequests():
                     list.name = req.get("name", list.name)
                     list.private = req.get("private", list.private)
                     if "img_url" in req:
-                        list.img_url = replace_cloudinary_image(req["img_url"])
+                        list.img_url = replace_cloudinary_image(req["img_url"], PRODUCT_IMG_PRESET)
                     db.session.commit()
                     return jsonify({"response": "List '{}' was updated".format(list_id)}), 200
 

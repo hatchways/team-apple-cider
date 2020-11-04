@@ -2,16 +2,13 @@ import json, re
 from flask import jsonify, request, Blueprint
 from models.profile import Profile
 from database import db
-from api.image_uploader import image_uploader
-from config import PROFILE_IMG_PRESET, CLOUDINARY_NAME
+from config import PROFILE_IMG_PRESET
+from .image_uploader import replace_cloudinary_image
 
 
 product_handler = Blueprint('product_handler', __name__)
 
 
-def replace_cloudinary_image(image_url):
-    try: return image_uploader(image_url, PROFILE_IMG_PRESET, CLOUDINARY_NAME)
-    except: return image_url
 
 
 profile_handler = Blueprint('profile_handler', __name__)
@@ -31,7 +28,7 @@ def single_profile_requests(id):
             profile = Profile.query.get(id)
             if profile:             
                 if "name" in body: profile.name = body["name"]
-                if "photo" in body: profile.photo = replace_cloudinary_image(body["photo"])
+                if "photo" in body: profile.photo = replace_cloudinary_image(body["photo"], PROFILE_IMG_PRESET)
                 db.session.commit()
                 return jsonify({"response": "Profile '{}' info was updated".format(id)}), 200
         except Exception as e:
