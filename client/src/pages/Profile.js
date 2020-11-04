@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import ProfileDisplay from "body/ProfileDisplay";
 
 import Header from "layout/Header";
