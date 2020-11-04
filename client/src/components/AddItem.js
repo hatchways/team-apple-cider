@@ -113,7 +113,7 @@ const AddItem = () => {
         Add new item:
       </Typography>
 
-      <form></form>
+      
         <Box className={classes.addItemInput}>
           <Input
             placeholder="Paste your link here"

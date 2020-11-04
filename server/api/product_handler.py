@@ -16,7 +16,7 @@ def oneProductRequests(product_id):
             product = Product.query.get(product_id)
             return jsonify(product.serialize), 200
         except Exception as e:
-            print(e)
+
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
     if request.method == 'DELETE':
@@ -37,7 +37,6 @@ def oneProductRequests(product_id):
             db.session.commit()
             return jsonify({'response': "{} was successfully added to the database".format(body['name'])}), 200
         except Exception as e:
-            print(e)
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
     if request.method == "PUT":
