@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Page from "layout/Page";
 import Body from "layout/Body";
+import { socket } from "sockets";
 
 const UserContext = React.createContext({});
 export function UserStore(props) {
-  const socket = io.connect("http://127.0.0.1:5000");
-
   const checkCookie = () =>
     fetch("/auth/status", {
       method: "GET",
@@ -26,14 +24,6 @@ export function UserStore(props) {
   useEffect(() => {
     checkCookie();
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      socket.on("connect", () => {
-        socket.send("User is connected!");
-      });
-    }
-  }, [user]);
 
   const handleSignup = (name, email, password, confirm) =>
     fetch("/auth/register", {
@@ -89,6 +79,21 @@ export function UserStore(props) {
       .then((response) => setUser(false))
       .catch((error) => setUser(false));
   };
+
+  useEffect(() => {
+    const setUpSockets = async () => {
+      const response = await fetch("/auth/status");
+      const json = await response.json();
+      if (json.status === "success") {
+        socket.open();
+        socket.on("someEvent", (message) => {
+          console.log(message);
+        });
+      }
+    };
+    setUpSockets();
+    return () => socket.disconnect();
+  }, [user]);
 
   if (loading)
     return (

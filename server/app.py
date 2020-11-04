@@ -11,8 +11,11 @@ from api.list_to_product_handler import list_to_product_handler
 from api.prices_handler import prices_handler 
 from api.profile_handler import profile_handler 
 
-from flask_socketio import SocketIO
+
+from api.sockets import SocketIO, attach_events
 import eventlet
+
+socketio = SocketIO()
 
 def create_app(): 
     app = Flask(__name__)
@@ -23,6 +26,10 @@ def create_app():
     migrate.init_app(app, db)
     cors.init_app(app)
     flask_bcrypt.init_app(app)
+    
+    socketio.init_app(app)
+    socketio.run(app)
+    attach_events(socketio)
 
     with app.app_context():
 
@@ -39,13 +46,3 @@ def create_app():
 
         db.create_all()
         return app
-
-app = create_app()
-socketio = SocketIO(app)
-socketio.init_app(app, cors_allowed_origins="*")
-if __name__ == '__main__':
-    socketio.run(app)
-
-@socketio.on('message')
-def handle_message(message):
-    print('received message: ' + message)
