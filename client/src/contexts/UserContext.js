@@ -5,8 +5,6 @@ import Page from "layout/Page";
 import Body from "layout/Body";
 
 const UserContext = React.createContext({});
-
-const UserContext = React.createContext({});
 export function UserStore(props) {
   const socket = io.connect("http://127.0.0.1:5000");
 
