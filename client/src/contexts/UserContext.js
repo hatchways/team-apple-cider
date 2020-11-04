@@ -86,8 +86,7 @@ export function UserStore(props) {
       socket.on("someEvent", (message) => {
         console.log(message);
       });
-      return () => socket.disconnect();
-    }
+    } else return () => socket.disconnect();
   }, [user]);
 
   if (loading)
