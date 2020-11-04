@@ -5,11 +5,7 @@ from api.auth_handler import token_getter
 import json
 from .image_uploader import replace_cloudinary_image
 
-
 list_handler = Blueprint('list_handler', __name__)
-
-
-
 
 @list_handler.route('/lists', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def listRequests():
