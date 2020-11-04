@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import icon from "img/icon.png";
 
-import UserContext from '../contexts/UserContext'
+import UserContext from "contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   profileMenuContainer: {
@@ -31,14 +31,14 @@ const useStyles = makeStyles((theme) => ({
 const ProfileMenu = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
-  const value=useContext(UserContext)
+  const value = useContext(UserContext);
   const handleClick = (e) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  
-  const handleLogout=(e)=>{
-    value.handleLogout()
-    props.history.push('/')
-  }
+
+  const handleLogout = (e) => {
+    value.handleLogout();
+    props.history.push("/");
+  };
 
   return (
     <Box className={classes.profileMenuContainer}>

@@ -1,11 +1,11 @@
 from models.user import User
+from models.profile import Profile
 from models.blacklist_token import BlacklistToken
 from flask import Blueprint, request, make_response, jsonify, g, redirect, url_for
 from flask.views import MethodView
 from database import db
 from server import flask_bcrypt
 from functools import wraps
-
 auth_handler = Blueprint("auth_handler", __name__)
 
 
@@ -73,6 +73,7 @@ class RegisterAPI(MethodView):
                         "message": "Passwords must match."
                     }
                     return make_response(jsonify(responseObject)), 401
+
                 user = User(
                     email=post_data.get("email"),
                     name=post_data.get("name"),
@@ -80,6 +81,11 @@ class RegisterAPI(MethodView):
                 )
                 db.session.add(user)
                 db.session.commit()
+
+                profile = Profile(user.id, post_data.get("name"), None)
+                db.session.add(profile)
+                db.session.commit()
+
                 auth_token = user.encode_auth_token(user.id)
                 blacklist_check = BlacklistToken.query.filter_by(
                     token=str(auth_token)
@@ -94,6 +100,7 @@ class RegisterAPI(MethodView):
                 else:
                     g.user = user
                     responseObject = {
+                        "id": user.id,
                         "status": "success",
                         "message": "Successfully registered."
                     }
@@ -177,16 +184,23 @@ class LoginAPI(MethodView):
 class UserAPI(MethodView):
     @login_cookie_getter
     def get(self):
-        user = g.user
-        responseObject = {
-            "status": "success",
-            "data": {
-                "user_id": user.id,
-                "email": user.email,
-                "registered_time": user.registered_time
+        try:
+            user = g.user
+            responseObject = {
+                "status": "success",
+                "data": {
+                    "user_id": user.id,
+                    "email": user.email,
+                    "registered_time": user.registered_time
+                }
             }
-        }
-        return make_response(jsonify(responseObject)), 200
+            return make_response(jsonify(responseObject)), 200
+        except:
+            responseObject = {
+                "status": "failure",
+                "message": "Error: no user on database"
+            }
+            return make_response(jsonify(responseObject)), 401
 
 
 class LogoutAPI(MethodView):

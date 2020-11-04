@@ -1,21 +1,11 @@
 from flask import jsonify, Blueprint, request, make_response
 from models.list import List
 from database import db
-from api.image_uploader import image_uploader
 from api.auth_handler import token_getter
-from config import PRODUCT_IMG_PRESET, CLOUDINARY_NAME
 import json
-
+from .image_uploader import replace_cloudinary_image
 
 list_handler = Blueprint('list_handler', __name__)
-
-
-def replace_cloudinary_image(image_url):
-    try:
-        return image_uploader(image_url, PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
-    except:
-        return image_url
-
 
 @list_handler.route('/lists', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def listRequests():
