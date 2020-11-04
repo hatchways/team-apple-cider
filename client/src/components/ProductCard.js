@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductCard = ({ item, listId, getListRelations }) => {
+const ProductCard = ({ item, listId, getProductIds }) => {
   const classes = useStyles();
   const listToggle = useContext(ListContext).listToggle;
   const removeButtonClick = async () => {
     const res = await fetch(`list-to-products/${listId}/${item.id}`, {
       method: "DELETE",
     });
-    getListRelations();
+    getProductIds();
     listToggle();
   };
 

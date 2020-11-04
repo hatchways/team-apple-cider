@@ -89,7 +89,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListPopup = ({
+  products,
   listId,
+  getProductIds,
   listTitle,
   itemCount,
   listOpen,
@@ -98,32 +100,6 @@ const ListPopup = ({
   changeAddProductOpen,
 }) => {
   const classes = useStyles();
-  const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
-  const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
-
-  const getListRelations = async () => {
-    const res = await fetch(`list-to-products/${listId}`);
-    const json = await res.json();
-    setListToProducts(json);
-  };
-
-  const getProducts = async () => {
-    const newProducts = await Promise.all(
-      listToProducts.map(async (relation) => {
-        const res = await fetch(`/products/${relation.product_id}`);
-        return res.json(res);
-      })
-    );
-    setProducts(newProducts);
-  };
-
-  useEffect(() => {
-    getListRelations();
-  }, [listId, listOpen]);
-
-  useEffect(() => {
-    getProducts();
-  }, [listToProducts]);
 
   const handleAddClick = () => {
     changeAddProductOpen();
@@ -131,7 +107,7 @@ const ListPopup = ({
   };
 
   return (
-    <Modal open={listOpen} onClose={changeListOpen} className={classes.popup}>
+    <Modal open={listOpen}  onClose={changeListOpen} className={classes.popup} onClic>
       <Box className={classes.paper}>
         <Box className={classes.closeButtonContainer}>
           <IconButton
@@ -160,7 +136,7 @@ const ListPopup = ({
                 key={i}
                 item={item}
                 listId={listId}
-                getListRelations={getListRelations}
+                getProductIds={getProductIds}
               />
             ))}
           </Box>

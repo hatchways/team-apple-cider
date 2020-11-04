@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useContext } from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import ListCard from "components/ListCard";
 import { useHorizontalScroll } from "components/HorrizontalScroll";
+import UserContext from "contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
@@ -53,24 +54,14 @@ const ListsDisplay = (props) => {
   const scrollRef = useHorizontalScroll();
   const { profile, addListOpen, changeAddListOpen } = props;
   const classes = useStyles();
+  const userId = useContext(UserContext).userId;
   const [lists, setLists] = useState([]);
-  const [userId, setUserId] = useState('-1');
-
-  const getUserId = async () =>{
-    const res = await fetch("/auth/status")
-    const json = await res.json()
-    setUserId(json.data.user_id)
-  }
 
   const getLists = async () =>{
     const res = await fetch(`/lists?user_id=${userId}`)
     const json = await res.json()
     setLists(json);
   }
-
-  useEffect(() => {
-    getUserId();
-  }, []);
 
     useEffect(() => {
     getLists();
