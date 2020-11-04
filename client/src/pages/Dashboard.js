@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 
 import Header from "layout/Header";
 import Page from "layout/Page";
@@ -9,14 +8,9 @@ import HeaderTabs from "components/HeaderTabs";
 import ShoppingLists from "body/ShoppingLists";
 import Friends from "body/Friends";
 
-const useStyles = makeStyles((theme) => ({
- 
-}));
-
 const Dashboard = () => {
   const [selectedPage, setSelectedPage] = useState(0);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const classes = useStyles();
 
   return (
     <Page>
