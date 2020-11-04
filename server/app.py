@@ -9,6 +9,7 @@ from api.list_handler import list_handler
 from api.scrape_handler import scrape_handler
 from api.list_to_product_handler import list_to_product_handler
 from api.prices_handler import prices_handler 
+from api.profile_handler import profile_handler 
 
 from flask_socketio import SocketIO
 import eventlet
@@ -34,6 +35,7 @@ def create_app():
         app.register_blueprint(scrape_handler) 
         app.register_blueprint(list_to_product_handler) 
         app.register_blueprint(prices_handler) 
+        app.register_blueprint(profile_handler) 
 
         db.create_all()
         return app

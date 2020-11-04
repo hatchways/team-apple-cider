@@ -22,9 +22,9 @@ class List(db.Model):
     def serialize(self):
         """Return object data in easily serializable format"""
         return {
-        "id" : self.id, 
-        "user_id" : self.user_id, 
-        "name": self.name, 
-        "img_url": self.img_url,
-        "private":self.private
+            "id" : self.id, 
+            "user_id" : self.user_id, 
+            "name": self.name, 
+            "img_url": self.img_url,
+            "private":self.private
         }
