@@ -18,6 +18,7 @@ cloudinary = "*"
 selenium = "*"
 webdriver-manager = "*"
 flask-socketio = "*"
+eventlet = "*"
 
 [requires]
 python_version = "3.7"
