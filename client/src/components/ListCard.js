@@ -72,45 +72,47 @@ const ListCard = (props) => {
   const listChange = useContext(ListContext).listChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
-  const [itemCount, setItemCount] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [itemCount, setItemCount] = useState('');
+  const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
+  const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
+  const [addProductOpen, setAddProductOpen] = useState(false);
 
-  const handleClick = (event) => {
-    event.stopPropagation()
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (event) => {
-    event.stopPropagation()
-    setAnchorEl(null);
-  };
-
+  // This affects the Modal open component which opens the modal when set to True
   const changeListOpen = () => {
     setListOpen(!listOpen);
+    getProductIds();
   };
 
-  const handleDeleteClicked = (event) =>{
-    event.stopPropagation()
-    setAnchorEl(null);
-    alert("Delete Clicked")
-  }
-  const getItemCount = async () => {
-    const res = await fetch(`/list-to-products/${listId}`);
+  // Gets the total number of items in the list
+  const getProductIds = async () => {
+    const res = await fetch(`/list-to-products/${listId}`)
     const json = await res.json();
-    setItemCount(json.length);
+    setItemCount(json.length)
+    setListToProducts(json);
+  };
+
+  const getProducts = async () => {
+    const newProducts = await Promise.all(
+      listToProducts.map(async (relation) => {
+        const res = await fetch(`/products/${relation.product_id}`);
+        return res.json(res);
+      })
+    );
+    setProducts(newProducts);
   };
 
   useEffect(() => {
-    getItemCount();
-  }, [listOpen, listChange]);
+    getProducts();
+  }, [listToProducts]);
+
+  useEffect(() => {
+    getProductIds()
+  }, [listChange]);
 
 
-  // const [addProductOpen, setAddProductOpen] = useState(false);
   // const changeAddProductOpen = () => {
   //   setAddProductOpen((previous) => !previous);
   // };
-
-
   return (
     <Box>
       <Box onClick={changeListOpen} className={classes.listContainer}>
@@ -142,12 +144,7 @@ const ListCard = (props) => {
           >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-
-      <ListPopup
-        {...{ listId, listTitle, itemCount, listOpen, changeListOpen }}
-      />
-
-      
+      <ListPopup {...{products, listId, getProductIds, listTitle, itemCount, listOpen, changeListOpen }} />
       {/* <AddProduct
         {...{
           listTitle,

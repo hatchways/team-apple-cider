@@ -6,18 +6,23 @@ import { socket } from "sockets";
 
 const UserContext = React.createContext({});
 export function UserStore(props) {
-  
-  const checkCookie = () =>
+  const [userId, setUserId] = useState('');
+  const checkCookie = () =>{
     fetch("/auth/status", {
       method: "GET",
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.status === "success") setUser(true);
+        if (response.status === "success"){
+          setUser(true);
+          setUserId(response.data.user_id)
+        } 
+        
         else setUser(false);
         setLoading(false);
       })
       .catch((error) => setUser(false));
+    }
 
   const [user, setUser] = useState(false);
   const [loading, setLoading] = useState(true);
