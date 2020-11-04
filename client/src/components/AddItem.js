@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   Typography,
@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddItemPopup from "components/AddItemPopup";
+import UserContext from "contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {
@@ -53,13 +54,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const demoListsArray = ["Clothes", "Furniture", "Luxury"];
-
 const AddItem = () => {
+  const userId = useContext(UserContext).userId;
   const [inputLink, setInputLink] = useState("");
   const [item, setItem] = useState({});
   const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedList, setSelectedList] = useState("none");
+  const [selectedListIndex, setSelectedListIndex] = useState(0);
+  const [listId, setListId] = useState("");
+  const [userLists, setUserLists] = useState([]);
+
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
 
@@ -72,12 +75,24 @@ const AddItem = () => {
     return response.json();
   };
 
-  const addButtonClick = async () => {
+  // Step 1: Fetch list from Database
+  const getLists = async () => {
+    const res = await fetch(`/lists?user_id=${userId}`);
+    const json = await res.json();
+    setUserLists(json);
+  };
+
+  useEffect(() => {
+    getLists();
+  }, []);
+
+  const addButtonClick = async (e) => {
     // TODO: regex check inputLink here is a valid URL to scrape
     if (inputLink.length > 0) {
       openPopup();
       const newItem = await getItem(inputLink);
       setItem(newItem);
+      setInputLink('')
     }
   };
 
@@ -86,42 +101,54 @@ const AddItem = () => {
     setItem({});
   };
 
+  const onChangeList = (e) => {
+    const newIndex = parseInt(e.target.value);
+    setSelectedListIndex(newIndex);
+    setListId(userLists[newIndex].id);
+  };
+
   return (
     <Box className={classes.dashboardAddItem}>
       <Typography variant="h5" className={classes.addNewItemTitle}>
         Add new item:
       </Typography>
-      <Box className={classes.addItemInput}>
-        <Input
-          placeholder="Paste your link here"
-          disableUnderline
-          className={classes.linkForm}
-          onChange={(e) => setInputLink(e.target.value)}
-        />
-        <Select
-          className={classes.dropdownList}
-          value={selectedList}
-          onChange={(e) => setSelectedList(e.target.value)}
-          disableUnderline
-        >
-          <MenuItem value="none" disabled>
-            Select List
-          </MenuItem>
-          {demoListsArray.map((listName, i) => (
-            <MenuItem key={i} value={listName}>
-              {listName}
+
+      
+        <Box className={classes.addItemInput}>
+          <Input
+            placeholder="Paste your link here"
+            disableUnderline
+            className={classes.linkForm}
+            value={inputLink}
+            onChange={(e) => setInputLink(e.target.value)}
+          />
+
+          {/* Dropdown menu to select list */}
+          <Select
+            className={classes.dropdownList}
+            value={selectedListIndex}
+            onChange={onChangeList}
+            disableUnderline
+          >
+            <MenuItem value="none" disabled>
+              Select List
             </MenuItem>
-          ))}
-        </Select>
-        <Button
-          className={classes.addButton}
-          variant="contained"
-          onClick={addButtonClick}
-        >
-          ADD
-        </Button>
-        <AddItemPopup {...{ item, popupOpen, closePopup }} />
-      </Box>
+            {userLists.map((listName, i) => (
+              <MenuItem key={i} value={i}>
+                {listName.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <Button
+            className={classes.addButton}
+            variant="contained"
+            onClick={addButtonClick}
+          >
+            ADD
+          </Button>
+
+          <AddItemPopup {...{ item, popupOpen, closePopup, listId }} />
+        </Box>  
     </Box>
   );
 };

@@ -11,12 +11,12 @@ product_handler = Blueprint('product_handler', __name__)
 
 @product_handler.route('/products/<product_id>', methods=['GET', 'DELETE', 'POST', 'PUT'])
 def oneProductRequests(product_id):
-   
     if request.method == 'GET':
         try:
             product = Product.query.get(product_id)
             return jsonify(product.serialize), 200
         except Exception as e:
+
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 
     if request.method == 'DELETE':

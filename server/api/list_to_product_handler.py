@@ -39,7 +39,8 @@ def listToProductsRequest(list_id):
                     id=int(list_id)).first().user_id
                 body = request.get_json()
                 list_to_product = ListToProduct.query.filter_by(
-                    list_id=int(list_id), product_id=body['product_id'])
+                    list_id=int(list_id), product_id=body['product_id']).first()
+
                 if int(list_user_id) == int(auth_token) and not list_to_product:
                     list_product_connection = ListToProduct(
                         int(list_id), body['product_id'])
@@ -61,13 +62,18 @@ def listToProductRequest(list_id, product_id):
             return jsonify({'error': "you must log in to delete a product from the list"}), 400
         try:
             list_to_product = ListToProduct.query.filter_by(
-                list_id=int(list_id), product_id=product_id)
-            list_user_id = List.query.filter_by(id=int(list_id)).user_id
+                list_id=int(list_id), product_id=product_id).first()
+            list_user_id = List.query.filter_by(
+                id=int(list_id)).first().user_id
+
             if int(list_user_id) == int(auth_token) and list_to_product:
+
                 db.session.delete(list_to_product)
+
                 db.session.commit()
                 return jsonify({'response': "Product '{}' was successfully deleted from the List '{}'".format(product_id, list_id)}), 200
             else:
                 return jsonify({"error": "unauthorized access or list connection does not exist"})
         except Exception as e:
+            print(e)
             return jsonify({'error': "{}".format(e.__cause__)}), 400

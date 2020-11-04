@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Modal,
@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
+import ListContext from "../contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   popup: {
@@ -50,8 +51,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddItemPopup = (props) => {
-  const { item, popupOpen, closePopup } = props;
+  const { item, popupOpen, closePopup, listId } = props;
   const classes = useStyles();
+  const listToggle = useContext(ListContext).listToggle;
+
+  const addProductToList = async () => {
+    const res = await fetch(`/list-to-products/${listId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product_id: item.product_id }),
+    });
+    const json = await res.json();
+    return json;
+  };
+
+  const addButtonClick = () => {
+    addProductToList();
+    closePopup();
+    listToggle();
+  };
 
   return (
     <Modal
@@ -66,11 +84,15 @@ const AddItemPopup = (props) => {
         {item.error ? (
           <Box className={classes.errorMessage}>{item.response}</Box>
         ) : item.name ? (
-          <ItemDisplay item={item} className={classes.itemDisplay} />
+          <>
+            <ItemDisplay item={item} className={classes.itemDisplay} />,
+            <Button onClick={addButtonClick} className={classes.addButton}>
+              ADD NEW ITEM
+            </Button>
+          </>
         ) : (
           <CircularProgress className={classes.spinner} />
         )}
-        <Button className={classes.addButton}>ADD NEW ITEM</Button>
       </Box>
     </Modal>
   );

@@ -8,9 +8,10 @@ import SignUp from "components/SignUp";
 import ProtectedRoute from "components/ProtectedRoute";
 import Dashboard from "pages/Dashboard";
 import Profile from "pages/Profile";
+import LandingPage from "pages/LandingPage";
 import { theme } from "themes/theme";
 import { UserStore } from "contexts/UserContext";
-import LandingPage from "./pages/LandingPage";
+import { ListStore } from "contexts/ListContext";
 
 function App() {
   return (
@@ -18,13 +19,15 @@ function App() {
       <CssBaseline>
         <MuiThemeProvider theme={theme}>
           <UserStore>
-            <BrowserRouter>
-              <ProtectedRoute exact path="/" component={Dashboard} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/signup" exact component={SignUp} />
-              <Route path="/landing" exact component={LandingPage} />
-              <ProtectedRoute path="/profile/:id" exact component={Profile} />
-            </BrowserRouter>
+            <ListStore>
+              <BrowserRouter>
+                <ProtectedRoute exact path="/" component={Dashboard} />
+                <Route path="/login" exact component={Login} />
+                <Route path="/signup" exact component={SignUp} />
+                <Route path="/landing" exact component={LandingPage} />
+                <ProtectedRoute path="/profile/:id" exact component={Profile} />
+              </BrowserRouter>
+            </ListStore>
           </UserStore>
         </MuiThemeProvider>
       </CssBaseline>

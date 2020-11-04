@@ -44,6 +44,15 @@ def listRequests():
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
 
+        
+        # 0|0 Case 3: when none is provided, we look at the auth_token and retrieve the lists
+        if auth_token != -1:
+            try:
+                lists = List.query.filter_by(user_id=auth_token)
+                return jsonify([list.serialize for list in lists]), 200
+            except Exception as e:
+                return jsonify({'error': "{}".format(e.__cause__)}), 400
+
     if request.method == 'POST':
         # client must be logged-in in order to create a list, client is only restricted to create list for their own account
         if type(auth_token) is not int:
