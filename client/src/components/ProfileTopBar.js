@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     height: "2rem",
     margin: theme.spacing(0.75, 1.25),
   },
-  followBackIcon: {},
 }));
 
 const ProfileTopBar = (props) => {
