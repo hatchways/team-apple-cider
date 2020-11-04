@@ -53,26 +53,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileTopBar = (props) => {
-  const { user, following, toggleFollow, followingYou } = props;
+  const { profile, following, toggleFollow, followingYou } = props;
   const classes = useStyles();
 
   return (
     <Box className={classes.profileTopBar}>
       <img
         className={classes.profilePhoto}
-        src={user && user.photo}
+        src={profile && profile.photo}
         alt="profile-pic"
       />
       <Box className={classes.profileTextContainer}>
-        <Typography className={classes.userName}>{user.name}</Typography>
+        <Typography className={classes.userName}>{profile.name}</Typography>
 
         <Box className={classes.followerBox}>
           <Box className={classes.followerTextContainer}>
             <Typography className={classes.followerText}>
-              {user.followers} Followers
+              {profile.followers} Followers
             </Typography>
             <Typography className={classes.followerText}>
-              {user.following} Following
+              {profile.following} Following
             </Typography>
           </Box>
           <Box className={classes.buttonContainer}>
@@ -81,7 +81,9 @@ const ProfileTopBar = (props) => {
             </Button>
           </Box>
           {following && followingYou && (
-            <Tooltip title={`You and ${user.name} are following each other!`}>
+            <Tooltip
+              title={`You and ${profile.name} are following each other!`}
+            >
               <FollowBackIcon className={classes.followBackIcon} />
             </Tooltip>
           )}

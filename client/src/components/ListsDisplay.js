@@ -66,25 +66,26 @@ const demoListsArray = [
 
 const ListsDisplay = (props) => {
   const scrollRef = useHorizontalScroll();
-  const { user, addListOpen, changeAddListOpen } = props;
+  const { profile, addListOpen, changeAddListOpen } = props;
   const classes = useStyles();
 
-  const getListsUserText = (user) => {
-    if (!user || user.name === undefined) return "My";
-    else if (user.name[user.name.length - 1] === "s") return `${user.name}'`;
-    else return `${user.name}'s`;
+  const getListsUserText = (profile) => {
+    if (!profile || profile.name === undefined) return "My";
+    else if (profile.name[profile.name.length - 1] === "s")
+      return `${profile.name}'`;
+    else return `${profile.name}'s`;
   };
 
   return (
     <Box className={`${classes.shoppingContainer} ${props.className}`}>
       <Typography variant="h5" className={classes.listsTitle}>
-        {getListsUserText(user)} Shopping Lists:
+        {getListsUserText(profile)} Shopping Lists:
       </Typography>
       <Box className={classes.myShoppingLists} ref={scrollRef}>
         {demoListsArray.map((list, i) => (
           <ListCard key={i} {...{ list, demoListsArray }} />
         ))}
-        {!user && (
+        {!profile && (
           <Box className={classes.addNewList}>
             <IconButton
               className={classes.addNewListButton}
