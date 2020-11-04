@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Page from "layout/Page";
 import Body from "layout/Body";
+import { socket } from "sockets";
 
 const UserContext = React.createContext({});
-
 export function UserStore(props) {
   const [userId, setUserId] = useState('');
   const checkCookie = () =>{
@@ -24,8 +24,12 @@ export function UserStore(props) {
       .catch((error) => setUser(false));
     }
 
-  const [user, setUser] = useState(checkCookie());
+  const [user, setUser] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    checkCookie();
+  }, []);
 
   const handleSignup = (name, email, password, confirm) =>
     fetch("/auth/register", {
@@ -81,6 +85,15 @@ export function UserStore(props) {
       .then((response) => setUser(false))
       .catch((error) => setUser(false));
   };
+
+  useEffect(() => {
+    if (user) {
+      socket.open();
+      socket.on("connection_message", (message) => {
+        console.log(message);
+      });
+    } else return () => socket.disconnect();
+  }, [user]);
 
   if (loading)
     return (

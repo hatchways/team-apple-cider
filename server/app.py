@@ -12,7 +12,12 @@ from api.prices_handler import prices_handler
 from api.profile_handler import profile_handler 
 
 
-def create_app():
+import eventlet
+from api.sockets import SocketIO, attach_events
+
+socketio = SocketIO()
+
+def create_app(): 
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
 
@@ -21,6 +26,11 @@ def create_app():
     migrate.init_app(app, db)
     cors.init_app(app)
     flask_bcrypt.init_app(app)
+
+    socketio.init_app(app)
+    if __name__ == "__main__":
+        socketio.run(app)
+    attach_events(socketio)
 
     with app.app_context():
 
