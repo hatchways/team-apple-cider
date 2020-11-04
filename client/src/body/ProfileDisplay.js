@@ -66,8 +66,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileDisplay = (props) => {
   const [user, setUser] = useState({});
+
+  // TODO: Get both following/followed booleans from backend
   const [following, setFollowing] = useState(false);
   const followingYou = true;
+
   const classes = useStyles();
   const id = parseInt(props.match.params.id);
 
