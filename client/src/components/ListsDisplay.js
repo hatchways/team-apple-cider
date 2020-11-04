@@ -46,8 +46,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ListsDisplay = () => {
   const classes = useStyles();
-  // const [error, setError] = useState(null);
-  // const [isLoaded, setIsLoaded] = useState(false);
   const [lists, setLists] = useState([]);
   const [userId, setUserId] = useState('-1');
 
@@ -66,7 +64,7 @@ const ListsDisplay = () => {
 
   useEffect(() => {
     getUserId();
-  }, [lists]);
+  }, []);
 
     useEffect(() => {
     getLists();

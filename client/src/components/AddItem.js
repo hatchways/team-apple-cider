@@ -8,7 +8,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import AddItemPopup from "pages/AddItemPopup";
+import AddItemPopup from "components/AddItemPopup";
 import UserContext from "../contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +97,7 @@ const AddItem = () => {
       openPopup();
       const newItem = await getItem(inputLink);
       setItem(newItem);
-    }
+    } 
   };
 
   const closePopup = () => {
@@ -108,6 +108,7 @@ const AddItem = () => {
   useEffect(() => {
     getLists();
   }, []);
+
 
   useEffect(() => {
     getListId();

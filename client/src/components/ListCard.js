@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext,useEffect, useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
 import AddProduct from "components/AddProduct";
+import ListContext from "../contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   listsTitle: {
@@ -47,6 +48,7 @@ const ListCard = (props) => {
   const listId = props.list.id;
   const listTitle = props.list.name;
   const img = props.list.img_url;
+  const listChange = useContext(ListContext).listChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
   const [itemCount, setItemCount] = useState('');
@@ -67,7 +69,7 @@ const ListCard = (props) => {
 
   useEffect(() => {
     getItemCount()
-  }, []);
+  }, [listOpen,listChange]);
 
 
   return (

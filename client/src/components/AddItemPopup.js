@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Modal,
@@ -8,6 +8,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
+import ListContext from "../contexts/ListContext";
+import UserContext from "../contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   popup: {
@@ -52,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const AddItemPopup = (props) => {
   const { item, popupOpen, closePopup, listId } = props;
   const classes = useStyles();
+  const value = useContext(UserContext).listToggle;
 
   const addProductToList = async () => {
     const res = await fetch(`/list-to-products/${listId}`,{
@@ -63,9 +66,10 @@ const AddItemPopup = (props) => {
     return json;
   };
 
-  const addButtonClick = async () => {
+  const addButtonClick = () => {
     addProductToList()
     closePopup()
+    value()
   };
 
   return (

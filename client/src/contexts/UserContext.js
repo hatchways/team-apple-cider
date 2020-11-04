@@ -2,6 +2,7 @@ import React, { useState } from "react";
 const UserContext = React.createContext({});
 
 export function UserStore(props) {
+  
   const checkCookie = () =>
     fetch("/auth/status", {
       method: "GET",
