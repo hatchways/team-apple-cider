@@ -1,4 +1,4 @@
-import React ,{ useEffect, useState }from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Modal, IconButton, Typography, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -88,44 +88,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen, addProductOpen, changeAddProductOpen }) => {
-  
+const ListPopup = ({
+  listId,
+  listTitle,
+  itemCount,
+  listOpen,
+  changeListOpen,
+  addProductOpen,
+  changeAddProductOpen,
+}) => {
   const classes = useStyles();
   const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
   const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
- 
-
 
   const getListRelations = async () => {
-    const res = await fetch(`list-to-products/${listId}`)
-    const json = await res.json()
+    const res = await fetch(`list-to-products/${listId}`);
+    const json = await res.json();
     setListToProducts(json);
-    console.log(json)
-  }
+  };
 
   const getProducts = async () => {
-    const newProducts = await Promise.all(listToProducts.map(async (relation)=>{      
-      const res = await fetch(`/products/${relation.product_id}`)
-      console.log(res)
-      return res.json(res);
-      
-    }));
-    setProducts(newProducts)
-  }
+    const newProducts = await Promise.all(
+      listToProducts.map(async (relation) => {
+        const res = await fetch(`/products/${relation.product_id}`);
+        return res.json(res);
+      })
+    );
+    setProducts(newProducts);
+  };
 
   useEffect(() => {
-    getListRelations()
-  }, [listId,listOpen]);
+    getListRelations();
+  }, [listId, listOpen]);
 
-  useEffect(() =>{
-    getProducts()
-  },[listToProducts])
-
+  useEffect(() => {
+    getProducts();
+  }, [listToProducts]);
 
   const handleAddClick = () => {
     changeAddProductOpen();
     changeListOpen();
-  }
+  };
 
   return (
     <Modal open={listOpen} onClose={changeListOpen} className={classes.popup}>
@@ -152,13 +155,22 @@ const ListPopup = ({ listId, listTitle, itemCount, listOpen, changeListOpen, add
         </Box>
         <Box className={classes.bodyContainer}>
           <Box className={classes.bodyContent}>
-          {products.map((item, i) => (
-          <ProductCard key={i} item={item} listId={listId} getListRelations={getListRelations}/>
-        ))}
+            {products.map((item, i) => (
+              <ProductCard
+                key={i}
+                item={item}
+                listId={listId}
+                getListRelations={getListRelations}
+              />
+            ))}
           </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained" onClick={handleAddClick}>
+          <Button
+            className={classes.addButton}
+            variant="contained"
+            onClick={handleAddClick}
+          >
             ADD NEW ITEM
           </Button>
         </Box>
