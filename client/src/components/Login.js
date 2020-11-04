@@ -1,13 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Box, Snackbar } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/alert";
+import { Button, TextField, Box } from "@material-ui/core";
 import UserContext from "../contexts/UserContext";
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import WarningSnackbar from "./WarningSnackbar";
 
 const useStyles = makeStyles((theme) => ({
   login: {
@@ -68,11 +64,9 @@ function Login(props) {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackText, setSnackText] = useState("");
   const value = useContext(UserContext);
-  const vertical = "top";
-  const horizontal = "center";
 
-  const handleSnack = (props) => {
-    setSnackText(props);
+  const handleSnack = (message) => {
+    setSnackText(message);
     setOpenSnack(true);
   };
 
@@ -86,30 +80,9 @@ function Login(props) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    fetch("/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((response) => response.json())
-      .then(function (response) {
-        if (response.status === "success") {
-          console.log("Success:", email);
-          const loginSuccess = value.handleLogin(email, password);
-          if (loginSuccess) props.history.push("/dashboard");
-        } else {
-          handleSnack(response.message);
-          console.log(response.message);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    const response = await value.handleLogin(email, password);
+    if (response.status === "success") props.history.push("/dashboard");
+    else handleSnack(response.message);
   };
 
   return (
@@ -152,16 +125,11 @@ function Login(props) {
             Create an account
           </Link>
         </Box>
-        <Snackbar
-          open={openSnack}
-          autoHideDuration={6000}
-          onClose={handleCloseSnack}
-          anchorOrigin={{ vertical, horizontal }}
-        >
-          <Alert onClose={handleCloseSnack} severity="error">
-            {snackText}
-          </Alert>
-        </Snackbar>
+        <WarningSnackbar
+          openSnack={openSnack}
+          handleCloseSnack={handleCloseSnack}
+          snackText={snackText}
+        />
       </Box>
     </section>
   );
