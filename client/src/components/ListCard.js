@@ -8,7 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Modal from '@material-ui/core/Modal';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -75,7 +74,6 @@ const ListCard = (props) => {
   const [listOpen, setListOpen] = useState(false);
   const [itemCount, setItemCount] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
-  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const handleClick = (event) => {
     event.stopPropagation()
@@ -87,24 +85,15 @@ const ListCard = (props) => {
     setAnchorEl(null);
   };
 
-  const handleDeleteClick = () => {
-    deleteListOpen()
-    handleClose()
-  };
-
-  const deleteListOpen = () => {
-    setDeleteOpen(!deleteOpen)
-  }
-
-
   const changeListOpen = () => {
     setListOpen(!listOpen);
   };
-  const [addProductOpen, setAddProductOpen] = useState(false);
-  const changeAddProductOpen = () => {
-    setAddProductOpen((previous) => !previous);
-  };
 
+  const handleDeleteClicked = (event) =>{
+    event.stopPropagation()
+    setAnchorEl(null);
+    alert("Delete Clicked")
+  }
   const getItemCount = async () => {
     const res = await fetch(`/list-to-products/${listId}`);
     const json = await res.json();
@@ -114,6 +103,13 @@ const ListCard = (props) => {
   useEffect(() => {
     getItemCount();
   }, [listOpen, listChange]);
+
+
+  // const [addProductOpen, setAddProductOpen] = useState(false);
+  // const changeAddProductOpen = () => {
+  //   setAddProductOpen((previous) => !previous);
+  // };
+
 
   return (
     <Box>
@@ -135,7 +131,7 @@ const ListCard = (props) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleDeleteClick}>Delete List</MenuItem>
+            <MenuItem onClose={handleClose} onClick={handleDeleteClicked}>Delete List</MenuItem>
           </Menu>
         </Box>
 
@@ -146,17 +142,12 @@ const ListCard = (props) => {
           >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <Modal
-        open={deleteOpen}
-        onClose={deleteListOpen}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        
-      </Modal>
+
       <ListPopup
         {...{ listId, listTitle, itemCount, listOpen, changeListOpen }}
       />
+
+      
       {/* <AddProduct
         {...{
           listTitle,
