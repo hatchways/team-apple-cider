@@ -2,7 +2,6 @@ from flask import jsonify, Blueprint, request, make_response
 from models.list import List
 from database import db
 from api.auth_handler import token_getter
-from config import PRODUCT_IMG_PRESET
 import json
 from .image_uploader import replace_cloudinary_image
 
@@ -62,7 +61,7 @@ def listRequests():
             # checks to see if list already exists
             if not List.query.filter_by(user_id=list_user_id, name=list_name).first():
                 # checks to see if cloudinary works
-                new_img_url = replace_cloudinary_image(body['img_url'], PRODUCT_IMG_PRESET)
+                new_img_url = replace_cloudinary_image(body['img_url'])
                 try:
                     list = List(list_user_id, list_name, new_img_url)
                     db.session.add(list)
@@ -86,7 +85,7 @@ def listRequests():
                     list.name = req.get("name", list.name)
                     list.private = req.get("private", list.private)
                     if "img_url" in req:
-                        list.img_url = replace_cloudinary_image(req["img_url"], PRODUCT_IMG_PRESET)
+                        list.img_url = replace_cloudinary_image(req["img_url"])
                     db.session.commit()
                     return jsonify({"response": "List '{}' was updated".format(list_id)}), 200
 

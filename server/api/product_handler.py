@@ -1,7 +1,6 @@
 from flask import jsonify, Blueprint, request
 from models.product import Product
 from database import db
-from config import PRODUCT_IMG_PRESET
 from .image_uploader import replace_cloudinary_image
 import json
 
@@ -32,7 +31,7 @@ def oneProductRequests(product_id):
     if request.method == 'POST':
         try:
             body = json.loads(request.get_data())
-            image = replace_cloudinary_image(body['img_url'], PRODUCT_IMG_PRESET)
+            image = replace_cloudinary_image(body['img_url'])
             product_item = Product(product_id, body['name'], body['currency'], body['old_price'], body['price'], body['availability'], body['url'], image)
             db.session.add(product_item)
             db.session.commit()
@@ -49,7 +48,7 @@ def oneProductRequests(product_id):
                 if "old_price" in req: product.old_price = req["old_price"]
                 if "price" in req: product.price = req["price"]
                 if "url" in req: product.url = req["url"]
-                if "img_url" in req: product.img_url = replace_cloudinary_image(req["img_url"], PRODUCT_IMG_PRESET)
+                if "img_url" in req: product.img_url = replace_cloudinary_image(req["img_url"])
                 db.session.commit()
                 return jsonify({"response": "Product '{}' was updated".format(product_id)}), 200
         except Exception as e:
