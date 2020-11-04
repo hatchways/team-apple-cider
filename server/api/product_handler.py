@@ -1,17 +1,12 @@
 from flask import jsonify, Blueprint, request
 from models.product import Product
 from database import db
-from api.image_uploader import image_uploader
-from config import PRODUCT_IMG_PRESET, CLOUDINARY_NAME
+from .image_uploader import replace_cloudinary_image
 import json
 
 
 product_handler = Blueprint('product_handler', __name__)
 
-
-def replace_cloudinary_image(image_url):
-    try: return image_uploader(image_url, PRODUCT_IMG_PRESET, CLOUDINARY_NAME)
-    except: return image_url
 
 
 @product_handler.route('/products/<product_id>', methods=['GET', 'DELETE', 'POST', 'PUT'])

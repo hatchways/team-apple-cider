@@ -41,7 +41,7 @@ def allPriceRequests():
     if request.method == 'GET':
         try:
             prices = Price.query.all()
-            return jsonify({'prices': [price.serialize for price in prices]}), 200
+            return jsonify([price.serialize for price in prices]), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400    
 

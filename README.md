@@ -78,31 +78,43 @@ A price history is kept for each product on the database. The API routes for the
 
 #### _POST new price to price history of a single product:_
 
-`curl -X POST localhost:5000/prices/product/<product_id> --data "{\"price\": ####, \"currency\": $/£/€ }" --header "Content-Type: application/json"`
+`curl -X POST localhost:5000/prices/product/<product_id> --data '{"price": ####, "currency": $/£/€}' --header "Content-Type: application/json"`
 
 #### _DELETE entire price history of a single product:_
 
 `curl -X DELETE localhost:5000/prices/product/<product_id>`
 
+### Profiles
+
+#### _GET all profiles from database:_
+
+`curl localhost:5000/profiles`
+
+#### _GET single profile from database:_
+
+`curl localhost:5000/profiles/<id>`
+
+#### _POST update profile information:_
+
+`curl -X PUT localhost:5000/profiles/1 --data '{"name": "Simon", "photo": "https://secure.gravatar.com/avatar/6f81c54461fc4b30b1b855050a071974"}' --header "Content-Type: application/json"`
+
 ### Lists
 
-The API routes for the lists are as follows:
-
 #### _GET one personal list (public or private) created by the user:_
+
 `curl localhost:5000/lists?user_id=<USER_ID>&list_id=<LIST_ID>`
 
 #### _GET all list of any one user (only authorized users can see private ones):_
+
 `curl localhost:5000/lists?user_id=<USER_ID>`
 
 #### _GET one list of any user (public lists only):_
+
 `curl localhost:5000/lists?list_id=<LIST_ID>`
 
 #### _POST(create) new list:_
-`curl -X POST localhost:5000/lists --data 
-'{
-   "name": "<NAME>",
-   "img_url": "<IMAGE URL>"
-}' --header "Content-Type: application/json"`
+
+`curl -X POST localhost:5000/lists --data '{ "name": "<NAME>", "img_url": "<IMAGE URL>" }' --header "Content-Type: application/json"`
 
 ### List to Products
 
@@ -112,10 +124,7 @@ The API routes for the lists are as follows:
 
 #### _POST(add) new product ids into an existing list (only authorized users can do this):_
 
-`curl -X POST localhost:5000/list-to-products/<LIST_ID> --data 
-'{
-   "product_id": <PRODUCT_ID>
-}'--header "Content-Type: application/json"`
+`curl -X POST localhost:5000/list-to-products/<LIST_ID> --data '{ "product_id": <PRODUCT_ID> }'--header "Content-Type: application/json"`
 
 ## External API Services
 
