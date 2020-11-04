@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddItemPopup from "components/AddItemPopup";
-import UserContext from "../contexts/UserContext";
+import UserContext from "contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {

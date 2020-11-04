@@ -46,7 +46,7 @@ const HeaderTabs = (props) => {
   const classes = useStyles();
   const handleTabChange = (e, newValue) => {
     setSelectedPage(newValue);
-  }
+  };
 
   return (
     <Box className={classes.tabContainer}>

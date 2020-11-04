@@ -121,7 +121,7 @@ function SignUp(props) {
     e.preventDefault();
     if (validations()) {
       const response = await value.handleSignup(name, email, password, confirm);
-      if (response.status === "success") props.history.push("/dashboard");
+      if (response.status === "success") props.history.push("/");
       else handleSnack(response.message);
     }
   };

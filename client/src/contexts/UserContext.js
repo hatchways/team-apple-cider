@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Page from "layout/Page";
+import Body from "layout/Body";
+
 const UserContext = React.createContext({});
 
 export function UserStore(props) {
@@ -9,17 +13,14 @@ export function UserStore(props) {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.status === "success") {
-          setUser(true);
-        } else {
-          setUser(false);
-        }
+        if (response.status === "success") setUser(true);
+        else setUser(false);
+        setLoading(false);
       })
-      .catch((error) => {
-        setUser(false);
-      });
+      .catch((error) => setUser(false));
 
   const [user, setUser] = useState(checkCookie());
+  const [loading, setLoading] = useState(true);
 
   const handleSignup = (name, email, password, confirm) =>
     fetch("/auth/register", {
@@ -39,9 +40,7 @@ export function UserStore(props) {
         if (response.status === "success") {
           setUser(true);
           return response;
-        } else {
-          return response;
-        }
+        } else return response;
       })
       .catch((error) => {
         return false;
@@ -63,9 +62,7 @@ export function UserStore(props) {
         if (response.status === "success") {
           setUser(true);
           return response;
-        } else {
-          return response;
-        }
+        } else return response;
       })
       .catch((error) => {
         return false;
@@ -76,12 +73,8 @@ export function UserStore(props) {
       method: "GET",
     })
       .then((response) => response.json())
-      .then((response) => {
-        setUser(false);
-      })
-      .catch((error) => {
-        setUser(false);
-      });
+      .then((response) => setUser(false))
+      .catch((error) => setUser(false));
   };
 
   const [userId, setUserId] = useState('');
@@ -91,6 +84,14 @@ export function UserStore(props) {
     setUserId(json.data.user_id)
   }
 
+  if (loading)
+    return (
+      <Page>
+        <Body>
+          <CircularProgress />
+        </Body>
+      </Page>
+    );
   return (
     <UserContext.Provider
       value={{

@@ -81,7 +81,7 @@ function Login(props) {
   const handleLogin = async (e) => {
     e.preventDefault();
     const response = await value.handleLogin(email, password);
-    if (response.status === "success") props.history.push("/dashboard");
+    if (response.status === "success") props.history.push("/");
     else handleSnack(response.message);
   };
 
