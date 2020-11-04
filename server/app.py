@@ -13,30 +13,32 @@ from api.prices_handler import prices_handler
 from flask_socketio import SocketIO
 import eventlet
 
-app = Flask(__name__)
-app.config.from_object('config.DevelopmentConfig')
+def create_app(): 
+    app = Flask(__name__)
+    app.config.from_object('config.DevelopmentConfig')
 
-db.init_app(app)
+    db.init_app(app)
 
-migrate.init_app(app, db)
-cors.init_app(app)
-flask_bcrypt.init_app(app)
+    migrate.init_app(app, db)
+    cors.init_app(app)
+    flask_bcrypt.init_app(app)
 
-with app.app_context():
+    with app.app_context():
 
-    # Register Blueprints
-    app.register_blueprint(home_handler)
-    app.register_blueprint(ping_handler)
-    app.register_blueprint(auth_handler)
-    app.register_blueprint(product_handler)
-    app.register_blueprint(list_handler)
-    app.register_blueprint(scrape_handler) 
-    app.register_blueprint(list_to_product_handler) 
-    app.register_blueprint(prices_handler) 
+        # Register Blueprints
+        app.register_blueprint(home_handler)
+        app.register_blueprint(ping_handler)
+        app.register_blueprint(auth_handler)
+        app.register_blueprint(product_handler)
+        app.register_blueprint(list_handler)
+        app.register_blueprint(scrape_handler) 
+        app.register_blueprint(list_to_product_handler) 
+        app.register_blueprint(prices_handler) 
 
-    db.create_all()
+        db.create_all()
+        return app
 
-
+app = create_app()
 socketio = SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
 if __name__ == '__main__':
