@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileDisplay = (props) => {
   const [profile, setProfile] = useState({});
+  const [error, setError] = useState({});
 
   // TODO: Get both following/followed booleans from backend
   const [following, setFollowing] = useState(false);
@@ -77,18 +78,20 @@ const ProfileDisplay = (props) => {
   useEffect(() => {
     const updateProfile = async () => {
       const response = await fetch(`/profiles/${id}`);
-      const newProfile = await response.json();
-      // TODO: seperate call for followers/following counts
-      // TODO: seperate call for public lists
-      setProfile(newProfile);
+      if (response.status === 200) {
+        const newProfile = await response.json();
+        setError(false);
+        // TODO: seperate call for followers/following counts
+        // TODO: seperate call for public lists
+        setProfile(newProfile);
+      } else setError(true);
     };
     updateProfile();
   }, [id]);
 
   const toggleFollow = () => setFollowing((cur) => !cur);
 
-  if (profile.name === undefined)
-    return <Typography>Profile link not valid</Typography>;
+  if (error) return <Typography>Profile link not valid</Typography>;
   else
     return (
       <Box className={classes.profileContainer}>
