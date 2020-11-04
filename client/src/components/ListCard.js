@@ -1,32 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext,useEffect, useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
 import AddProduct from "components/AddProduct";
 import ListContext from "../contexts/ListContext";
-import IconButton from "@material-ui/core/IconButton";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
-
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
   listsTitle: {
     fontWeight: "bold",
+    margin: "2rem 0",
   },
   listContainer: {
     display: "flex",
-    alignItems: "center",
     flexDirection: "column",
-    marginRight: "2rem",
+    alignItems: "center",
     backgroundColor: "white",
     borderRadius: "1rem",
     overflow: "hidden",
@@ -40,15 +27,6 @@ const useStyles = makeStyles((theme) => ({
     objectFit: "cover",
     height: "18rem",
     width: "18rem",
-  },
-  listSettingsContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  listSettings: {
-    fontSize: "3rem",
   },
   listTextContainer: {
     margin: "2rem",
@@ -116,26 +94,7 @@ const ListCard = (props) => {
   return (
     <Box>
       <Box onClick={changeListOpen} className={classes.listContainer}>
-        <img src={img} alt={listTitle} className={classes.listImage}></img>
-        <Box className={classes.listSettingsContainer}>
-          <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreHorizIcon />
-          </IconButton>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClose={handleClose} onClick={handleDeleteClicked}>Delete List</MenuItem>
-          </Menu>
-        </Box>
+        <img src={img} alt={listTitle} className={classes.listImage} />
 
         <Box className={classes.listTextContainer}>
           <Typography className={classes.listTextTitle}>{listTitle}</Typography>
