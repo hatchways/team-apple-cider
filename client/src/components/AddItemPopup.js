@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
 import ListContext from "../contexts/ListContext";
-import UserContext from "../contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   popup: {
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 const AddItemPopup = (props) => {
   const { item, popupOpen, closePopup, listId } = props;
   const classes = useStyles();
-  const value = useContext(UserContext).listToggle;
+  const value = useContext(ListContext).listToggle;
 
   const addProductToList = async () => {
     const res = await fetch(`/list-to-products/${listId}`,{
