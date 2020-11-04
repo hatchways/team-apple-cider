@@ -10,7 +10,7 @@ import ShoppingLists from "body/ShoppingLists";
 import Friends from "body/Friends";
 
 const useStyles = makeStyles((theme) => ({
-  //
+ 
 }));
 
 const Dashboard = () => {
