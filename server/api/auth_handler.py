@@ -1,28 +1,48 @@
 from models.user import User
+from models.profile import Profile
+from models.blacklist_token import BlacklistToken
 from flask import Blueprint, request, make_response, jsonify, g, redirect, url_for
 from flask.views import MethodView
 from database import db
-from server import flask_bcrypt
+from bcrypt_file import bcrypt
 from functools import wraps
-
 auth_handler = Blueprint("auth_handler", __name__)
+
+
+def token_getter():
+    try:
+        auth_header = request.cookies.get("Authentication token")
+        if auth_header:
+            auth_token = auth_header
+            blacklist_check = BlacklistToken.query.filter_by(
+                token=str(auth_token)
+                ).first()
+            if blacklist_check:
+                responseObject = {
+                    "status": "failure",
+                    "message": "Invalid authentication token, please logout."
+                }
+                resp = make_response(jsonify(responseObject))
+                return resp, 401
+            auth_token = User.decode_auth_token(auth_token)
+            return auth_token
+        else:
+            raise Exception
+    except:
+        responseObject = {
+            "status": "fail",
+            "message": "User is not logged in."
+        }
+    return make_response(jsonify(responseObject)), 401
 
 
 # Wrapper that obtains and verifies an auth token in a cookie. Returns true if valid, false otherwise.
 def login_cookie_getter(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        auth_token = token_getter()
         try:
-            auth_header = request.cookies.get("Authentication token")
-            if auth_header:
-                auth_token = auth_header
-                auth_token = User.decode_auth_token(auth_token)
-                if not isinstance(auth_token, str):
-                    g.user = User.query.filter_by(id=auth_token).first()
-                else:
-                    raise Exception
-            else:
-                raise Exception
+            g.user = User.query.filter_by(id=auth_token).first()
         except:
             responseObject = {
                 "status": "fail",
@@ -53,6 +73,7 @@ class RegisterAPI(MethodView):
                         "message": "Passwords must match."
                     }
                     return make_response(jsonify(responseObject)), 401
+
                 user = User(
                     email=post_data.get("email"),
                     name=post_data.get("name"),
@@ -60,17 +81,34 @@ class RegisterAPI(MethodView):
                 )
                 db.session.add(user)
                 db.session.commit()
+
+                profile = Profile(user.id, post_data.get("name"), None)
+                db.session.add(profile)
+                db.session.commit()
+
                 auth_token = user.encode_auth_token(user.id)
-                g.user = user
-                responseObject = {
-                    "status": "success",
-                    "message": "Successfully registered."
-                }
-                resp = make_response(jsonify(responseObject))
-                resp.set_cookie("Authentication token",
-                                auth_token, httponly=True)
-                return resp, 201
-            except Exception as e:
+                blacklist_check = BlacklistToken.query.filter_by(
+                    token=str(auth_token)
+                ).first()
+                if blacklist_check:
+                    responseObject = {
+                        "status": "failure",
+                        "message": "Some error occurred. Please try again."
+                    }
+                    resp = make_response(jsonify(responseObject))
+                    return resp, 401
+                else:
+                    g.user = user
+                    responseObject = {
+                        "id": user.id,
+                        "status": "success",
+                        "message": "Successfully registered."
+                    }
+                    resp = make_response(jsonify(responseObject))
+                    resp.set_cookie("Authentication token",
+                                    auth_token, httponly=True)
+                    return resp, 201
+            except Exception:
                 responseObject = {
                     "status": "fail",
                     "message": "Some error occurred. Please try again."
@@ -91,18 +129,37 @@ class LoginAPI(MethodView):
             user = User.query.filter_by(
                 email=post_data.get("email")
             ).first()
-            if user and flask_bcrypt.check_password_hash(
+            
+            if user and bcrypt.check_password_hash(
                 user.password, post_data.get("password")
             ):
                 auth_token = user.encode_auth_token(user.id)
+                
                 if auth_token:
+                    try:
+                        blacklist_check = BlacklistToken.query.filter_by(
+                            token=str(auth_token)
+                        ).first()
+                       
+                    except Exception:
+                        return "Error"
+                    if blacklist_check:
+                        
+                        responseObject = {
+                            "status": "failure",
+                            "message": "Some error occurred. Please try again."
+                        }
+                        resp = make_response(jsonify(responseObject))
+                        return resp, 401
                     responseObject = {
                         "status": "success",
                         "message": "Successfully logged in"
                     }
                     resp = make_response(jsonify(responseObject))
+                    
                     resp.set_cookie("Authentication token",
                                     auth_token, httponly=True)
+                                   
                     return resp, 200
                 else:
                     responseObject = {
@@ -133,27 +190,49 @@ class LoginAPI(MethodView):
 class UserAPI(MethodView):
     @login_cookie_getter
     def get(self):
-        user = g.user
-        responseObject = {
-            "status": "success",
-            "data": {
-                "user_id": user.id,
-                "email": user.email,
-                "registered_time": user.registered_time
+        try:
+            user = g.user
+            responseObject = {
+                "status": "success",
+                "data": {
+                    "user_id": user.id,
+                    "email": user.email,
+                    "registered_time": user.registered_time
+                }
             }
-        }
-        return make_response(jsonify(responseObject)), 200
+            return make_response(jsonify(responseObject)), 200
+        except:
+            responseObject = {
+                "status": "failure",
+                "message": "Error: no user on database"
+            }
+            return make_response(jsonify(responseObject)), 401
 
 
 class LogoutAPI(MethodView):
     def get(self):
-        responseObject = {
-            "status": "success",
-            "message": "Logout successful"
-        }
-        resp = make_response(jsonify(responseObject))
-        resp.delete_cookie("Authentication token")
-        return resp, 200
+        try:
+            auth_token = request.cookies.get("Authentication token")
+            responseObject = {
+                "status": "success",
+                "message": "Logout successful"
+            }
+            resp = make_response(jsonify(responseObject))
+            resp.delete_cookie("Authentication token")
+            token = BlacklistToken(
+                    token=auth_token
+                )
+            db.session.add(token)
+            db.session.commit()
+            return resp, 200
+        except:
+            responseObject = {
+                "status": "failure",
+                "message": "Already logged out!"
+            }
+            resp = make_response(jsonify(responseObject))
+            resp.delete_cookie("Authentication token")
+            return resp, 401
 
 
 # Basic middleware for protected routes pulled from Flask's documentation.

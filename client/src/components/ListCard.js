@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext,useEffect, useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
+import AddProduct from "components/AddProduct";
+import ListContext from "../contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   listsTitle: {
@@ -12,13 +14,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginRight: "2rem",
     backgroundColor: "white",
     borderRadius: "1rem",
     overflow: "hidden",
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.04)",
       opacity: "0.95",
+      cursor: "pointer",
     },
   },
   listImage: {
@@ -42,13 +44,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListCard = (props) => {
-  const { listTitle, itemCount, img } = props.list;
+  const listId = props.list.id;
+  const listTitle = props.list.name;
+  const img = props.list.img_url;
+  const listChange = useContext(ListContext).listChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
+  const [itemCount, setItemCount] = useState('');
+  const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
+  const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
+  const [addProductOpen, setAddProductOpen] = useState(false);
+
+  // This affects the Modal open component which opens the modal when set to True
   const changeListOpen = () => {
     setListOpen(!listOpen);
+    getProductIds();
   };
 
+  // Gets the total number of items in the list
+  const getProductIds = async () => {
+    const res = await fetch(`/list-to-products/${listId}`)
+    const json = await res.json();
+    setItemCount(json.length)
+    setListToProducts(json);
+  };
+
+  const getProducts = async () => {
+    const newProducts = await Promise.all(
+      listToProducts.map(async (relation) => {
+        const res = await fetch(`/products/${relation.product_id}`);
+        return res.json(res);
+      })
+    );
+    setProducts(newProducts);
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, [listToProducts]);
+
+  useEffect(() => {
+    getProductIds()
+  }, [listChange]);
+
+
+  // const changeAddProductOpen = () => {
+  //   setAddProductOpen((previous) => !previous);
+  // };
   return (
     <Box>
       <Box onClick={changeListOpen} className={classes.listContainer}>
@@ -61,7 +103,17 @@ const ListCard = (props) => {
           >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{ listTitle, itemCount, listOpen, changeListOpen }} />
+      <ListPopup {...{products, listId, getProductIds, listTitle, itemCount, listOpen, changeListOpen }} />
+      {/* <AddProduct
+        {...{
+          listTitle,
+          listOpen,
+          changeListOpen,
+          addProductOpen,
+          changeAddProductOpen,
+          demoListsArray,
+        }}
+      /> */}
     </Box>
   );
 };

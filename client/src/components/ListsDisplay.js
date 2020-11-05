@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useEffect, useState , useContext } from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
-import clothes from "img/clothes.png";
-import furniture from "img/furniture.png";
-import luxury from "img/luxury.png";
 import ListCard from "components/ListCard";
+import { useHorizontalScroll } from "components/HorrizontalScroll";
+import UserContext from "contexts/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
     display: "flex",
     flexDirection: "column",
-    margin: "1rem 18rem",
   },
   listsTitle: {
     fontWeight: "bold",
@@ -19,13 +17,18 @@ const useStyles = makeStyles((theme) => ({
   },
   myShoppingLists: {
     display: "flex",
+    maxWidth: "75vw",
+    overflowX: "auto",
+    "& > *": {
+      marginRight: theme.spacing(4),
+    },
   },
 
   addNewList: {
-    width: "18rem",
+    padding: theme.spacing(12),
     backgroundColor: "white",
     borderRadius: "1rem",
-    overflow: "hidden",
+    textAlign: "center",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -47,31 +50,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const demoListsArray = [
-  { listTitle: "Clothes", itemCount: 34, img: clothes },
-  { listTitle: "Furniture", itemCount: 12, img: furniture },
-  { listTitle: "Luxury", itemCount: 8, img: luxury },
-];
-
-const ListsDisplay = () => {
+const ListsDisplay = (props) => {
+  const scrollRef = useHorizontalScroll();
+  const { profile, addListOpen, changeAddListOpen } = props;
   const classes = useStyles();
+  const userId = useContext(UserContext).userId;
+  const [lists, setLists] = useState([]);
+
+  const getLists = async () =>{
+    const res = await fetch(`/lists?user_id=${userId}`)
+    const json = await res.json()
+    setLists(json);
+  }
+
+    useEffect(() => {
+    getLists();
+  }, [userId]);
+
+
+  const getListsUserText = (profile) => {
+    if (!profile || profile.name === undefined) return "My";
+    else if (profile.name[profile.name.length - 1] === "s")
+      return `${profile.name}'`;
+    else return `${profile.name}'s`;
+  };
+
   return (
-    <Box className={classes.shoppingContainer}>
+    <Box className={`${classes.shoppingContainer} ${props.className}`}>
       <Typography variant="h5" className={classes.listsTitle}>
-        My Shopping Lists:
+        {getListsUserText(profile)} Shopping Lists:
       </Typography>
-      <Box className={classes.myShoppingLists}>
-        {demoListsArray.map((list, i) => (
+
+      <Box className={classes.myShoppingLists} ref={scrollRef}>
+      {lists.map((list, i) => (
           <ListCard key={i} list={list} />
         ))}
-        <Box className={classes.addNewList}>
-          <IconButton className={classes.addNewListButton}>
-            <AddIcon className={classes.addIcon} />
-          </IconButton>
-          <Typography className={classes.addNewListText}>
-            ADD NEW LIST
-          </Typography>
-        </Box>
+        {!profile && (
+          <Box className={classes.addNewList}>
+            <IconButton
+              className={classes.addNewListButton}
+              onClick={() => changeAddListOpen()}
+            >
+              <AddIcon className={classes.addIcon} />
+            </IconButton>
+            <Typography className={classes.addNewListText}>
+              ADD NEW LIST
+            </Typography>
+          </Box>
+        )}
       </Box>
     </Box>
   );

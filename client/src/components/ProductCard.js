@@ -1,8 +1,8 @@
-import React from "react";
+import React , {useContext} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Button } from "@material-ui/core";
-
 import ItemDisplay from "components/ItemDisplay";
+import ListContext from "../contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   productCard: {
@@ -30,8 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductCard = ({item}) => {
+const ProductCard = ({ item, listId, getProductIds }) => {
   const classes = useStyles();
+  const listToggle = useContext(ListContext).listToggle;
+  const removeButtonClick = async () => {
+    const res = await fetch(`list-to-products/${listId}/${item.id}`, {
+      method: "DELETE",
+    });
+    getProductIds();
+    listToggle();
+  };
+
   return (
     <Box className={classes.productCard}>
       <Box>
@@ -39,7 +48,11 @@ const ProductCard = ({item}) => {
       </Box>
 
       <Box className={classes.removeButtonContainer}>
-        <Button variant="outlined" className={classes.removeButton}>
+        <Button
+          onClick={removeButtonClick}
+          variant="outlined"
+          className={classes.removeButton}
+        >
           Remove
         </Button>
       </Box>

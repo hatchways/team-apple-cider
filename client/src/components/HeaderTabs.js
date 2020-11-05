@@ -43,16 +43,16 @@ const StyledTab = withStyles({
 })(Tab);
 
 const HeaderTabs = (props) => {
-  const { selectedPage, setSelectedPage } = props;
   const classes = useStyles();
   const handleTabChange = (e, newValue) => {
-    setSelectedPage(newValue);
-  }
+    // setSelectedPage(newValue);
+  };
 
   return (
     <Box className={classes.tabContainer}>
       <Tabs
-        value={selectedPage}
+        // value={selectedPage}
+        value={window.location.pathname === "/" ? 0 : 1}
         onChange={handleTabChange}
         aria-label="page select"
       >
@@ -60,15 +60,14 @@ const HeaderTabs = (props) => {
           disableRipple
           label={<Typography>Shopping Lists</Typography>}
           component={Link}
-          to="/dashboard"
+          to="/"
         />
         <StyledTab
-         disableRipple 
-         label={<Typography>Friends</Typography>} 
-         component={Link}
-         to="/dashboard/friends"
+          disableRipple
+          label={<Typography>Friends</Typography>}
+          component={Link}
+          to="/friends"
         />
-         
       </Tabs>
       <NotificationsButton {...props} />
     </Box>

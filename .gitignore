@@ -32,3 +32,6 @@ instance/
 
 #TODO add .env to your gitignore
 
+server/api/celery_api/celerybeat-schedule.bak
+server/api/celery_api/celerybeat-schedule.dat
+server/api/celery_api/celerybeat-schedule.dir

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileMenu from "components/ProfileMenu";
-import HeaderTabs from "components/HeaderTabs";
 import logo from "img/logo.png";
+import HeaderTabs from "components/HeaderTabs";
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
     boxSizing: "border-box",
     padding: theme.spacing(3),
+    backgroundColor: "white",
+    boxShadow: "0 2px 15px 2px #f4f8ff",
+    zIndex: "10",
   },
   logo: {
     height: "2.8rem",
@@ -23,12 +26,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
-
   return (
     <Box className={classes.headerContainer}>
       <img className={classes.logo} src={logo} alt="logo" />
-      <HeaderTabs {...props} />
+      {props.children}
+      <HeaderTabs
+        {...{
+          notificationsOpen,
+          setNotificationsOpen,
+        }}
+      />
       <ProfileMenu />
     </Box>
   );
