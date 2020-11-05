@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
+  const [selectedPage, setSelectedPage] = useState(0);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
   return (
@@ -34,6 +35,8 @@ const Header = (props) => {
       {props.children}
       <HeaderTabs
         {...{
+          selectedPage,
+          setSelectedPage,
           notificationsOpen,
           setNotificationsOpen,
         }}

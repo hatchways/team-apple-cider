@@ -43,16 +43,16 @@ const StyledTab = withStyles({
 })(Tab);
 
 const HeaderTabs = (props) => {
+  const { selectedPage, setSelectedPage } = props;
   const classes = useStyles();
   const handleTabChange = (e, newValue) => {
-    // setSelectedPage(newValue);
+    setSelectedPage(newValue);
   };
 
   return (
     <Box className={classes.tabContainer}>
       <Tabs
-        // value={selectedPage}
-        value={window.location.pathname === "/" ? 0 : 1}
+        value={selectedPage}
         onChange={handleTabChange}
         aria-label="page select"
       >
