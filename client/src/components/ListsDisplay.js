@@ -80,7 +80,6 @@ const ListsDisplay = (props) => {
       <Typography variant="h5" className={classes.listsTitle}>
         {getListsUserText(profile)} Shopping Lists:
       </Typography>
-
       <Box className={classes.myShoppingLists} ref={scrollRef}>
       {lists.map((list, i) => (
           <ListCard key={i} list={list} />
