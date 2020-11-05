@@ -37,3 +37,7 @@ server/api/celery_api/celerybeat-schedule.dat
 server/api/celery_api/celerybeat-schedule.dir
 server/api/celery_api/celerybeat.pid
 server/api/celery_api/celerybeat-schedule.db
+server/api/celerybeat-schedule.db
+server/api/celerybeat.pid
+server/celerybeat-schedule.db
+server/celerybeat.pid
