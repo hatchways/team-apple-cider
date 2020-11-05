@@ -35,3 +35,5 @@ instance/
 server/api/celery_api/celerybeat-schedule.bak
 server/api/celery_api/celerybeat-schedule.dat
 server/api/celery_api/celerybeat-schedule.dir
+server/api/celery_api/celerybeat.pid
+server/api/celery_api/celerybeat-schedule.db
