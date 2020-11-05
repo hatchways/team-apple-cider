@@ -1,4 +1,4 @@
-from server import flask_bcrypt
+from bcrypt import bcrypt
 from database import db
 from flask_login import UserMixin
 from config import DevelopmentConfig
@@ -29,7 +29,7 @@ class User(UserMixin, db.Model):
     def __init__(self, email, name, password):
         self.email = email
         self.name = name
-        self.password = flask_bcrypt.generate_password_hash(
+        self.password = bcrypt.generate_password_hash(
             password, DevelopmentConfig.BCRYPT_LOG_ROUNDS).decode()
         self.registered_time = datetime.datetime.now(tz=datetime.timezone.utc)
 

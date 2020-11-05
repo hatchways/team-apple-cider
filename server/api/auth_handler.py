@@ -4,7 +4,7 @@ from models.blacklist_token import BlacklistToken
 from flask import Blueprint, request, make_response, jsonify, g, redirect, url_for
 from flask.views import MethodView
 from database import db
-from server import flask_bcrypt
+from bcrypt import bcrypt
 from functools import wraps
 auth_handler = Blueprint("auth_handler", __name__)
 
@@ -129,7 +129,7 @@ class LoginAPI(MethodView):
             user = User.query.filter_by(
                 email=post_data.get("email")
             ).first()
-            if user and flask_bcrypt.check_password_hash(
+            if user and bcrypt.check_password_hash(
                 user.password, post_data.get("password")
             ):
                 auth_token = user.encode_auth_token(user.id)
