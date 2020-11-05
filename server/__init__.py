@@ -31,6 +31,7 @@ def create_app():
         # from api.list_to_product_handler import list_to_product_handler
         # from api.prices_handler import prices_handler 
         # from api.profile_handler import profile_handler 
+        from api.follower_handler import follower_handler
         
 
         # Register Blueprints
@@ -42,7 +43,8 @@ def create_app():
         # app.register_blueprint(scrape_handler) 
         # app.register_blueprint(list_to_product_handler) 
         # app.register_blueprint(prices_handler) 
-        # app.register_blueprint(profile_handler) 
+        # app.register_blueprint(profile_handler)
+        app.register_blueprint(follower_handler) 
 
         db.create_all()
         return app

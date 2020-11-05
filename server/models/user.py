@@ -18,6 +18,8 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     registered_time = db.Column(db.DateTime, nullable=False)
     followed = db.relationship('User', secondary=followers, 
+    primaryjoin=(followers.c.follower_id == id), 
+    secondaryjoin=(followers.c.followed_id == id), 
     backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
     def __init__(self, email, name, password):
