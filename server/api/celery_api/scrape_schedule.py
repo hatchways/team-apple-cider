@@ -10,15 +10,14 @@ app.conf.timezone = ('US/Eastern')
 @app.task
 def scrape_url():
 
-    # Get product url
     product_req = requests.get('http://localhost:5000/products')
-    product_json = product_req.json()
-    URL = product_json[0]['url']
-    print(URL)
+    items = product_req.json()
 
-    # Scrape item
-    item = ScrapeAmazon(URL)
-    return 'Scraped "{}", price currently at: {}'.format(item.name, item.price)
+    for item in items:
+        URL = item['url']
+        item = ScrapeAmazon(URL)
+    
+    return 'Scraped items: {}'.format([item['id'] for item in items])
 
 @app.on_after_configure.connect
 def scheduled_tasks(sender, **kwargs):
