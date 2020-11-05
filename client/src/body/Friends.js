@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
   },
   tab: {
-    width: "50%",
+    width: "33.33333%",
     maxWidth: "none",
   },
   tabsContainer: {
@@ -80,19 +80,20 @@ const Friends = (props) => {
       >
         <Tab disableRipple className={classes.tab} label="followers"></Tab>
         <Tab disableRipple className={classes.tab} label="following"></Tab>
+        <Tab disableRipple className={classes.tab} label="explore"></Tab>
       </Tabs>
       <Box className={classes.tabsContainer}>
         {selectedPage == 0 ? (
           <ProfileList
             list={followersList}
+            followingsList={followingsList}
             toggleFollow={toggleFollow}
-            buttonText={"follow"}
           />
         ) : (
           <ProfileList
             list={followingsList}
+            followingsList={followingsList}
             toggleFollow={toggleFollow}
-            buttonText={"unfollow"}
           />
         )}
       </Box>
