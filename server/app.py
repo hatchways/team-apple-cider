@@ -1,6 +1,6 @@
 from flask import Flask
 from database import db
-from bcrypt import bcrypt
+from bcrypt_file import bcrypt
 from flask_migrate import Migrate
 from flask_cors import CORS
 from sockets import SocketIO, attach_events

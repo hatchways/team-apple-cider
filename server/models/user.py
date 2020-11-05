@@ -1,4 +1,4 @@
-from bcrypt import bcrypt
+from bcrypt_file import bcrypt
 from database import db
 from flask_login import UserMixin
 from config import DevelopmentConfig
