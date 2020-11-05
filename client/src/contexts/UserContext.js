@@ -86,14 +86,14 @@ export function UserStore(props) {
       .catch((error) => setUser(false));
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     socket.open();
-  //     socket.on("connection_message", (message) => {
-  //       console.log(message);
-  //     });
-  //   } else return () => socket.disconnect();
-  // }, [user]);
+  useEffect(() => {
+    if (user) {
+      socket.open();
+      socket.on("connection_message", (message) => {
+        console.log(message);
+      });
+    } else return () => socket.disconnect();
+  }, [user]);
 
   if (loading)
     return (
