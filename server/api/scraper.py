@@ -3,7 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-CHROME_OPTIONS = ['--headless','--no-sandbox','--ignore-certificate-errors','--disable-dev-shm-usage','--remote-debugging-port=9222']
+# '--headless',
+CHROME_OPTIONS = ['--no-sandbox','--ignore-certificate-errors','--disable-dev-shm-usage','--remote-debugging-port=9222']
 
 def loadChromeDriver():
     chrome_options = Options()
@@ -41,11 +42,11 @@ SELECTORS = {
 }
 
 
-
 class ScrapeAmazon:   
-    def __init__(self, URL):
-        
-        driver = loadChromeDriver()
+    def __init__(self, URL, driver=None): 
+              
+        if driver == None:
+            driver=loadChromeDriver()        
         driver.get(URL)
         
         self.website = "amazon"
