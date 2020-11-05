@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Box, Snackbar, Tooltip } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/alert";
+import MuiAlert from "@material-ui/lab/Alert";
 import UserContext from "../contexts/UserContext";
 
 function Alert(props) {
