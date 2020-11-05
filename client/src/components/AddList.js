@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Dropzone from 'react-dropzone'
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
@@ -16,12 +17,23 @@ const AddList = (props) => {
   const classes = useStyles();
   // const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setimage] = useState("");
 
+  const onDrop = (acceptedFiles) => {
+    console.log(acceptedFiles)
+    acceptedFiles.forEach(file =>
+      setimage(file)
+      )
+  }
+
+  const addList=(title, file)=>{
+    
+  }
 
   const handleClose = () => {
     changeAddListOpen();
   };
+ 
 
   // const validations = () => {
   //   const errorsCopy = { ...errors };
@@ -97,24 +109,32 @@ const AddList = (props) => {
         <Box className={classes.bodyContainer}>
           <Typography className={classes.itemText}>Add a cover</Typography>
           <Box className={classes.imageFieldContainer}>
-            <Typography>Drop an image here or </Typography>
+            {/* <Typography>Drop an image here or </Typography> */}
             <Typography>
-              <input
-                accept="image/*"
-                className={classes.input}
-                id="file-input"
-                multiple
-                type="file"
-                onChange={(e) => setImage(e.target.value)}
-              />
-              <label htmlFor="file-input" className={classes.imageFieldText}>
-                select a file
-              </label>
+              <Dropzone
+                  onDrop={onDrop}
+                  accept="image/*"
+                >
+                  {({getRootProps, getInputProps, isDragActive, isDragReject, acceptedFiles}) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      {!isDragActive && 'Click here or drop a file to upload!'}
+                      {isDragActive && !isDragReject && "Drop a image here"}
+                      {isDragReject && "File type not accepted, sorry!"}
+                      <div>
+                        {acceptedFiles.length!==0 
+                        && 
+                        acceptedFiles.map(file =>
+                         file.name)}
+                      </div>
+                    </div>
+                  )}
+            </Dropzone>
             </Typography>
           </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained"  onClick={()=>console.log(image, title)}>
+          <Button className={classes.addButton} variant="contained"  onClick={addList}>
             CREATE LIST
           </Button>
         </Box>
