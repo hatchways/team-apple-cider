@@ -80,6 +80,7 @@ const AddItem = () => {
     const res = await fetch(`/lists?user_id=${userId}`);
     const json = await res.json();
     setUserLists(json);
+    
   };
 
   useEffect(() => {
@@ -101,8 +102,9 @@ const AddItem = () => {
     setItem({});
   };
 
-  const onChangeList = (e) => {
+  const onChangeList  = async (e) => {
     const newIndex = parseInt(e.target.value);
+    console.log("hello" + newIndex)
     setSelectedListIndex(newIndex);
     setListId(userLists[newIndex].id);
   };

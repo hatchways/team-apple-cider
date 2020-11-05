@@ -3,7 +3,7 @@ from database import db
 from bcrypt_file import bcrypt
 from flask_migrate import Migrate
 from flask_cors import CORS
-from sockets import SocketIO, attach_events
+# from sockets import SocketIO, attach_events
 from api.ping_handler import ping_handler
 from api.home_handler import home_handler
 from api.auth_handler import auth_handler
@@ -17,25 +17,26 @@ from api.follower_handler import follower_handler
 
 # from api.celery_api.scheduled_tasks import scheduled_tasks
 
-import eventlet
-from sockets import SocketIO, attach_events
+# import eventlet
+# from sockets import SocketIO, attach_events
 
 migrate = Migrate()
 cors = CORS()
-socketio = SocketIO()
+# socketio = SocketIO()
 
 
 def create_app(): 
+    
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
     db.init_app(app)
     migrate.init_app(app, db)
     cors.init_app(app)
     bcrypt.init_app(app)
-    socketio.init_app(app)
+    # socketio.init_app(app)
     
-    socketio.run(app)
-    attach_events(socketio)
+    # socketio.run(app)
+    # attach_events(socketio)
 
     with app.app_context():
 

@@ -56,12 +56,14 @@ const AddItemPopup = (props) => {
   const listToggle = useContext(ListContext).listToggle;
 
   const addProductToList = async () => {
+    
     const res = await fetch(`/list-to-products/${listId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ product_id: item.product_id }),
     });
     const json = await res.json();
+    
     return json;
   };
 
