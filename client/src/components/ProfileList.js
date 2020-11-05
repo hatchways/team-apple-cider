@@ -1,6 +1,7 @@
-import React, {Fragment } from "react";
+import React, { useState ,Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { List, ListItem, ListItemText, Divider, ListItemAvatar, Avatar, Button} from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
     list:{
@@ -20,11 +21,12 @@ const useStyles = makeStyles((theme) => ({
     }
     
   }));
-const Followers =(props)=>{
+const ProfileList =(props)=>{
     const classes = useStyles();
+    const { list, toggleFollow, buttonText } = props
     return(
-        <List aria-label='following list' className={classes.list}>
-            {props.followingsList.map((person=>{
+        <List aria-label='followers list' className={classes.list}>
+            {list.map((person=>{
               return(
                 <Fragment>
                 <ListItem className={classes.listItem}>
@@ -40,9 +42,9 @@ const Followers =(props)=>{
                      <Button
                         className={classes.unFollowButton}
                         variant="contained"
-                        onClick={()=>props.handleUnfollow(person)}
+                        onClick={()=>toggleFollow(person)}
                         >
-                        Unfollow
+                        {buttonText}
                     </Button>
                 </ListItem>
                 <Divider />
@@ -52,4 +54,5 @@ const Followers =(props)=>{
     )
 }
 
-export default Followers
+export default ProfileList
+

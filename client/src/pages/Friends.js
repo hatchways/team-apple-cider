@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Box, Typography, Tabs,Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Followers from '../components/Followers'
-import Following from "components/Following";
+import FollowersFollowing from '../components/ProfileList'
 import rose from '../img/roseBarron.png';
 import david from '../img/davidRichardson.png'
 import christine from '../img/christineSmith.png'
 import jennifer from '../img/jenniferFordham.png'
 import rebbeca from  '../img/rebbecaSchindler.png'
+import ProfileList from "../components/ProfileList";
 
 const useStyles = makeStyles((theme) => ({
   h1:{
@@ -53,6 +53,9 @@ const Friends = (props) => {
   const handleTabChange = (e, newValue) => {
     setSelectedPage(newValue);
   }
+  const toggleFollow = (person) => {
+    followingsList.includes(person) ? handleUnfollow(person) : handleFollow(person);
+  }
   const handleFollow=(person)=>{
     const newFollowingsList=[...followingsList]
     newFollowingsList.push(person)
@@ -84,13 +87,15 @@ const Friends = (props) => {
       </Tabs>
       <Box className={classes.tabsContainer}>
         {selectedPage==0 ? 
-        <Followers 
-        followersList={followersList}
-        handleFollow={handleFollow}
+        <ProfileList
+        list={followersList}
+        toggleFollow={toggleFollow}
+        buttonText={'follow'}
         />:
-        <Following 
-        followingsList={followingsList}
-        handleUnfollow={handleUnfollow}
+        <ProfileList
+        list={followingsList}
+        toggleFollow={toggleFollow}
+        buttonText={'unfollow'}
         />
         }
       </Box>
