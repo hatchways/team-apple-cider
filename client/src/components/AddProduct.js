@@ -22,7 +22,7 @@ const AddProduct = (props) => {
     changeListOpen,
     addProductOpen,
     changeAddProductOpen,
-    demoListsArray,
+    lists,
   } = props;
   const classes = useStyles();
   const [url, setUrl] = useState("");
@@ -45,10 +45,10 @@ const AddProduct = (props) => {
     return Object.values(errorsCopy).every((field) => field === "");
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
     if (validations()) {
-      fetch("route", {
+      fetch("/scrape", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,9 +60,28 @@ const AddProduct = (props) => {
         .then((response) => response.json())
         .then(function (response) {
           if (response.status === "success") {
+            console.log("Success on scraping!");
+          } else {
+            console.log(response.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      fetch(`/list-to-products/${list.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          product_id: item.product_id,
+        }),
+      })
+        .then((response) => response.json())
+        .then(function (response) {
+          if (response.status === "success") {
             console.log("Success:");
           } else {
-            window.alert(response.message); // Replace with snackbar.
             console.log(response.message);
           }
         })
@@ -127,16 +146,20 @@ const AddProduct = (props) => {
               onChange={handleChange}
               label="List"
             >
-              {demoListsArray.map((list, i) => (
-                <MenuItem key={i} value={list.listTitle}>
-                  {list.listTitle}
+              {lists.map((list, i) => (
+                <MenuItem key={i} value={list.name}>
+                  {list.name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </Box>
         <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained">
+          <Button
+            className={classes.addButton}
+            variant="contained"
+            onClick={handleClick}
+          >
             ADD ITEM
           </Button>
         </Box>

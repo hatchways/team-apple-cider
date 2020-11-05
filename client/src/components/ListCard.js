@@ -1,4 +1,4 @@
-import React, { useContext,useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
@@ -47,10 +47,11 @@ const ListCard = (props) => {
   const listId = props.list.id;
   const listTitle = props.list.name;
   const img = props.list.img_url;
+  const lists = props.lists;
   const listChange = useContext(ListContext).listChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
-  const [itemCount, setItemCount] = useState('');
+  const [itemCount, setItemCount] = useState("");
   const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
   const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
   const [addProductOpen, setAddProductOpen] = useState(false);
@@ -63,9 +64,9 @@ const ListCard = (props) => {
 
   // Gets the total number of items in the list
   const getProductIds = async () => {
-    const res = await fetch(`/list-to-products/${listId}`)
+    const res = await fetch(`/list-to-products/${listId}`);
     const json = await res.json();
-    setItemCount(json.length)
+    setItemCount(json.length);
     setListToProducts(json);
   };
 
@@ -84,13 +85,12 @@ const ListCard = (props) => {
   }, [listToProducts]);
 
   useEffect(() => {
-    getProductIds()
+    getProductIds();
   }, [listChange]);
 
-
-  // const changeAddProductOpen = () => {
-  //   setAddProductOpen((previous) => !previous);
-  // };
+  const changeAddProductOpen = () => {
+    setAddProductOpen((previous) => !previous);
+  };
   return (
     <Box>
       <Box onClick={changeListOpen} className={classes.listContainer}>
@@ -103,17 +103,28 @@ const ListCard = (props) => {
           >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{products, listId, getProductIds, listTitle, itemCount, listOpen, changeListOpen }} />
-      {/* <AddProduct
+      <ListPopup
+        {...{
+          products,
+          listId,
+          getProductIds,
+          listTitle,
+          itemCount,
+          listOpen,
+          changeListOpen,
+          changeAddProductOpen,
+        }}
+      />
+      <AddProduct
         {...{
           listTitle,
           listOpen,
           changeListOpen,
           addProductOpen,
           changeAddProductOpen,
-          demoListsArray,
+          lists,
         }}
-      /> */}
+      />
     </Box>
   );
 };

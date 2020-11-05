@@ -107,7 +107,7 @@ const ListPopup = ({
   };
 
   return (
-    <Modal open={listOpen}  onClose={changeListOpen} className={classes.popup} onClic>
+    <Modal open={listOpen} onClose={changeListOpen} className={classes.popup}>
       <Box className={classes.paper}>
         <Box className={classes.closeButtonContainer}>
           <IconButton
