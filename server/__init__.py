@@ -1,13 +1,16 @@
+import eventlet
 from flask import Flask
 from database import db
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
+from api.sockets import SocketIO, attach_events
 
 
 migrate = Migrate()
 cors = CORS()
 flask_bcrypt = Bcrypt()
+socketio = SocketIO()
 
 
 def create_app():
@@ -18,6 +21,9 @@ def create_app():
     migrate.init_app(app, db)
     cors.init_app(app)
     flask_bcrypt.init_app(app)
+    socketio.init_app(app)
+    socketio.run(app)
+    attach_events(socketio)
 
     with app.app_context():
 
@@ -32,6 +38,7 @@ def create_app():
         from api.prices_handler import prices_handler 
         from api.profile_handler import profile_handler 
         from api.follower_handler import follower_handler
+        
         
 
         # Register Blueprints
