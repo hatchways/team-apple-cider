@@ -60,10 +60,11 @@ const ListsDisplay = (props) => {
   const getLists = async () =>{
     const res = await fetch(`/lists?user_id=${userId}`)
     const json = await res.json()
-    setLists(json);
+    if(Array.isArray(json)) 
+    {setLists(json);}
   }
 
-    useEffect(() => {
+  useEffect(() => {
     getLists();
   }, [userId]);
 
@@ -81,7 +82,7 @@ const ListsDisplay = (props) => {
         {getListsUserText(profile)} Shopping Lists:
       </Typography>
       <Box className={classes.myShoppingLists} ref={scrollRef}>
-      {lists.map((list, i) => (
+      {lists.length!==0 && lists.map((list, i) => (
           <ListCard key={i} list={list} />
         ))}
         {!profile && (

@@ -61,7 +61,7 @@ const AddItem = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedListIndex, setSelectedListIndex] = useState(0);
   const [listId, setListId] = useState("");
-  const [userLists, setUserLists] = useState([]);
+  const [userLists, setUserLists] = useState(["Luxury", "Electronics"]);
 
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
@@ -76,10 +76,12 @@ const AddItem = () => {
   };
 
   // Step 1: Fetch list from Database
-  const getLists = async () => {
-    const res = await fetch(`/lists?user_id=${userId}`);
-    const json = await res.json();
-    setUserLists(json);
+  const getLists = async () => {
+        const newUserList=[...userLists]
+        const res = await fetch(`/lists?user_id=${userId}`);
+        const json = await res.json();
+        console.log(json)
+        // setUserLists();
   };
 
   useEffect(() => {
