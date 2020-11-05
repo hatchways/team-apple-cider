@@ -1,6 +1,5 @@
 from server import flask_bcrypt
 from database import db
-from flask_login import UserMixin
 from config import DevelopmentConfig
 import datetime
 import jwt
@@ -10,7 +9,7 @@ followers = db.Table('followers',
         db.Column('followed_id', db.Integer, db.ForeignKey('users.id'))
 )
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -18,9 +17,9 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     registered_time = db.Column(db.DateTime, nullable=False)
-    followed = db.relationship('User', secondary=followers,
-    primaryjoin=(followers.c.follower_id == id),
-    secondaryjoin=(followers.c.followed_id == id),
+    followed = db.relationship('User', secondary=followers, 
+    primaryjoin=(followers.c.follower_id == id), 
+    secondaryjoin=(followers.c.followed_id == id), 
     backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
     def __init__(self, email, name, password):
