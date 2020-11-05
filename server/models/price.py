@@ -9,12 +9,10 @@ class Price(db.Model):
 
     __tablename__ = 'prices'
 
-
-
     product = relationship('Product')
 
     primary_id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
-    product_id = db.Column(ForeignKey('product.id'), nullable=False) 
+    product_id = db.Column(ForeignKey('products.id'), nullable=False) 
     price = db.Column(db.Integer)    
     currency = db.Column(db.String)
     scrape_date = db.Column(db.DateTime, nullable=False)
