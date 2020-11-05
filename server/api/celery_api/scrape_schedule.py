@@ -7,6 +7,7 @@ import requests
 app = Celery('scrape_schedule', backend='rpc://', broker='amqp://guest@localhost//')
 app.conf.timezone = ('US/Eastern')
 
+
 @app.task
 def scrape_url():
     product_req = requests.get('http://localhost:5000/products')

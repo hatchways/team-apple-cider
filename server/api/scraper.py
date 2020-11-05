@@ -41,11 +41,10 @@ SELECTORS = {
 }
 
 
-
 class ScrapeAmazon:   
-    def __init__(self, URL):
-        
-        driver = loadChromeDriver()
+    def __init__(self, URL): 
+              
+        driver = loadChromeDriver()        
         driver.get(URL)
         
         self.website = "amazon"
