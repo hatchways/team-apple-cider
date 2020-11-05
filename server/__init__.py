@@ -22,8 +22,8 @@ def create_app():
     cors.init_app(app)
     flask_bcrypt.init_app(app)
     socketio.init_app(app)
-    socketio.run(app)
-    attach_events(socketio)
+    # socketio.run(app)
+    # attach_events(socketio)
 
     with app.app_context():
 
