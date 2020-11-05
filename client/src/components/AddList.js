@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Dropzone from 'react-dropzone'
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -11,9 +11,11 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import useStyles from "../styles/AddListStyles";
+import UserContext from "contexts/UserContext";
 
 const AddList = (props) => {
   const { addListOpen, changeAddListOpen } = props;
+  const userId = useContext(UserContext).userId;
   const classes = useStyles();
   // const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
@@ -22,13 +24,18 @@ const AddList = (props) => {
   const onDrop = (acceptedFiles) => {
     console.log(acceptedFiles)
     acceptedFiles.forEach(file =>
-      setimage(file)
+      setimage(URL.createObjectURL(file))
       )
   }
 
-  const addList=(title, file)=>{
-    
-  }
+  const addList= async (image, title)=>{
+    const response = await fetch(`/lists?user_id=${userId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: title, img_url:image})
+    });
+    console.log(response)
+  };
 
   const handleClose = () => {
     changeAddListOpen();
@@ -134,7 +141,7 @@ const AddList = (props) => {
           </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained"  onClick={addList}>
+          <Button className={classes.addButton} variant="contained"  onClick={()=> addList(Image, title)}>
             CREATE LIST
           </Button>
         </Box>
