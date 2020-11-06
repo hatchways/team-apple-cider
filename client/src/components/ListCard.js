@@ -51,6 +51,7 @@ const ListCard = (props) => {
   const listTitle = props.list.name;
   const img = props.list.img_url;
   const lists = props.lists;
+  const changeOpenSuccessSnack = props.changeOpenSuccessSnack;
   const listChange = useContext(ListContext).listChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
@@ -146,6 +147,7 @@ const ListCard = (props) => {
           addProductOpen,
           changeAddProductOpen,
           lists,
+          changeOpenSuccessSnack,
         }}
       />
        <ListSettingsPopup {...{ listId, settingsOpen, settingsClose }} />
