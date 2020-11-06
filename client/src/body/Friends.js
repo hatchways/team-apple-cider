@@ -47,8 +47,13 @@ const Friends = (props) => {
   const getFollowers = async () => {
     const response = await fetch("/followers");
     const json = await response.json();
-    console.log(json);
     setFollowers(json);
+  };
+
+  const getFollowings = async () => {
+    const response = await fetch("/followings");
+    const json = await response.json();
+    setFollowings(json);
   };
 
   const getExplore = async () => {
@@ -68,6 +73,7 @@ const Friends = (props) => {
 
   useEffect(() => {
     getFollowers();
+    getFollowings();
     getExplore();
     resetTab(window.location.pathname);
   }, []);
@@ -76,19 +82,20 @@ const Friends = (props) => {
     setSelectedPage(newValue);
   };
   const toggleFollow = (person) => {
+    console.log("toggleFollow");
     followings.includes(person) ? handleUnfollow(person) : handleFollow(person);
   };
-  const handleFollow = (person) => {
-    let newFollowingsList = [...followings];
-    newFollowingsList.push(person);
-    setFollowings(newFollowingsList);
+  const handleFollow = async (person) => {
+    await fetch(`/followers/${person.id}`, {
+      method: "POST",
+    });
+    getFollowings();
   };
-  const handleUnfollow = (person) => {
-    let newFollowingsList = [...followings];
-    newFollowingsList = newFollowingsList.filter(
-      (following) => following.id != person.id
-    );
-    setFollowings(newFollowingsList);
+  const handleUnfollow = async (person) => {
+    await fetch(`/followers/${person.id}`, {
+      method: "DELETE",
+    });
+    getFollowings();
   };
 
   const getProfileListDisplay = () => {
