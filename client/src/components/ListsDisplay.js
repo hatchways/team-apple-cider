@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ListCard from "components/ListCard";
 import { useHorizontalScroll } from "components/HorrizontalScroll";
 import UserContext from "contexts/UserContext";
+import SuccessSnackbar from "components/SuccessSnackbar";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
@@ -56,6 +57,28 @@ const ListsDisplay = (props) => {
   const classes = useStyles();
   const userId = useContext(UserContext).userId;
   const [lists, setLists] = useState([]);
+  const [snackText, setSnackText] = useState("");
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
+
+  const changeOpenSuccessSnack = (message) => {
+    setSnackText(message);
+    setOpenSuccessSnack(true);
+  };
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSuccessSnack(false);
+  };
+
+  const snackProps = {
+    snackText,
+    setSnackText,
+    openSuccessSnack,
+    setOpenSuccessSnack,
+    changeOpenSuccessSnack,
+  };
 
   const getLists = async () => {
     const res = await fetch(`/lists?user_id=${userId}`);
@@ -82,7 +105,7 @@ const ListsDisplay = (props) => {
 
       <Box className={classes.myShoppingLists} ref={scrollRef}>
         {lists.map((list, i) => (
-          <ListCard key={i} list={list} lists={lists} />
+          <ListCard key={i} list={list} lists={lists} snackProps={snackProps} />
         ))}
         {!profile && (
           <Box className={classes.addNewList}>
@@ -98,6 +121,11 @@ const ListsDisplay = (props) => {
           </Box>
         )}
       </Box>
+      <SuccessSnackbar
+        openSnack={openSuccessSnack}
+        handleCloseSnack={handleCloseSnack}
+        snackText={snackText}
+      />
     </Box>
   );
 };

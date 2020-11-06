@@ -25,7 +25,9 @@ const AddProduct = (props) => {
     addProductOpen,
     changeAddProductOpen,
     lists,
+    snackProps,
   } = props;
+  const { changeOpenSuccessSnack, ...rest } = props.snackProps;
   const classes = useStyles();
   const [inputLink, setInputLink] = useState("");
   const [list, setList] = useState("");
@@ -80,6 +82,7 @@ const AddProduct = (props) => {
     e.preventDefault();
     await addProductToList();
     changeAddProductOpen();
+    changeOpenSuccessSnack("Product successfully added!");
   };
 
   const onChangeList = (e) => {
