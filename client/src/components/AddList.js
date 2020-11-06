@@ -22,10 +22,17 @@ const AddList = (props) => {
   const [imageUrl, setimageUrl] = useState("");
 
   const onDrop = (acceptedFiles) => {
-    console.log(acceptedFiles)
-    acceptedFiles.forEach(file =>
-      setimageUrl(URL.createObjectURL(file))
-      )
+    acceptedFiles.forEach(file =>{
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        // convert image file to base64 string
+        let src = reader.result;
+        setimageUrl(src)
+      }, false);
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    })
   }
 
   const addList= async (imageUrl, title)=>{
@@ -35,6 +42,7 @@ const AddList = (props) => {
       body: JSON.stringify({ name: title, img_url:imageUrl})
     });
     console.log(response)
+    handleClose()
   };
 
   const handleClose = () => {
