@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import FollowersFollowing from "../components/ProfileList";
 import ProfileList from "../components/ProfileList";
 import { Switch, Route, Link } from "react-router-dom";
+import { handleFollow, handleUnfollow } from "fetch/following";
 
 const useStyles = makeStyles((theme) => ({
   friendsContainer: {
@@ -89,19 +90,9 @@ const Friends = (props) => {
     setSelectedPage(newValue);
   };
   const toggleFollow = (person) => {
-    followings.includes(person) ? handleUnfollow(person) : handleFollow(person);
-  };
-  const handleFollow = async (person) => {
-    await fetch(`/followers/${person.id}`, {
-      method: "POST",
-    });
-    resetLists();
-  };
-  const handleUnfollow = async (person) => {
-    await fetch(`/followers/${person.id}`, {
-      method: "DELETE",
-    });
-    resetLists();
+    followings.includes(person)
+      ? handleUnfollow(person, resetLists)
+      : handleFollow(person, resetLists);
   };
 
   const getProfileListDisplay = () => {

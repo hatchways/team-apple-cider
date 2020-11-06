@@ -3,6 +3,7 @@ import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileTopBar from "components/ProfileTopBar";
 import ListsDisplay from "components/ListsDisplay";
+import { handleFollow, handleUnfollow } from "fetch/following";
 
 const useStyles = makeStyles((theme) => ({
   profileContainer: {
@@ -68,37 +69,43 @@ const useStyles = makeStyles((theme) => ({
 const ProfileDisplay = (props) => {
   const [profile, setProfile] = useState({});
   const [error, setError] = useState({});
-
-  // TODO: Get both following/followed booleans from backend
-  const [following, setFollowing] = useState(false);
-  const followingYou = true;
+  const [relation, setRelation] = useState({
+    following: null,
+    follows_back: null,
+  });
 
   const classes = useStyles();
   const id = parseInt(props.match.params.id);
 
+  const updateProfile = async () => {
+    const response = await fetch(`/profiles/${id}`);
+    if (response.status === 200) {
+      const newProfile = await response.json();
+      setError(false);
+      setProfile(newProfile);
+      getRelation();
+    } else setError(true);
+  };
+
   useEffect(() => {
-    const updateProfile = async () => {
-      const response = await fetch(`/profiles/${id}`);
-      if (response.status === 200) {
-        const newProfile = await response.json();
-        setError(false);
-        // TODO: seperate call for followers/following counts
-        // TODO: seperate call for public lists
-        setProfile(newProfile);
-      } else setError(true);
-    };
     updateProfile();
   }, [id]);
 
-  const toggleFollow = () => setFollowing((cur) => !cur);
+  const getRelation = async () => {
+    const relation = await (await fetch(`/follower_relation/${id}`)).json();
+    setRelation(relation);
+  };
+
+  const toggleFollow = async () => {
+    if (relation.following) handleUnfollow(profile, updateProfile);
+    else handleFollow(profile, updateProfile);
+  };
 
   if (error) return <Typography>Profile link not valid</Typography>;
   else
     return (
       <Box className={classes.profileContainer}>
-        <ProfileTopBar
-          {...{ profile, following, toggleFollow, followingYou }}
-        />
+        <ProfileTopBar {...{ profile, toggleFollow, relation }} />
         <ListsDisplay {...{ profile }} className={classes.listsDisplay} />
       </Box>
     );
