@@ -4,8 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import FollowersFollowing from "../components/ProfileList";
 import ProfileList from "../components/ProfileList";
-import UserContext from "contexts/UserContext";
-import { Filter } from "@material-ui/icons";
 import { Switch, Route, Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +40,6 @@ const Friends = (props) => {
   const [followings, setFollowings] = useState([]);
   const [explore, setExplore] = useState([]);
   const [selectedPage, setSelectedPage] = useState(0);
-  const { userId } = useContext(UserContext);
 
   const getFollowersFollowings = async (allProfiles, type) => {
     const userList = await (await fetch(`/${type}`)).json();
@@ -55,9 +52,10 @@ const Friends = (props) => {
   };
 
   const getAllProfiles = async () => {
-    const response = await fetch("/profiles");
-    const json = await response.json();
-    return json.filter((listUser) => listUser.id !== userId);
+    const allProfiles = await (await fetch("/profiles")).json();
+    const auth = await (await fetch("/auth/status")).json();
+    const userId = auth.data.user_id;
+    return allProfiles.filter((listUser) => listUser.id !== userId);
   };
 
   const tabs = ["followers", "following", "explore"];
