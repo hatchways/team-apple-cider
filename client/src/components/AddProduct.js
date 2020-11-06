@@ -171,7 +171,7 @@ const AddProduct = (props) => {
             <Box className={classes.errorMessage}>{item.response}</Box>
           ) : item.name ? (
             <>
-              <ItemDisplay item={item} className={classes.itemDisplay} />,
+              <ItemDisplay item={item} className={classes.itemDisplay} />
               <Button
                 onClick={addButtonClick}
                 variant="contained"
