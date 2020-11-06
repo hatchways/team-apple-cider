@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Typography, Tabs, Tab } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import NotificationsButton from "components/NotificationsButton";
@@ -48,6 +48,15 @@ const HeaderTabs = (props) => {
   const handleTabChange = (e, newValue) => {
     setSelectedPage(newValue);
   };
+
+  const resetTab = (path) => {
+    if (path === `/`) setSelectedPage(0);
+    else if (path.match(`/friends`)) setSelectedPage(1);
+  };
+
+  useEffect(() => {
+    resetTab(window.location.pathname);
+  }, []);
 
   return (
     <Box className={classes.tabContainer}>

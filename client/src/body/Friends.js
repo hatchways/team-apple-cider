@@ -61,10 +61,9 @@ const Friends = (props) => {
   const tabs = ["followers", "following", "explore"];
 
   const resetTab = (path) => {
-    path = path.replace(/\/+$/, "");
-    if (path === `/friends/${tabs[0]}`) setSelectedPage(0);
-    else if (path === `/friends/${tabs[1]}`) setSelectedPage(1);
-    else if (path === `/friends/${tabs[2]}`) setSelectedPage(2);
+    if (path.match(`/friends/${tabs[0]}`)) setSelectedPage(0);
+    else if (path.match(`/friends/${tabs[1]}`)) setSelectedPage(1);
+    else if (path.match(`/friends/${tabs[2]}`)) setSelectedPage(2);
   };
 
   useEffect(() => {
