@@ -74,6 +74,12 @@ const ProfileMenu = (props) => {
     updateUserPhoto();
   }, [imageURL]);
 
+  const goToUserProfile = async () => {
+    const auth = await (await fetch("/auth/status")).json();
+    const userId = auth.data.user_id;
+    props.history.push(`/profile/${userId}`);
+  };
+
   const onDrop = (acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader();
@@ -114,7 +120,7 @@ const ProfileMenu = (props) => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        <MenuItem>Go to profile</MenuItem>
+        <MenuItem onClick={goToUserProfile}>Go to profile</MenuItem>
       </Menu>
     </Box>
   );
