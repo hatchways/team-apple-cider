@@ -44,23 +44,20 @@ const Friends = (props) => {
   const [selectedPage, setSelectedPage] = useState(0);
   const { userId } = useContext(UserContext);
 
-  const getFollowers = async () => {
-    const response = await fetch("/followers");
-    const json = await response.json();
-    setFollowers(json);
+  const getFollowersFollowings = async (allProfiles, type) => {
+    const userList = await (await fetch(`/${type}`)).json();
+    const idList = userList.map((user) => user.id);
+    const profiles = allProfiles.filter((profile) =>
+      idList.includes(profile.id)
+    );
+    if (type === "followers") setFollowers(profiles);
+    else if (type === "followings") setFollowings(profiles);
   };
 
-  const getFollowings = async () => {
-    const response = await fetch("/followings");
-    const json = await response.json();
-    setFollowings(json);
-  };
-
-  const getExplore = async () => {
+  const getAllProfiles = async () => {
     const response = await fetch("/profiles");
     const json = await response.json();
-    const exploreUsers = json.filter((listUser) => listUser.id !== userId);
-    setExplore(exploreUsers);
+    return json.filter((listUser) => listUser.id !== userId);
   };
 
   const tabs = ["followers", "following", "explore"];
@@ -71,10 +68,15 @@ const Friends = (props) => {
     else if (path.match(`/friends/${tabs[2]}`)) setSelectedPage(2);
   };
 
+  const resetLists = async () => {
+    const allProfiles = await getAllProfiles();
+    await getFollowersFollowings(allProfiles, "followers");
+    await getFollowersFollowings(allProfiles, "followings");
+    setExplore(allProfiles);
+  };
+
   useEffect(() => {
-    getFollowers();
-    getFollowings();
-    getExplore();
+    resetLists();
     resetTab(window.location.pathname);
   }, []);
 
@@ -82,20 +84,19 @@ const Friends = (props) => {
     setSelectedPage(newValue);
   };
   const toggleFollow = (person) => {
-    console.log("toggleFollow");
     followings.includes(person) ? handleUnfollow(person) : handleFollow(person);
   };
   const handleFollow = async (person) => {
     await fetch(`/followers/${person.id}`, {
       method: "POST",
     });
-    getFollowings();
+    resetLists();
   };
   const handleUnfollow = async (person) => {
     await fetch(`/followers/${person.id}`, {
       method: "DELETE",
     });
-    getFollowings();
+    resetLists();
   };
 
   const getProfileListDisplay = () => {
