@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   productCard: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "space-between",
     margin: theme.spacing(0.5, 2, 3),
     boxShadow: " 0 2px 6px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.06)",
   },
