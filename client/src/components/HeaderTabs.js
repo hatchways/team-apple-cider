@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, Tabs, Tab } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import NotificationsButton from "components/NotificationsButton";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   tabContainer: {
@@ -58,8 +59,15 @@ const HeaderTabs = (props) => {
         <StyledTab
           disableRipple
           label={<Typography>Shopping Lists</Typography>}
+          component={Link}
+          to="/"
         />
-        <StyledTab disableRipple label={<Typography>Friends</Typography>} />
+        <StyledTab
+          disableRipple
+          label={<Typography>Friends</Typography>}
+          component={Link}
+          to="/friends"
+        />
       </Tabs>
       <NotificationsButton {...props} />
     </Box>

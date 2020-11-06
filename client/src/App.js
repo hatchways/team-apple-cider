@@ -21,7 +21,7 @@ function App() {
           <UserStore>
             <ListStore>
               <BrowserRouter>
-                <ProtectedRoute exact path="/" component={Dashboard} />
+                <ProtectedRoute path="/" component={Dashboard} />
                 <Route path="/login" exact component={Login} />
                 <Route path="/signup" exact component={SignUp} />
                 <Route path="/landing" exact component={LandingPage} />
