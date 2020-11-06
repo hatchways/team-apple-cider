@@ -88,6 +88,8 @@ const Friends = (props) => {
     return <ProfileList {...{ list, followings, toggleFollow }} />;
   };
 
+  const tabs = ["followers", "following", "explore"];
+
   return (
     <Box className={classes.friendsContainer}>
       <Typography variant={"h1"} className={classes.h1}>
@@ -98,41 +100,27 @@ const Friends = (props) => {
         value={selectedPage}
         onChange={handleTabChange}
       >
-        <Tab
-          disableRipple
-          className={classes.tab}
-          label="followers"
-          component={Link}
-          to="/friends/followers"
-        ></Tab>
-        <Tab
-          disableRipple
-          className={classes.tab}
-          label="following"
-          component={Link}
-          to="/friends/following"
-        ></Tab>
-        <Tab
-          disableRipple
-          className={classes.tab}
-          label="explore"
-          component={Link}
-          to="/friends/explore"
-        ></Tab>
+        {tabs.map((tab, index) => (
+          <Tab
+            key={index}
+            disableRipple
+            className={classes.tab}
+            label={tab}
+            component={Link}
+            to={`/friends/${tab}`}
+          />
+        ))}
       </Tabs>
       <Box className={classes.tabsContainer}>
         <Switch>
-          <Route
-            exact
-            path="/friends/followers"
-            render={getProfileListDisplay}
-          />
-          <Route
-            exact
-            path="/friends/following"
-            render={getProfileListDisplay}
-          />
-          <Route exact path="/friends/explore" render={getProfileListDisplay} />
+          {tabs.map((tab, index) => (
+            <Route
+              key={index}
+              exact
+              path={`/friends/${tab}`}
+              render={getProfileListDisplay}
+            />
+          ))}
         </Switch>
       </Box>
     </Box>

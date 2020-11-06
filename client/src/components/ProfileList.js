@@ -33,9 +33,9 @@ const ProfileList = (props) => {
   return (
     <List aria-label="followers list" className={classes.list}>
       {list.length > 0 &&
-        list.map((person) => {
+        list.map((person, index) => {
           return (
-            <Fragment>
+            <Fragment key={index}>
               <ListItem className={classes.listItem}>
                 <ListItemAvatar>
                   <Avatar alt={person.name} src={person.photo} />
