@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     backgroundColor: "white",
     height: "60vh",
-    overflow: "scroll",
+    overflowY: "scroll",
   },
 }));
 

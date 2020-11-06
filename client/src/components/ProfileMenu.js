@@ -40,9 +40,18 @@ const ProfileMenu = (props) => {
     props.history.push("/");
   };
 
+  const handlePhotoClick = () => {
+    console.log("hiya");
+  };
+
   return (
     <Box className={classes.profileMenuContainer}>
-      <img className={classes.profileIcon} src={icon} alt="profile" />
+      <img
+        className={classes.profileIcon}
+        src={icon}
+        alt="profile"
+        onClick={handlePhotoClick}
+      />
       <Button onClick={handleClick}>
         <Typography className={classes.profileButtonText}>Profile</Typography>
       </Button>
