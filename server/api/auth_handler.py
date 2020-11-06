@@ -4,7 +4,7 @@ from models.blacklist_token import BlacklistToken
 from flask import Blueprint, request, make_response, jsonify, g, redirect, url_for
 from flask.views import MethodView
 from database import db
-from server import flask_bcrypt
+from bcrypt_file import bcrypt
 from functools import wraps
 auth_handler = Blueprint("auth_handler", __name__)
 
@@ -129,18 +129,22 @@ class LoginAPI(MethodView):
             user = User.query.filter_by(
                 email=post_data.get("email")
             ).first()
-            if user and flask_bcrypt.check_password_hash(
+            
+            if user and bcrypt.check_password_hash(
                 user.password, post_data.get("password")
             ):
                 auth_token = user.encode_auth_token(user.id)
+                
                 if auth_token:
                     try:
                         blacklist_check = BlacklistToken.query.filter_by(
                             token=str(auth_token)
                         ).first()
+                       
                     except Exception:
                         return "Error"
                     if blacklist_check:
+                        
                         responseObject = {
                             "status": "failure",
                             "message": "Some error occurred. Please try again."
@@ -152,8 +156,10 @@ class LoginAPI(MethodView):
                         "message": "Successfully logged in"
                     }
                     resp = make_response(jsonify(responseObject))
+                    
                     resp.set_cookie("Authentication token",
                                     auth_token, httponly=True)
+                                   
                     return resp, 200
                 else:
                     responseObject = {
@@ -173,7 +179,7 @@ class LoginAPI(MethodView):
                     "message": "User does not exist."
                 }
                 return make_response(jsonify(responseObject)), 404
-        except Exception:
+        except Exception as e:
             responseObject = {
                 "status": "fail",
                 "message": "Try again"

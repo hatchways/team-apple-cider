@@ -1,32 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 
 import Header from "layout/Header";
 import Page from "layout/Page";
 import Body from "layout/Body";
-import HeaderTabs from "components/HeaderTabs";
 
 import ShoppingLists from "body/ShoppingLists";
 import Friends from "body/Friends";
 
 const Dashboard = () => {
-  const [selectedPage, setSelectedPage] = useState(0);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-
   return (
     <Page>
-      <Header>
-        <HeaderTabs
-          {...{
-            selectedPage,
-            setSelectedPage,
-            notificationsOpen,
-            setNotificationsOpen,
-          }}
-        />
-      </Header>
+      <Header />
       <Body>
-        {selectedPage === 0 && <ShoppingLists />}
-        {selectedPage === 1 && <Friends />}
+        <Switch>
+          <Route exact path="/" component={ShoppingLists} />
+          <Route exact path="/friends" component={Friends} />
+        </Switch>
       </Body>
     </Page>
   );
