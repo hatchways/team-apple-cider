@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileMenu from "components/ProfileMenu";
 import logo from "img/logo.png";
+import HeaderTabs from "components/HeaderTabs";
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -25,11 +26,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
+  const [selectedPage, setSelectedPage] = useState(0);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const classes = useStyles();
   return (
     <Box className={classes.headerContainer}>
       <img className={classes.logo} src={logo} alt="logo" />
       {props.children}
+      <HeaderTabs
+        {...{
+          selectedPage,
+          setSelectedPage,
+          notificationsOpen,
+          setNotificationsOpen,
+        }}
+      />
       <ProfileMenu />
     </Box>
   );

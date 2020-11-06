@@ -1,5 +1,6 @@
 from flask import jsonify, Blueprint, request, make_response
 from models.list import List
+from models.list_to_product import ListToProduct
 from database import db
 from api.auth_handler import token_getter
 import json
@@ -108,10 +109,11 @@ def listRequests():
             list = List.query.get(int(list_id))
             if list.user_id == int(auth_token):
                 try:
-                    req = request.get_json()
+                    list_to_product = ListToProduct.query.filter_by(
+                        list_id=int(list_id)).delete()
                     db.session.delete(list)
                     db.session.commit()
-                    return jsonify({'response': "Product '{}' was successfully deleted from the database".format(list)}), 200
+                    return jsonify({'response': "List '{}' was successfully deleted from the database".format(list)}), 200
 
                 except Exception as e:
                     return jsonify({'error': "{}".format(e.__cause__)}), 400

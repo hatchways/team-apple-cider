@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: "column",
     width: "fit-content",
+    margin: theme.spacing(4),
   },
   profileTopBar: {
     display: "flex",

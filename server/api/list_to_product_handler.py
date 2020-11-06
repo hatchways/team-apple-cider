@@ -53,7 +53,6 @@ def listToProductsRequest(list_id):
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
 
-
 @list_to_product_handler.route('/list-to-products/<list_id>/<product_id>', methods=['DELETE'])
 def listToProductRequest(list_id, product_id):
     auth_token = token_getter()
