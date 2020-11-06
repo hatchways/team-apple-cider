@@ -19,20 +19,20 @@ const AddList = (props) => {
   const classes = useStyles();
   // const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
-  const [image, setimage] = useState("");
+  const [imageUrl, setimageUrl] = useState("");
 
   const onDrop = (acceptedFiles) => {
     console.log(acceptedFiles)
     acceptedFiles.forEach(file =>
-      setimage(URL.createObjectURL(file))
+      setimageUrl(URL.createObjectURL(file))
       )
   }
 
-  const addList= async (image, title)=>{
+  const addList= async (imageUrl, title)=>{
     const response = await fetch(`/lists?user_id=${userId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: title, img_url:image})
+      body: JSON.stringify({ name: title, img_url:imageUrl})
     });
     console.log(response)
   };
@@ -132,7 +132,7 @@ const AddList = (props) => {
                         {acceptedFiles.length!==0 
                         && 
                         acceptedFiles.map(file =>
-                         file.name)}
+                        <p>{file.name}</p>)}
                       </div>
                     </div>
                   )}
@@ -141,7 +141,7 @@ const AddList = (props) => {
           </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained"  onClick={()=> addList(Image, title)}>
+          <Button className={classes.addButton} variant="contained"  onClick={()=> addList(imageUrl, title)}>
             CREATE LIST
           </Button>
         </Box>
