@@ -30,10 +30,8 @@ const AddProduct = (props) => {
   const classes = useStyles();
   const [inputLink, setInputLink] = useState("");
   const [list, setList] = useState("");
-  const [errors, setErrors] = useState({});
   const userId = useContext(UserContext).userId;
   const [item, setItem] = useState({});
-  const [selectedListIndex, setSelectedListIndex] = useState(0);
   const [listId, setListId] = useState("");
   const [userLists, setUserLists] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -82,6 +80,7 @@ const AddProduct = (props) => {
     await addProductToList();
     changeAddProductOpen();
     changeOpenSuccessSnack("Product successfully added!");
+    setItem({});
   };
 
   const onChangeList = (e) => {
@@ -91,14 +90,6 @@ const AddProduct = (props) => {
 
   const handleClose = () => {
     changeAddProductOpen();
-  };
-
-  const validations = () => {
-    const errorsCopy = { ...errors };
-    errorsCopy.inputLink = inputLink ? "" : "This field is required.";
-    setErrors({ ...errorsCopy });
-
-    return Object.values(errorsCopy).every((field) => field === "");
   };
 
   return (
@@ -135,8 +126,6 @@ const AddProduct = (props) => {
             placeholder="Paste your link here" // Placeholder needs to be centered.
             fullWidth
             type="text"
-            error={Boolean(errors.inputLink)}
-            helperText={errors.inputLink}
             onChange={(e) => setInputLink(e.target.value)}
           />
         </Box>
