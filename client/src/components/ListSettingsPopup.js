@@ -15,9 +15,6 @@ export default function ListSettingsPopup({
   const listDeleteToggle = useContext(ListContext).listDeleteToggle;
 
   const handleDeleteList = async () => {
-    await fetch(`/list-to-products/${listId}`, {
-      method: "DELETE",
-    });
     await fetch(`/lists?list_id=${listId}`, {
       method: "DELETE",
     });

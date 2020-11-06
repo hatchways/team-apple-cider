@@ -9,7 +9,7 @@ import json
 list_to_product_handler = Blueprint('list_to_product_handler', __name__)
 
 
-@list_to_product_handler.route('/list-to-products/<list_id>', methods=['GET', 'POST', 'DELETE'])
+@list_to_product_handler.route('/list-to-products/<list_id>', methods=['GET', 'POST'])
 def listToProductsRequest(list_id):
     auth_token = token_getter()
 
