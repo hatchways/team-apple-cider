@@ -16,6 +16,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import useStyles from "../styles/AddProductStyles";
 import UserContext from "contexts/UserContext";
 import ItemDisplay from "components/ItemDisplay";
+import ListContext from "contexts/ListContext";
 
 const AddProduct = (props) => {
   const {
@@ -31,6 +32,7 @@ const AddProduct = (props) => {
   const [list, setList] = useState("");
   const [errors, setErrors] = useState({});
   const userId = useContext(UserContext).userId;
+  const listToggle = useContext(ListContext).listToggle;
   const [item, setItem] = useState({});
   const [selectedListIndex, setSelectedListIndex] = useState(0);
   const [listId, setListId] = useState("");
@@ -54,7 +56,7 @@ const AddProduct = (props) => {
 
   useEffect(() => {
     getLists();
-  }, []);
+  }, [listToggle]);
 
   const addProductToList = async () => {
     const res = await fetch(`/list-to-products/${listId}`, {

@@ -138,7 +138,6 @@ const ListCard = (props) => {
           changeAddProductOpen,
         }}
       />
-      <ListSettingsPopup {...{ listId, settingsOpen, settingsClose }} />
       <AddProduct
         {...{
           listTitle,
@@ -149,6 +148,7 @@ const ListCard = (props) => {
           lists,
         }}
       />
+       <ListSettingsPopup {...{ listId, settingsOpen, settingsClose }} />
     </Box>
   );
 };
