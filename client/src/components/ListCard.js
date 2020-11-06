@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import ListSettingsPopup from "components/ListSettingsPopup";
 
 const useStyles = makeStyles((theme) => ({
   listsTitle: {
@@ -94,10 +95,6 @@ const ListCard = (props) => {
   }, [listChange]);
 
 
-  // const changeAddProductOpen = () => {
-  //   setAddProductOpen((previous) => !previous);
-  // };
-
 
   const handleClick = (event) => {
     event.stopPropagation()
@@ -108,6 +105,7 @@ const ListCard = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
 
   return (
     <Box>
@@ -122,20 +120,6 @@ const ListCard = (props) => {
       >
         <MoreHorizIcon />
       </IconButton>
-      <Menu
-        id="long-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={open}
-        onClose={handleClose}
-        
-      >
-           
-          <MenuItem >
-            Delete
-          </MenuItem>
-      </Menu>
-
         </Box>
         <Box className={classes.listTextContainer}>
           <Typography className={classes.listTextTitle}>{listTitle}</Typography>
@@ -145,6 +129,7 @@ const ListCard = (props) => {
         </Box>
       </Box>
       <ListPopup {...{products, listId, getProductIds, listTitle, itemCount, listOpen, changeListOpen }} />
+      <ListSettingsPopup {...{listId,open,handleClose}}/>
       {/* <AddProduct
         {...{
           listTitle,
