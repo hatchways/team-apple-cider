@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ListCard from "components/ListCard";
 import { useHorizontalScroll } from "components/HorrizontalScroll";
 import UserContext from "contexts/UserContext";
+import SuccessSnackbar from "components/SuccessSnackbar";
 import ListContext from "contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -58,13 +59,28 @@ const ListsDisplay = (props) => {
   const userId = useContext(UserContext).userId;
   const listDelete = useContext(ListContext).listDelete;
   const [lists, setLists] = useState([]);
+  const [snackText, setSnackText] = useState("");
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
 
-  const getLists = async () =>{
-    const res = await fetch(`/lists?user_id=${userId}`)
-    const json = await res.json()
-    if(Array.isArray(json)) 
-    {setLists(json);}
-  }
+  const changeOpenSuccessSnack = (message) => {
+    setSnackText(message);
+    setOpenSuccessSnack(true);
+  };
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSuccessSnack(false);
+  };
+
+  const getLists = async () => {
+    const res = await fetch(`/lists?user_id=${userId}`);
+    const json = await res.json();
+    if (Array.isArray(json)) {
+      setLists(json);
+    }
+  };
 
   useEffect(() => {
     getLists();
@@ -83,9 +99,15 @@ const ListsDisplay = (props) => {
         {getListsUserText(profile)} Shopping Lists:
       </Typography>
       <Box className={classes.myShoppingLists} ref={scrollRef}>
-      {lists.length!==0 && lists.map((list, i) => (
-          <ListCard key={i} list={list} />
-        ))}
+        {lists.length !== 0 &&
+          lists.map((list, i) => (
+            <ListCard
+              key={i}
+              list={list}
+              lists={lists}
+              changeOpenSuccessSnack={changeOpenSuccessSnack}
+            />
+          ))}
         {!profile && (
           <Box className={classes.addNewList}>
             <IconButton
@@ -100,6 +122,11 @@ const ListsDisplay = (props) => {
           </Box>
         )}
       </Box>
+      <SuccessSnackbar
+        openSnack={openSuccessSnack}
+        handleCloseSnack={handleCloseSnack}
+        snackText={snackText}
+      />
     </Box>
   );
 };
