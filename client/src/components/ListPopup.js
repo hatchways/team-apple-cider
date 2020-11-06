@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Modal, IconButton, Typography, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import ProductCard from "components/ProductCard";
-import { ContactSupportOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -107,7 +106,7 @@ const ListPopup = ({
   };
 
   return (
-    <Modal open={listOpen}  onClose={changeListOpen} className={classes.popup} onClic>
+    <Modal open={listOpen} onClose={changeListOpen} className={classes.popup}>
       <Box className={classes.paper}>
         <Box className={classes.closeButtonContainer}>
           <IconButton

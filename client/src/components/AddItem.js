@@ -10,6 +10,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import AddItemPopup from "components/AddItemPopup";
 import UserContext from "contexts/UserContext";
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {
@@ -52,6 +54,14 @@ const useStyles = makeStyles((theme) => ({
     width: "7rem",
     marginRight: "5rem",
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  
 }));
 
 const AddItem = () => {
@@ -59,7 +69,7 @@ const AddItem = () => {
   const [inputLink, setInputLink] = useState("");
   const [item, setItem] = useState({});
   const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedListIndex, setSelectedListIndex] = useState(0);
+  const [selectedListIndex, setSelectedListIndex] = useState("");
   const [listId, setListId] = useState("");
   const [userLists, setUserLists] = useState([]);
 
@@ -80,6 +90,7 @@ const AddItem = () => {
     const res = await fetch(`/lists?user_id=${userId}`);
     const json = await res.json();
     setUserLists(json);
+    
   };
 
   useEffect(() => {
@@ -124,13 +135,18 @@ const AddItem = () => {
           />
 
           {/* Dropdown menu to select list */}
+          <FormControl className={classes.formControl}>
+          
+        
           <Select
             className={classes.dropdownList}
             value={selectedListIndex}
             onChange={onChangeList}
+            displayEmpty
             disableUnderline
+            inputProps={{ 'aria-label': 'Without label' }}
           >
-            <MenuItem value="none" disabled>
+            <MenuItem value="" disabled >
               Select List
             </MenuItem>
             {userLists.map((listName, i) => (
@@ -138,7 +154,9 @@ const AddItem = () => {
                 {listName.name}
               </MenuItem>
             ))}
+            
           </Select>
+          </FormControl>
           <Button
             className={classes.addButton}
             variant="contained"

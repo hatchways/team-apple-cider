@@ -124,6 +124,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 0 0.5rem 1px #eee",
     width: "80%",
   },
+  itemContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
 }));
 
 export default useStyles;
