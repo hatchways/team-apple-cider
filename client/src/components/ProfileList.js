@@ -28,29 +28,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ProfileList = (props) => {
   const classes = useStyles();
-  const { list, toggleFollow, buttonText, followingsList } = props;
+  const { list, toggleFollow, buttonText, followings } = props;
   return (
     <List aria-label="followers list" className={classes.list}>
-      {list.map((person) => {
-        return (
-          <Fragment>
-            <ListItem className={classes.listItem}>
-              <ListItemAvatar>
-                <Avatar alt={person.name} src={person.img} />
-              </ListItemAvatar>
-              <ListItemText>{person.name}</ListItemText>
-              <Button
-                className={classes.unFollowButton}
-                variant="contained"
-                onClick={() => toggleFollow(person)}
-              >
-                {followingsList.includes(person) ? "follow" : "unfollow"}
-              </Button>
-            </ListItem>
-            <Divider />
-          </Fragment>
-        );
-      })}
+      {list.length > 0 &&
+        list.map((person) => {
+          return (
+            <Fragment>
+              <ListItem className={classes.listItem}>
+                <ListItemAvatar>
+                  <Avatar alt={person.name} src={person.photo} />
+                </ListItemAvatar>
+                <ListItemText>{person.name}</ListItemText>
+                <Button
+                  className={classes.unFollowButton}
+                  variant="contained"
+                  onClick={() => toggleFollow(person)}
+                >
+                  {followings.includes(person) ? "unfollow" : "follow"}
+                </Button>
+              </ListItem>
+              <Divider />
+            </Fragment>
+          );
+        })}
     </List>
   );
 };

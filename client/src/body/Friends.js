@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Box, Typography, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import FollowersFollowing from "../components/ProfileList";
-import rose from "../img/roseBarron.png";
-import david from "../img/davidRichardson.png";
-import christine from "../img/christineSmith.png";
-import jennifer from "../img/jenniferFordham.png";
-import rebbeca from "../img/rebbecaSchindler.png";
 import ProfileList from "../components/ProfileList";
+import UserContext from "contexts/UserContext";
+import { Filter } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   friendsContainer: {
@@ -40,31 +37,44 @@ const useStyles = makeStyles((theme) => ({
 
 const Friends = (props) => {
   const classes = useStyles();
+  const [followers, setFollowers] = useState([]);
+  const [followings, setFollowings] = useState([]);
+  const [explore, setExplore] = useState([]);
   const [selectedPage, setSelectedPage] = useState(0);
-  const [followersList, setFollowers] = useState([
-    { name: "David Richardson", img: david },
-    { name: "Christine Smith", img: christine },
-    { name: "Jennifer Fordham", img: jennifer },
-    { name: "Rebbeca Schindler", img: rebbeca },
-  ]);
-  const [followingsList, setFollowings] = useState([
-    { name: "Rose Barron", img: rose },
-  ]);
+  const { userId } = useContext(UserContext);
+
+  const getFollowers = async () => {
+    const response = await fetch("/followers");
+    const json = await response.json();
+    console.log(json);
+    setFollowers(json);
+  };
+
+  const getExplore = async () => {
+    const response = await fetch("/profiles");
+    const json = await response.json();
+    const exploreUsers = json.filter((listUser) => listUser.id !== userId);
+    setExplore(exploreUsers);
+  };
+
+  useEffect(() => {
+    getFollowers();
+    getExplore();
+  }, []);
+
   const handleTabChange = (e, newValue) => {
     setSelectedPage(newValue);
   };
   const toggleFollow = (person) => {
-    followingsList.includes(person)
-      ? handleUnfollow(person)
-      : handleFollow(person);
+    followings.includes(person) ? handleUnfollow(person) : handleFollow(person);
   };
   const handleFollow = (person) => {
-    const newFollowingsList = [...followingsList];
+    const newFollowingsList = [...followings];
     newFollowingsList.push(person);
     setFollowings(newFollowingsList);
   };
   const handleUnfollow = (person) => {
-    const newFollowingsList = [...followingsList];
+    const newFollowingsList = [...followings];
     newFollowingsList.pop(person);
     setFollowings(newFollowingsList);
   };
@@ -83,16 +93,25 @@ const Friends = (props) => {
         <Tab disableRipple className={classes.tab} label="explore"></Tab>
       </Tabs>
       <Box className={classes.tabsContainer}>
-        {selectedPage == 0 ? (
+        {selectedPage == 0 && (
           <ProfileList
-            list={followersList}
-            followingsList={followingsList}
+            list={followers}
+            followings={followings}
             toggleFollow={toggleFollow}
           />
-        ) : (
+        )}
+
+        {selectedPage == 1 && (
           <ProfileList
-            list={followingsList}
-            followingsList={followingsList}
+            list={followings}
+            followings={followings}
+            toggleFollow={toggleFollow}
+          />
+        )}
+        {selectedPage == 2 && (
+          <ProfileList
+            list={explore}
+            followings={followings}
             toggleFollow={toggleFollow}
           />
         )}
