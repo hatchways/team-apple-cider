@@ -156,7 +156,7 @@ const AddProduct = (props) => {
               onChange={onChangeList}
               label="List"
             >
-              {lists.map((userList, i) => (
+              {userLists.map((userList, i) => (
                 <MenuItem key={i} value={userList}>
                   {userList.name}
                 </MenuItem>
