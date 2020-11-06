@@ -59,11 +59,12 @@ const ListsDisplay = (props) => {
   const listDelete = useContext(ListContext).listDelete;
   const [lists, setLists] = useState([]);
 
-  const getLists = async () => {
-    const res = await fetch(`/lists?user_id=${userId}`);
-    const json = await res.json();
-    setLists(json);
-  };
+  const getLists = async () =>{
+    const res = await fetch(`/lists?user_id=${userId}`)
+    const json = await res.json()
+    if(Array.isArray(json)) 
+    {setLists(json);}
+  }
 
   useEffect(() => {
     getLists();
@@ -81,10 +82,9 @@ const ListsDisplay = (props) => {
       <Typography variant="h5" className={classes.listsTitle}>
         {getListsUserText(profile)} Shopping Lists:
       </Typography>
-
       <Box className={classes.myShoppingLists} ref={scrollRef}>
-        {lists.map((list, i) => (
-          <ListCard key={i} list={list} lists={lists} />
+      {lists.length!==0 && lists.map((list, i) => (
+          <ListCard key={i} list={list} />
         ))}
         {!profile && (
           <Box className={classes.addNewList}>

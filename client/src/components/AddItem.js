@@ -71,7 +71,7 @@ const AddItem = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedListIndex, setSelectedListIndex] = useState("");
   const [listId, setListId] = useState("");
-  const [userLists, setUserLists] = useState([]);
+  const [userLists, setUserLists] = useState(["Luxury", "Electronics"]);
 
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
