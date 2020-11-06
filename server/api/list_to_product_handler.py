@@ -9,7 +9,7 @@ import json
 list_to_product_handler = Blueprint('list_to_product_handler', __name__)
 
 
-@list_to_product_handler.route('/list-to-products/<list_id>', methods=['GET', 'POST','DELETE'])
+@list_to_product_handler.route('/list-to-products/<list_id>', methods=['GET', 'POST', 'DELETE'])
 def listToProductsRequest(list_id):
     auth_token = token_getter()
 
@@ -58,16 +58,17 @@ def listToProductsRequest(list_id):
             return jsonify({'error': "you must log in to add a product to a list"}), 400
         else:
             try:
-                list_user_id = List.query.filter_by(id=int(list_id)).first().user_id
+                list_user_id = List.query.filter_by(
+                    id=int(list_id)).first().user_id
                 if int(list_user_id) == int(auth_token):
-                    list_to_product = ListToProduct.query.filter_by(list_id=int(list_id)).delete()
+                    list_to_product = ListToProduct.query.filter_by(
+                        list_id=int(list_id)).delete()
                     db.session.commit()
                 else:
                     return jsonify({"error": "you are unauthorized to delete from this list"}), 404
                 return jsonify({'response': "items were successfully deleted from the list"}), 200
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
-
 
 
 @list_to_product_handler.route('/list-to-products/<list_id>/<product_id>', methods=['DELETE'])

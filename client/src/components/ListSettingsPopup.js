@@ -37,8 +37,7 @@ export default function ListSettingsPopup({
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            All items within the list will be permanetly deleted and you will
-            not be able to revert these changes.
+            All items in the list will be deleted permanetly.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
