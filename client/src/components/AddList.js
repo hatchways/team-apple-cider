@@ -49,42 +49,6 @@ const AddList = (props) => {
     changeAddListOpen();
   };
  
-
-  // const validations = () => {
-  //   const errorsCopy = { ...errors };
-  //   errorsCopy.title = title ? "" : "This field is required.";
-  //   setErrors({ ...errorsCopy });
-
-  //   return Object.values(errorsCopy).every((field) => field === "");
-  // };
-
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   if (validations()) {
-  //     fetch("route", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         title: title,
-  //       }),
-  //     })
-  //       .then((response) => response.json())
-  //       .then(function (response) {
-  //         if (response.status === "success") {
-  //           console.log("Success:");
-  //         } else {
-  //           window.alert(response.message); // Replace with snackbar.
-  //           console.log(response.message);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error:", error);
-  //       });
-  //   }
-  // };
-
   return (
     <Modal
       className={classes.popup}
@@ -115,8 +79,7 @@ const AddList = (props) => {
               placeholder="Enter name" // Placeholder needs to be centered.
               fullWidth
               type="text"
-              // error={Boolean(errors.title)}
-              // helperText={errors.title}
+              required
               onChange={(e) => setTitle(e.target.value)}
             />
           </Box>
@@ -124,13 +87,11 @@ const AddList = (props) => {
         <Box className={classes.bodyContainer}>
           <Typography className={classes.itemText}>Add a cover</Typography>
           <Box className={classes.imageFieldContainer}>
-            {/* <Typography>Drop an image here or </Typography> */}
-            <Typography>
               <Dropzone
                   onDrop={onDrop}
                   accept="image/*"
                 >
-                  {({getRootProps, getInputProps, isDragActive, isDragReject, acceptedFiles}) => (
+                  {({getRootProps, getInputProps, isDragReject, acceptedFiles}) => (
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
                       {acceptedFiles.length==0 
@@ -144,7 +105,6 @@ const AddList = (props) => {
                     </div>
                   )}
             </Dropzone>
-            </Typography>
           </Box>
         </Box>
         <Box className={classes.addButtonContainer}>
