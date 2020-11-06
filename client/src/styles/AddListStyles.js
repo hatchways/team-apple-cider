@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     outline: "none",
     minWidth: "30rem",
-    maxHeight: "41rem",
     height: "75%",
   },
   addButton: {
@@ -81,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   addButtonContainer: {
     display: "flex",
     justifyContent: "center",
-    margin: theme.spacing(3, 0, 2),
+    // margin: theme.spacing(2, 0, 2),
   },
   bodyContainer: {
     minWidth: "30rem",
@@ -113,16 +112,17 @@ const useStyles = makeStyles((theme) => ({
   imageFieldContainer: {
     display: "flex",
     backgroundColor: "white",
-    width: "13rem",
-    height: "13rem",
+    // width: "13rem",
+    // height: "13rem",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
     border: "1px dashed grey",
     margin: theme.spacing(2),
+    padding: theme.spacing(1)
   },
   input: {
-    display: "none",
+    opacity: "0",
   },
   imageFieldText: {
     fontWeight: "bold",

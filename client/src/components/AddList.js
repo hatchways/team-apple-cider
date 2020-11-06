@@ -133,15 +133,14 @@ const AddList = (props) => {
                   {({getRootProps, getInputProps, isDragActive, isDragReject, acceptedFiles}) => (
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
-                      {!isDragActive && 'Click here or drop a file to upload!'}
-                      {isDragActive && !isDragReject && "Drop a image here"}
-                      {isDragReject && "File type not accepted, sorry!"}
-                      <div>
-                        {acceptedFiles.length!==0 
-                        && 
+                      {acceptedFiles.length==0 
+                        ?
+                        "click here to upload or drop an image here"
+                        :
                         acceptedFiles.map(file =>
-                        <p>{file.name}</p>)}
-                      </div>
+                        <p>{file.name}</p>)
+                      }
+                      {isDragReject && "the file type is not accepted"}
                     </div>
                   )}
             </Dropzone>
