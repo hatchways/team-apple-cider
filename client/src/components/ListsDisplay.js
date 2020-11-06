@@ -60,7 +60,8 @@ const ListsDisplay = (props) => {
   const [lists, setLists] = useState([]);
 
   const getLists = async () => {
-    const res = await fetch(`/lists?user_id=${userId}`);
+    const id = profile && profile.id ? profile.id : userId;
+    const res = await fetch(`/lists?user_id=${id}`);
     const json = await res.json();
     if (Array.isArray(json)) {
       setLists(json);
@@ -69,7 +70,7 @@ const ListsDisplay = (props) => {
 
   useEffect(() => {
     getLists();
-  }, [listDelete]);
+  }, [listDelete, profile && profile.id]);
 
   const getListsUserText = (profile) => {
     if (!profile || profile.name === undefined) return "My Shopping Lists:";

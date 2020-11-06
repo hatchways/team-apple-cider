@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileTopBar from "components/ProfileTopBar";
 import ListsDisplay from "components/ListsDisplay";
@@ -12,7 +12,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: "column",
     width: "fit-content",
-    margin: theme.spacing(4),
+    margin: theme.spacing(8),
+  },
+  centerPageContainer: {
+    height: "40rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   profileTopBar: {
     display: "flex",
@@ -73,18 +79,21 @@ const ProfileDisplay = (props) => {
     following: null,
     follows_back: null,
   });
-
+  const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
   const id = parseInt(props.match.params.id);
 
   const updateProfile = async () => {
-    const response = await fetch(`/profiles/${id}`);
-    if (response.status === 200) {
-      const newProfile = await response.json();
+    const newProfile = await (await fetch(`/profiles/${id}`)).json();
+    if (!("error" in newProfile)) {
       setError(false);
       setProfile(newProfile);
       getRelation();
-    } else setError(true);
+      setLoaded(true);
+    } else {
+      setError(true);
+      setLoaded(true);
+    }
   };
 
   useEffect(() => {
@@ -101,12 +110,26 @@ const ProfileDisplay = (props) => {
     else handleFollow(profile, updateProfile);
   };
 
-  if (error) return <Typography>Profile link not valid</Typography>;
+  if (!loaded)
+    return (
+      <Box className={classes.centerPageContainer}>
+        <CircularProgress className={classes.spinner} />
+      </Box>
+    );
+  else if (error)
+    return (
+      <Box className={classes.centerPageContainer}>
+        <Typography>Profile link not valid</Typography>
+      </Box>
+    );
   else
     return (
       <Box className={classes.profileContainer}>
         <ProfileTopBar {...{ profile, toggleFollow, relation }} />
-        <ListsDisplay {...{ profile }} className={classes.listsDisplay} />
+        <ListsDisplay
+          {...{ profile, loaded }}
+          className={classes.listsDisplay}
+        />
       </Box>
     );
 };
