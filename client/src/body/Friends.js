@@ -58,9 +58,19 @@ const Friends = (props) => {
     setExplore(exploreUsers);
   };
 
+  const tabs = ["followers", "following", "explore"];
+
+  const resetTab = (path) => {
+    path = path.replace(/\/+$/, "");
+    if (path === `/friends/${tabs[0]}`) setSelectedPage(0);
+    else if (path === `/friends/${tabs[1]}`) setSelectedPage(1);
+    else if (path === `/friends/${tabs[2]}`) setSelectedPage(2);
+  };
+
   useEffect(() => {
     getFollowers();
     getExplore();
+    resetTab(window.location.pathname);
   }, []);
 
   const handleTabChange = (e, newValue) => {
@@ -89,8 +99,6 @@ const Friends = (props) => {
     else if (selectedPage === 2) list = explore;
     return <ProfileList {...{ list, followings, toggleFollow }} />;
   };
-
-  const tabs = ["followers", "following", "explore"];
 
   return (
     <Box className={classes.friendsContainer}>
