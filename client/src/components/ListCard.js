@@ -4,6 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
 import AddProduct from "components/AddProduct";
 import ListContext from "../contexts/ListContext";
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles((theme) => ({
   listsTitle: {
@@ -54,9 +58,11 @@ const ListCard = (props) => {
   const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
   const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
   const [addProductOpen, setAddProductOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   // This affects the Modal open component which opens the modal when set to True
-  const changeListOpen = () => {
+  const changeListOpen = (event) => {
     setListOpen(!listOpen);
     getProductIds();
   };
@@ -91,11 +97,46 @@ const ListCard = (props) => {
   // const changeAddProductOpen = () => {
   //   setAddProductOpen((previous) => !previous);
   // };
+
+
+  const handleClick = (event) => {
+    event.stopPropagation()
+    setAnchorEl(event.currentTarget);
+   
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box>
-      <Box onClick={changeListOpen} className={classes.listContainer}>
+      <Box onClick={!open && changeListOpen} className={classes.listContainer}>
         <img src={img} alt={listTitle} className={classes.listImage} />
+        <Box>
+        <IconButton
+        aria-label="more"
+        aria-controls="long-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreHorizIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        
+      >
+           
+          <MenuItem >
+            Delete
+          </MenuItem>
+      </Menu>
 
+        </Box>
         <Box className={classes.listTextContainer}>
           <Typography className={classes.listTextTitle}>{listTitle}</Typography>
           <Typography
