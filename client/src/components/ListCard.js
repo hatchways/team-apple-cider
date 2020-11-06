@@ -4,6 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
 import AddProduct from "components/AddProduct";
 import ListContext from "../contexts/ListContext";
+import IconButton from "@material-ui/core/IconButton";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import ListSettingsPopup from "components/ListSettingsPopup";
 
 const useStyles = makeStyles((theme) => ({
   listsTitle: {
@@ -55,9 +58,11 @@ const ListCard = (props) => {
   const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
   const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
   const [addProductOpen, setAddProductOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const settingsOpen = Boolean(anchorEl);
 
   // This affects the Modal open component which opens the modal when set to True
-  const changeListOpen = () => {
+  const changeListOpen = (event) => {
     setListOpen(!listOpen);
     getProductIds();
   };
@@ -88,14 +93,32 @@ const ListCard = (props) => {
     getProductIds();
   }, [listChange]);
 
+  const settingsClick = (event) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const settingsClose = () => {
+    setAnchorEl(null);
+  };
+
   const changeAddProductOpen = () => {
     setAddProductOpen((previous) => !previous);
   };
   return (
     <Box>
-      <Box onClick={changeListOpen} className={classes.listContainer}>
+      <Box onClick={!settingsOpen && changeListOpen} className={classes.listContainer}>
         <img src={img} alt={listTitle} className={classes.listImage} />
-
+        <Box>
+          <IconButton
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={settingsClick}
+          >
+            <MoreHorizIcon />
+          </IconButton>
+        </Box>
         <Box className={classes.listTextContainer}>
           <Typography className={classes.listTextTitle}>{listTitle}</Typography>
           <Typography
@@ -125,6 +148,7 @@ const ListCard = (props) => {
           lists,
         }}
       />
+       <ListSettingsPopup {...{ listId, settingsOpen, settingsClose }} />
     </Box>
   );
 };
