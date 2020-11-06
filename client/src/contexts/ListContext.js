@@ -2,21 +2,27 @@ import React, { useState } from "react";
 const ListContext = React.createContext({});
 
 export function ListStore(props) {
-const [listChange, setListChange] = useState(true);
+  const [listChange, setListChange] = useState(true);
+  const [listDelete, setListDelete] = useState(true);
 
-const listToggle = () => {
+  const listToggle = () => {
     setListChange(!listChange);
-}
-return (
+  };
+  const listDeleteToggle = () => {
+    setListDelete(!listDelete);
+  };
+  return (
     <ListContext.Provider
       value={{
-          listToggle :listToggle,
-          listChange : listChange
+        listToggle: listToggle,
+        listChange: listChange,
+        listDeleteToggle: listDeleteToggle,
+        listDelete: listDelete,
       }}
     >
       {props.children}
     </ListContext.Provider>
   );
- }
+}
 
 export default ListContext;

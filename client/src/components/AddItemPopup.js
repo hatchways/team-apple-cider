@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
-import ListContext from "../contexts/ListContext";
+import ListContext from "contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   popup: {

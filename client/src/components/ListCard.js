@@ -1,13 +1,11 @@
-import React, { useContext,useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ListPopup from "components/ListPopup";
 import AddProduct from "components/AddProduct";
 import ListContext from "../contexts/ListContext";
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import IconButton from "@material-ui/core/IconButton";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ListSettingsPopup from "components/ListSettingsPopup";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,12 +53,12 @@ const ListCard = (props) => {
   const listChange = useContext(ListContext).listChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
-  const [itemCount, setItemCount] = useState('');
+  const [itemCount, setItemCount] = useState("");
   const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
   const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
   const [addProductOpen, setAddProductOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const settingsOpen = Boolean(anchorEl);
 
   // This affects the Modal open component which opens the modal when set to True
   const changeListOpen = (event) => {
@@ -70,9 +68,9 @@ const ListCard = (props) => {
 
   // Gets the total number of items in the list
   const getProductIds = async () => {
-    const res = await fetch(`/list-to-products/${listId}`)
+    const res = await fetch(`/list-to-products/${listId}`);
     const json = await res.json();
-    setItemCount(json.length)
+    setItemCount(json.length);
     setListToProducts(json);
   };
 
@@ -91,35 +89,31 @@ const ListCard = (props) => {
   }, [listToProducts]);
 
   useEffect(() => {
-    getProductIds()
+    getProductIds();
   }, [listChange]);
 
-
-
-  const handleClick = (event) => {
-    event.stopPropagation()
+  const settingsClick = (event) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
-   
   };
 
-  const handleClose = () => {
+  const settingsClose = () => {
     setAnchorEl(null);
   };
 
-
   return (
     <Box>
-      <Box onClick={!open && changeListOpen} className={classes.listContainer}>
+      <Box onClick={!settingsOpen && changeListOpen} className={classes.listContainer}>
         <img src={img} alt={listTitle} className={classes.listImage} />
         <Box>
-        <IconButton
-        aria-label="more"
-        aria-controls="long-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreHorizIcon />
-      </IconButton>
+          <IconButton
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={settingsClick}
+          >
+            <MoreHorizIcon />
+          </IconButton>
         </Box>
         <Box className={classes.listTextContainer}>
           <Typography className={classes.listTextTitle}>{listTitle}</Typography>
@@ -128,8 +122,18 @@ const ListCard = (props) => {
           >{`${itemCount} items`}</Typography>
         </Box>
       </Box>
-      <ListPopup {...{products, listId, getProductIds, listTitle, itemCount, listOpen, changeListOpen }} />
-      <ListSettingsPopup {...{listId,open,handleClose}}/>
+      <ListPopup
+        {...{
+          products,
+          listId,
+          getProductIds,
+          listTitle,
+          itemCount,
+          listOpen,
+          changeListOpen,
+        }}
+      />
+      <ListSettingsPopup {...{ listId, settingsOpen, settingsClose }} />
       {/* <AddProduct
         {...{
           listTitle,

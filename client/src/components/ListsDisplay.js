@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ListCard from "components/ListCard";
 import { useHorizontalScroll } from "components/HorrizontalScroll";
 import UserContext from "contexts/UserContext";
+import ListContext from "contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
@@ -55,6 +56,7 @@ const ListsDisplay = (props) => {
   const { profile, addListOpen, changeAddListOpen } = props;
   const classes = useStyles();
   const userId = useContext(UserContext).userId;
+  const listDelete = useContext(ListContext).listDelete;
   const [lists, setLists] = useState([]);
 
   const getLists = async () =>{
@@ -65,7 +67,7 @@ const ListsDisplay = (props) => {
 
     useEffect(() => {
     getLists();
-  }, [userId]);
+  }, [listDelete]);
 
 
   const getListsUserText = (profile) => {
