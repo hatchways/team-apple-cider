@@ -9,6 +9,7 @@ import {
   Avatar,
   Button,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -39,7 +40,10 @@ const ProfileList = (props) => {
                 <ListItemAvatar>
                   <Avatar alt={person.name} src={person.photo} />
                 </ListItemAvatar>
-                <ListItemText>{person.name}</ListItemText>
+                <ListItemText>
+                  <Link to={`/profile/${person.id}`}>{person.name} </Link>
+                </ListItemText>
+
                 <Button
                   className={classes.unFollowButton}
                   variant="contained"

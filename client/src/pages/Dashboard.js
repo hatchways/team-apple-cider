@@ -15,7 +15,7 @@ const Dashboard = () => {
       <Body>
         <Switch>
           <Route exact path="/" component={ShoppingLists} />
-          <Route exact path="/friends" component={Friends} />
+          <Route path="/friends/*" component={Friends} />
         </Switch>
       </Body>
     </Page>

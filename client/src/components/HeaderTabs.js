@@ -66,7 +66,7 @@ const HeaderTabs = (props) => {
           disableRipple
           label={<Typography>Friends</Typography>}
           component={Link}
-          to="/friends"
+          to="/friends/followers"
         />
       </Tabs>
       <NotificationsButton {...props} />

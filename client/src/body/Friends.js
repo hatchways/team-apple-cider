@@ -6,6 +6,7 @@ import FollowersFollowing from "../components/ProfileList";
 import ProfileList from "../components/ProfileList";
 import UserContext from "contexts/UserContext";
 import { Filter } from "@material-ui/icons";
+import { Switch, Route, Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   friendsContainer: {
@@ -78,6 +79,15 @@ const Friends = (props) => {
     newFollowingsList.pop(person);
     setFollowings(newFollowingsList);
   };
+
+  const getProfileListDisplay = () => {
+    let list = [];
+    if (selectedPage === 0) list = followers;
+    else if (selectedPage === 1) list = followings;
+    else if (selectedPage === 2) list = explore;
+    return <ProfileList {...{ list, followings, toggleFollow }} />;
+  };
+
   return (
     <Box className={classes.friendsContainer}>
       <Typography variant={"h1"} className={classes.h1}>
@@ -88,33 +98,42 @@ const Friends = (props) => {
         value={selectedPage}
         onChange={handleTabChange}
       >
-        <Tab disableRipple className={classes.tab} label="followers"></Tab>
-        <Tab disableRipple className={classes.tab} label="following"></Tab>
-        <Tab disableRipple className={classes.tab} label="explore"></Tab>
+        <Tab
+          disableRipple
+          className={classes.tab}
+          label="followers"
+          component={Link}
+          to="/friends/followers"
+        ></Tab>
+        <Tab
+          disableRipple
+          className={classes.tab}
+          label="following"
+          component={Link}
+          to="/friends/following"
+        ></Tab>
+        <Tab
+          disableRipple
+          className={classes.tab}
+          label="explore"
+          component={Link}
+          to="/friends/explore"
+        ></Tab>
       </Tabs>
       <Box className={classes.tabsContainer}>
-        {selectedPage == 0 && (
-          <ProfileList
-            list={followers}
-            followings={followings}
-            toggleFollow={toggleFollow}
+        <Switch>
+          <Route
+            exact
+            path="/friends/followers"
+            render={getProfileListDisplay}
           />
-        )}
-
-        {selectedPage == 1 && (
-          <ProfileList
-            list={followings}
-            followings={followings}
-            toggleFollow={toggleFollow}
+          <Route
+            exact
+            path="/friends/following"
+            render={getProfileListDisplay}
           />
-        )}
-        {selectedPage == 2 && (
-          <ProfileList
-            list={explore}
-            followings={followings}
-            toggleFollow={toggleFollow}
-          />
-        )}
+          <Route exact path="/friends/explore" render={getProfileListDisplay} />
+        </Switch>
       </Box>
     </Box>
   );
