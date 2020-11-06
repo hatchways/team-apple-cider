@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -59,16 +59,15 @@ const ListsDisplay = (props) => {
   const listDelete = useContext(ListContext).listDelete;
   const [lists, setLists] = useState([]);
 
-  const getLists = async () =>{
-    const res = await fetch(`/lists?user_id=${userId}`)
-    const json = await res.json()
+  const getLists = async () => {
+    const res = await fetch(`/lists?user_id=${userId}`);
+    const json = await res.json();
     setLists(json);
-  }
+  };
 
-    useEffect(() => {
+  useEffect(() => {
     getLists();
   }, [listDelete]);
-
 
   const getListsUserText = (profile) => {
     if (!profile || profile.name === undefined) return "My";
@@ -84,8 +83,8 @@ const ListsDisplay = (props) => {
       </Typography>
 
       <Box className={classes.myShoppingLists} ref={scrollRef}>
-      {lists.map((list, i) => (
-          <ListCard key={i} list={list} />
+        {lists.map((list, i) => (
+          <ListCard key={i} list={list} lists={lists} />
         ))}
         {!profile && (
           <Box className={classes.addNewList}>

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   Modal,
@@ -11,9 +10,12 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  CircularProgress,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import useStyles from "../styles/AddProductStyles";
+import UserContext from "contexts/UserContext";
+import ItemDisplay from "components/ItemDisplay";
 
 const AddProduct = (props) => {
   const {
@@ -22,15 +24,67 @@ const AddProduct = (props) => {
     changeListOpen,
     addProductOpen,
     changeAddProductOpen,
-    demoListsArray,
+    lists,
   } = props;
   const classes = useStyles();
-  const [url, setUrl] = useState("");
+  const [inputLink, setInputLink] = useState("");
   const [list, setList] = useState("");
   const [errors, setErrors] = useState({});
+  const userId = useContext(UserContext).userId;
+  const [item, setItem] = useState({});
+  const [selectedListIndex, setSelectedListIndex] = useState(0);
+  const [listId, setListId] = useState("");
+  const [userLists, setUserLists] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (event) => {
-    setList(event.target.value);
+  const getItem = async (input) => {
+    const response = await fetch("/scrape", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: input }),
+    });
+    return response.json();
+  };
+
+  const getLists = async () => {
+    const res = await fetch(`/lists?user_id=${userId}`);
+    const json = await res.json();
+    setUserLists(json);
+  };
+
+  useEffect(() => {
+    getLists();
+  }, []);
+
+  const addProductToList = async () => {
+    const res = await fetch(`/list-to-products/${listId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product_id: item.product_id }),
+    });
+    const json = await res.json();
+    return json;
+  };
+
+  const findButtonClick = async (e) => {
+    if (inputLink.length > 0) {
+      setLoading(true);
+      const newItem = await getItem(inputLink);
+      setItem(newItem);
+      setInputLink("");
+      setLoading(false);
+    }
+  };
+
+  const addButtonClick = async (e) => {
+    e.preventDefault();
+    await addProductToList();
+    changeAddProductOpen();
+  };
+
+  const onChangeList = (e) => {
+    setList(e.target.value);
+    setListId(e.target.value.id);
   };
 
   const handleClose = () => {
@@ -39,37 +93,10 @@ const AddProduct = (props) => {
 
   const validations = () => {
     const errorsCopy = { ...errors };
-    errorsCopy.url = url ? "" : "This field is required.";
+    errorsCopy.inputLink = inputLink ? "" : "This field is required.";
     setErrors({ ...errorsCopy });
 
     return Object.values(errorsCopy).every((field) => field === "");
-  };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    if (validations()) {
-      fetch("route", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          url: url,
-        }),
-      })
-        .then((response) => response.json())
-        .then(function (response) {
-          if (response.status === "success") {
-            console.log("Success:");
-          } else {
-            window.alert(response.message); // Replace with snackbar.
-            console.log(response.message);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
   };
 
   return (
@@ -106,9 +133,9 @@ const AddProduct = (props) => {
             placeholder="Paste your link here" // Placeholder needs to be centered.
             fullWidth
             type="text"
-            error={Boolean(errors.url)}
-            helperText={errors.url}
-            onChange={(e) => setUrl(e.target.value)}
+            error={Boolean(errors.inputLink)}
+            helperText={errors.inputLink}
+            onChange={(e) => setInputLink(e.target.value)}
           />
         </Box>
         <Box className={classes.bodyContainer}>
@@ -124,22 +151,44 @@ const AddProduct = (props) => {
             <Select
               id="select-list"
               value={list}
-              onChange={handleChange}
+              onChange={onChangeList}
               label="List"
             >
-              {demoListsArray.map((list, i) => (
-                <MenuItem key={i} value={list.listTitle}>
-                  {list.listTitle}
+              {lists.map((userList, i) => (
+                <MenuItem key={i} value={userList}>
+                  {userList.name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </Box>
-        <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained">
-            ADD ITEM
-          </Button>
+        <Box className={classes.itemContainer}>
+          {item.error ? (
+            <Box className={classes.errorMessage}>{item.response}</Box>
+          ) : item.name ? (
+            <>
+              <ItemDisplay item={item} className={classes.itemDisplay} />,
+              <Button
+                onClick={addButtonClick}
+                variant="contained"
+                className={classes.addButton}
+              >
+                ADD ITEM
+              </Button>
+            </>
+          ) : loading ? (
+            <CircularProgress className={classes.spinner} />
+          ) : (
+            <Button
+              className={classes.addButton}
+              variant="contained"
+              onClick={findButtonClick}
+            >
+              FIND ITEM
+            </Button>
+          )}
         </Box>
+        <Box className={classes.addButtonContainer}></Box>
       </Box>
     </Modal>
   );

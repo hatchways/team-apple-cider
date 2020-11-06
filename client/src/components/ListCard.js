@@ -50,6 +50,7 @@ const ListCard = (props) => {
   const listId = props.list.id;
   const listTitle = props.list.name;
   const img = props.list.img_url;
+  const lists = props.lists;
   const listChange = useContext(ListContext).listChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
@@ -101,6 +102,9 @@ const ListCard = (props) => {
     setAnchorEl(null);
   };
 
+  const changeAddProductOpen = () => {
+    setAddProductOpen((previous) => !previous);
+  };
   return (
     <Box>
       <Box onClick={!settingsOpen && changeListOpen} className={classes.listContainer}>
@@ -131,19 +135,20 @@ const ListCard = (props) => {
           itemCount,
           listOpen,
           changeListOpen,
+          changeAddProductOpen,
         }}
       />
       <ListSettingsPopup {...{ listId, settingsOpen, settingsClose }} />
-      {/* <AddProduct
+      <AddProduct
         {...{
           listTitle,
           listOpen,
           changeListOpen,
           addProductOpen,
           changeAddProductOpen,
-          demoListsArray,
+          lists,
         }}
-      /> */}
+      />
     </Box>
   );
 };
