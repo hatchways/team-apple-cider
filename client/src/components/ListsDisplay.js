@@ -59,33 +59,43 @@ const ListsDisplay = (props) => {
   const listDelete = useContext(ListContext).listDelete;
   const [lists, setLists] = useState([]);
 
-  const getLists = async () =>{
-    const res = await fetch(`/lists?user_id=${userId}`)
-    const json = await res.json()
-    if(Array.isArray(json)) 
-    {setLists(json);}
-  }
+  const getLists = async () => {
+    const res = await fetch(`/lists?user_id=${userId}`);
+    const json = await res.json();
+    if (Array.isArray(json)) {
+      setLists(json);
+    }
+  };
 
   useEffect(() => {
     getLists();
   }, [listDelete]);
 
   const getListsUserText = (profile) => {
-    if (!profile || profile.name === undefined) return "My";
+    if (!profile || profile.name === undefined) return "My Shopping Lists:";
     else if (profile.name[profile.name.length - 1] === "s")
-      return `${profile.name}'`;
-    else return `${profile.name}'s`;
+      return `${profile.name}' Shopping Lists:`;
+    else return `${profile.name}'s Shopping Lists:`;
+  };
+
+  const getEmptyListText = (profile) => {
+    if (!profile || profile.name === undefined)
+      return "Click the plus icon to make your first list";
+    else if (profile.name[profile.name.length - 1] === "s")
+      return `${profile.name}' does not have any public lists:`;
+    else return `${profile.name}'s does not have any public lists`;
   };
 
   return (
     <Box className={`${classes.shoppingContainer} ${props.className}`}>
       <Typography variant="h5" className={classes.listsTitle}>
-        {getListsUserText(profile)} Shopping Lists:
+        {lists.length !== 0
+          ? getListsUserText(profile)
+          : getEmptyListText(profile)}
       </Typography>
       <Box className={classes.myShoppingLists} ref={scrollRef}>
-      {lists.length!==0 && lists.map((list, i) => (
-          <ListCard key={i} list={list} />
-        ))}
+        {lists.length !== 0 &&
+          lists.map((list, i) => <ListCard key={i} list={list} />)}
         {!profile && (
           <Box className={classes.addNewList}>
             <IconButton

@@ -156,11 +156,13 @@ const AddProduct = (props) => {
               onChange={onChangeList}
               label="List"
             >
-              {lists.map((userList, i) => (
-                <MenuItem key={i} value={userList}>
-                  {userList.name}
-                </MenuItem>
-              ))}
+              {lists &&
+                lists.length > 0 &&
+                lists.map((userList, i) => (
+                  <MenuItem key={i} value={userList}>
+                    {userList.name}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
         </Box>
