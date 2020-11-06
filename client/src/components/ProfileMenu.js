@@ -96,7 +96,11 @@ const ProfileMenu = (props) => {
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            <img className={classes.profileIcon} src={userIcon} alt="profile" />
+            <img
+              className={classes.profileIcon}
+              src={userIcon}
+              alt="upload a profile pic"
+            />
           </div>
         )}
       </Dropzone>
