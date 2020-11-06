@@ -56,6 +56,16 @@ const AddProduct = (props) => {
     getLists();
   }, []);
 
+  const addProductToList = async () => {
+    const res = await fetch(`/list-to-products/${listId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product_id: item.product_id }),
+    });
+    const json = await res.json();
+    return json;
+  };
+
   const findButtonClick = async (e) => {
     if (inputLink.length > 0) {
       setLoading(true);
@@ -66,18 +76,15 @@ const AddProduct = (props) => {
     }
   };
 
-  const addButtonClick = (e) => {
+  const addButtonClick = async (e) => {
     e.preventDefault();
+    await addProductToList();
+    changeAddProductOpen();
   };
 
   const onChangeList = (e) => {
-    const newIndex = parseInt(e.target.value);
-    setSelectedListIndex(newIndex);
-    setListId(userLists[newIndex].id);
-  };
-
-  const handleChange = (event) => {
-    setList(event.target.value);
+    setList(e.target.value);
+    setListId(e.target.value.id);
   };
 
   const handleClose = () => {
@@ -144,12 +151,12 @@ const AddProduct = (props) => {
             <Select
               id="select-list"
               value={list}
-              onChange={handleChange}
+              onChange={onChangeList}
               label="List"
             >
-              {lists.map((list, i) => (
-                <MenuItem key={i} value={list.name}>
-                  {list.name}
+              {lists.map((userList, i) => (
+                <MenuItem key={i} value={userList}>
+                  {userList.name}
                 </MenuItem>
               ))}
             </Select>
