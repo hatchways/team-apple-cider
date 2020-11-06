@@ -23,23 +23,30 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   paper: {
-    padding: theme.spacing(1, 1, 3),
+    padding: theme.spacing(4),
     backgroundColor: "white",
     outline: "none",
-    minWidth: "40rem",
+    boxSizing: "border-box",
+    width: "50rem",
     maxHeight: "42rem",
     overflow: "hidden",
     height: "100%",
-    display: "block",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    position: "relative",
   },
   titleContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: theme.spacing(0, 0, 3),
+    padding: theme.spacing(4),
   },
   closeButtonContainer: {
-    textAlign: "right",
+    position: "absolute",
+    top: "0",
+    right: "0",
+    margin: theme.spacing(3),
   },
   popupTitleProductType: {
     fontSize: "1.3rem",
@@ -56,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
   productCard: {
     display: "flex",
     flexDirection: "row",
-    maxWidth: "30rem",
   },
 
   addButton: {
@@ -71,19 +77,18 @@ const useStyles = makeStyles((theme) => ({
   addButtonContainer: {
     display: "flex",
     justifyContent: "center",
-    margin: theme.spacing(2, 0, 2),
+    padding: theme.spacing(4),
   },
   bodyContainer: {
-    minWidth: "30rem",
     maxHeight: "29rem",
     overflow: "hidden",
   },
 
   bodyContent: {
-    minWidth: "30rem",
-    maxHeight: "30rem",
+    height: "22rem",
     overflow: "scroll",
     overflowX: "hidden",
+    margin: theme.spacing(4),
   },
 }));
 

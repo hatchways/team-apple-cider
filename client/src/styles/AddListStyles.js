@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#f8f8f8",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -30,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     outline: "none",
     minWidth: "30rem",
-    height: "75%",
   },
   addButton: {
     borderRadius: "10rem",
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   titleContainer: {
     display: "flex",
     maxHeight: "2rem",
-    margin: theme.spacing(0.8),
+    margin: theme.spacing(4),
   },
   closeButtonContainer: {
     textAlign: "right",
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   addButtonContainer: {
     display: "flex",
     justifyContent: "center",
-    // margin: theme.spacing(2, 0, 2),
+    margin: theme.spacing(4),
   },
   bodyContainer: {
     minWidth: "30rem",
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     width: "80%",
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
     flexDirection: "column",
   },
   bodyContent: {
@@ -112,14 +112,18 @@ const useStyles = makeStyles((theme) => ({
   imageFieldContainer: {
     display: "flex",
     backgroundColor: "white",
-    // width: "13rem",
-    // height: "13rem",
+    width: "13rem",
+    height: "13rem",
+    textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
     border: "1px dashed grey",
+    borderRadius: "2rem",
     margin: theme.spacing(2),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    userSelect: "none",
+    cursor: "pointer",
   },
   input: {
     opacity: "0",

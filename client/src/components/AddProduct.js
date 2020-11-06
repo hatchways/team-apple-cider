@@ -147,11 +147,13 @@ const AddProduct = (props) => {
               onChange={onChangeList}
               label="List"
             >
-              {userLists.map((userList, i) => (
-                <MenuItem key={i} value={userList}>
-                  {userList.name}
-                </MenuItem>
-              ))}
+              {lists &&
+                lists.length > 0 &&
+                lists.map((userList, i) => (
+                  <MenuItem key={i} value={userList}>
+                    {userList.name}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
         </Box>
@@ -160,7 +162,7 @@ const AddProduct = (props) => {
             <Box className={classes.errorMessage}>{item.response}</Box>
           ) : item.name ? (
             <>
-              <ItemDisplay item={item} className={classes.itemDisplay} />,
+              <ItemDisplay item={item} className={classes.itemDisplay} />
               <Button
                 onClick={addButtonClick}
                 variant="contained"

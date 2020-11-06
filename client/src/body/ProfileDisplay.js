@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileTopBar from "components/ProfileTopBar";
 import ListsDisplay from "components/ListsDisplay";
+import { handleFollow, handleUnfollow } from "fetch/following";
 
 const useStyles = makeStyles((theme) => ({
   profileContainer: {
@@ -11,7 +12,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: "column",
     width: "fit-content",
-    margin: theme.spacing(4),
+    margin: theme.spacing(8),
+  },
+  centerPageContainer: {
+    height: "40rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   profileTopBar: {
     display: "flex",
@@ -68,38 +75,61 @@ const useStyles = makeStyles((theme) => ({
 const ProfileDisplay = (props) => {
   const [profile, setProfile] = useState({});
   const [error, setError] = useState({});
-
-  // TODO: Get both following/followed booleans from backend
-  const [following, setFollowing] = useState(false);
-  const followingYou = true;
-
+  const [relation, setRelation] = useState({
+    following: null,
+    follows_back: null,
+  });
+  const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
   const id = parseInt(props.match.params.id);
 
+  const updateProfile = async () => {
+    const newProfile = await (await fetch(`/profiles/${id}`)).json();
+    if (!("error" in newProfile)) {
+      setError(false);
+      setProfile(newProfile);
+      getRelation();
+      setLoaded(true);
+    } else {
+      setError(true);
+      setLoaded(true);
+    }
+  };
+
   useEffect(() => {
-    const updateProfile = async () => {
-      const response = await fetch(`/profiles/${id}`);
-      if (response.status === 200) {
-        const newProfile = await response.json();
-        setError(false);
-        // TODO: seperate call for followers/following counts
-        // TODO: seperate call for public lists
-        setProfile(newProfile);
-      } else setError(true);
-    };
     updateProfile();
   }, [id]);
 
-  const toggleFollow = () => setFollowing((cur) => !cur);
+  const getRelation = async () => {
+    const relation = await (await fetch(`/follower_relation/${id}`)).json();
+    setRelation(relation);
+  };
 
-  if (error) return <Typography>Profile link not valid</Typography>;
+  const toggleFollow = async () => {
+    if (relation.following) handleUnfollow(profile, updateProfile);
+    else handleFollow(profile, updateProfile);
+  };
+
+  if (!loaded)
+    return (
+      <Box className={classes.centerPageContainer}>
+        <CircularProgress className={classes.spinner} />
+      </Box>
+    );
+  else if (error)
+    return (
+      <Box className={classes.centerPageContainer}>
+        <Typography>Profile link not valid</Typography>
+      </Box>
+    );
   else
     return (
       <Box className={classes.profileContainer}>
-        <ProfileTopBar
-          {...{ profile, following, toggleFollow, followingYou }}
+        <ProfileTopBar {...{ profile, toggleFollow, relation }} />
+        <ListsDisplay
+          {...{ profile, loaded }}
+          className={classes.listsDisplay}
         />
-        <ListsDisplay {...{ profile }} className={classes.listsDisplay} />
       </Box>
     );
 };

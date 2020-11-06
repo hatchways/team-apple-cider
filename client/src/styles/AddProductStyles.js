@@ -23,15 +23,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "space-between",
     backgroundColor: "#f8f8f8",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
     borderRadius: "0.3rem",
     overflow: "hidden",
     outline: "none",
     minWidth: "30rem",
-    maxHeight: "41rem",
-    height: "75%",
+    padding: theme.spacing(4),
   },
   addButton: {
     borderRadius: "10rem",
@@ -42,18 +41,22 @@ const useStyles = makeStyles((theme) => ({
     width: "11rem",
     height: "3.5rem",
     fontSize: "0.8rem",
+    margin: theme.spacing(8),
   },
   titleContainer: {
     display: "flex",
-    maxHeight: "3rem",
+    padding: theme.spacing(4),
   },
   closeButtonContainer: {
-    textAlign: "right",
-    width: "100%",
+    position: "absolute",
+    top: "0",
+    right: "0",
+    margin: theme.spacing(3),
   },
   titleText: {
     fontSize: "1.5rem",
     fontWeight: "bold",
+    margin: theme.spacing(4),
   },
   itemText: {
     fontSize: "0.8rem",
@@ -80,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
   addButtonContainer: {
     display: "flex",
     justifyContent: "center",
-    margin: theme.spacing(3, 0, 2),
   },
   bodyContainer: {
     minWidth: "30rem",
@@ -88,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     display: "flex",
     justifyContent: "center",
+    padding: theme.spacing(2),
   },
   bodyContent: {
     minWidth: "30rem",
@@ -100,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     width: "80%",
     backgroundColor: "white",
+    margin: theme.spacing(4),
   },
   centerText: {
     textAlign: "center",
@@ -110,6 +114,7 @@ const useStyles = makeStyles((theme) => ({
     width: "35%",
     height: "0",
     paddingBottom: "35%",
+    margin: theme.spacing(4),
   },
   selectListInput: {
     display: "flex",
@@ -117,7 +122,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-    margin: "3rem",
     overflow: "hidden",
     height: "4rem",
     padding: "0 0.5rem",

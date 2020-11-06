@@ -27,6 +27,17 @@ def getFollowings():
     except Exception as e:
         return jsonify({'error': "{}".format(e.__cause__)}), 400
 
+@follower_handler.route('/follower_relation/<user_id>', methods=['GET'])
+def getRelation(user_id):
+    auth_token = token_getter()
+    try:
+        loggedin_user = User.query.get(auth_token)
+        target_user = User.query.get(user_id)
+        following = (target_user.id in [user.serialize['id'] for user in loggedin_user.followed.all()])
+        follows_back = (loggedin_user.id in [user.serialize['id'] for user in target_user.followed.all()])
+        return jsonify({"following": following, "follows_back": follows_back}), 200
+    except Exception as e:
+        return jsonify({'error': "{}".format(e.__cause__)}), 400
 
 @follower_handler.route('/followers/<user_id>', methods=['POST', 'DELETE'])
 def followersReqs(user_id):
