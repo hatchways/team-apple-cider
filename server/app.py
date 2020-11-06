@@ -50,7 +50,7 @@ def create_app():
         app.register_blueprint(list_to_product_handler) 
         app.register_blueprint(scrape_handler) 
         app.register_blueprint(profile_handler) 
-        app.register_blueprint(scheduled_tasks)
+        # app.register_blueprint(scheduled_tasks)
         app.register_blueprint(follower_handler) 
 
         db.create_all()
