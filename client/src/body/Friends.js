@@ -70,13 +70,15 @@ const Friends = (props) => {
     followings.includes(person) ? handleUnfollow(person) : handleFollow(person);
   };
   const handleFollow = (person) => {
-    const newFollowingsList = [...followings];
+    let newFollowingsList = [...followings];
     newFollowingsList.push(person);
     setFollowings(newFollowingsList);
   };
   const handleUnfollow = (person) => {
-    const newFollowingsList = [...followings];
-    newFollowingsList.pop(person);
+    let newFollowingsList = [...followings];
+    newFollowingsList = newFollowingsList.filter(
+      (following) => following.id != person.id
+    );
     setFollowings(newFollowingsList);
   };
 
