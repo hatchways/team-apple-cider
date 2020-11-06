@@ -59,7 +59,7 @@ const AddItem = () => {
   const [inputLink, setInputLink] = useState("");
   const [item, setItem] = useState({});
   const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedListIndex, setSelectedListIndex] = useState(0);
+  const [selectedListIndex, setSelectedListIndex] = useState("");
   const [listId, setListId] = useState("");
   const [userLists, setUserLists] = useState([]);
 
