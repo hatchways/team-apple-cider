@@ -8,6 +8,7 @@ import {
   ListItemAvatar,
   Avatar,
   Button,
+  Typography,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -26,13 +27,17 @@ const useStyles = makeStyles((theme) => ({
     height: "2rem",
     fontSize: "0.6rem",
   },
+  emptyMessage: {
+    padding: theme.spacing(4),
+    textAlign: "center",
+  },
 }));
 const ProfileList = (props) => {
   const classes = useStyles();
-  const { list, toggleFollow, buttonText, followings } = props;
+  const { list, toggleFollow, emptyMessage, followings } = props;
   return (
     <List aria-label="followers list" className={classes.list}>
-      {list.length > 0 &&
+      {list.length > 0 ? (
         list.map((person, index) => {
           return (
             <Fragment key={index}>
@@ -55,7 +60,10 @@ const ProfileList = (props) => {
               <Divider />
             </Fragment>
           );
-        })}
+        })
+      ) : (
+        <Typography className={classes.emptyMessage}>{emptyMessage}</Typography>
+      )}
     </List>
   );
 };

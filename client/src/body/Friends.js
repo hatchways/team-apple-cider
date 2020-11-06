@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Friends = (props) => {
   const classes = useStyles();
+  const [loaded, setLoaded] = useState(false);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [explore, setExplore] = useState([]);
@@ -76,8 +77,12 @@ const Friends = (props) => {
   };
 
   useEffect(() => {
-    resetLists();
-    resetTab(window.location.pathname);
+    const init = async () => {
+      await resetLists();
+      resetTab(window.location.pathname);
+      setLoaded(true);
+    };
+    init();
   }, []);
 
   const handleTabChange = (e, newValue) => {
@@ -101,10 +106,24 @@ const Friends = (props) => {
 
   const getProfileListDisplay = () => {
     let list = [];
-    if (selectedPage === 0) list = followers;
-    else if (selectedPage === 1) list = followings;
-    else if (selectedPage === 2) list = explore;
-    return <ProfileList {...{ list, followings, toggleFollow }} />;
+    let emptyMessage = null;
+    if (selectedPage === 0) {
+      list = followers;
+      emptyMessage =
+        "You don't have any followers. Post more lists to get seen!";
+    } else if (selectedPage === 1) {
+      list = followings;
+      emptyMessage =
+        "You aren't following anyone. Go to the explore page to find friends!";
+    } else if (selectedPage === 2) {
+      list = explore;
+      emptyMessage = "No other profiles found.";
+    }
+    return (
+      loaded && (
+        <ProfileList {...{ list, followings, toggleFollow, emptyMessage }} />
+      )
+    );
   };
 
   return (
