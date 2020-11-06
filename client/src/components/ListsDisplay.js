@@ -6,6 +6,7 @@ import ListCard from "components/ListCard";
 import { useHorizontalScroll } from "components/HorrizontalScroll";
 import UserContext from "contexts/UserContext";
 import SuccessSnackbar from "components/SuccessSnackbar";
+import ListContext from "contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   shoppingContainer: {
@@ -56,6 +57,7 @@ const ListsDisplay = (props) => {
   const { profile, addListOpen, changeAddListOpen } = props;
   const classes = useStyles();
   const userId = useContext(UserContext).userId;
+  const listDelete = useContext(ListContext).listDelete;
   const [lists, setLists] = useState([]);
   const [snackText, setSnackText] = useState("");
   const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
@@ -75,12 +77,14 @@ const ListsDisplay = (props) => {
   const getLists = async () => {
     const res = await fetch(`/lists?user_id=${userId}`);
     const json = await res.json();
-    setLists(json);
+    if (Array.isArray(json)) {
+      setLists(json);
+    }
   };
 
   useEffect(() => {
     getLists();
-  }, [userId]);
+  }, [listDelete]);
 
   const getListsUserText = (profile) => {
     if (!profile || profile.name === undefined) return "My";
@@ -94,16 +98,16 @@ const ListsDisplay = (props) => {
       <Typography variant="h5" className={classes.listsTitle}>
         {getListsUserText(profile)} Shopping Lists:
       </Typography>
-
       <Box className={classes.myShoppingLists} ref={scrollRef}>
-        {lists.map((list, i) => (
-          <ListCard
-            key={i}
-            list={list}
-            lists={lists}
-            changeOpenSuccessSnack={changeOpenSuccessSnack}
-          />
-        ))}
+        {lists.length !== 0 &&
+          lists.map((list, i) => (
+            <ListCard
+              key={i}
+              list={list}
+              lists={lists}
+              changeOpenSuccessSnack={changeOpenSuccessSnack}
+            />
+          ))}
         {!profile && (
           <Box className={classes.addNewList}>
             <IconButton

@@ -16,6 +16,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import useStyles from "../styles/AddProductStyles";
 import UserContext from "contexts/UserContext";
 import ItemDisplay from "components/ItemDisplay";
+import ListContext from "contexts/ListContext";
 
 const AddProduct = (props) => {
   const {
@@ -31,6 +32,7 @@ const AddProduct = (props) => {
   const [inputLink, setInputLink] = useState("");
   const [list, setList] = useState("");
   const userId = useContext(UserContext).userId;
+  const listToggle = useContext(ListContext).listToggle;
   const [item, setItem] = useState({});
   const [listId, setListId] = useState("");
   const [userLists, setUserLists] = useState([]);
@@ -53,7 +55,7 @@ const AddProduct = (props) => {
 
   useEffect(() => {
     getLists();
-  }, []);
+  }, [listToggle]);
 
   const addProductToList = async () => {
     const res = await fetch(`/list-to-products/${listId}`, {
@@ -145,7 +147,7 @@ const AddProduct = (props) => {
               onChange={onChangeList}
               label="List"
             >
-              {lists.map((userList, i) => (
+              {userLists.map((userList, i) => (
                 <MenuItem key={i} value={userList}>
                   {userList.name}
                 </MenuItem>
