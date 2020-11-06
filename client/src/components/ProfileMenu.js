@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: "3.5rem",
     width: "3.5rem",
     borderRadius: "100%",
+    cursor: "pointer",
   },
   profileButtonText: {
     textTransform: "none",
