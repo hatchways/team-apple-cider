@@ -25,9 +25,8 @@ const AddProduct = (props) => {
     addProductOpen,
     changeAddProductOpen,
     lists,
-    snackProps,
+    changeOpenSuccessSnack,
   } = props;
-  const { changeOpenSuccessSnack, ...rest } = props.snackProps;
   const classes = useStyles();
   const [inputLink, setInputLink] = useState("");
   const [list, setList] = useState("");

@@ -72,14 +72,6 @@ const ListsDisplay = (props) => {
     setOpenSuccessSnack(false);
   };
 
-  const snackProps = {
-    snackText,
-    setSnackText,
-    openSuccessSnack,
-    setOpenSuccessSnack,
-    changeOpenSuccessSnack,
-  };
-
   const getLists = async () => {
     const res = await fetch(`/lists?user_id=${userId}`);
     const json = await res.json();
@@ -105,7 +97,12 @@ const ListsDisplay = (props) => {
 
       <Box className={classes.myShoppingLists} ref={scrollRef}>
         {lists.map((list, i) => (
-          <ListCard key={i} list={list} lists={lists} snackProps={snackProps} />
+          <ListCard
+            key={i}
+            list={list}
+            lists={lists}
+            changeOpenSuccessSnack={changeOpenSuccessSnack}
+          />
         ))}
         {!profile && (
           <Box className={classes.addNewList}>
