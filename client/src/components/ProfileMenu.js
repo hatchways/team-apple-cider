@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import UserContext from "contexts/UserContext";
 import ProfilePhotoPlaceholder from "components/ProfilePhotoPlaceholder";
+import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme) => ({
   profileMenuContainer: {
@@ -106,11 +107,13 @@ const ProfileMenu = (props) => {
           <div {...getRootProps()}>
             <input {...getInputProps()} />
             {userIcon ? (
-              <img
-                className={classes.profileIcon}
-                src={userIcon}
-                alt={"profile pic"}
-              />
+              <Fade timeout={1000} in={!loading}>
+                <img
+                  className={classes.profileIcon}
+                  src={userIcon}
+                  alt={"profile pic"}
+                />
+              </Fade>
             ) : (
               <ProfilePhotoPlaceholder {...{ loading }} />
             )}

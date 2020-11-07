@@ -5,6 +5,8 @@ import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme) => ({
   placeholderBox: {
+    marginTop: theme.spacing(0.3),
+    marginBottom: theme.spacing(0.3),
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     height: "3.5rem",
@@ -15,8 +17,16 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     transition: "1s",
   },
+  "@keyframes spin": {
+    from: { transform: "rotate(0deg)" },
+    to: { transform: "rotate(360deg)" },
+  },
   loadingPhoto: {
-    border: "1px solid grey",
+    animation: "$spin 1000ms infinite linear",
+    borderTop: "1px solid #ccc",
+    borderRight: "1px solid #ccc",
+    borderBottom: "1px solid #ccc",
+    borderLeft: "1px solid #DF1B1B",
     borderRadius: "50%",
   },
   noPhotoFound: {
