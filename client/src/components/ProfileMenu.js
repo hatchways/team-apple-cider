@@ -106,7 +106,7 @@ const ProfileMenu = (props) => {
             <img
               className={classes.profileIcon}
               src={userIcon}
-              alt={userIcon ? "profile pic" : "upload a profile pic"}
+              alt={"profile pic"}
             />
           </div>
         )}
