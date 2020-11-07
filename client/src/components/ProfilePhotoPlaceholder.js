@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
   },
   noPhotoFound: {
+    animation: "none",
     border: "1px dashed black",
     borderRadius: "1rem",
   },
