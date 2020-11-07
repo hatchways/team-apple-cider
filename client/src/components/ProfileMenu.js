@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileMenu = (props) => {
+  const [loading, setLoading] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [imageURL, setImageURL] = useState("");
   const [userIcon, setUserIcon] = useState(null);
@@ -59,6 +60,7 @@ const ProfileMenu = (props) => {
     const userId = auth.data.user_id;
     const user = await (await fetch(`/profiles/${userId}`)).json();
     setUserIcon(user.photo);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -110,7 +112,7 @@ const ProfileMenu = (props) => {
                 alt={"profile pic"}
               />
             ) : (
-              <ProfilePhotoPlaceholder />
+              <ProfilePhotoPlaceholder {...{ loading }} />
             )}
           </div>
         )}
