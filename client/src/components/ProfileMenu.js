@@ -3,8 +3,8 @@ import { Box, Typography, Button, Menu, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import Dropzone from "react-dropzone";
-
 import UserContext from "contexts/UserContext";
+import NoUserPhoto from "components/NoUserPhoto";
 
 const useStyles = makeStyles((theme) => ({
   profileMenuContainer: {
@@ -103,11 +103,15 @@ const ProfileMenu = (props) => {
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            <img
-              className={classes.profileIcon}
-              src={userIcon}
-              alt={"profile pic"}
-            />
+            {userIcon ? (
+              <img
+                className={classes.profileIcon}
+                src={userIcon}
+                alt={"profile pic"}
+              />
+            ) : (
+              <NoUserPhoto />
+            )}
           </div>
         )}
       </Dropzone>
