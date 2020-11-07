@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import UserContext from "contexts/UserContext";
-import NoUserPhoto from "components/NoUserPhoto";
+import ProfilePhotoPlaceholder from "components/ProfilePhotoPlaceholder";
 
 const useStyles = makeStyles((theme) => ({
   profileMenuContainer: {
@@ -110,7 +110,7 @@ const ProfileMenu = (props) => {
                 alt={"profile pic"}
               />
             ) : (
-              <NoUserPhoto />
+              <ProfilePhotoPlaceholder />
             )}
           </div>
         )}

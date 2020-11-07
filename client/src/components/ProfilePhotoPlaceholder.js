@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NoUserPhoto = () => {
+const ProfilePhotoPlaceholder = () => {
   const classes = useStyles();
   return (
     <Box className={classes.placeholderBox}>
@@ -31,4 +31,4 @@ const NoUserPhoto = () => {
   );
 };
 
-export default NoUserPhoto;
+export default ProfilePhotoPlaceholder;
