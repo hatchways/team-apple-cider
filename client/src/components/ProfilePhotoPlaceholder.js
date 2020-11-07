@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme) => ({
   placeholderBox: {
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
+    transition: "1s",
   },
   loadingPhoto: {
     border: "1px solid grey",
@@ -24,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   placeholderText: {
     fontSize: "0.6rem",
     textAlign: "center",
+    transition: "11s",
   },
 }));
 
@@ -36,11 +39,11 @@ const ProfilePhotoPlaceholder = (props) => {
         loading ? classes.loadingPhoto : classes.noPhotoFound
       }`}
     >
-      {!loading && (
+      <Fade timeout={1000} in={!loading}>
         <Typography className={classes.placeholderText}>
           Add a profile photo
         </Typography>
-      )}
+      </Fade>
     </Box>
   );
 };
