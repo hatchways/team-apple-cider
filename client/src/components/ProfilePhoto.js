@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfilePhoto = (props) => {
   const { loading, userIcon } = props;
-  console.log(loading);
   const classes = useStyles();
   return (
     <Box

@@ -45,7 +45,6 @@ const AddList = (props) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: title, img_url: imageUrl }),
     });
-    console.log(response);
     handleClose();
   };
 
