@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-    transition: "1s",
+    transition: "border-radius 1s, border-color 1.5s",
   },
   "@keyframes spin": {
     from: { transform: "rotate(0deg)" },
@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
   placeholderText: {
     fontSize: "0.6rem",
     textAlign: "center",
-    transition: "11s",
   },
 }));
 
