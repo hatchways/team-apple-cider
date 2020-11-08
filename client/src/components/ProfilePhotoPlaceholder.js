@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
   },
   photoFound: {
-    animation: "$spin 1000ms 2 linear",
+    animation: "$spin 1000ms 3 linear",
     border: "1px solid #fff",
     borderRadius: "50%",
   },
