@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
     from: { transform: "rotate(0deg)" },
     to: { transform: "rotate(360deg)" },
   },
+  "@keyframes color-shift": {
+    from: { border: "1px dashed #eee" },
+    to: { border: "1px dashed grey" },
+  },
   loadingPhoto: {
     animation: "$spin 1000ms infinite linear",
     borderTop: "1px solid #ccc",
@@ -35,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
   },
   noPhotoFound: {
-    animation: "$spin 1000ms 1 linear",
-    border: "1px dashed black",
+    animation: "$spin 1000ms 1 linear, $color-shift 1000ms 1 ease-out",
+    animationFillMode: "forwards",
     borderRadius: "1rem",
   },
   profileIcon: {
