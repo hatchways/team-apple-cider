@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Fade from "@material-ui/core/Fade";
+import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles((theme) => ({
   placeholderBox: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-    transition: "border-radius 1s, border-color 1.5s",
+    transition: "border-radius 1s, border-color 1s",
   },
   "@keyframes spin": {
     from: { transform: "rotate(0deg)" },
@@ -29,10 +29,23 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: "1px solid #DF1B1B",
     borderRadius: "50%",
   },
+  photoFound: {
+    animation: "$spin 1000ms 2 linear",
+    border: "1px solid #fff",
+    borderRadius: "50%",
+  },
   noPhotoFound: {
-    animation: "none",
+    animation: "$spin 1000ms 1 linear",
     border: "1px dashed black",
     borderRadius: "1rem",
+  },
+  profileIcon: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    height: "100%",
+    width: "100%",
+    borderRadius: "100%",
+    cursor: "pointer",
   },
   placeholderText: {
     fontSize: "0.6rem",
@@ -41,19 +54,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfilePhotoPlaceholder = (props) => {
-  const { loading } = props;
+  const { loading, userIcon } = props;
+  console.log(loading);
   const classes = useStyles();
   return (
     <Box
       className={`${classes.placeholderBox} ${
-        loading ? classes.loadingPhoto : classes.noPhotoFound
+        loading
+          ? classes.loadingPhoto
+          : userIcon
+          ? classes.photoFound
+          : classes.noPhotoFound
       }`}
     >
-      <Fade timeout={1000} in={!loading}>
-        <Typography className={classes.placeholderText}>
-          Add a profile photo
-        </Typography>
-      </Fade>
+      <Zoom
+        timeout={1000}
+        in={!loading}
+        style={{ transitionDelay: userIcon ? 1000 : 0 }}
+      >
+        {userIcon ? (
+          <img
+            className={classes.profileIcon}
+            src={userIcon}
+            alt={"profile pic"}
+          />
+        ) : (
+          <Typography className={classes.placeholderText}>
+            Add a profile photo
+          </Typography>
+        )}
+      </Zoom>
     </Box>
   );
 };

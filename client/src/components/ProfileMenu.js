@@ -6,6 +6,7 @@ import Dropzone from "react-dropzone";
 import UserContext from "contexts/UserContext";
 import ProfilePhotoPlaceholder from "components/ProfilePhotoPlaceholder";
 import Fade from "@material-ui/core/Fade";
+import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles((theme) => ({
   profileMenuContainer: {
@@ -17,14 +18,6 @@ const useStyles = makeStyles((theme) => ({
   },
   profileMenuDropdown: {
     position: "relative",
-  },
-  profileIcon: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    height: "3.5rem",
-    width: "3.5rem",
-    borderRadius: "100%",
-    cursor: "pointer",
   },
   profileButtonText: {
     textTransform: "none",
@@ -106,17 +99,7 @@ const ProfileMenu = (props) => {
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            {userIcon ? (
-              <Fade timeout={1000} in={!loading}>
-                <img
-                  className={classes.profileIcon}
-                  src={userIcon}
-                  alt={"profile pic"}
-                />
-              </Fade>
-            ) : (
-              <ProfilePhotoPlaceholder {...{ loading }} />
-            )}
+            <ProfilePhotoPlaceholder {...{ loading, userIcon }} />
           </div>
         )}
       </Dropzone>
