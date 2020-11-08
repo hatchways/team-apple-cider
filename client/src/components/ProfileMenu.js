@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import UserContext from "contexts/UserContext";
-import ProfilePhotoPlaceholder from "components/ProfilePhotoPlaceholder";
+import ProfilePhoto from "components/ProfilePhoto";
 import Fade from "@material-ui/core/Fade";
 import Zoom from "@material-ui/core/Zoom";
 
@@ -99,7 +99,7 @@ const ProfileMenu = (props) => {
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            <ProfilePhotoPlaceholder {...{ loading, userIcon }} />
+            <ProfilePhoto {...{ loading, userIcon }} />
           </div>
         )}
       </Dropzone>

@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles((theme) => ({
-  placeholderBox: {
+  profilePhotoContainer: {
     marginTop: theme.spacing(0.3),
     marginBottom: theme.spacing(0.3),
     marginLeft: theme.spacing(2),
@@ -57,13 +57,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfilePhotoPlaceholder = (props) => {
+const ProfilePhoto = (props) => {
   const { loading, userIcon } = props;
   console.log(loading);
   const classes = useStyles();
   return (
     <Box
-      className={`${classes.placeholderBox} ${
+      className={`${classes.profilePhotoContainer} ${
         loading
           ? classes.loadingPhoto
           : userIcon
@@ -92,4 +92,4 @@ const ProfilePhotoPlaceholder = (props) => {
   );
 };
 
-export default ProfilePhotoPlaceholder;
+export default ProfilePhoto;
