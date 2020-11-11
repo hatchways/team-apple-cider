@@ -3,8 +3,10 @@ import { Box, Typography, Button, Menu, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import Dropzone from "react-dropzone";
-
 import UserContext from "contexts/UserContext";
+import ProfilePhoto from "components/ProfilePhoto";
+import Fade from "@material-ui/core/Fade";
+import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles((theme) => ({
   profileMenuContainer: {
@@ -17,20 +19,13 @@ const useStyles = makeStyles((theme) => ({
   profileMenuDropdown: {
     position: "relative",
   },
-  profileIcon: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    height: "3.5rem",
-    width: "3.5rem",
-    borderRadius: "100%",
-    cursor: "pointer",
-  },
   profileButtonText: {
     textTransform: "none",
   },
 }));
 
 const ProfileMenu = (props) => {
+  const [loading, setLoading] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [imageURL, setImageURL] = useState("");
   const [userIcon, setUserIcon] = useState(null);
@@ -59,6 +54,7 @@ const ProfileMenu = (props) => {
     const userId = auth.data.user_id;
     const user = await (await fetch(`/profiles/${userId}`)).json();
     setUserIcon(user.photo);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -103,11 +99,7 @@ const ProfileMenu = (props) => {
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            <img
-              className={classes.profileIcon}
-              src={userIcon}
-              alt={userIcon ? "profile pic" : "upload a profile pic"}
-            />
+            <ProfilePhoto {...{ loading, userIcon }} />
           </div>
         )}
       </Dropzone>

@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileDisplay = (props) => {
+const Profile = (props) => {
   const [profile, setProfile] = useState({});
   const [error, setError] = useState({});
   const [relation, setRelation] = useState({
@@ -134,4 +134,4 @@ const ProfileDisplay = (props) => {
     );
 };
 
-export default ProfileDisplay;
+export default Profile;
