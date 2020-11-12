@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import Dropzone from 'react-dropzone'
+import Dropzone from "react-dropzone";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
@@ -22,33 +22,36 @@ const AddList = (props) => {
   const [imageUrl, setimageUrl] = useState("");
 
   const onDrop = (acceptedFiles) => {
-    acceptedFiles.forEach(file =>{
+    acceptedFiles.forEach((file) => {
       const reader = new FileReader();
-      reader.addEventListener("load", function () {
-        // convert image file to base64 string
-        let src = reader.result;
-        setimageUrl(src)
-      }, false);
+      reader.addEventListener(
+        "load",
+        function () {
+          // convert image file to base64 string
+          let src = reader.result;
+          setimageUrl(src);
+        },
+        false
+      );
       if (file) {
         reader.readAsDataURL(file);
       }
-    })
-  }
+    });
+  };
 
-  const addList= async (imageUrl, title)=>{
+  const addList = async (imageUrl, title) => {
     const response = await fetch(`/lists?user_id=${userId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: title, img_url:imageUrl})
+      body: JSON.stringify({ name: title, img_url: imageUrl }),
     });
-    console.log(response)
-    handleClose()
+    handleClose();
   };
 
   const handleClose = () => {
     changeAddListOpen();
   };
- 
+
   return (
     <Modal
       className={classes.popup}
@@ -86,29 +89,24 @@ const AddList = (props) => {
         </Box>
         <Box className={classes.bodyContainer}>
           <Typography className={classes.itemText}>Add a cover</Typography>
-          <Box className={classes.imageFieldContainer}>
-              <Dropzone
-                  onDrop={onDrop}
-                  accept="image/*"
-                >
-                  {({getRootProps, getInputProps, isDragReject, acceptedFiles}) => (
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      {acceptedFiles.length==0 
-                        ?
-                        "click here to upload or drop an image here"
-                        :
-                        acceptedFiles.map(file =>
-                        <p>{file.name}</p>)
-                      }
-                      {isDragReject && "the file type is not accepted"}
-                    </div>
-                  )}
-            </Dropzone>
-          </Box>
+          <Dropzone onDrop={onDrop} accept="image/*">
+            {({ getRootProps, getInputProps, isDragReject, acceptedFiles }) => (
+              <Box className={classes.imageFieldContainer} {...getRootProps()}>
+                <input {...getInputProps()} />
+                {acceptedFiles.length == 0
+                  ? "Click here to upload or drop an image here"
+                  : acceptedFiles.map((file) => <p>{file.name}</p>)}
+                {isDragReject && "the file type is not accepted"}
+              </Box>
+            )}
+          </Dropzone>
         </Box>
         <Box className={classes.addButtonContainer}>
-          <Button className={classes.addButton} variant="contained"  onClick={()=> addList(imageUrl, title)}>
+          <Button
+            className={classes.addButton}
+            variant="contained"
+            onClick={() => addList(imageUrl, title)}
+          >
             CREATE LIST
           </Button>
         </Box>

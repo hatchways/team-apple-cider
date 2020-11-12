@@ -1,6 +1,7 @@
 import json, re
 from flask import jsonify, request, Blueprint
 from models.profile import Profile
+from models.user import User
 from database import db
 from config import PROFILE_IMG_PRESET
 from .image_uploader import replace_cloudinary_image
@@ -12,7 +13,12 @@ def single_profile_requests(id):
     if request.method == 'GET':
         try:
             profile = Profile.query.get(int(id))
-            return jsonify(profile.serialize), 200
+            user = User.query.get(int(id))
+            counts = {
+                "follower_count": len(user.followers.all()),
+                "following_count": len(user.followed.all())
+            }
+            return jsonify({**profile.serialize, **counts}), 200
         except Exception as e:
             return jsonify({'error': "{}".format(e.__cause__)}), 400
 

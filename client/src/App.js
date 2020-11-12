@@ -7,7 +7,6 @@ import Login from "components/Login";
 import SignUp from "components/SignUp";
 import ProtectedRoute from "components/ProtectedRoute";
 import Dashboard from "pages/Dashboard";
-import Profile from "pages/Profile";
 import LandingPage from "pages/LandingPage";
 import { theme } from "themes/theme";
 import { UserStore } from "contexts/UserContext";
@@ -25,7 +24,6 @@ function App() {
                 <Route path="/login" exact component={Login} />
                 <Route path="/signup" exact component={SignUp} />
                 <Route path="/landing" exact component={LandingPage} />
-                <ProtectedRoute path="/profile/:id" exact component={Profile} />
               </BrowserRouter>
             </ListStore>
           </UserStore>

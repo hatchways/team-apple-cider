@@ -10,8 +10,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import AddItemPopup from "components/AddItemPopup";
 import UserContext from "contexts/UserContext";
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-  
 }));
 
 const AddItem = () => {
@@ -71,7 +70,7 @@ const AddItem = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedListIndex, setSelectedListIndex] = useState("");
   const [listId, setListId] = useState("");
-  const [userLists, setUserLists] = useState(["Luxury", "Electronics"]);
+  const [userLists, setUserLists] = useState(["Luxury", "Electronics"]);
 
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
@@ -90,7 +89,6 @@ const AddItem = () => {
     const res = await fetch(`/lists?user_id=${userId}`);
     const json = await res.json();
     setUserLists(json);
-    
   };
 
   useEffect(() => {
@@ -103,7 +101,7 @@ const AddItem = () => {
       openPopup();
       const newItem = await getItem(inputLink);
       setItem(newItem);
-      setInputLink('')
+      setInputLink("");
     }
   };
 
@@ -124,29 +122,26 @@ const AddItem = () => {
         Add new item:
       </Typography>
 
-      
-        <Box className={classes.addItemInput}>
-          <Input
-            placeholder="Paste your link here"
-            disableUnderline
-            className={classes.linkForm}
-            value={inputLink}
-            onChange={(e) => setInputLink(e.target.value)}
-          />
+      <Box className={classes.addItemInput}>
+        <Input
+          placeholder="Paste your link here"
+          disableUnderline
+          className={classes.linkForm}
+          value={inputLink}
+          onChange={(e) => setInputLink(e.target.value)}
+        />
 
-          {/* Dropdown menu to select list */}
-          <FormControl className={classes.formControl}>
-          
-        
+        {/* Dropdown menu to select list */}
+        <FormControl className={classes.formControl}>
           <Select
             className={classes.dropdownList}
             value={selectedListIndex}
             onChange={onChangeList}
             displayEmpty
             disableUnderline
-            inputProps={{ 'aria-label': 'Without label' }}
+            inputProps={{ "aria-label": "Without label" }}
           >
-            <MenuItem value="" disabled >
+            <MenuItem value="" disabled>
               Select List
             </MenuItem>
             {userLists.map((listName, i) => (
@@ -154,19 +149,18 @@ const AddItem = () => {
                 {listName.name}
               </MenuItem>
             ))}
-            
           </Select>
-          </FormControl>
-          <Button
-            className={classes.addButton}
-            variant="contained"
-            onClick={addButtonClick}
-          >
-            ADD
-          </Button>
+        </FormControl>
+        <Button
+          className={classes.addButton}
+          variant="contained"
+          onClick={addButtonClick}
+        >
+          ADD
+        </Button>
 
-          <AddItemPopup {...{ item, popupOpen, closePopup, listId }} />
-        </Box>  
+        <AddItemPopup {...{ item, popupOpen, closePopup, listId }} />
+      </Box>
     </Box>
   );
 };
