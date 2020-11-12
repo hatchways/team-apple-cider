@@ -10,7 +10,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import AddItemPopup from "components/AddItemPopup";
 import UserContext from "contexts/UserContext";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
