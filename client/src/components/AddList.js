@@ -12,12 +12,13 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import useStyles from "../styles/AddListStyles";
 import UserContext from "contexts/UserContext";
+import ListContext from "contexts/ListContext";
 
 const AddList = (props) => {
   const { addListOpen, changeAddListOpen } = props;
   const userId = useContext(UserContext).userId;
+  const listsToggle = useContext(ListContext).listsToggle;
   const classes = useStyles();
-  // const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
   const [imageUrl, setimageUrl] = useState("");
 
@@ -46,6 +47,7 @@ const AddList = (props) => {
       body: JSON.stringify({ name: title, img_url: imageUrl }),
     });
     handleClose();
+    listsToggle();
   };
 
   const handleClose = () => {

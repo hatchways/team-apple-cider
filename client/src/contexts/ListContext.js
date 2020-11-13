@@ -1,23 +1,40 @@
-import React, { useState,createContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
+import UserContext from "contexts/UserContext";
+
 const ListContext = createContext({});
 
 export function ListStore(props) {
-  const [listChange, setListChange] = useState(true);
-  const [listDelete, setListDelete] = useState(true);
+  const userId = useContext(UserContext).userId;
+  const [listsChange, setListsChange] = useState(true);
+  const [productChange, setProductChange] = useState(true);
+  const [lists, setLists] = useState([]);
 
-  const listToggle = () => {
-    setListChange(!listChange);
+  //get request list
+  useEffect(() => {
+    async function getLists() {
+      const res = await fetch(`/lists?user_id=${userId}`);
+      const json = await res.json();
+      setLists(json);
+    }
+    getLists();
+  }, [listsChange]);
+
+  const productToggle = () => {
+    setProductChange(!productChange);
   };
-  const listDeleteToggle = () => {
-    setListDelete(!listDelete);
+
+  const listsToggle = () => {
+    setListsChange(!listsChange);
   };
+
   return (
     <ListContext.Provider
       value={{
-        listToggle: listToggle,
-        listChange: listChange,
-        listDeleteToggle: listDeleteToggle,
-        listDelete: listDelete,
+        productToggle: productToggle,
+        productChange: productChange,
+        listsToggle: listsToggle,
+        lists: lists,
+        setLists: setLists,
       }}
     >
       {props.children}

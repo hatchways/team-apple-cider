@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 const AddItemPopup = (props) => {
   const { item, popupOpen, closePopup, listId } = props;
   const classes = useStyles();
-  const listToggle = useContext(ListContext).listToggle;
+  const productToggle = useContext(ListContext).productToggle;
 
   const addProductToList = async () => {
     const res = await fetch(`/list-to-products/${listId}`, {
@@ -69,7 +69,7 @@ const AddItemPopup = (props) => {
   const addButtonClick = () => {
     addProductToList();
     closePopup();
-    listToggle();
+    productToggle();
   };
 
   return (

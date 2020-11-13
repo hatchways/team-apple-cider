@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Typography,
@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddItemPopup from "components/AddItemPopup";
-import UserContext from "contexts/UserContext";
 import FormControl from "@material-ui/core/FormControl";
+import ListContext from "contexts/ListContext";
 
 const useStyles = makeStyles((theme) => ({
   dashboardAddItem: {
@@ -63,13 +63,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddItem = () => {
-  const userId = useContext(UserContext).userId;
+  const lists = useContext(ListContext).lists;
   const [inputLink, setInputLink] = useState("");
   const [item, setItem] = useState({});
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedListIndex, setSelectedListIndex] = useState("");
   const [listId, setListId] = useState("");
-  const [userLists, setUserLists] = useState(["Luxury", "Electronics"]);
 
   const classes = useStyles();
   const openPopup = () => setPopupOpen(true);
@@ -82,17 +81,6 @@ const AddItem = () => {
     });
     return response.json();
   };
-
-  // Step 1: Fetch list from Database
-  const getLists = async () => {
-    const res = await fetch(`/lists?user_id=${userId}`);
-    const json = await res.json();
-    setUserLists(json);
-  };
-
-  useEffect(() => {
-    getLists();
-  }, []);
 
   const addButtonClick = async (e) => {
     // TODO: regex check inputLink here is a valid URL to scrape
@@ -112,7 +100,7 @@ const AddItem = () => {
   const onChangeList = (e) => {
     const newIndex = parseInt(e.target.value);
     setSelectedListIndex(newIndex);
-    setListId(userLists[newIndex].id);
+    setListId(lists[newIndex].id);
   };
 
   return (
@@ -143,7 +131,7 @@ const AddItem = () => {
             <MenuItem value="" disabled>
               Select List
             </MenuItem>
-            {userLists.map((listName, i) => (
+            {lists.map((listName, i) => (
               <MenuItem key={i} value={i}>
                 {listName.name}
               </MenuItem>

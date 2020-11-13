@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Modal,
@@ -14,28 +14,21 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import useStyles from "../styles/AddProductStyles";
-import UserContext from "contexts/UserContext";
 import ItemDisplay from "components/ItemDisplay";
 import ListContext from "contexts/ListContext";
 
 const AddProduct = (props) => {
   const {
-    listTitle,
-    listOpen,
-    changeListOpen,
     addProductOpen,
     changeAddProductOpen,
-    lists,
     changeOpenSuccessSnack,
   } = props;
+  const lists = useContext(ListContext).lists;
   const classes = useStyles();
   const [inputLink, setInputLink] = useState("");
-  const [list, setList] = useState("");
-  const userId = useContext(UserContext).userId;
-  const listToggle = useContext(ListContext).listToggle;
+  const [selectedListIndex, setSelectedListIndex] = useState("");
   const [item, setItem] = useState({});
   const [listId, setListId] = useState("");
-  const [userLists, setUserLists] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const getItem = async (input) => {
@@ -46,16 +39,6 @@ const AddProduct = (props) => {
     });
     return response.json();
   };
-
-  const getLists = async () => {
-    const res = await fetch(`/lists?user_id=${userId}`);
-    const json = await res.json();
-    setUserLists(json);
-  };
-
-  useEffect(() => {
-    getLists();
-  }, [listToggle]);
 
   const addProductToList = async () => {
     const res = await fetch(`/list-to-products/${listId}`, {
@@ -86,8 +69,10 @@ const AddProduct = (props) => {
   };
 
   const onChangeList = (e) => {
-    setList(e.target.value);
-    setListId(e.target.value.id);
+    const newIndex = parseInt(e.target.value);
+    alert(newIndex);
+    setSelectedListIndex(newIndex);
+    setListId(lists[newIndex].id);
   };
 
   const handleClose = () => {
@@ -143,13 +128,13 @@ const AddProduct = (props) => {
             <InputLabel id="select-list-label">Select</InputLabel>
             <Select
               id="select-list"
-              value={list}
+              value={selectedListIndex}
               onChange={onChangeList}
               label="List"
             >
-              {userLists.map((userList, i) => (
-                <MenuItem key={i} value={userList}>
-                  {userList.name}
+              {lists.map((lists, i) => (
+                <MenuItem key={i} value={i}>
+                  {lists.name}
                 </MenuItem>
               ))}
             </Select>
