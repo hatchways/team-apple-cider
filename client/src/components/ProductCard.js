@@ -1,4 +1,4 @@
-import React , {useContext} from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Button } from "@material-ui/core";
 import ItemDisplay from "components/ItemDisplay";
@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductCard = ({ item, listId, getProductIds }) => {
   const classes = useStyles();
-  const listToggle = useContext(ListContext).listToggle;
+  const productToggle = useContext(ListContext).productToggle;
   const removeButtonClick = async () => {
     const res = await fetch(`list-to-products/${listId}/${item.id}`, {
       method: "DELETE",
     });
     getProductIds();
-    listToggle();
+    productToggle();
   };
 
   return (

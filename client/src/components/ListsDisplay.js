@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import ListCard from "components/ListCard";
 import { useHorizontalScroll } from "components/HorrizontalScroll";
-import UserContext from "contexts/UserContext";
 import SuccessSnackbar from "components/SuccessSnackbar";
 import ListContext from "contexts/ListContext";
 
@@ -54,11 +53,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ListsDisplay = (props) => {
   const scrollRef = useHorizontalScroll();
-  const { profile, addListOpen, changeAddListOpen } = props;
+  const { profile, changeAddListOpen } = props;
   const classes = useStyles();
-  const userId = useContext(UserContext).userId;
-  const listDelete = useContext(ListContext).listDelete;
-  const [lists, setLists] = useState([]);
+  const lists = useContext(ListContext).lists;
   const [snackText, setSnackText] = useState("");
   const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
 
@@ -73,19 +70,6 @@ const ListsDisplay = (props) => {
     }
     setOpenSuccessSnack(false);
   };
-
-  const getLists = async () => {
-    const id = profile && profile.id ? profile.id : userId;
-    const res = await fetch(`/lists?user_id=${id}`);
-    const json = await res.json();
-    if (Array.isArray(json)) {
-      setLists(json);
-    }
-  };
-
-  useEffect(() => {
-    getLists();
-  }, [listDelete, profile && profile.id]);
 
   const getListsUserText = (profile) => {
     if (!profile || profile.name === undefined) return "My Shopping Lists:";

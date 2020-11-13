@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ListSettingsPopup from "components/ListSettingsPopup";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   listsTitle: {
     fontWeight: "bold",
     margin: "2rem 0",
@@ -63,9 +63,8 @@ const ListCard = (props) => {
   const settingsOpen = Boolean(anchorEl);
 
   // This affects the Modal open component which opens the modal when set to True
-  const changeListOpen = (event) => {
+  const changeListOpen = () => {
     setListOpen(!listOpen);
-    getProductIds();
   };
 
   // Gets the total number of items in the list
@@ -108,7 +107,10 @@ const ListCard = (props) => {
   };
   return (
     <Box>
-      <Box onClick={!settingsOpen && changeListOpen} className={classes.listContainer}>
+      <Box
+        onClick={!settingsOpen && changeListOpen}
+        className={classes.listContainer}
+      >
         <img src={img} alt={listTitle} className={classes.listImage} />
         <Box>
           <IconButton
@@ -150,7 +152,7 @@ const ListCard = (props) => {
           changeOpenSuccessSnack,
         }}
       />
-       <ListSettingsPopup {...{ listId, settingsOpen, settingsClose }} />
+      <ListSettingsPopup {...{ listId, settingsOpen, settingsClose }} />
     </Box>
   );
 };
