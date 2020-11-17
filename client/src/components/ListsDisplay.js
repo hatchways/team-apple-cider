@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
         "& > *": {
             marginRight: theme.spacing(4),
         },
+        "& > *:last-child": {
+            marginRight: 0,
+        },
     },
 
     addNewList: {
