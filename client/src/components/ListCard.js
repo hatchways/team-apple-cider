@@ -47,11 +47,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ListCard = (props) => {
-    const { demo } = props;
+    const { demo, lists } = props;
     const listId = props.list.id;
     const listTitle = props.list.name;
     const img = props.list.img_url;
-    const lists = props.lists;
     const changeOpenSuccessSnack = props.changeOpenSuccessSnack;
     const listChange = useContext(ListContext).listChange;
     const classes = useStyles();
