@@ -7,6 +7,9 @@ import { useHorizontalScroll } from "components/HorrizontalScroll";
 import SuccessSnackbar from "components/SuccessSnackbar";
 import ListContext from "contexts/ListContext";
 import ListsDisplayTitle from "components/ListsDisplayTitle";
+import fashion from "img/default/fashion.png";
+import home from "img/default/home.png";
+import travel from "img/default/travel.png";
 
 const useStyles = makeStyles((theme) => ({
     shoppingContainer: {
@@ -51,6 +54,27 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const defaultLists = [
+    {
+        name: "Home",
+        id: 2,
+        user_id: 6,
+        img_url: home,
+    },
+    {
+        name: "Fashion",
+        id: 2,
+        user_id: 6,
+        img_url: fashion,
+    },
+    {
+        name: "Travel",
+        id: 2,
+        user_id: 6,
+        img_url: travel,
+    },
+];
+
 const ListsDisplay = (props) => {
     const userLists = useContext(ListContext).lists;
     const scrollRef = useHorizontalScroll();
@@ -70,8 +94,10 @@ const ListsDisplay = (props) => {
         if (profile) {
             const profileLists = await getLists(profile.id);
             setLists(profileLists);
-        } else setLists(userLists);
+        } else if (userLists.length === 0) setLists(defaultLists);
+        else setLists(userLists);
     };
+    console.log(lists);
 
     useEffect(() => {
         refreshLists();
