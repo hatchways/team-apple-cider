@@ -62,9 +62,7 @@ const ListsDisplay = (props) => {
     };
 
     const handleCloseSnack = (event, reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
+        if (reason === "clickaway") return;
         setOpenSuccessSnack(false);
     };
 
