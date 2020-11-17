@@ -91,8 +91,7 @@ const ListsDisplay = (props) => {
         <Box className={`${classes.shoppingContainer} ${props.className}`}>
             <ListsDisplayTitle {...{ profile, lists }} />
             <Box className={classes.myShoppingLists} ref={scrollRef}>
-                {lists &&
-                    lists.length !== 0 &&
+                {lists.length !== 0 &&
                     lists.map((list, i) => (
                         <ListCard
                             key={i}
