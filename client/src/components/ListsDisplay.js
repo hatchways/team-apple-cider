@@ -115,7 +115,7 @@ const ListsDisplay = (props) => {
 
     return (
         <Box className={`${classes.shoppingContainer} ${props.className}`}>
-            <ListsDisplayTitle {...{ profile, lists }} />
+            <ListsDisplayTitle {...{ demo, profile, lists }} />
             <Box className={classes.myShoppingLists} ref={scrollRef}>
                 {lists.length !== 0 &&
                     lists.map((list, i) => (

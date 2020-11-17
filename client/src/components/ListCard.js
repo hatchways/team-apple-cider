@@ -109,27 +109,31 @@ const ListCard = (props) => {
     return (
         <Box>
             <Box
-                onClick={!settingsOpen && changeListOpen}
+                onClick={!settingsOpen && !demo && changeListOpen}
                 className={classes.listContainer}
             >
                 <img src={img} alt={listTitle} className={classes.listImage} />
-                <Box>
-                    <IconButton
-                        aria-label="more"
-                        aria-controls="long-menu"
-                        aria-haspopup="true"
-                        onClick={settingsClick}
-                    >
-                        <MoreHorizIcon />
-                    </IconButton>
-                </Box>
+                {!demo && (
+                    <Box>
+                        <IconButton
+                            aria-label="more"
+                            aria-controls="long-menu"
+                            aria-haspopup="true"
+                            onClick={settingsClick}
+                        >
+                            <MoreHorizIcon />
+                        </IconButton>
+                    </Box>
+                )}
                 <Box className={classes.listTextContainer}>
                     <Typography className={classes.listTextTitle}>
                         {listTitle}
                     </Typography>
-                    <Typography
-                        className={classes.listTextItems}
-                    >{`${itemCount} items`}</Typography>
+                    {!demo && (
+                        <Typography
+                            className={classes.listTextItems}
+                        >{`${itemCount} items`}</Typography>
+                    )}
                 </Box>
             </Box>
             <ListPopup
