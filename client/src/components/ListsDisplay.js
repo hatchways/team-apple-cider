@@ -7,9 +7,9 @@ import { useHorizontalScroll } from "components/HorrizontalScroll";
 import SuccessSnackbar from "components/SuccessSnackbar";
 import ListContext from "contexts/ListContext";
 import ListsDisplayTitle from "components/ListsDisplayTitle";
-import fashion from "img/default/fashion.png";
-import home from "img/default/home.png";
-import travel from "img/default/travel.png";
+import tech from "img/default/tech.jpg";
+import home from "img/default/home.jpg";
+import travel from "img/default/travel.jpg";
 
 const useStyles = makeStyles((theme) => ({
     shoppingContainer: {
@@ -60,8 +60,8 @@ const defaultLists = [
         img_url: home,
     },
     {
-        name: "Fashion",
-        img_url: fashion,
+        name: "Tech",
+        img_url: tech,
     },
     {
         name: "Travel",
