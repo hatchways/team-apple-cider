@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -52,12 +52,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListsDisplay = (props) => {
+    const userLists = useContext(ListContext).lists;
     const scrollRef = useHorizontalScroll();
     const { profile, changeAddListOpen } = props;
     const classes = useStyles();
-    const lists = useContext(ListContext).lists;
+    const [lists, setLists] = useState(userLists);
     const [snackText, setSnackText] = useState("");
     const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
+
+    const getLists = async (id) => {
+        const res = await fetch(`/lists?user_id=${id}`);
+        const json = await res.json();
+        return json;
+    };
+
+    const refreshLists = async () => {
+        if (profile) {
+            const profileLists = await getLists(profile.id);
+            setLists(profileLists);
+        } else setLists(userLists);
+    };
+
+    useEffect(() => {
+        refreshLists();
+    }, [profile, userLists]);
 
     const changeOpenSuccessSnack = (message) => {
         setSnackText(message);
@@ -73,7 +91,8 @@ const ListsDisplay = (props) => {
         <Box className={`${classes.shoppingContainer} ${props.className}`}>
             <ListsDisplayTitle {...{ profile, lists }} />
             <Box className={classes.myShoppingLists} ref={scrollRef}>
-                {lists.length !== 0 &&
+                {lists &&
+                    lists.length !== 0 &&
                     lists.map((list, i) => (
                         <ListCard
                             key={i}
