@@ -56,7 +56,7 @@ const ListCard = (props) => {
     const listChange = useContext(ListContext).listChange;
     const classes = useStyles();
     const [listOpen, setListOpen] = useState(false);
-    const [itemCount, setItemCount] = useState("");
+    const [itemCount, setItemCount] = useState(0);
     const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
     const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
     const [addProductOpen, setAddProductOpen] = useState(false);
