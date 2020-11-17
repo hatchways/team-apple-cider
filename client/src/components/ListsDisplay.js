@@ -97,7 +97,6 @@ const ListsDisplay = (props) => {
         } else if (userLists.length === 0) setLists(defaultLists);
         else setLists(userLists);
     };
-    console.log(lists);
 
     useEffect(() => {
         refreshLists();
