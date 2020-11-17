@@ -7,9 +7,7 @@ import { useHorizontalScroll } from "components/HorrizontalScroll";
 import SuccessSnackbar from "components/SuccessSnackbar";
 import ListContext from "contexts/ListContext";
 import ListsDisplayTitle from "components/ListsDisplayTitle";
-import tech from "img/default/tech.jpg";
-import home from "img/default/home.jpg";
-import travel from "img/default/travel.jpg";
+import DemoShoppingLists from "components/DemoShoppingLists";
 
 const useStyles = makeStyles((theme) => ({
     shoppingContainer: {
@@ -54,21 +52,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const defaultLists = [
-    {
-        name: "Home",
-        img_url: home,
-    },
-    {
-        name: "Tech",
-        img_url: tech,
-    },
-    {
-        name: "Travel",
-        img_url: travel,
-    },
-];
-
 const ListsDisplay = (props) => {
     const userLists = useContext(ListContext).lists;
     const scrollRef = useHorizontalScroll();
@@ -93,10 +76,7 @@ const ListsDisplay = (props) => {
         } else if (userLists.length > 0) {
             setLists(userLists);
             setDemo(false);
-        } else {
-            setLists(defaultLists);
-            setDemo(true);
-        }
+        } else setDemo(true);
     };
 
     useEffect(() => {
@@ -117,13 +97,17 @@ const ListsDisplay = (props) => {
         <Box className={`${classes.shoppingContainer} ${props.className}`}>
             <ListsDisplayTitle {...{ demo, profile, lists }} />
             <Box className={classes.myShoppingLists} ref={scrollRef}>
-                {lists.length !== 0 &&
+                {demo ? (
+                    <DemoShoppingLists />
+                ) : (
+                    lists.length !== 0 &&
                     lists.map((list, i) => (
                         <ListCard
                             key={i}
                             {...{ list, lists, changeOpenSuccessSnack, demo }}
                         />
-                    ))}
+                    ))
+                )}
                 {!profile && (
                     <Box className={classes.addNewList}>
                         <IconButton

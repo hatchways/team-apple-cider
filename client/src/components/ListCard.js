@@ -47,7 +47,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ListCard = (props) => {
-    const { demo, lists } = props;
+    const { lists } = props;
     const listId = props.list.id;
     const listTitle = props.list.name;
     const img = props.list.img_url;
@@ -86,11 +86,11 @@ const ListCard = (props) => {
     };
 
     useEffect(() => {
-        if (!demo) getProducts();
+        getProducts();
     }, [listToProducts]);
 
     useEffect(() => {
-        if (!demo) getProductIds();
+        getProductIds();
     }, [listChange]);
 
     const settingsClick = (event) => {
@@ -108,31 +108,27 @@ const ListCard = (props) => {
     return (
         <Box>
             <Box
-                onClick={!settingsOpen && !demo && changeListOpen}
+                onClick={!settingsOpen && changeListOpen}
                 className={classes.listContainer}
             >
                 <img src={img} alt={listTitle} className={classes.listImage} />
-                {!demo && (
-                    <Box>
-                        <IconButton
-                            aria-label="more"
-                            aria-controls="long-menu"
-                            aria-haspopup="true"
-                            onClick={settingsClick}
-                        >
-                            <MoreHorizIcon />
-                        </IconButton>
-                    </Box>
-                )}
+                <Box>
+                    <IconButton
+                        aria-label="more"
+                        aria-controls="long-menu"
+                        aria-haspopup="true"
+                        onClick={settingsClick}
+                    >
+                        <MoreHorizIcon />
+                    </IconButton>
+                </Box>
                 <Box className={classes.listTextContainer}>
                     <Typography className={classes.listTextTitle}>
                         {listTitle}
                     </Typography>
-                    {!demo && (
-                        <Typography
-                            className={classes.listTextItems}
-                        >{`${itemCount} items`}</Typography>
-                    )}
+                    <Typography
+                        className={classes.listTextItems}
+                    >{`${itemCount} items`}</Typography>
                 </Box>
             </Box>
             <ListPopup
