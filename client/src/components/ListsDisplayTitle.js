@@ -29,7 +29,7 @@ const ListsDisplayTitle = (props) => {
     return (
         <Typography variant="h5" className={classes.listsTitle}>
             {demo
-                ? "Create a new list!"
+                ? "Create your first list:"
                 : lists.length !== 0
                 ? getListsUserText(profile)
                 : getEmptyListText(profile)}
