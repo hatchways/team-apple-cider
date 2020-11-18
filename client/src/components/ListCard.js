@@ -47,15 +47,16 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ListCard = (props) => {
+  const { lists } = props;
   const listId = props.list.id;
   const listTitle = props.list.name;
   const img = props.list.img_url;
-  const lists = props.lists;
   const changeOpenSuccessSnack = props.changeOpenSuccessSnack;
   const listChange = useContext(ListContext).listChange;
+  const productChange = useContext(ListContext).productChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
-  const [itemCount, setItemCount] = useState("");
+  const [itemCount, setItemCount] = useState(0);
   const [listToProducts, setListToProducts] = useState([]); // list-to-products table {list_id, product_id}
   const [products, setProducts] = useState([]); // products table {product_id, img_url, price}
   const [addProductOpen, setAddProductOpen] = useState(false);
@@ -91,7 +92,7 @@ const ListCard = (props) => {
 
   useEffect(() => {
     getProductIds();
-  }, [listChange]);
+  }, [listChange, productChange]);
 
   const settingsClick = (event) => {
     event.stopPropagation();
