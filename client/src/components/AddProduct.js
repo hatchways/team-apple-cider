@@ -70,7 +70,6 @@ const AddProduct = (props) => {
 
   const onChangeList = (e) => {
     const newIndex = parseInt(e.target.value);
-    alert(newIndex);
     setSelectedListIndex(newIndex);
     setListId(lists[newIndex].id);
   };
