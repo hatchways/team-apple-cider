@@ -24,6 +24,7 @@ const AddProduct = (props) => {
     changeOpenSuccessSnack,
   } = props;
   const lists = useContext(ListContext).lists;
+  const productToggle = useContext(ListContext).productToggle;
   const classes = useStyles();
   const [inputLink, setInputLink] = useState("");
   const [selectedListIndex, setSelectedListIndex] = useState("");
@@ -66,6 +67,7 @@ const AddProduct = (props) => {
     changeAddProductOpen();
     changeOpenSuccessSnack("Product successfully added!");
     setItem({});
+    productToggle();
   };
 
   const onChangeList = (e) => {

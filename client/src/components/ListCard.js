@@ -53,6 +53,7 @@ const ListCard = (props) => {
   const img = props.list.img_url;
   const changeOpenSuccessSnack = props.changeOpenSuccessSnack;
   const listChange = useContext(ListContext).listChange;
+  const productChange = useContext(ListContext).productChange;
   const classes = useStyles();
   const [listOpen, setListOpen] = useState(false);
   const [itemCount, setItemCount] = useState(0);
@@ -91,7 +92,7 @@ const ListCard = (props) => {
 
   useEffect(() => {
     getProductIds();
-  }, [listChange]);
+  }, [listChange, productChange]);
 
   const settingsClick = (event) => {
     event.stopPropagation();
