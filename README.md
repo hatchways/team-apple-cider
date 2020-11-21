@@ -1,4 +1,7 @@
-# flask-starter
+# Dealsmate
+
+ Dealsmate is an online marketplace that allows users to create and follow shopping lists that notifies users when items are on sale.
+
 
 ## Starting the server:
 
