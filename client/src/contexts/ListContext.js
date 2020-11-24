@@ -3,7 +3,7 @@ import UserContext from "contexts/UserContext";
 
 const ListContext = createContext({});
 
-export function ListStore(props) {
+export const ListStore = (props) => {
     const userId = useContext(UserContext).userId;
     const [listsChange, setListsChange] = useState(true);
     const [productChange, setProductChange] = useState(true);
@@ -34,6 +34,6 @@ export function ListStore(props) {
             {props.children}
         </ListContext.Provider>
     );
-}
+};
 
 export default ListContext;
