@@ -92,7 +92,7 @@ const ListCard = (props) => {
 
   useEffect(() => {
     getProductIds();
-  }, [listChange, productChange]);
+  }, [listChange, productChange, listId]);
 
   const settingsClick = (event) => {
     event.stopPropagation();
