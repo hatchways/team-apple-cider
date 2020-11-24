@@ -18,8 +18,8 @@ export function ListStore(props) {
         getLists();
     }, [listsChange]);
 
-    const productToggle = () => setProductChange(!productChange);
-    const listsToggle = () => setListsChange(!listsChange);
+    const productToggle = () => setProductChange((cur) => !cur);
+    const listsToggle = () => setListsChange((cur) => !cur);
 
     return (
         <ListContext.Provider
