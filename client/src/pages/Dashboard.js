@@ -14,10 +14,10 @@ import { ListStore } from "contexts/ListContext";
 
 const Dashboard = () => {
     return (
-        <ListStore>
-            <Page>
-                <Header />
-                <Body>
+        <Page>
+            <Header />
+            <Body>
+                <ListStore>
                     <Switch>
                         <Route exact path="/" component={ShoppingLists} />
                         <Route path="/friends/*" component={Friends} />
@@ -27,9 +27,9 @@ const Dashboard = () => {
                             component={Profile}
                         />
                     </Switch>
-                </Body>
-            </Page>
-        </ListStore>
+                </ListStore>
+            </Body>
+        </Page>
     );
 };
 
