@@ -28,7 +28,6 @@ export const ListStore = (props) => {
                 productChange,
                 listsToggle,
                 lists,
-                setLists,
             }}
         >
             {props.children}
