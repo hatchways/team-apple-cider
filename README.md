@@ -1,4 +1,4 @@
-<div align="center">
+<div align="center" style="margin: 2rem">
     <img alt="Dealsmate logo" src="./docs/img/logo.png" width="400px" />
 </div>
 
@@ -36,7 +36,7 @@ You will now have a profile photo that is visible to friends!
 
 Next let's create your first list.
 
-Either select from one of the default lists, or click `ADD NEW LIST` and select a name and image to use:
+Either select from one of the default lists, or click `ADD NEW LIST` and select a name and image to use.
 
 ![add_list](./docs/img/gifs/add_list.gif)
 
