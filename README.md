@@ -70,7 +70,7 @@ You can follow a friends profile to get updates on their public lists:
 2. Click on the `Explore` tab to find users not in your network
 3. Click the follow button next to the user you want to follow
 4. Go to the `Following` tab to see who you are following
-5. Click a users name to view their profile
+5. Click a user's name to view their profile
 
 ![follow_profiles](./docs/img/gifs/follow_profiles.gif)
 
