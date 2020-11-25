@@ -63,3 +63,10 @@ You can follow a friends profile to get updates on their public lists:
 5. Click a users name to view their profile
 
 ![follow_profiles](./docs/img/gifs/follow_profiles.gif)
+
+# Development
+
+<ul>
+    <li><a href="./docs/local_setup.md">Local Setup README</a></li>
+    <li><a href="./docs/api_usage.md">API Usage README</a></li>
+</ul>
