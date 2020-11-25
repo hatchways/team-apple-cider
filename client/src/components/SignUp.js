@@ -4,7 +4,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Button, TextField, Box, Tooltip, Typography } from "@material-ui/core";
 import UserContext from "../contexts/UserContext";
 import WarningSnackbar from "./WarningSnackbar";
-
+import saleImage from "../img/sale.jpg"
 const ErrorTooltip = withStyles((theme) => ({
   arrow: {
     color: "red",
@@ -18,20 +18,28 @@ const ErrorTooltip = withStyles((theme) => ({
 }))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
+  dealsMate:{
+    backgroundImage: `url(${saleImage})`,
+    backgroundSize:"contain",
+    backgroundRepeat:"no-repeat",
+    width:"70%"
+  },
   signup: {
     width: "100vw",
     margin: "0 auto",
     minHeight: "100vh",
     padding: "50px",
     backgroundColor: "#44475ab9",
+    display:"flex",
+    justifyContent:"right"
   },
   formContainer: {
     border: " solid rgb(241, 238, 232) 1px",
-    borderRadius: "1%",
-    width: "50% ",
-    maxWidth: "400px",
-    minWidth: "250px",
-    margin: "0 auto",
+    // borderRadius: "1%",
+    width: "300px ",
+    // // maxWidth: "400px",
+    // // minWidth: "250px",
+    // // margin: "0 auto",
     textAlign: "center",
     backgroundColor: "#f7f3f3",
     padding: "30px",
@@ -128,6 +136,9 @@ function SignUp(props) {
 
   return (
     <section className={classes.signup}>
+      <Box className={classes.dealsMate}>
+
+      </Box>
       <Box className={classes.formContainer}>
         <form onSubmit={handleSignup}>
           <h2 className={classes.h2}>Sign up</h2>
