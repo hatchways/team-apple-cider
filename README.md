@@ -14,15 +14,17 @@ Dealsmate is an online marketplace that allows users to create and follow shoppi
 -   Follow your friends lists to see what items they want
 -   Make private lists for sensitive items/presents/etc.
 
+# Contents
+
+-   [Usage](#Usage)
+    -   [Signup](#Signup)
+    -   [Adding a profile photo](#Adding-a-profile-photo)
+    -   [Creating lists](#Creating-lists)
+    -   [Adding products to lists](#Adding-products-to-lists)
+    -   [Following friends](#Following-friends)
+-   [Development](#Development)
+
 # Usage
-
-### Contents
-
--   [Signup](#Signup)
--   [Adding a profile photo](#Adding-a-profile-photo)
--   [Creating lists](#Creating-lists)
--   [Adding products to lists](#Adding-products-to-lists)
--   [Following friends](#Following-friends)
 
 ## Signup
 
