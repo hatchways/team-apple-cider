@@ -11,7 +11,9 @@
 ### Starting the frontend
 
 1. Open a terminal and go to the client folder
+
 2. Run `npm install` to install node dependencies
+
 3. Run `npm start` to start the React App
 
 ### Setting up PostgreSQL
