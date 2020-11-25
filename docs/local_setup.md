@@ -1,21 +1,5 @@
 ## Local Setup
 
-### Starting the server:
-
-1. Open a terminal and go to the server folder. Make sure you have **pipenv** installed (`pip install pipenv`)
-
-2. Install the dependencies with `pipenv install`. This will also create a virtual environment, if there isn't one already
-
-3. Activate the virtual environment and start the app with `pipenv run flask run`
-
-### Starting the frontend
-
-1. Open a terminal and go to the client folder
-
-2. Run `npm install` to install node dependencies
-
-3. Run `npm start` to start the React App
-
 ### Setting up PostgreSQL
 
 1. Follow the instructions to [install](https://www.postgresqltutorial.com/install-postgresql/) Postgresql (v12) on your local machine
@@ -48,3 +32,19 @@
     - `POSTGRES_PW = "password"`
     - `POSTGRES_URL = "127.0.0.1:5432"`
     - `POSTGRES_DB = "dealsmate_db"`
+
+### Starting the server:
+
+1. Open a terminal and go to the server folder. Make sure you have **pipenv** installed (`pip install pipenv`)
+
+2. Install the dependencies with `pipenv install`. This will also create a virtual environment, if there isn't one already
+
+3. Activate the virtual environment and start the app with `pipenv run flask run`
+
+### Starting the frontend
+
+1. Open a terminal and go to the client folder
+
+2. Run `npm install` to install node dependencies
+
+3. Run `npm start` to start the React App
