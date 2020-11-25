@@ -1,4 +1,4 @@
-<div align="center" style="padding-bottom: 2rem">
+<div align="center">
     <img alt="Dealsmate logo" src="./docs/img/logo.png" width="400px" />
 </div>
 
