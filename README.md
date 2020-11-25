@@ -16,6 +16,14 @@ Dealsmate is an online marketplace that allows users to create and follow shoppi
 
 # Usage
 
+### Contents
+
+-   [Signup](#Signup)
+-   [Adding a profile photo](#Adding-a-profile-photo)
+-   [Creating lists](#Creating-lists)
+-   [Adding products to lists](#Adding-products-to-lists)
+-   [Following friends](#Following-friends)
+
 ## Signup
 
 To get started create an account at the <a href='dealsmate.com/signup' >sign up page</a>.
