@@ -8,6 +8,12 @@
 
 3. Activate the virtual environment and start the app with `pipenv run flask run`
 
+### Starting the frontend
+
+1. Open a terminal and go to the client folder
+2. Run `npm install` to install node dependencies
+3. Run `npm start` to start the React App
+
 ### Setting up PostgreSQL
 
 1. Follow the instructions to [install](https://www.postgresqltutorial.com/install-postgresql/) Postgresql (v12) on your local machine
