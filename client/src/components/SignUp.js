@@ -4,7 +4,9 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Button, TextField, Box, Tooltip, Typography } from "@material-ui/core";
 import UserContext from "../contexts/UserContext";
 import WarningSnackbar from "./WarningSnackbar";
-import saleImage from "../img/sale.jpg"
+import backgroundImage from "../img/bcImage5.jpg"
+import zIndex from "@material-ui/core/styles/zIndex";
+import { Opacity } from "@material-ui/icons";
 const ErrorTooltip = withStyles((theme) => ({
   arrow: {
     color: "red",
@@ -18,20 +20,24 @@ const ErrorTooltip = withStyles((theme) => ({
 }))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
-  dealsMate:{
-    backgroundImage: `url(${saleImage})`,
-    backgroundSize:"contain",
-    backgroundRepeat:"no-repeat",
-    width:"70%"
-  },
   signup: {
+    backgroundColor:"#7577853b",
     width: "100vw",
     margin: "0 auto",
     minHeight: "100vh",
     padding: "50px",
-    backgroundColor: "#44475ab9",
     display:"flex",
-    justifyContent:"right"
+    position:"relative",
+    justifyContent:"space-between",
+  },
+  backgroundImage:{
+    width:"100%",
+    height:"100%",
+    position:"absolute",
+    top:"0",
+    left:"0",
+    zIndex:"-1",
+    opacity:"0.5"
   },
   formContainer: {
     border: " solid rgb(241, 238, 232) 1px",
@@ -136,8 +142,10 @@ function SignUp(props) {
 
   return (
     <section className={classes.signup}>
+      <img src={backgroundImage} className={classes.backgroundImage}></img>
       <Box className={classes.dealsMate}>
-
+      <Typography className={classes.h1}>Deals Mate</Typography>
+      <Typography className={classes.description}></Typography>
       </Box>
       <Box className={classes.formContainer}>
         <form onSubmit={handleSignup}>
