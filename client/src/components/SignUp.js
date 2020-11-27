@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     // overflow:"hidden"
   },
   backgroundImage:{
-    
     height:"100vh",
     position:"absolute",
     top:"0",
@@ -48,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   dealsMate:{
     width:"40%",
     padding:"20px",
-    marginTop:"150px"
+    marginTop:"100px"
   },
   logo:{
     width:"100%",
@@ -61,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f7f3f3",
     padding: "30px",
     marginLeft:"40px",
+    marginRight:"100px"
   },
   h2: {
     marginTop: 0,
