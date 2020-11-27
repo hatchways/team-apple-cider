@@ -5,8 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     listsTitle: {
         fontWeight: "bold",
-        margin: "2rem 0",
-    },
+        margin: "2rem 0"
+    }
 }));
 
 const ListsDisplayTitle = (props) => {
