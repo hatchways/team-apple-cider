@@ -13,24 +13,35 @@ import { UserStore } from "contexts/UserContext";
 import { ListStore } from "contexts/ListContext";
 
 function App() {
-  return (
-    <Fragment>
-      <CssBaseline>
-        <MuiThemeProvider theme={theme}>
-          <UserStore>
-            <ListStore>
-              <BrowserRouter>
-                <ProtectedRoute path="/" component={Dashboard} />
-                <Route path="/login" exact component={Login} />
-                <Route path="/signup" exact component={SignUp} />
-                <Route path="/landing" exact component={LandingPage} />
-              </BrowserRouter>
-            </ListStore>
-          </UserStore>
-        </MuiThemeProvider>
-      </CssBaseline>
-    </Fragment>
-  );
+    return (
+        <Fragment>
+            <CssBaseline>
+                <MuiThemeProvider theme={theme}>
+                    <UserStore>
+                        <ListStore>
+                            <BrowserRouter>
+                                <ProtectedRoute
+                                    path="/"
+                                    component={Dashboard}
+                                />
+                                <Route path="/login" exact component={Login} />
+                                <Route
+                                    path="/signup"
+                                    exact
+                                    component={SignUp}
+                                />
+                                <Route
+                                    path="/landing"
+                                    exact
+                                    component={LandingPage}
+                                />
+                            </BrowserRouter>
+                        </ListStore>
+                    </UserStore>
+                </MuiThemeProvider>
+            </CssBaseline>
+        </Fragment>
+    );
 }
 
 export default App;

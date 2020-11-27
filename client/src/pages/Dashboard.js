@@ -11,18 +11,22 @@ import Friends from "body/Friends";
 import Profile from "body/Profile";
 
 const Dashboard = () => {
-  return (
-    <Page>
-      <Header />
-      <Body>
-        <Switch>
-          <Route exact path="/" component={ShoppingLists} />
-          <Route path="/friends/*" component={Friends} />
-          <ProtectedRoute path="/profile/:id" exact component={Profile} />
-        </Switch>
-      </Body>
-    </Page>
-  );
+    return (
+        <Page>
+            <Header />
+            <Body>
+                <Switch>
+                    <Route exact path="/" component={ShoppingLists} />
+                    <Route path="/friends/*" component={Friends} />
+                    <ProtectedRoute
+                        path="/profile/:id"
+                        exact
+                        component={Profile}
+                    />
+                </Switch>
+            </Body>
+        </Page>
+    );
 };
 
 export default Dashboard;
