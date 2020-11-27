@@ -1,143 +1,82 @@
-# Dealsmate
+<div align="center">
+    <img alt="Dealsmate logo" src="./docs/img/logo.png" width="400px" />
+</div> <br /> <br />
 
 Dealsmate is an online marketplace that allows users to create and follow shopping lists that notifies them when items are on sale.
 
-## Starting the server:
+![dashboard](./docs/img/dashboard.jpeg)
 
-1. Open a terminal and go to the server folder. Make sure you have **pipenv** installed (`pip install pipenv`)
+# Features
 
-2. Install the dependencies with `pipenv install`. This will also create a virtual environment, if there isn't one already
+-   Create and share lists shopping lists with friends
+-   Easily import Amazon URLs to lists
+-   Get notifications when items go on sale
+-   Follow your friends lists to see what items they want
+-   Make private lists for sensitive items/presents/etc.
 
-3. Activate the virtual environment and start the app with `pipenv run flask run`
+# Contents
 
-## Setting up PostgreSQL
+-   [Usage](#Usage)
+    -   [Signup](#Signup)
+    -   [Adding a profile photo](#Adding-a-profile-photo)
+    -   [Creating lists](#Creating-lists)
+    -   [Adding products to lists](#Adding-products-to-lists)
+    -   [Following friends](#Following-friends)
+-   [Development](#Development)
 
-1. Follow the instructions to [install](https://www.postgresqltutorial.com/install-postgresql/) Postgresql (v12) on your local machine
+# Usage
 
-2. Install all dependencies with `pipenv install`
+## Signup
 
-3. (MacOS and Windows only) To run the psql shell from anywhere in our command line, we need to set up our \$PATH [environment variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them) to point towards the location of our psql shell executable.
+To get started create an account at the <a href='dealsmate.com/signup' >sign up page</a>.
 
-    - Windows: [follow these instructions](https://sqlbackupandftp.com/blog/setting-windows-path-for-postgres-tools)
-    - [MacOS](https://www.cyberciti.biz/faq/appleosx-bash-unix-change-set-path-environment-variable/): `export PATH=/Library/PostgreSQL/12/bin:$PATH`
-    - Linux: _Most Linux platforms such as Debian, Red Hat / CentOS, SUSE, and Ubuntu have PostgreSQL integrated with their package management._
+On a successful signup you will be redirected to the app dashboard.
 
-4. To create a local database, we can either use the GUI (eg pgAdmin or [dbeavear](https://dbeaver.io/download/)) or through the psql shell via terminal. The following is an example of how to run it through your terminal.
+## Adding a profile photo
 
-    a) Access the psql shell and type in your password
+Once in the app let's first add a profile photo.
 
-    - Windows: `psql -U postgres`
-    - MacOS: `sudo psql postgres`
-    - Linux: `sudo -i -u postgres` then `psql`
+Click on the `Add a profile photo` button in the top right and open the file you want to use:
 
-    b) Create a database while in the shell
+![add_profile_pic](./docs/img/gifs/add_profile_pic.gif)
 
-    - `postgres=# CREATE DATABASE dealsmate_db;`
-    - `postgres=# \l`: to view all available databases`
-    - `postgres=# \q`: to exit the shell`
-    - other psql shell [commands](https://www.postgresqltutorial.com/psql-commands/)
+You will now have a profile photo that is visible to friends!
 
-5. If you made any changes (eg. passwords, urls, dbNames). Update the following vars in your .env file so in the future you will be able to connect the flask app to your local psql.
-    - `POSTGRES_USER = "postgres"`
-    - `POSTGRES_PW = "password"`
-    - `POSTGRES_URL = "127.0.0.1:5432"`
-    - `POSTGRES_DB = "dealsmate_db"`
+## Creating lists
 
-## API Usage
+Next let's create your first list.
 
-### Scraper
+Either select from one of the default lists, or click `ADD NEW LIST` and select a name and image to use.
 
-The scraper can retrieve information about an Amazon product by providing a valid product link.
+![add_list](./docs/img/gifs/add_list.gif)
 
-The following cURL POST request will scrape an Amazon headset listing:
+## Adding products to lists
 
-`curl -X POST http://localhost:5000/scrape --data '{"url": "https://www.amazon.com/dp/B00YXO5UKY"}' --header "Content-Type: application/json" | jq`
+Now that you have a list it's time to add some items:
 
-The information is returned as a JSON object:
+1. Click on the list you want to add to
+2. Click add new item
+3. Go to Amazon and copy the URL of the product you want
+4. Click the find item button
+5. Click the add item button
 
-```
-{
-  "availability": true,
-  "img_url": "https://images-na.ssl-images-amazon.com/images/I/81dh8R950eL._SX342_.jpg",
-  "old_price": "$29.95",
-  "price": "$24.95",
-  "url": "https://www.amazon.com/dp/B00YXO5UKY",
-  "name": "Turtle Beach Recon 50P Gaming Headset for PlayStation 5, PS4 Pro & PS4"
-}
-```
+![add_product](./docs/img/gifs/add_product.gif)
 
-### Prices
+## Following friends
 
-A price history is kept for each product on the database. The API routes for the pricing are as follows:
+You can follow a friends profile to get updates on their public lists:
 
-#### _GET entire price history all products in database:_
+1. Click on the `Friends` tab
+2. Click on the `Explore` tab to find users not in your network
+3. Click the follow button next to the user you want to follow
+4. Go to the `Following` tab to see who you are following
+5. Click a user's name to view their profile
 
-`curl localhost:5000/prices`
+![follow_profiles](./docs/img/gifs/follow_profiles.gif)
 
-#### _GET entire price history of a single product:_
+# Development
 
-`curl localhost:5000/prices/product/<product_id>`
-
-#### _POST new price to price history of a single product:_
-
-`curl -X POST localhost:5000/prices/product/<product_id> --data '{"price": ####, "currency": $/£/€}' --header "Content-Type: application/json"`
-
-#### _DELETE entire price history of a single product:_
-
-`curl -X DELETE localhost:5000/prices/product/<product_id>`
-
-### Profiles
-
-#### _GET all profiles from database:_
-
-`curl localhost:5000/profiles`
-
-#### _GET single profile from database:_
-
-`curl localhost:5000/profiles/<id>`
-
-#### _POST update profile information:_
-
-`curl -X PUT localhost:5000/profiles/1 --data '{"name": "Simon", "photo": "https://secure.gravatar.com/avatar/6f81c54461fc4b30b1b855050a071974"}' --header "Content-Type: application/json"`
-
-### Lists
-
-#### _GET one personal list (public or private) created by the user:_
-
-`curl localhost:5000/lists?user_id=<USER_ID>&list_id=<LIST_ID>`
-
-#### _GET all list of any one user (only authorized users can see private ones):_
-
-`curl localhost:5000/lists?user_id=<USER_ID>`
-
-#### _GET one list of any user (public lists only):_
-
-`curl localhost:5000/lists?list_id=<LIST_ID>`
-
-#### _POST(create) new list:_
-
-`curl -X POST localhost:5000/lists --data '{ "name": "<NAME>", "img_url": "<IMAGE URL>" }' --header "Content-Type: application/json"`
-
-### List to Products
-
-#### _GET all existing product given an list_id (only authorized users can see ones from private lists):_
-
-`curl localhost:5000/list-to-products/<LIST_ID>`
-
-#### _POST(add) new product ids into an existing list (only authorized users can do this):_
-
-`curl -X POST localhost:5000/list-to-products/<LIST_ID> --data '{ "product_id": <PRODUCT_ID> }'--header "Content-Type: application/json"`
-
-## External API Services
-
-### Cloudinary
-
-On Cloudinary these were the presets that were used to get proper image transformations for the products and profiles.
-
-| PRODUCT_IMG_PRESET | PROFILE_IMG_PRESET        |
-| ------------------ | ------------------------- |
-| max_width: 400px   | max_width: 400px          |
-| max_height:400px   | max_height:400px          |
-| crop_type:fitted   | crop_type: fitted         |
-|                    | face_detection_crop: true |
-|                    | background_removal: true  |
+<ul>
+    <li><a href="./docs/local_setup.md">Local Setup README</a></li>
+    <li><a href="./docs/api_usage.md">API Usage README</a></li>
+</ul>
