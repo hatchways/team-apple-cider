@@ -45,9 +45,16 @@ const useStyles = makeStyles((theme) => ({
         // marginTop:"100px"
     },
     dealsMate: {
-        width: "40%",
+        width: "30%",
         padding: "20px",
-        marginTop: "100px"
+        marginTop: "5vh",
+        marginRight: "10vw",
+        textAlign: "center",
+        alignContent: "center"
+    },
+    description: {
+        fontSize: "1.5rem",
+        textAlign: "center"
     },
     logo: {
         width: "100%",
@@ -65,9 +72,11 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "5vh",
 
         padding: "2rem",
-        marginLeft: "40px",
-        marginRight: "200px"
+        // marginLeft: "10vw",
+
+        marginRight: "10vw"
     },
+
     h2: {
         marginTop: 0
     },
@@ -186,7 +195,7 @@ function SignUp(props) {
                     className={classes.registrationFieldContainer}
                     onSubmit={handleSignup}
                 >
-                    <h2 className={classes.h2}>Sign up</h2>
+                    <h2 className={classes.h2}>Sign up today!</h2>
                     <label>Your Name</label>
                     <TextField
                         className={classes.textField}
