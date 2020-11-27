@@ -4,9 +4,10 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Button, TextField, Box, Tooltip, Typography } from "@material-ui/core";
 import UserContext from "../contexts/UserContext";
 import WarningSnackbar from "./WarningSnackbar";
-import backgroundImage from "../img/bcImage5.jpg"
+import backgroundImage from "../img/bcImage6.jpg";
+import logo from "../img/logo.png";
 import zIndex from "@material-ui/core/styles/zIndex";
-import { Opacity } from "@material-ui/icons";
+
 const ErrorTooltip = withStyles((theme) => ({
   arrow: {
     color: "red",
@@ -21,34 +22,45 @@ const ErrorTooltip = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   signup: {
-    backgroundColor:"#7577853b",
+    backgroundColor:"#d8d8d9",
     width: "100vw",
     margin: "0 auto",
     minHeight: "100vh",
     padding: "50px",
     display:"flex",
     position:"relative",
-    justifyContent:"space-between",
+    justifyContent:"flex-end",
+    zIndex:"0",
+    // overflow:"hidden"
   },
   backgroundImage:{
-    width:"100%",
-    height:"100%",
+    
+    height:"100vh",
     position:"absolute",
     top:"0",
-    left:"0",
+    bottom:"0",
+    left:"-150px",
     zIndex:"-1",
-    opacity:"0.5"
+    opacity:"0.4",
+    overFlow:"hidden"
+    // marginTop:"100px"
+  },
+  dealsMate:{
+    width:"40%",
+    padding:"20px",
+    marginTop:"150px"
+  },
+  logo:{
+    width:"100%",
+    maxWidth:"400px",
+    marginBottom:"20px"
   },
   formContainer: {
     border: " solid rgb(241, 238, 232) 1px",
-    // borderRadius: "1%",
-    width: "300px ",
-    // // maxWidth: "400px",
-    // // minWidth: "250px",
-    // // margin: "0 auto",
     textAlign: "center",
     backgroundColor: "#f7f3f3",
     padding: "30px",
+    marginLeft:"40px",
   },
   h2: {
     marginTop: 0,
@@ -56,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     display: "block",
     width: "80%",
-    margin: "5px auto 40px auto",
+    margin: "5px auto 20px auto",
     textAlign: "center",
     backgroundColor: "white",
   },
@@ -144,8 +156,11 @@ function SignUp(props) {
     <section className={classes.signup}>
       <img src={backgroundImage} className={classes.backgroundImage}></img>
       <Box className={classes.dealsMate}>
-      <Typography className={classes.h1}>Deals Mate</Typography>
-      <Typography className={classes.description}></Typography>
+      <img src={logo} className={classes.logo}></img>
+      <Typography className={classes.description}>
+        Dealsmate is a marketplace website that allows users to create 
+        and follow shopping lists that automatically notifies users when items are on sale
+      </Typography>
       </Box>
       <Box className={classes.formContainer}>
         <form onSubmit={handleSignup}>
@@ -158,6 +173,7 @@ function SignUp(props) {
             fullWidth
             required
             type="text"
+            inputProps={{className:classes.input}}
             onChange={(e) => setName(e.target.value)}
           />
           <label>Your email address:</label>
