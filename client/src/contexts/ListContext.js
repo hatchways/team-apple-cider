@@ -17,7 +17,7 @@ export function ListStore(props) {
             setLists(json);
         }
         getLists();
-    }, [listsChange]);
+    }, [listsChange, userId]);
 
     const productToggle = () => {
         setProductChange(!productChange);

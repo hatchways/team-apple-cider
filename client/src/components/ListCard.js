@@ -76,6 +76,10 @@ const ListCard = (props) => {
         setListToProducts(json);
     };
 
+    useEffect(() => {
+        getProductIds();
+    }, [listChange, productChange, listId]);
+
     const getProducts = async () => {
         const newProducts = await Promise.all(
             listToProducts.map(async (relation) => {
@@ -89,10 +93,6 @@ const ListCard = (props) => {
     useEffect(() => {
         getProducts();
     }, [listToProducts]);
-
-    useEffect(() => {
-        getProductIds();
-    }, [listChange, productChange]);
 
     const settingsClick = (event) => {
         event.stopPropagation();

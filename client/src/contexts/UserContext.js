@@ -27,7 +27,7 @@ export function UserStore(props) {
 
     useEffect(() => {
         checkCookie();
-    }, []);
+    }, [user]);
 
     const handleSignup = (name, email, password, confirm) =>
         fetch("/auth/register", {
