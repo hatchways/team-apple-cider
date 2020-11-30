@@ -27,7 +27,7 @@ export const ListStore = (props) => {
                 productToggle,
                 productChange,
                 listsToggle,
-                lists,
+                lists
             }}
         >
             {props.children}

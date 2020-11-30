@@ -12,18 +12,18 @@ import DemoShoppingLists from "components/DemoShoppingLists";
 const useStyles = makeStyles((theme) => ({
     shoppingContainer: {
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column"
     },
     myShoppingLists: {
         display: "flex",
         maxWidth: "75vw",
         overflowX: "auto",
         "& > *": {
-            marginRight: theme.spacing(4),
+            marginRight: theme.spacing(4)
         },
         "& > *:last-child": {
-            marginRight: 0,
-        },
+            marginRight: 0
+        }
     },
 
     addNewList: {
@@ -34,22 +34,22 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
     },
     addNewListButton: {
         height: "5rem",
         width: "5rem",
-        margin: "0.5rem",
+        margin: "0.5rem"
     },
     addIcon: {
         color: "red",
         height: "3rem",
         width: "3rem",
-        margin: "0.5rem",
+        margin: "0.5rem"
     },
     addNewListText: {
-        fontWeight: "bold",
-    },
+        fontWeight: "bold"
+    }
 }));
 
 const ListsDisplay = (props) => {
