@@ -3,7 +3,8 @@ import {
     Box,
     Typography,
     IconButton,
-    CircularProgress
+    CircularProgress,
+    Fade
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -108,51 +109,57 @@ const ListsDisplay = (props) => {
 
     if (listsLoading)
         return (
-            <Box className={classes.spinnerContainer}>
-                <CircularProgress />
-            </Box>
+            <Fade in={true} timeout={1000}>
+                <Box className={classes.spinnerContainer}>
+                    <CircularProgress />
+                </Box>
+            </Fade>
         );
     else
         return (
-            <Box className={`${classes.shoppingContainer} ${props.className}`}>
-                <ListsDisplayTitle {...{ demo, profile, lists }} />
-                <Box className={classes.myShoppingLists} ref={scrollRef}>
-                    {demo ? (
-                        <DemoShoppingLists />
-                    ) : (
-                        lists.length !== 0 &&
-                        lists.map((list, i) => (
-                            <ListCard
-                                key={i}
-                                {...{
-                                    list,
-                                    lists,
-                                    changeOpenSuccessSnack,
-                                    demo
-                                }}
-                            />
-                        ))
-                    )}
-                    {!profile && (
-                        <Box className={classes.addNewList}>
-                            <IconButton
-                                className={classes.addNewListButton}
-                                onClick={() => changeAddListOpen()}
-                            >
-                                <AddIcon className={classes.addIcon} />
-                            </IconButton>
-                            <Typography className={classes.addNewListText}>
-                                ADD NEW LIST
-                            </Typography>
-                        </Box>
-                    )}
+            <Fade in={true} timeout={1000}>
+                <Box
+                    className={`${classes.shoppingContainer} ${props.className}`}
+                >
+                    <ListsDisplayTitle {...{ demo, profile, lists }} />
+                    <Box className={classes.myShoppingLists} ref={scrollRef}>
+                        {demo ? (
+                            <DemoShoppingLists />
+                        ) : (
+                            lists.length !== 0 &&
+                            lists.map((list, i) => (
+                                <ListCard
+                                    key={i}
+                                    {...{
+                                        list,
+                                        lists,
+                                        changeOpenSuccessSnack,
+                                        demo
+                                    }}
+                                />
+                            ))
+                        )}
+                        {!profile && (
+                            <Box className={classes.addNewList}>
+                                <IconButton
+                                    className={classes.addNewListButton}
+                                    onClick={() => changeAddListOpen()}
+                                >
+                                    <AddIcon className={classes.addIcon} />
+                                </IconButton>
+                                <Typography className={classes.addNewListText}>
+                                    ADD NEW LIST
+                                </Typography>
+                            </Box>
+                        )}
+                    </Box>
+                    <SuccessSnackbar
+                        openSnack={openSuccessSnack}
+                        handleCloseSnack={handleCloseSnack}
+                        snackText={snackText}
+                    />
                 </Box>
-                <SuccessSnackbar
-                    openSnack={openSuccessSnack}
-                    handleCloseSnack={handleCloseSnack}
-                    snackText={snackText}
-                />
-            </Box>
+            </Fade>
         );
 };
 
