@@ -4,6 +4,7 @@ import UserContext from "contexts/UserContext";
 const ListContext = createContext({});
 
 export const ListStore = (props) => {
+    const [listsLoading, setListsLoading] = useState(true);
     const userId = useContext(UserContext).userId;
     const [listsChange, setListsChange] = useState(true);
     const [productChange, setProductChange] = useState(true);
@@ -14,6 +15,7 @@ export const ListStore = (props) => {
             const res = await fetch(`/lists?user_id=${userId}`);
             const json = await res.json();
             setLists(json);
+            setListsLoading(false);
         }
         getLists();
     }, [listsChange]);
@@ -27,7 +29,8 @@ export const ListStore = (props) => {
                 productToggle,
                 productChange,
                 listsToggle,
-                lists
+                lists,
+                listsLoading
             }}
         >
             {props.children}

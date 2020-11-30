@@ -1,5 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Box, Typography, IconButton } from "@material-ui/core";
+import {
+    Box,
+    Typography,
+    IconButton,
+    CircularProgress
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import ListCard from "components/ListCard";
@@ -49,10 +54,18 @@ const useStyles = makeStyles((theme) => ({
     },
     addNewListText: {
         fontWeight: "bold"
+    },
+    spinnerContainer: {
+        width: "100%",
+        height: "10rem",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
     }
 }));
 
 const ListsDisplay = (props) => {
+    const listsLoading = useContext(ListContext).listsLoading;
     const userLists = useContext(ListContext).lists;
     const scrollRef = useHorizontalScroll();
     const { profile, changeAddListOpen } = props;
@@ -93,42 +106,54 @@ const ListsDisplay = (props) => {
         setOpenSuccessSnack(false);
     };
 
-    return (
-        <Box className={`${classes.shoppingContainer} ${props.className}`}>
-            <ListsDisplayTitle {...{ demo, profile, lists }} />
-            <Box className={classes.myShoppingLists} ref={scrollRef}>
-                {demo ? (
-                    <DemoShoppingLists />
-                ) : (
-                    lists.length !== 0 &&
-                    lists.map((list, i) => (
-                        <ListCard
-                            key={i}
-                            {...{ list, lists, changeOpenSuccessSnack, demo }}
-                        />
-                    ))
-                )}
-                {!profile && (
-                    <Box className={classes.addNewList}>
-                        <IconButton
-                            className={classes.addNewListButton}
-                            onClick={() => changeAddListOpen()}
-                        >
-                            <AddIcon className={classes.addIcon} />
-                        </IconButton>
-                        <Typography className={classes.addNewListText}>
-                            ADD NEW LIST
-                        </Typography>
-                    </Box>
-                )}
+    if (listsLoading)
+        return (
+            <Box className={classes.spinnerContainer}>
+                <CircularProgress />
             </Box>
-            <SuccessSnackbar
-                openSnack={openSuccessSnack}
-                handleCloseSnack={handleCloseSnack}
-                snackText={snackText}
-            />
-        </Box>
-    );
+        );
+    else
+        return (
+            <Box className={`${classes.shoppingContainer} ${props.className}`}>
+                <ListsDisplayTitle {...{ demo, profile, lists }} />
+                <Box className={classes.myShoppingLists} ref={scrollRef}>
+                    {demo ? (
+                        <DemoShoppingLists />
+                    ) : (
+                        lists.length !== 0 &&
+                        lists.map((list, i) => (
+                            <ListCard
+                                key={i}
+                                {...{
+                                    list,
+                                    lists,
+                                    changeOpenSuccessSnack,
+                                    demo
+                                }}
+                            />
+                        ))
+                    )}
+                    {!profile && (
+                        <Box className={classes.addNewList}>
+                            <IconButton
+                                className={classes.addNewListButton}
+                                onClick={() => changeAddListOpen()}
+                            >
+                                <AddIcon className={classes.addIcon} />
+                            </IconButton>
+                            <Typography className={classes.addNewListText}>
+                                ADD NEW LIST
+                            </Typography>
+                        </Box>
+                    )}
+                </Box>
+                <SuccessSnackbar
+                    openSnack={openSuccessSnack}
+                    handleCloseSnack={handleCloseSnack}
+                    snackText={snackText}
+                />
+            </Box>
+        );
 };
 
 export default ListsDisplay;
