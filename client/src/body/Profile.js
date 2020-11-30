@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, CircularProgress } from "@material-ui/core";
+import { Box, Typography, CircularProgress, Fade } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileTopBar from "components/ProfileTopBar";
 import ListsDisplay from "components/ListsDisplay";
@@ -124,13 +124,15 @@ const Profile = (props) => {
         );
     else
         return (
-            <Box className={classes.profileContainer}>
-                <ProfileTopBar {...{ profile, toggleFollow, relation }} />
-                <ListsDisplay
-                    {...{ profile, loaded }}
-                    className={classes.listsDisplay}
-                />
-            </Box>
+            <Fade in={true} timeout={1000}>
+                <Box className={classes.profileContainer}>
+                    <ProfileTopBar {...{ profile, toggleFollow, relation }} />
+                    <ListsDisplay
+                        {...{ profile, loaded }}
+                        className={classes.listsDisplay}
+                    />
+                </Box>
+            </Fade>
         );
 };
 

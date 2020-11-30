@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@material-ui/core";
+import { Box, Fade } from "@material-ui/core";
 import AddItem from "components/AddItem";
 import ListsDisplay from "components/ListsDisplay";
 import AddList from "components/AddList";
@@ -17,14 +17,16 @@ const ShoppingLists = (props) => {
     const classes = useStyles();
 
     return (
-        <Box>
-            <AddItem />
-            <ListsDisplay
-                className={classes.listsDisplay}
-                {...{ addListOpen, changeAddListOpen }}
-            />
-            <AddList {...{ addListOpen, changeAddListOpen }} />
-        </Box>
+        <Fade in={true} timeout={1000}>
+            <Box>
+                <AddItem />
+                <ListsDisplay
+                    className={classes.listsDisplay}
+                    {...{ addListOpen, changeAddListOpen }}
+                />
+                <AddList {...{ addListOpen, changeAddListOpen }} />
+            </Box>
+        </Fade>
     );
 };
 

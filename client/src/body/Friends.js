@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Box, Typography, Tabs, Tab } from "@material-ui/core";
+import { Box, Typography, Tabs, Tab, Fade } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import FollowersFollowing from "../components/ProfileList";
@@ -120,39 +120,41 @@ const Friends = (props) => {
     };
 
     return (
-        <Box className={classes.friendsContainer}>
-            <Typography variant={"h1"} className={classes.h1}>
-                Friends
-            </Typography>
-            <Tabs
-                className={classes.tabs}
-                value={selectedPage}
-                onChange={handleTabChange}
-            >
-                {tabs.map((tab, index) => (
-                    <Tab
-                        key={index}
-                        disableRipple
-                        className={classes.tab}
-                        label={tab}
-                        component={Link}
-                        to={`/friends/${tab}`}
-                    />
-                ))}
-            </Tabs>
-            <Box className={classes.tabsContainer}>
-                <Switch>
+        <Fade in={true} timeout={1000}>
+            <Box className={classes.friendsContainer}>
+                <Typography variant={"h1"} className={classes.h1}>
+                    Friends
+                </Typography>
+                <Tabs
+                    className={classes.tabs}
+                    value={selectedPage}
+                    onChange={handleTabChange}
+                >
                     {tabs.map((tab, index) => (
-                        <Route
+                        <Tab
                             key={index}
-                            exact
-                            path={`/friends/${tab}`}
-                            render={getProfileListDisplay}
+                            disableRipple
+                            className={classes.tab}
+                            label={tab}
+                            component={Link}
+                            to={`/friends/${tab}`}
                         />
                     ))}
-                </Switch>
+                </Tabs>
+                <Box className={classes.tabsContainer}>
+                    <Switch>
+                        {tabs.map((tab, index) => (
+                            <Route
+                                key={index}
+                                exact
+                                path={`/friends/${tab}`}
+                                render={getProfileListDisplay}
+                            />
+                        ))}
+                    </Switch>
+                </Box>
             </Box>
-        </Box>
+        </Fade>
     );
 };
 
