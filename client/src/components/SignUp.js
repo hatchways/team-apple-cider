@@ -45,26 +45,39 @@ const useStyles = makeStyles((theme) => ({
         // marginTop:"100px"
     },
     dealsMate: {
-        width: "40%",
+        width: "30%",
         padding: "20px",
         marginTop: "20px",
-        display:"flex",
-        flexDirection:"column"
-        
+        diarginTop: "5vh",
+        marginRight: "10vw",
+        textAlign: "center",
+        alignContent: "center"
+    },
+    description: {
+      fontSize: "1.5rem",
+      textAlign: "center"
     },
     logo: {
         width: "100%",
         maxWidth: "400px",
         marginBottom: "20px"
     },
+    registrationFieldContainer: {
+        width: "20vw"
+    },
     formContainer: {
         border: " solid rgb(241, 238, 232) 1px",
         textAlign: "center",
         backgroundColor: "#f7f3f3",
-        padding: "30px",
-        marginLeft: "40px",
-        marginRight: "15%"
+        height: "80%",
+        marginTop: "5vh",
+
+        padding: "2rem",
+        // marginLeft: "10vw",
+
+        marginRight: "10vw"
     },
+
     h2: {
         marginTop: 0
     },
@@ -75,8 +88,11 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center",
         backgroundColor: "white"
     },
+
     button: {
-        marginTop: "25px",
+        padding: "0.8rem",
+        width: "80%",
+        marginTop: "10px",
         backgroundColor: "#DF1B1B"
     },
     login: {
@@ -84,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
         padding: "20px",
         borderTop: "1px solid rgba(128, 128, 128, 0.274)",
         justifyContent: "center",
-        marginTop: "40px",
+        marginTop: "30px",
         textAlign: "center"
     },
     p: {
@@ -176,8 +192,11 @@ function SignUp(props) {
                 </Typography>
             </Box>
             <Box className={classes.formContainer}>
-                <form onSubmit={handleSignup}>
-                    <h2 className={classes.h2}>Sign up</h2>
+                <form
+                    className={classes.registrationFieldContainer}
+                    onSubmit={handleSignup}
+                >
+                    <h2 className={classes.h2}>Sign up today!</h2>
                     <label>Your Name</label>
                     <TextField
                         className={classes.textField}
@@ -188,6 +207,7 @@ function SignUp(props) {
                         type="text"
                         inputProps={{ className: classes.input }}
                         onChange={(e) => setName(e.target.value)}
+                        size="medium"
                     />
                     <label>Your email address:</label>
                     <TextField
@@ -198,6 +218,7 @@ function SignUp(props) {
                         required
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
+                        size="medium"
                     />
                     <label>Password:</label>
                     <TextField
@@ -209,6 +230,7 @@ function SignUp(props) {
                         type="password"
                         inputProps={{ minLength: 6 }}
                         onChange={(e) => setPassword(e.target.value)}
+                        size="medium"
                     />
                     <label>Confirm Password:</label>
                     <ErrorTooltip
@@ -228,6 +250,7 @@ function SignUp(props) {
                             type="password"
                             error={Boolean(errors.confirm)}
                             onChange={(e) => setConfirm(e.target.value)}
+                            size="medium"
                         />
                     </ErrorTooltip>
                     <Button
@@ -235,13 +258,14 @@ function SignUp(props) {
                         type="submit"
                         variant="contained"
                         color="secondary"
+                        fullWidth
                     >
                         Sign up
                     </Button>
                 </form>
                 <Box className={classes.login}>
                     <p className={classes.p}>Already have an account?</p>
-                    <Link className={classes.signupLink} to="/">
+                    <Link className={classes.signupLink} to="/login">
                         Login
                     </Link>
                 </Box>
