@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     position:"relative",
     justifyContent:"flex-end",
     zIndex:"0",
-    // overflow:"hidden"
   },
   backgroundImage:{
     height:"100vh",
@@ -42,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     zIndex:"-1",
     opacity:"0.4",
     overFlow:"hidden"
-    // marginTop:"100px"
   },
   dealsMate:{
     width:"40%",
