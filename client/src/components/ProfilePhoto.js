@@ -15,15 +15,15 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
         cursor: "pointer",
-        transition: "border-radius 1s, border-color 1s",
+        transition: "border-radius 1s, border-color 1s"
     },
     "@keyframes spin": {
         from: { transform: "rotate(0deg)" },
-        to: { transform: "rotate(360deg)" },
+        to: { transform: "rotate(360deg)" }
     },
     "@keyframes color-shift": {
         from: { border: "1px dashed #eee" },
-        to: { border: "1px dashed grey" },
+        to: { border: "1px dashed grey" }
     },
     loadingPhoto: {
         animation: "$spin 1000ms infinite linear",
@@ -31,17 +31,17 @@ const useStyles = makeStyles((theme) => ({
         borderRight: "1px solid #ccc",
         borderBottom: "1px solid #ccc",
         borderLeft: "1px solid #DF1B1B",
-        borderRadius: "50%",
+        borderRadius: "50%"
     },
     photoFound: {
         animation: "$spin 1000ms 1 linear",
         border: "1px solid #fff",
-        borderRadius: "50%",
+        borderRadius: "50%"
     },
     noPhotoFound: {
         animation: "$spin 1000ms 1 linear, $color-shift 1000ms 1 ease-out",
         animationFillMode: "forwards",
-        borderRadius: "1rem",
+        borderRadius: "1rem"
     },
     profileIcon: {
         marginLeft: theme.spacing(2),
@@ -49,12 +49,12 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
         width: "100%",
         borderRadius: "100%",
-        cursor: "pointer",
+        cursor: "pointer"
     },
     placeholderText: {
         fontSize: "0.6rem",
-        textAlign: "center",
-    },
+        textAlign: "center"
+    }
 }));
 
 const ProfilePhoto = (props) => {

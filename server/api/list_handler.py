@@ -8,6 +8,7 @@ from .image_uploader import replace_cloudinary_image
 
 list_handler = Blueprint('list_handler', __name__)
 
+
 @list_handler.route('/lists', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def listRequests():
     list_id = request.args.get('list_id', None)
@@ -32,7 +33,7 @@ def listRequests():
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
 
-        # 0|1 Case 2: when user_id
+        # 0|1 Case 2: when only user_id is provided
         if user_id:
             try:
                 if int(user_id) == int(auth_token):
@@ -45,7 +46,6 @@ def listRequests():
             except Exception as e:
                 return jsonify({'error': "{}".format(e.__cause__)}), 400
 
-        
         # 0|0 Case 3: when none is provided, we look at the auth_token and retrieve the lists
         if auth_token != -1:
             try:
