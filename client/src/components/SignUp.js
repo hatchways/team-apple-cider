@@ -45,17 +45,18 @@ const useStyles = makeStyles((theme) => ({
         // marginTop:"100px"
     },
     dealsMate: {
-        width: "30%",
+        width: "45%",
         padding: "20px",
         marginTop: "20px",
         diarginTop: "5vh",
-        marginRight: "10vw",
-        textAlign: "center",
-        alignContent: "center"
+        marginRight: "2vw"
     },
     description: {
-      fontSize: "1.5rem",
-      textAlign: "center"
+        paddingTop: "4rem",
+        fontSize: "1.5rem",
+        "& h1": {
+            fontSize: "2.5rem"
+        }
     },
     logo: {
         width: "100%",
@@ -71,10 +72,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#f7f3f3",
         height: "80%",
         marginTop: "5vh",
-
         padding: "2rem",
-        // marginLeft: "10vw",
-
         marginRight: "10vw"
     },
 
@@ -186,9 +184,12 @@ function SignUp(props) {
             <Box className={classes.dealsMate}>
                 <img src={logo} className={classes.logo}></img>
                 <Typography className={classes.description}>
-                    Dealsmate is a marketplace website that allows users to
-                    create and follow shopping lists that automatically notifies
-                    users when items are on sale
+                    <h1>
+                        Welcome to the next generation <br />
+                        of online shopping.
+                    </h1>
+                    Create and follow shopping lists that instantly notifies you
+                    on sales!
                 </Typography>
             </Box>
             <Box className={classes.formContainer}>
