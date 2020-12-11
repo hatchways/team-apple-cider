@@ -20,6 +20,7 @@ webdriver-manager = "*"
 flask-socketio = "*"
 eventlet = "*"
 flask-login = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
