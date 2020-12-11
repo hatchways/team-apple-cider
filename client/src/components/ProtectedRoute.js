@@ -12,7 +12,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
                 value.user ? (
                     <Component {...rest} {...props} />
                 ) : (
-                    <Redirect to={"/login"} />
+                    <Redirect to={"/signup"} />
                 )
             }
         />

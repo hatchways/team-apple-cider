@@ -24,6 +24,7 @@ function App() {
                                     path="/"
                                     component={Dashboard}
                                 />
+
                                 <Route path="/login" exact component={Login} />
                                 <Route
                                     path="/signup"

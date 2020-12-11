@@ -4,6 +4,9 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Button, TextField, Box, Tooltip, Typography } from "@material-ui/core";
 import UserContext from "../contexts/UserContext";
 import WarningSnackbar from "./WarningSnackbar";
+import backgroundImage from "../img/bcImage6.jpg";
+import logo from "../img/logo.png";
+import zIndex from "@material-ui/core/styles/zIndex";
 
 const ErrorTooltip = withStyles((theme) => ({
     arrow: {
@@ -19,35 +22,75 @@ const ErrorTooltip = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
     signup: {
+        backgroundColor: "#d8d8d8",
         width: "100vw",
         margin: "0 auto",
         minHeight: "100vh",
         padding: "50px",
-        backgroundColor: "#44475ab9"
+        display: "flex",
+        position: "relative",
+        justifyContent: "flex-end",
+        zIndex: "0"
+        // overflow:"hidden"
+    },
+    backgroundImage: {
+        height: "100vh",
+        position: "absolute",
+        top: "0",
+        bottom: "0",
+        left: "-150px",
+        zIndex: "-1",
+        opacity: "0.5",
+        overFlow: "hidden"
+        // marginTop:"100px"
+    },
+    dealsMate: {
+        width: "45%",
+        padding: "20px",
+        marginTop: "20px",
+        diarginTop: "5vh",
+        marginRight: "2vw"
+    },
+    description: {
+        paddingTop: "4rem",
+        fontSize: "1.5rem",
+        "& h1": {
+            fontSize: "2.5rem"
+        }
+    },
+    logo: {
+        width: "100%",
+        maxWidth: "400px",
+        marginBottom: "20px"
+    },
+    registrationFieldContainer: {
+        width: "20vw"
     },
     formContainer: {
         border: " solid rgb(241, 238, 232) 1px",
-        borderRadius: "1%",
-        width: "50% ",
-        maxWidth: "400px",
-        minWidth: "250px",
-        margin: "0 auto",
         textAlign: "center",
         backgroundColor: "#f7f3f3",
-        padding: "30px"
+        height: "80%",
+        marginTop: "5vh",
+        padding: "2rem",
+        marginRight: "10vw"
     },
+
     h2: {
         marginTop: 0
     },
     textField: {
         display: "block",
         width: "80%",
-        margin: "5px auto 40px auto",
+        margin: "5px auto 20px auto",
         textAlign: "center",
         backgroundColor: "white"
     },
+
     button: {
-        marginTop: "25px",
+        padding: "0.8rem",
+        width: "80%",
+        marginTop: "10px",
         backgroundColor: "#DF1B1B"
     },
     login: {
@@ -55,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
         padding: "20px",
         borderTop: "1px solid rgba(128, 128, 128, 0.274)",
         justifyContent: "center",
-        marginTop: "40px",
+        marginTop: "30px",
         textAlign: "center"
     },
     p: {
@@ -134,9 +177,27 @@ function SignUp(props) {
 
     return (
         <section className={classes.signup}>
+            <img
+                src={backgroundImage}
+                className={classes.backgroundImage}
+            ></img>
+            <Box className={classes.dealsMate}>
+                <img src={logo} className={classes.logo}></img>
+                <Typography className={classes.description}>
+                    <h1>
+                        Welcome to the next generation <br />
+                        of online shopping.
+                    </h1>
+                    Create and follow shopping lists that instantly notifies you
+                    on sales!
+                </Typography>
+            </Box>
             <Box className={classes.formContainer}>
-                <form onSubmit={handleSignup}>
-                    <h2 className={classes.h2}>Sign up</h2>
+                <form
+                    className={classes.registrationFieldContainer}
+                    onSubmit={handleSignup}
+                >
+                    <h2 className={classes.h2}>Sign up today!</h2>
                     <label>Your Name</label>
                     <TextField
                         className={classes.textField}
@@ -145,7 +206,9 @@ function SignUp(props) {
                         fullWidth
                         required
                         type="text"
+                        inputProps={{ className: classes.input }}
                         onChange={(e) => setName(e.target.value)}
+                        size="medium"
                     />
                     <label>Your email address:</label>
                     <TextField
@@ -156,6 +219,7 @@ function SignUp(props) {
                         required
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
+                        size="medium"
                     />
                     <label>Password:</label>
                     <TextField
@@ -167,6 +231,7 @@ function SignUp(props) {
                         type="password"
                         inputProps={{ minLength: 6 }}
                         onChange={(e) => setPassword(e.target.value)}
+                        size="medium"
                     />
                     <label>Confirm Password:</label>
                     <ErrorTooltip
@@ -186,6 +251,7 @@ function SignUp(props) {
                             type="password"
                             error={Boolean(errors.confirm)}
                             onChange={(e) => setConfirm(e.target.value)}
+                            size="medium"
                         />
                     </ErrorTooltip>
                     <Button
@@ -193,13 +259,14 @@ function SignUp(props) {
                         type="submit"
                         variant="contained"
                         color="secondary"
+                        fullWidth
                     >
                         Sign up
                     </Button>
                 </form>
                 <Box className={classes.login}>
                     <p className={classes.p}>Already have an account?</p>
-                    <Link className={classes.signupLink} to="/">
+                    <Link className={classes.signupLink} to="/login">
                         Login
                     </Link>
                 </Box>
