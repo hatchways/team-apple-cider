@@ -18,6 +18,7 @@ from api.follower_handler import follower_handler
 # from api.celery_api.scheduled_tasks import scheduled_tasks
 
 import eventlet
+import os
 from sockets import SocketIO, attach_events
 
 migrate = Migrate()
@@ -56,4 +57,8 @@ def create_app():
         return app
 
 
-create_app()
+# create_app()
+
+if __name__ == "__main__":
+    app = create_app()
+    app.run(host='0.0.0.0', port=os.environ.get('PORT', 5000))
