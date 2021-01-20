@@ -18,7 +18,7 @@ from api.follower_handler import follower_handler
 # from api.celery_api.scheduled_tasks import scheduled_tasks
 
 # import eventlet
-# import os
+import os
 # from sockets import SocketIO, attach_events
 
 migrate = Migrate()
