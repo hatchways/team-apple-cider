@@ -17,13 +17,13 @@ from api.follower_handler import follower_handler
 
 # from api.celery_api.scheduled_tasks import scheduled_tasks
 
-import eventlet
-import os
-from sockets import SocketIO, attach_events
+# import eventlet
+# import os
+# from sockets import SocketIO, attach_events
 
 migrate = Migrate()
 cors = CORS()
-socketio = SocketIO()
+# socketio = SocketIO()
 
 
 def create_app():
@@ -33,10 +33,10 @@ def create_app():
     migrate.init_app(app, db)
     cors.init_app(app)
     bcrypt.init_app(app)
-    socketio.init_app(app)
+    # socketio.init_app(app)
 
-    socketio.run(app)
-    attach_events(socketio)
+    # socketio.run(app)
+    # attach_events(socketio)
 
     with app.app_context():
 
