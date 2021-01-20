@@ -30,7 +30,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
     db.init_app(app)
+
     migrate.init_app(app, db)
+
     cors.init_app(app)
     bcrypt.init_app(app)
     # socketio.init_app(app)
@@ -52,13 +54,16 @@ def create_app():
         app.register_blueprint(profile_handler)
         # app.register_blueprint(scheduled_tasks)
         app.register_blueprint(follower_handler)
+        # db.create_all()
 
-        db.create_all()
+        def create_tables():
+            db.create_all()
+
         return app
 
 
-# create_app()
+def create_tables():
+    db.create_all()
 
-if __name__ == "__main__":
-    app = create_app()
-    app.run(host='0.0.0.0', port=os.environ.get('PORT', 5000))
+
+app = create_app()
