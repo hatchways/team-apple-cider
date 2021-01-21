@@ -1,5 +1,6 @@
 import re
 import json
+import os
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -11,13 +12,14 @@ CHROME_OPTIONS = ['--headless', '--no-sandbox', '--ignore-certificate-errors',
 
 def loadChromeDriver():
     chrome_options = Options()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     for option in CHROME_OPTIONS:
         chrome_options.add_argument(option)
     executable_path = ChromeDriverManager().install()
     userAgent = 'Mozilla/5.0 (X11; Linux x86_64)' + \
         'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
     chrome_options.add_argument("user-agent={}".format(userAgent))
-    return webdriver.Chrome(executable_path=executable_path, options=chrome_options)
+    return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
 
 
 def string_to_int_price(price_string):
