@@ -23,7 +23,7 @@
     "eslintConfig": {
         "extends": "react-app"
     },
-    "proxy": "https://dealsmate-app-server.herokuapp.com/",
+    "proxy": "https://dealsmate-app-server.herokuapp.com",
     "browserslist": {
         "production": [
             ">0.2%",
